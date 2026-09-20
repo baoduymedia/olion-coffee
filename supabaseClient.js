@@ -37,6 +37,188 @@ if (typeof window !== 'undefined') {
   initSupabase();
 }
 
+// =========================================================================
+// 0. SECURITY & DEVICE FINGERPRINTING & RATE LIMITING
+// =========================================================================
+
+/**
+ * Tạo mã định danh phần cứng/trình duyệt (Device Fingerprint) an toàn
+ */
+function getDeviceFingerprint() {
+  try {
+    const screenRes = `${window.screen?.width || 0}x${window.screen?.height || 0}x${window.screen?.colorDepth || 0}`;
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+    const language = navigator.language || navigator.userLanguage || '';
+    const hardwareConcurrency = navigator.hardwareConcurrency || '';
+    const platform = navigator.platform || '';
+    const ua = navigator.userAgent || '';
+    
+    // Thuật toán hash chuỗi đơn giản & nhanh DJB2
+    const str = `${ua}|${screenRes}|${timeZone}|${language}|${hardwareConcurrency}|${platform}`;
+    let hash = 5381;
+    for (let i = 0; i < str.length; i++) {
+      hash = ((hash << 5) + hash) + str.charCodeAt(i);
+      hash = hash & hash; // Convert to 32bit integer
+    }
+    return 'fp_' + Math.abs(hash).toString(36);
+  } catch (e) {
+    return 'fp_fallback_' + Math.random().toString(36).substring(2, 10);
+  }
+}
+
+/**
+ * Lấy hoặc khởi tạo Device ID lưu đồng thời trong LocalStorage & Cookie bảo mật
+ */
+function getOrCreateDeviceId() {
+  try {
+    // 1. Kiểm tra LocalStorage
+    let deviceId = localStorage.getItem('olion_device_id');
+    
+    // 2. Kiểm tra Cookie nếu LocalStorage bị xóa
+    if (!deviceId) {
+      const match = document.cookie.match(/(^|;)\s*olion_device_id\s*=\s*([^;]+)/);
+      if (match) deviceId = match[2];
+    }
+    
+    // 3. Nếu chưa có, tạo mới kết hợp Fingerprint + Random UUID
+    if (!deviceId) {
+      const fp = getDeviceFingerprint();
+      const rand = Math.random().toString(36).substring(2, 9);
+      const time = Date.now().toString(36);
+      deviceId = `dev_${fp}_${time}_${rand}`;
+    }
+    
+    // 4. Đồng bộ lưu lại cả LocalStorage và Cookie (hạn 365 ngày)
+    localStorage.setItem('olion_device_id', deviceId);
+    const expires = new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toUTCString();
+    document.cookie = `olion_device_id=${deviceId}; expires=${expires}; path=/; SameSite=Lax`;
+    
+    return deviceId;
+  } catch (e) {
+    return 'dev_anon_' + Date.now();
+  }
+}
+
+/**
+ * Kiểm tra xem thiết bị / SĐT này đã quay Minigame trong 24h qua chưa
+ */
+async function canUserSpinToday(phone) {
+  const deviceId = getOrCreateDeviceId();
+  
+  // 1. Kiểm tra nhanh LocalStorage Cooldown (24 giờ = 86400 giây)
+  const lastSpinTime = localStorage.getItem('olion_last_spin_time');
+  if (lastSpinTime) {
+    const elapsedSec = Math.floor((Date.now() - parseInt(lastSpinTime, 10)) / 1000);
+    if (elapsedSec < 86400) {
+      const waitSec = 86400 - elapsedSec;
+      const hours = Math.floor(waitSec / 3600);
+      const mins = Math.floor((waitSec % 3600) / 60);
+      return {
+        can_spin: false,
+        wait_seconds: waitSec,
+        message: `Bạn đã sử dụng hết lượt quay hôm nay. Hãy quay lại vào ngày mai nhé! (Còn ${hours > 0 ? hours + 'h ' : ''}${mins} phút)`
+      };
+    }
+  }
+
+  // 2. Kiểm tra Database Supabase RPC (Server-side validation)
+  const client = supabaseClient || initSupabase();
+  if (client) {
+    try {
+      const { data, error } = await client.rpc('check_can_spin', {
+        p_device_id: deviceId,
+        p_phone: phone || ''
+      });
+
+      if (!error && data) {
+        if (!data.can_spin) {
+          return {
+            can_spin: false,
+            wait_seconds: data.wait_seconds || 86400,
+            message: data.message || 'Bạn đã sử dụng hết lượt quay hôm nay. Hãy quay lại vào ngày mai nhé!'
+          };
+        }
+      }
+    } catch (err) {
+      console.warn('⚠️ [Supabase RPC] Lỗi check_can_spin, fallback local:', err.message);
+    }
+  }
+
+  return { can_spin: true, wait_seconds: 0, message: 'Được phép quay thưởng!' };
+}
+
+/**
+ * Kiểm tra xem thiết bị / Liên hệ này có gửi góp ý quá nhanh không (Cooldown 5 phút)
+ */
+async function canUserSubmitFeedback(contact) {
+  const deviceId = getOrCreateDeviceId();
+
+  // 1. Kiểm tra nhanh LocalStorage Cooldown (5 phút = 300 giây)
+  const lastFbTime = localStorage.getItem('olion_last_feedback_time');
+  if (lastFbTime) {
+    const elapsedSec = Math.floor((Date.now() - parseInt(lastFbTime, 10)) / 1000);
+    if (elapsedSec < 300) {
+      const waitSec = 300 - elapsedSec;
+      const mins = Math.floor(waitSec / 60);
+      const secs = waitSec % 60;
+      return {
+        can_submit: false,
+        wait_seconds: waitSec,
+        message: `Bạn vừa gửi đánh giá xong. Vui lòng đợi thêm ${mins > 0 ? mins + ' phút ' : ''}${secs}s trước khi gửi tiếp nhé!`
+      };
+    }
+  }
+
+  // 2. Kiểm tra Database Supabase RPC
+  const client = supabaseClient || initSupabase();
+  if (client) {
+    try {
+      const { data, error } = await client.rpc('check_can_feedback', {
+        p_device_id: deviceId,
+        p_contact: contact || ''
+      });
+
+      if (!error && data) {
+        if (!data.can_submit) {
+          return {
+            can_submit: false,
+            wait_seconds: data.wait_seconds || 300,
+            message: data.message || 'Bạn thao tác quá nhanh! Vui lòng đợi thêm một chút.'
+          };
+        }
+      }
+    } catch (err) {
+      console.warn('⚠️ [Supabase RPC] Lỗi check_can_feedback, fallback local:', err.message);
+    }
+  }
+
+  return { can_submit: true, wait_seconds: 0, message: 'Được phép gửi góp ý!' };
+}
+
+/**
+ * Thực thi Google reCAPTCHA v3 (nếu đã cấu hình Site Key)
+ */
+async function executeReCaptcha(action = 'submit_feedback') {
+  if (typeof window !== 'undefined' && window.grecaptcha && window.RECAPTCHA_SITE_KEY && window.RECAPTCHA_SITE_KEY !== 'YOUR_RECAPTCHA_SITE_KEY') {
+    try {
+      return await new Promise((resolve) => {
+        window.grecaptcha.ready(async () => {
+          try {
+            const token = await window.grecaptcha.execute(window.RECAPTCHA_SITE_KEY, { action });
+            resolve(token);
+          } catch (e) {
+            console.warn('⚠️ [reCAPTCHA] Lỗi token:', e.message);
+            resolve(null);
+          }
+        });
+      });
+    } catch (e) {
+      return null;
+    }
+  }
+  return null;
+}
+
 /**
  * Kiểm tra kết nối tới Supabase Cloud
  */
@@ -470,10 +652,13 @@ async function deleteCustomerFromCloud(id) {
 
 async function submitFeedbackToCloud(feedbackData) {
   const client = supabaseClient || initSupabase();
+  const deviceId = getOrCreateDeviceId();
 
+  // Ghi nhận cooldown 5 phút cho lượt gửi tiếp theo
   try {
+    localStorage.setItem('olion_last_feedback_time', Date.now().toString());
     const localFeedbacks = JSON.parse(localStorage.getItem('olion_feedbacks') || '[]');
-    localFeedbacks.unshift({ ...feedbackData, id: Date.now(), localOnly: !client });
+    localFeedbacks.unshift({ ...feedbackData, id: Date.now(), device_id: deviceId, localOnly: !client });
     localStorage.setItem('olion_feedbacks', JSON.stringify(localFeedbacks));
   } catch (e) {}
 
@@ -485,6 +670,7 @@ async function submitFeedbackToCloud(feedbackData) {
         rating: feedbackData.rating || 5,
         content: feedbackData.content || '',
         image_url: feedbackData.imageDataUrl || feedbackData.image_url || null,
+        device_id: deviceId,
         approved: true
       }]).select();
 
@@ -624,8 +810,11 @@ async function deleteFeedbackFromCloud(id) {
 
 async function recordLuckySpinToCloud(spinData) {
   const client = supabaseClient || initSupabase();
+  const deviceId = getOrCreateDeviceId();
 
+  // Ghi nhận cooldown 24h vào LocalStorage
   try {
+    localStorage.setItem('olion_last_spin_time', Date.now().toString());
     const localCustomers = JSON.parse(localStorage.getItem('olion_customers') || '[]');
     localCustomers.unshift({
       id: Date.now(),
@@ -645,7 +834,8 @@ async function recordLuckySpinToCloud(spinData) {
         customer_name: spinData.customer_name || 'Khách quay minigame',
         customer_phone: spinData.customer_phone,
         prize_name: spinData.prize_name,
-        promo_code: spinData.promo_code
+        promo_code: spinData.promo_code,
+        device_id: deviceId
       }]);
 
       await client.from('customers').upsert([{
