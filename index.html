@@ -1096,13 +1096,17 @@
       object-fit: contain;
       border-radius: 12px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(197, 155, 99, 0.3);
-      transition: transform 0.3s ease, max-width 0.3s ease, max-height 0.3s ease;
+      transition: transform 0.25s ease, max-width 0.25s ease;
       user-select: none;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: high-quality;
+      transform: translateZ(0);
     }
     .menu-board-viewport.zoomed .menu-board-img {
-      max-width: 1600px;
+      max-width: 2200px;
       max-height: none;
       width: 100%;
+      cursor: zoom-out;
     }
     .menu-board-hint {
       position: fixed;
@@ -3670,11 +3674,11 @@
         document.body.style.overflow = '';
       };
 
-      function toggleMenuBoardZoom() {
+      window.toggleMenuBoardZoom = function() {
         if (!menuBoardViewport) return;
         const isZoomed = menuBoardViewport.classList.toggle('zoomed');
         if (menuBoardZoomText) menuBoardZoomText.textContent = isZoomed ? 'Thu nhỏ' : 'Phóng to';
-      }
+      };
 
       if (openMenuBoardBtn) openMenuBoardBtn.addEventListener('click', openMenuBoard);
       if (menuBoardCloseBtn) menuBoardCloseBtn.addEventListener('click', closeMenuBoard);
