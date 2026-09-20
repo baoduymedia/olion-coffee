@@ -1671,13 +1671,397 @@
 
     .wheel-float-btn:hover { transform: translateY(-3px) scale(1.03); }
 
-    @media (max-width: 767px) {
-      .wheel-float-btn {
-        bottom: 80px;
-        left: 14px;
-        padding: 8px 14px;
-        font-size: 12px;
+    /* ======== 8. NEWS & EVENTS (TIN TỨC & SỰ KIỆN) ======== */
+    .news-section {
+      padding: clamp(70px, 8vw, 120px) 0;
+      scroll-margin-top: 90px;
+      background: radial-gradient(circle at 10% 20%, rgba(229, 154, 85, 0.04) 0%, transparent 50%),
+                  radial-gradient(circle at 90% 80%, rgba(27, 104, 63, 0.04) 0%, transparent 50%),
+                  #0E1611;
+      position: relative;
+      border-top: 1px solid rgba(229, 154, 85, 0.1);
+      border-bottom: 1px solid rgba(229, 154, 85, 0.1);
+    }
+
+    .news-main-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 1024px) {
+      .news-main-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
       }
+    }
+
+    /* Featured Big Card */
+    .news-featured-card {
+      background: linear-gradient(180deg, #17221A 0%, #111A14 100%);
+      border: 1px solid rgba(229, 154, 85, 0.25);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      position: relative;
+    }
+
+    .news-featured-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent-gold);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(229, 154, 85, 0.15);
+    }
+
+    .news-featured-img-wrap {
+      position: relative;
+      width: 100%;
+      height: 380px;
+      overflow: hidden;
+      background: #090E0A;
+    }
+
+    @media (max-width: 768px) {
+      .news-featured-img-wrap { height: 280px; }
+    }
+
+    .news-featured-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 25%;
+      transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .news-featured-card:hover .news-featured-img {
+      transform: scale(1.05);
+    }
+
+    .news-featured-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: linear-gradient(135deg, #E59A55, #D36C2D);
+      color: #FFFFFF;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 999px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      z-index: 2;
+    }
+
+    .news-img-count-badge {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      color: #EDE5D8;
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.15);
+      z-index: 2;
+    }
+
+    .news-featured-content {
+      padding: clamp(20px, 3vw, 32px);
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .news-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .news-date {
+      color: var(--accent-gold);
+      font-weight: 600;
+    }
+
+    .news-category {
+      background: rgba(255,255,255,0.06);
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .news-featured-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(20px, 2.5vw, 26px);
+      font-weight: 700;
+      color: #FFFFFF;
+      margin-bottom: 12px;
+      line-height: 1.35;
+      transition: color 0.3s;
+    }
+
+    .news-featured-card:hover .news-featured-title {
+      color: var(--accent-gold);
+    }
+
+    .news-featured-excerpt {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      flex: 1;
+    }
+
+    .news-featured-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      flex-wrap: wrap;
+    }
+
+    .news-thumbnails-preview {
+      display: flex;
+      gap: 8px;
+    }
+
+    .news-thumbnails-preview img {
+      width: 46px;
+      height: 46px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid rgba(229,154,85,0.3);
+      transition: transform 0.2s;
+    }
+
+    .news-featured-card:hover .news-thumbnails-preview img:hover {
+      transform: scale(1.15);
+    }
+
+    .btn-read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: none;
+      color: var(--accent-gold);
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: gap 0.2s, color 0.2s;
+    }
+
+    .news-featured-card:hover .btn-read-more {
+      gap: 12px;
+      color: #FFFFFF;
+    }
+
+    /* Sub Grid Cards */
+    .news-sub-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 640px) {
+      .news-sub-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .news-sub-card {
+      background: #141D16;
+      border: 1px solid rgba(184, 165, 139, 0.14);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .news-sub-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-gold);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+    }
+
+    .news-sub-img-wrap {
+      position: relative;
+      width: 100%;
+      height: 150px;
+      overflow: hidden;
+      background: #090E0A;
+    }
+
+    .news-sub-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .news-sub-card:hover .news-sub-img {
+      transform: scale(1.08);
+    }
+
+    .news-sub-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(14, 22, 17, 0.85);
+      backdrop-filter: blur(6px);
+      color: var(--accent-gold);
+      border: 1px solid rgba(229,154,85,0.4);
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .news-sub-content {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .news-sub-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #EDE5D8;
+      margin-bottom: 8px;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      transition: color 0.2s;
+    }
+
+    .news-sub-card:hover .news-sub-title {
+      color: var(--accent-gold);
+    }
+
+    .news-sub-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .news-sub-link {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s;
+    }
+
+    .news-sub-card:hover .news-sub-link {
+      gap: 8px;
+    }
+
+    /* News Modal Box & Gallery */
+    .news-modal-box {
+      background: #141D16;
+      border: 1px solid var(--accent-gold);
+      border-radius: var(--radius-lg);
+      max-width: 720px;
+      width: 100%;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: clamp(20px, 4vw, 36px);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.85);
+      animation: modalSlideUp 0.35s ease-out;
+    }
+
+    @keyframes modalSlideUp {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .news-gallery-main {
+      width: 100%;
+      height: clamp(260px, 40vw, 420px);
+      border-radius: 14px;
+      overflow: hidden;
+      background: #090E0A;
+      margin-bottom: 14px;
+      border: 1px solid rgba(229,154,85,0.2);
+    }
+
+    .news-gallery-main img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.3s;
+    }
+
+    .news-gallery-thumbs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+
+    .news-gallery-thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: 8px;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid transparent;
+      opacity: 0.6;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .news-gallery-thumb.active, .news-gallery-thumb:hover {
+      border-color: var(--accent-gold);
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    .news-article-body {
+      color: #EDE5D8;
+      font-size: 15px;
+      line-height: 1.8;
+      margin: 20px 0;
+    }
+
+    .news-quote-box {
+      background: rgba(229, 154, 85, 0.08);
+      border-left: 4px solid var(--accent-gold);
+      padding: 16px 20px;
+      border-radius: 0 10px 10px 0;
+      margin: 18px 0;
+      font-style: italic;
+      color: #F6F1E7;
     }
   </style>
 </head>
@@ -1698,6 +2082,7 @@
         <a href="#signature" class="nav-link">Signature</a>
         <a href="#menu" class="nav-link">Thực đơn</a>
         <a href="#spaces" class="nav-link">Không gian</a>
+        <a href="#news" class="nav-link">Tin tức</a>
         <a href="#faq" class="nav-link">Hỏi đáp</a>
         <a href="#contact" class="nav-link">Liên hệ</a>
       </nav>
@@ -1729,6 +2114,7 @@
       <a href="#signature" class="drawer-link">Món Signature <span>→</span></a>
       <a href="#menu" class="drawer-link">Thực đơn đồ uống <span>→</span></a>
       <a href="#spaces" class="drawer-link">Không gian quán <span>→</span></a>
+      <a href="#news" class="drawer-link">Tin tức & Sự kiện <span>→</span></a>
       <a href="#faq" class="drawer-link">Hỏi đáp <span>→</span></a>
       <a href="#contact" class="drawer-link">Thông tin liên hệ <span>→</span></a>
     </div>
@@ -2442,7 +2828,120 @@
       </div>
     </section>
 
-    <!-- ======== 8. FAQ ACCORDION ======== -->
+    <!-- ======== 8. NEWS & EVENTS (TIN TỨC & SỰ KIỆN) ======== -->
+    <section class="news-section" id="news" aria-label="Tin tức và sự kiện Olion Coffee">
+      <div class="shell">
+        <div class="section-header">
+          <div class="section-eyebrow">
+            <span>●</span> Bản Tin & Sự Kiện
+          </div>
+          <h2 class="section-title">
+            Tin tức & <span class="accent">Sự kiện</span>
+          </h2>
+          <p class="section-desc">Khám phá những khoảnh khắc đáng nhớ, câu chuyện thức uống và các hoạt động mới nhất tại Olion Coffee.</p>
+        </div>
+
+        <div class="news-main-grid">
+          <!-- Featured Big News Card (Tin tức 1: OLION'S FIRST WEEK) -->
+          <article class="news-featured-card" onclick="openNewsModal('news-first-week')">
+            <div class="news-featured-img-wrap">
+              <img src="assets/news/news-1-space.webp" alt="OLION’S FIRST WEEK - Nhật ký tuần đầu tiên tại Olion Coffee" class="news-featured-img" width="800" height="600" loading="lazy" decoding="async" />
+              <div class="news-featured-badge">🌟 Sự kiện đặc biệt</div>
+              <div class="news-img-count-badge">📸 3 ảnh câu chuyện</div>
+            </div>
+            <div class="news-featured-content">
+              <div class="news-meta">
+                <span class="news-date">📅 19/09/2026</span>
+                <span class="news-category">Nhật Ký Quán</span>
+              </div>
+              <h3 class="news-featured-title">OLION’S FIRST WEEK 🤎</h3>
+              <p class="news-featured-excerpt">
+                Một tuần đầu tiên thật nhiều yêu thương. Cảm ơn bạn đã ghé Olion, dành cho chúng mình những lời nhắn và sự ủng hộ thật dễ thương ☕️ Nếu có điều gì chưa trọn vẹn, mong bạn nhẹ nhàng nhắn nhủ và thương Olion bỏ qua nhé 🫶🏻...
+              </p>
+              <div class="news-featured-footer">
+                <div class="news-thumbnails-preview" title="Xem bộ ảnh câu chuyện">
+                  <img src="assets/news/news-1-recap.webp" alt="Grand Opening Recap" />
+                  <img src="assets/news/news-1-drinks.webp" alt="Matcha Latte & Cà Phê" />
+                  <img src="assets/news/news-1-space.webp" alt="Quầy bar và hoa" />
+                </div>
+                <button type="button" class="btn-read-more" aria-label="Xem chi tiết bài viết">
+                  Đọc toàn bộ bài viết <span>→</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Right Side Sub Grid (2x2 Grid) -->
+          <div class="news-sub-grid">
+            <!-- Sub News 1 -->
+            <article class="news-sub-card" onclick="openNewsModal('news-signature-drinks')">
+              <div class="news-sub-img-wrap">
+                <img src="assets/news/news-1-drinks.webp" alt="Khám phá bộ đôi thức uống Signature tại Olion" class="news-sub-img" width="400" height="250" loading="lazy" decoding="async" />
+                <span class="news-sub-badge">Signature</span>
+              </div>
+              <div class="news-sub-content">
+                <div class="news-meta">
+                  <span class="news-date">📅 18/09/2026</span>
+                </div>
+                <h4 class="news-sub-title">Khám Phá Bộ Đôi Matcha Latte & Cà Phê Muối Chuẩn Vị</h4>
+                <p class="news-sub-desc">Hương vị hòa quyện giữa lớp bọt béo ngậy mịn màng và matcha Nhật Bản thơm dịu tại 80/64A Dương Quảng Hàm.</p>
+                <span class="news-sub-link">Xem chi tiết →</span>
+              </div>
+            </article>
+
+            <!-- Sub News 2 -->
+            <article class="news-sub-card" onclick="openNewsModal('news-space-story')">
+              <div class="news-sub-img-wrap">
+                <img src="assets/news/news-1-space.webp" alt="Không gian làm việc và chill tại Olion Coffee" class="news-sub-img" width="400" height="250" loading="lazy" decoding="async" />
+                <span class="news-sub-badge">Không gian</span>
+              </div>
+              <div class="news-sub-content">
+                <div class="news-meta">
+                  <span class="news-date">📅 15/09/2026</span>
+                </div>
+                <h4 class="news-sub-title">Góc Yên Bình Giữa Lòng Gò Vấp Cho Những Buổi Chiều Làm Việc</h4>
+                <p class="news-sub-desc">Không gian ấm cúng với ánh đèn lồng dịu mắt, bàn ghế tiêu chuẩn và âm nhạc nhẹ nhàng thư giãn.</p>
+                <span class="news-sub-link">Xem chi tiết →</span>
+              </div>
+            </article>
+
+            <!-- Sub News 3 -->
+            <article class="news-sub-card" onclick="openNewsModal('news-opening-promo')">
+              <div class="news-sub-img-wrap">
+                <img src="assets/space-4.webp" alt="Chương trình ưu đãi Grand Opening Mua 2 Tặng 1" class="news-sub-img" width="400" height="250" loading="lazy" decoding="async" />
+                <span class="news-sub-badge">Ưu đãi</span>
+              </div>
+              <div class="news-sub-content">
+                <div class="news-meta">
+                  <span class="news-date">📅 12/09/2026</span>
+                </div>
+                <h4 class="news-sub-title">Grand Opening Recap — Tuần Lễ Khai Trương Rực Rỡ Ưu Đãi</h4>
+                <p class="news-sub-desc">Chương trình Mua 2 Tặng 1 cùng hàng trăm voucher tri ân những vị khách đầu tiên đến với Olion.</p>
+                <span class="news-sub-link">Xem chi tiết →</span>
+              </div>
+            </article>
+
+            <!-- Sub News 4 -->
+            <article class="news-sub-card" onclick="openNewsModal('news-craft-beans')">
+              <div class="news-sub-img-wrap">
+                <img src="assets/space-1.webp" alt="Cẩm nang hạt cà phê rang mộc nguyên chất" class="news-sub-img" width="400" height="250" loading="lazy" decoding="async" />
+                <span class="news-sub-badge">Pha chế</span>
+              </div>
+              <div class="news-sub-content">
+                <div class="news-meta">
+                  <span class="news-date">📅 10/09/2026</span>
+                </div>
+                <h4 class="news-sub-title">Nghệ Thuật Chọn Lọc Hạt Cà Phê Mộc Nguyên Chất Tại Olion</h4>
+                <p class="news-sub-desc">Từng mẻ hạt Arabica Cầu Đất và Robusta được rang mộc tỉ mỉ để giữ trọn vẹn hậu vị ngọt ngào sâu lắng.</p>
+                <span class="news-sub-link">Xem chi tiết →</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== 9. FAQ ACCORDION ======== -->
     <section class="faq-section" id="faq" aria-label="Hỏi đáp thường gặp">
       <div class="shell">
         <div class="section-header">
@@ -2811,7 +3310,53 @@
     </div>
   </div>
 
-  <!-- ======== 16. PERFORMANCE OPTIMIZED SCRIPTS ======== -->
+  <!-- ======== 16. NEWS DETAIL MODAL (POPUP BÀI VIẾT TIN TỨC & BỘ ẢNH) ======== -->
+  <div class="modal-overlay" id="newsModal" aria-hidden="true" role="dialog" aria-labelledby="newsModalTitle">
+    <div class="news-modal-box">
+      <button type="button" class="modal-close" onclick="closeNewsModal()" aria-label="Đóng bài viết">✕</button>
+      
+      <div class="news-meta" style="margin-bottom: 8px;">
+        <span class="news-date" id="newsModalDate">📅 19/09/2026</span>
+        <span class="news-category" id="newsModalCategory">Sự Kiện & Nhật Ký Quán</span>
+      </div>
+
+      <h3 class="font-serif" id="newsModalTitle" style="font-size: clamp(22px, 3vw, 28px); color: #FFFFFF; margin-bottom: 16px; line-height: 1.35;">
+        OLION’S FIRST WEEK 🤎
+      </h3>
+
+      <!-- Gallery Main Viewer -->
+      <div class="news-gallery-main">
+        <img id="newsModalMainImg" src="assets/news/news-1-recap.webp" alt="Ảnh bài viết Olion Coffee" loading="lazy" />
+      </div>
+
+      <!-- Thumbs Selector (hiện khi bài viết có nhiều ảnh) -->
+      <div class="news-gallery-thumbs" id="newsModalThumbs">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- Article Text Body -->
+      <div class="news-article-body" id="newsModalBody">
+        <!-- Injected via JS -->
+      </div>
+
+      <!-- Footer Actions & Direct CTAs -->
+      <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.1); justify-content: space-between; align-items: center;">
+        <div style="display: flex; gap: 8px;">
+          <a href="#menu" class="btn btn-primary" onclick="closeNewsModal()" style="font-size: 13px; padding: 10px 18px;">
+            Xem Thực Đơn ☕
+          </a>
+          <a href="tel:0783657587" class="btn btn-ghost" style="font-size: 13px; padding: 10px 18px;">
+            📞 0783 657 587
+          </a>
+        </div>
+        <button type="button" class="btn btn-secondary" onclick="shareNewsArticle()" style="font-size: 13px; padding: 10px 16px;">
+          🔗 Chia sẻ bài viết
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== 17. PERFORMANCE OPTIMIZED SCRIPTS ======== -->
   <script defer>
     document.addEventListener('DOMContentLoaded', () => {
       // 1. Scroll Progress Bar & Header Shrink
@@ -3185,6 +3730,163 @@
           window.location.href = 'admin.html';
         }
       });
+
+      // 9. News & Events Modal & Gallery Logic
+      const newsArticlesData = {
+        'news-first-week': {
+          title: 'OLION’S FIRST WEEK 🤎',
+          date: '19/09/2026',
+          category: 'Nhật Ký Quán & Sự Kiện',
+          images: [
+            'assets/news/news-1-space.webp',
+            'assets/news/news-1-drinks.webp',
+            'assets/news/news-1-recap.webp'
+          ],
+          contentHtml: `
+            <div class="news-quote-box">
+              "Một tuần đầu tiên thật nhiều yêu thương.<br>
+              Cảm ơn bạn đã ghé Olion, dành cho chúng mình những lời nhắn và sự ủng hộ thật dễ thương ☕️"
+            </div>
+            <p>Nếu có điều gì chưa trọn vẹn, mong bạn nhẹ nhàng nhắn nhủ và thương Olion bỏ qua nhé 🫶🏻</p>
+            <p>Cảm ơn vì đã cùng Olion tạo nên những ngày đầu tiên thật đẹp!</p>
+            <div style="margin-top: 24px; padding: 16px; background: rgba(0,0,0,0.3); border-radius: 10px; border: 1px dashed var(--border-gold);">
+              <p style="margin: 0; font-size: 13.5px; color: var(--accent-gold);"><strong>📍 Địa chỉ quán:</strong> 80/64A Dương Quảng Hàm, Phường An Nhơn, TP. Hồ Chí Minh</p>
+              <p style="margin: 6px 0 0; font-size: 13.5px; color: #EDE5D8;"><strong>⏰ Giờ mở cửa:</strong> 08:00 — 21:00 (Cả tuần)</p>
+            </div>
+          `
+        },
+        'news-signature-drinks': {
+          title: 'Khám Phá Bộ Đôi Matcha Latte & Cà Phê Muối Chuẩn Vị',
+          date: '18/09/2026',
+          category: 'Thực Đơn Signature',
+          images: [
+            'assets/news/news-1-drinks.webp',
+            'assets/space-1.webp'
+          ],
+          contentHtml: `
+            <p>Tại Olion Coffee, mỗi ly thức uống đều được pha chế bằng cả sự nâng niu và tỉ mỉ.</p>
+            <div class="news-quote-box">
+              "Lớp bọt kem muối béo mặn sánh mịn hòa cùng cốt cà phê đậm đà tạo nên hương vị bùng nổ ngay từ ngụm đầu tiên."
+            </div>
+            <p>Bên cạnh đó, dòng Matcha Latte sử dụng 100% bột trà xanh nhập khẩu từ Shizuoka Nhật Bản, mang hương thơm thanh nhã và vị đắng dịu êm ái.</p>
+          `
+        },
+        'news-space-story': {
+          title: 'Góc Yên Bình Giữa Lòng Gò Vấp Cho Những Buổi Chiều Làm Việc',
+          date: '15/09/2026',
+          category: 'Không Gian Quán',
+          images: [
+            'assets/news/news-1-space.webp',
+            'assets/space-4.webp'
+          ],
+          contentHtml: `
+            <p>Bước qua cánh cửa Olion, bạn sẽ cảm nhận ngay một không gian tách biệt khỏi nhịp sống vội vã ngoài phố thị.</p>
+            <p>Tông màu gỗ ấm cúng, hệ thống đèn lồng giấy dịu mắt cùng những chậu cây xanh mướt tạo nên một chốn dừng chân hoàn hảo để đọc sách, làm việc hay trò chuyện cùng bạn bè.</p>
+          `
+        },
+        'news-opening-promo': {
+          title: 'Grand Opening Recap — Tuần Lễ Khai Trương Rực Rỡ Ưu Đãi',
+          date: '12/09/2026',
+          category: 'Chương Trình Khuyến Mãi',
+          images: [
+            'assets/space-4.webp',
+            'assets/news/news-1-recap.webp'
+          ],
+          contentHtml: `
+            <p>Tuần lễ khai trương Olion Coffee đã diễn ra vô cùng náo nhiệt với sự đồng hành của đông đảo khách hàng thân thương.</p>
+            <p>Đừng quên tham gia Vòng Quay May Mắn trên website để nhận thêm nhiều voucher giảm giá và quà tặng hấp dẫn mỗi ngày nhé!</p>
+          `
+        },
+        'news-craft-beans': {
+          title: 'Nghệ Thuật Chọn Lọc Hạt Cà Phê Mộc Nguyên Chất Tại Olion',
+          date: '10/09/2026',
+          category: 'Pha Chế Thủ Công',
+          images: [
+            'assets/space-1.webp',
+            'assets/space-2.webp'
+          ],
+          contentHtml: `
+            <p>Olion Coffee cam kết sử dụng 100% hạt cà phê mộc nguyên chất, không pha tẩm hương liệu hay phẩm màu nhân tạo.</p>
+            <p>Sự kết hợp tỉ lệ hoàn hảo giữa Arabica Cầu Đất chua thanh và Robusta đậm đà tạo nên hương thơm lôi cuốn khó quên.</p>
+          `
+        }
+      };
+
+      const newsModal = document.getElementById('newsModal');
+      const newsModalTitle = document.getElementById('newsModalTitle');
+      const newsModalDate = document.getElementById('newsModalDate');
+      const newsModalCategory = document.getElementById('newsModalCategory');
+      const newsModalMainImg = document.getElementById('newsModalMainImg');
+      const newsModalThumbs = document.getElementById('newsModalThumbs');
+      const newsModalBody = document.getElementById('newsModalBody');
+
+      window.openNewsModal = function(newsId) {
+        const article = newsArticlesData[newsId] || newsArticlesData['news-first-week'];
+        if (!newsModal || !article) return;
+
+        newsModalTitle.textContent = article.title;
+        newsModalDate.textContent = `📅 ${article.date}`;
+        newsModalCategory.textContent = article.category;
+        newsModalMainImg.src = article.images[0] || 'assets/news/news-1-recap.webp';
+        newsModalBody.innerHTML = article.contentHtml;
+
+        // Render gallery thumbnails
+        if (newsModalThumbs) {
+          newsModalThumbs.innerHTML = '';
+          if (article.images && article.images.length > 1) {
+            article.images.forEach((imgSrc, idx) => {
+              const thumb = document.createElement('img');
+              thumb.src = imgSrc;
+              thumb.alt = `${article.title} - Ảnh ${idx + 1}`;
+              thumb.className = `news-gallery-thumb ${idx === 0 ? 'active' : ''}`;
+              thumb.addEventListener('click', () => {
+                newsModalMainImg.style.opacity = '0';
+                setTimeout(() => {
+                  newsModalMainImg.src = imgSrc;
+                  newsModalMainImg.style.opacity = '1';
+                }, 150);
+                document.querySelectorAll('.news-gallery-thumb').forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+              });
+              newsModalThumbs.appendChild(thumb);
+            });
+            newsModalThumbs.style.display = 'flex';
+          } else {
+            newsModalThumbs.style.display = 'none';
+          }
+        }
+
+        newsModal.classList.add('active');
+        newsModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      };
+
+      window.closeNewsModal = function() {
+        if (!newsModal) return;
+        newsModal.classList.remove('active');
+        newsModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      };
+
+      if (newsModal) {
+        newsModal.addEventListener('click', (e) => {
+          if (e.target === newsModal) closeNewsModal();
+        });
+      }
+
+      window.shareNewsArticle = function() {
+        const shareData = {
+          title: newsModalTitle.textContent,
+          text: 'Xem tin tức mới nhất từ Olion Coffee!',
+          url: window.location.href.split('#')[0] + '#news'
+        };
+        if (navigator.share) {
+          navigator.share(shareData).catch(() => {});
+        } else {
+          navigator.clipboard.writeText(shareData.url);
+          alert('Đã sao chép liên kết bài viết vào bộ nhớ tạm!');
+        }
+      };
     });
   </script>
 </body>
