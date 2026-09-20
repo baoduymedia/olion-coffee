@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olion Coffee — Quản Trị Hệ Thống (Admin Portal)</title>
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-dark: #190D07;
+      --bg-sidebar: #22120A;
+      --bg-card: #2C1810;
+      --bg-hover: #382015;
+      --accent: #E59A55;
+      --accent-hover: #F2AC6D;
+      --gold: #C59B63;
+      --text: #F6F1E7;
+      --text-muted: #B8A58B;
+      --border: rgba(184, 165, 139, 0.18);
+      --success: #2E7D32;
+      --danger: #C62828;
+    }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; }
+    input, textarea, select {
+      font-family: inherit;
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(229, 154, 85, 0.2);
+    }
+
+    /* ======== LOGIN SCREEN ======== */
+    .login-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: radial-gradient(circle at center, #351A0E 0%, #170B05 100%);
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+    .login-container.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .login-card {
+      width: 100%;
+      max-width: 440px;
+      background: rgba(44, 24, 16, 0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(229, 154, 85, 0.35);
+      border-radius: 24px;
+      padding: 44px 36px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7);
+      text-align: center;
+      animation: floatIn 0.5s ease-out;
+    }
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .login-logo {
+      height: 64px;
+      width: auto;
+      margin: 0 auto 20px;
+      display: block;
+    }
+    .login-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: #EDE5D8;
+      margin-bottom: 6px;
+    }
+    .login-subtitle {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+    .login-field {
+      margin-bottom: 18px;
+      text-align: left;
+    }
+    .login-field label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .login-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), #D36C2D);
+      color: #FFF;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 13px;
+      border-radius: 10px;
+      margin-top: 12px;
+      box-shadow: 0 6px 20px rgba(229, 154, 85, 0.35);
+      transition: all 0.25s ease;
+    }
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(229, 154, 85, 0.5);
+    }
+    .login-error {
+      color: #FF6B6B;
+      font-size: 13px;
+      margin-top: 14px;
+      display: none;
+      background: rgba(255, 107, 107, 0.1);
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 107, 107, 0.25);
+    }
+    .login-hint {
+      margin-top: 22px;
+      font-size: 12px;
+      color: rgba(184, 165, 139, 0.7);
+      background: rgba(0,0,0,0.25);
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px dashed var(--border);
+    }
+
+    /* ======== ADMIN APP LAYOUT ======== */
+    .admin-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+    /* SIDEBAR */
+    .sidebar {
+      width: 270px;
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
+    .sidebar-header {
+      padding: 24px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-logo {
+      height: 38px;
+      width: auto;
+    }
+    .sidebar-brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .sidebar-badge {
+      font-size: 10px;
+      background: rgba(229, 154, 85, 0.2);
+      color: var(--accent);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .sidebar-nav {
+      padding: 20px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-grow: 1;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(246, 241, 231, 0.75);
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .nav-item:hover {
+      background: var(--bg-hover);
+      color: var(--text);
+    }
+    .nav-item.active {
+      background: rgba(229, 154, 85, 0.15);
+      color: var(--accent);
+      font-weight: 700;
+      border-left: 3px solid var(--accent);
+    }
+    .nav-icon {
+      font-size: 18px;
+      width: 22px;
+      text-align: center;
+    }
+    .sidebar-footer {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .btn-view-site {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: rgba(246, 241, 231, 0.06);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .btn-view-site:hover {
+      background: rgba(246, 241, 231, 0.12);
+      border-color: var(--accent);
+    }
+    .btn-logout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: none;
+      color: #E57373;
+      padding: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+    .btn-logout:hover {
+      background: rgba(229, 115, 115, 0.1);
+    }
+
+    /* MAIN CONTENT */
+    .main-wrapper {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+    .topbar {
+      height: 70px;
+      background: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+    .topbar-title {
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-card);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .user-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #2C1810;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 12px;
+    }
+    .content-area {
+      padding: 32px;
+      flex-grow: 1;
+      max-width: 1300px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* TABS */
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CARDS & GRIDS */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .stat-icon-wrap {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: rgba(229, 154, 85, 0.15);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+    .stat-val {
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.1;
+      color: #FFF;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #EDE5D8;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* TABLES */
+    .table-container {
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+    }
+    th {
+      background: rgba(0, 0, 0, 0.25);
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      text-transform: uppercase;
+      font-size: 11.5px;
+      letter-spacing: 0.05em;
+    }
+    td {
+      padding: 16px;
+      border-bottom: 1px solid rgba(184, 165, 139, 0.1);
+      vertical-align: middle;
+    }
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* BUTTONS */
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #D36C2D);
+      color: #FFF;
+      font-weight: 600;
+      font-size: 13.5px;
+      padding: 9px 18px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(229, 154, 85, 0.4);
+    }
+    .btn-secondary {
+      background: rgba(246, 241, 231, 0.08);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 600;
+      font-size: 13.5px;
+      padding: 9px 16px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover {
+      background: rgba(246, 241, 231, 0.15);
+    }
+    .btn-sm-danger {
+      background: rgba(198, 40, 40, 0.2);
+      color: #EF5350;
+      border: 1px solid rgba(198, 40, 40, 0.4);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .btn-sm-danger:hover {
+      background: rgba(198, 40, 40, 0.4);
+    }
+
+    /* BADGES */
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-success { background: rgba(46, 125, 50, 0.25); color: #81C784; border: 1px solid rgba(46, 125, 50, 0.4); }
+    .badge-warning { background: rgba(229, 154, 85, 0.25); color: #FFB74D; border: 1px solid rgba(229, 154, 85, 0.4); }
+
+    /* SWITCH TOGGLE */
+    .switch-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 26px;
+    }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; cursor: pointer; inset: 0;
+      background-color: rgba(255,255,255,0.15);
+      transition: .3s; border-radius: 34px;
+    }
+    .slider:before {
+      position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px;
+      background-color: white; transition: .3s; border-radius: 50%;
+    }
+    input:checked + .slider { background-color: var(--accent); }
+    input:checked + .slider:before { transform: translateX(24px); }
+
+    /* TOAST */
+    .toast {
+      position: fixed; bottom: 30px; right: 30px; z-index: 10000;
+      background: #2C1810; border: 1px solid var(--accent);
+      color: #FFF; padding: 14px 22px; border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      display: flex; align-items: center; gap: 10px;
+      transform: translateY(100px); opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 900px) {
+      .sidebar { width: 72px; }
+      .sidebar-brand-name, .nav-text, .sidebar-badge, .btn-view-site span, .btn-logout span { display: none; }
+      .sidebar-header { justify-content: center; padding: 18px 0; }
+      .topbar { padding: 0 18px; }
+      .content-area { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======== LOGIN MODAL / GATE ======== -->
+  <div class="login-container" id="loginContainer">
+    <div class="login-card">
+      <img src="assets/logo-white.png" alt="Olion Coffee" class="login-logo" />
+      <h2 class="login-title">Quản Trị Olion Coffee</h2>
+      <p class="login-subtitle">Vui lòng đăng nhập để truy cập hệ thống quản lý</p>
+
+      <form id="loginForm" onsubmit="return false;">
+        <div class="login-field">
+          <label for="adminUsername">Tài khoản</label>
+          <input type="text" id="adminUsername" placeholder="Nhập tài khoản" autocomplete="username" />
+        </div>
+        <div class="login-field">
+          <label for="adminPassword">Mật khẩu</label>
+          <input type="password" id="adminPassword" placeholder="Nhập mật khẩu" autocomplete="current-password" />
+        </div>
+        <button type="submit" class="login-btn" id="loginBtn">Đăng nhập vào Hệ thống →</button>
+      </form>
+
+      <div class="login-error" id="loginError">Tài khoản hoặc mật khẩu không chính xác!</div>
+
+      <div class="login-hint">
+        💡 <strong>Tài khoản mặc định:</strong> <code>admin</code><br>
+        🔑 <strong>Mật khẩu mặc định:</strong> <code>olion2024</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== MAIN ADMIN LAYOUT ======== -->
+  <div class="admin-layout" id="adminLayout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="assets/logo-white.png" alt="Olion Coffee" class="sidebar-logo" />
+        <div>
+          <div class="sidebar-brand-name">OLION</div>
+          <span class="sidebar-badge">Admin System</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-item active" data-tab="overview">
+          <span class="nav-icon">📊</span>
+          <span class="nav-text">Tổng quan</span>
+        </div>
+        <div class="nav-item" data-tab="feedbacks">
+          <span class="nav-icon">💬</span>
+          <span class="nav-text">Thu thập góp ý</span>
+        </div>
+        <div class="nav-item" data-tab="announcements">
+          <span class="nav-icon">📢</span>
+          <span class="nav-text">Thông báo lên Web</span>
+        </div>
+        <div class="nav-item" data-tab="promotions">
+          <span class="nav-icon">🎁</span>
+          <span class="nav-text">Chương trình ưu đãi</span>
+        </div>
+        <div class="nav-item" data-tab="minigame">
+          <span class="nav-icon">🎡</span>
+          <span class="nav-text">Vòng quay Minigame</span>
+        </div>
+        <div class="nav-item" data-tab="customers">
+          <span class="nav-icon">👥</span>
+          <span class="nav-text">Quản lý khách hàng</span>
+        </div>
+        <div class="nav-item" data-tab="customizer">
+          <span class="nav-icon">🎨</span>
+          <span class="nav-text">Thiết kế & Cài đặt</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="index.html" target="_blank" class="btn-view-site">
+          <span>Xem trang chủ</span> ↗
+        </a>
+        <button type="button" class="btn-logout" id="logoutBtn">
+          <span>Đăng xuất</span> 🚪
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN WRAPPER -->
+    <div class="main-wrapper">
+      <header class="topbar">
+        <div class="topbar-title" id="pageTitle">
+          <span>📊</span>
+          <span>Bảng Điều Khiển Tổng Quan</span>
+        </div>
+        <div class="topbar-right">
+          <div class="user-pill">
+            <div class="user-avatar">AD</div>
+            <span>Quản Trị Viên</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-area">
+
+        <!-- ======== TAB 1: OVERVIEW ======== -->
+        <section class="tab-content active" id="tab-overview">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon-wrap">💬</div>
+              <div>
+                <div class="stat-val" id="statFeedbackCount">0</div>
+                <div class="stat-label">Góp ý từ khách hàng</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon-wrap">⭐</div>
+              <div>
+                <div class="stat-val" id="statRatingAvg">4.9 ★</div>
+                <div class="stat-label">Điểm đánh giá trung bình</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon-wrap">🎁</div>
+              <div>
+                <div class="stat-val" id="statPromoCount">0</div>
+                <div class="stat-label">Mã ưu đãi đang chạy</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon-wrap">👥</div>
+              <div>
+                <div class="stat-val" id="statCustomerCount">0</div>
+                <div class="stat-label">Khách hàng ghi nhận</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Shortcuts -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">⚡ Tác vụ nhanh</h3>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 14px;">
+              <button type="button" class="btn-primary" onclick="switchTab('announcements')">
+                📢 Cập nhật thông báo lên Web
+              </button>
+              <button type="button" class="btn-secondary" onclick="switchTab('feedbacks')">
+                💬 Xem góp ý mới nhất
+              </button>
+              <button type="button" class="btn-secondary" onclick="switchTab('promotions')">
+                🎁 Tạo voucher giảm giá mới
+              </button>
+              <button type="button" class="btn-secondary" onclick="switchTab('minigame')">
+                🎡 Bật / Tắt Minigame Vòng Quay
+              </button>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🕒 Góp ý mới nhận gần đây</h3>
+              <button type="button" class="btn-secondary" style="font-size: 12px;" onclick="switchTab('feedbacks')">Xem tất cả →</button>
+            </div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Khách hàng</th>
+                    <th>Đánh giá</th>
+                    <th>Nội dung góp ý</th>
+                    <th>Ngày gửi</th>
+                  </tr>
+                </thead>
+                <tbody id="overviewRecentFeedbackTable">
+                  <tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Chưa có dữ liệu góp ý</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======== TAB 2: FEEDBACKS ======== -->
+        <section class="tab-content" id="tab-feedbacks">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">💬 Danh sách góp ý & Đánh giá của khách hàng</h3>
+              <div style="display: flex; gap: 10px;">
+                <button type="button" class="btn-secondary" id="seedFeedbackBtn">➕ Thêm đánh giá mẫu</button>
+                <button type="button" class="btn-secondary" id="exportFeedbackCsvBtn">📥 Xuất CSV</button>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-bottom: 20px; align-items: center;">
+              <label style="font-size: 13px; color: var(--text-muted);">Lọc theo số sao:</label>
+              <select id="feedbackFilterStar" style="max-width: 180px;">
+                <option value="all">Tất cả số sao</option>
+                <option value="5">5 Sao ★★★★★</option>
+                <option value="4">4 Sao ★★★★☆</option>
+                <option value="low">1 - 3 Sao (Cần hỗ trợ)</option>
+              </select>
+            </div>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Họ tên</th>
+                    <th>Liên hệ (SĐT/Email)</th>
+                    <th>Số sao</th>
+                    <th>Nội dung góp ý</th>
+                    <th>Ảnh</th>
+                    <th>Ngày gửi</th>
+                    <th>Trạng thái web</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="feedbackTableBody">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======== TAB 3: ANNOUNCEMENTS ======== -->
+        <section class="tab-content" id="tab-announcements">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">📢 Quản lý Dải Thông Báo Web (Announcement Bar)</h3>
+              <div class="switch-wrap">
+                <span style="font-size: 13px; color: var(--text-muted);">Trạng thái hiển thị:</span>
+                <label class="switch">
+                  <input type="checkbox" id="announcementEnableToggle" checked />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <form id="announcementForm" onsubmit="return false;" style="display: flex; flex-direction: column; gap: 18px;">
+              <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 18px;">
+                <div>
+                  <label style="font-size: 13px; font-weight: 600; margin-bottom: 6px; display: block;">Huy hiệu thông báo (Badge)</label>
+                  <input type="text" id="announcementBadgeInput" value="Ưu đãi hot" placeholder="Vd: Ưu đãi hot, Thông báo..." />
+                </div>
+                <div>
+                  <label style="font-size: 13px; font-weight: 600; margin-bottom: 6px; display: block;">Đường link liên kết khi click</label>
+                  <input type="text" id="announcementLinkInput" value="#menu" placeholder="Vd: #menu, #contact hoặc tel:0783657587" />
+                </div>
+              </div>
+
+              <div>
+                <label style="font-size: 13px; font-weight: 600; margin-bottom: 6px; display: block;">Nội dung hiển thị</label>
+                <textarea id="announcementTextInput" rows="3" placeholder="Nhập câu thông báo...">🎉 Chào mừng đến với Olion Coffee — Giảm 15% cho hóa đơn đầu tiên khi check-in tại quán! Hotline: 0783 657 587</textarea>
+              </div>
+
+              <!-- Live Preview Box -->
+              <div>
+                <label style="font-size: 13px; font-weight: 600; margin-bottom: 8px; display: block;">Xem trước trên giao diện:</label>
+                <div style="background: linear-gradient(90deg, #2A150D, #4E2C1B, #2A150D); border: 1px solid rgba(229,154,85,0.3); border-radius: 8px; padding: 12px 20px; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 13px;">
+                  <span style="background: #E59A55; color: #2C1810; font-weight: 800; font-size: 10.5px; padding: 2px 8px; border-radius: 999px; text-transform: uppercase;" id="previewBadge">Ưu đãi hot</span>
+                  <span id="previewText">🎉 Chào mừng đến với Olion Coffee — Giảm 15% cho hóa đơn đầu tiên khi check-in tại quán! Hotline: 0783 657 587</span>
+                  <span style="text-decoration: underline; font-weight: 700;">Xem chi tiết →</span>
+                </div>
+              </div>
+
+              <div style="margin-top: 10px;">
+                <button type="submit" class="btn-primary" id="saveAnnouncementBtn">
+                  💾 Lưu & Áp Dụng Lên Trang Web
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- ======== TAB 4: PROMOTIONS ======== -->
+        <section class="tab-content" id="tab-promotions">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🎁 Tạo & Quản lý Chương Trình Ưu Đãi (Vouchers)</h3>
+            </div>
+
+            <form id="newPromoForm" onsubmit="return false;" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) 140px; gap: 14px; margin-bottom: 28px; background: rgba(0,0,0,0.25); padding: 18px; border-radius: 12px; border: 1px dashed var(--border);">
+              <div>
+                <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Mã Voucher</label>
+                <input type="text" id="promoCodeInput" placeholder="Vd: OLION20" required />
+              </div>
+              <div>
+                <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Mức giảm</label>
+                <input type="text" id="promoDiscountInput" placeholder="Vd: Giảm 20% hoặc 20.000đ" required />
+              </div>
+              <div>
+                <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Mô tả chương trình</label>
+                <input type="text" id="promoDescInput" placeholder="Vd: Dành cho khách hàng mới check-in" />
+              </div>
+              <div>
+                <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Hạn dùng</label>
+                <input type="text" id="promoExpireInput" placeholder="31/12/2026" />
+              </div>
+              <div style="display: flex; align-items: flex-end;">
+                <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">+ Thêm mã</button>
+              </div>
+            </form>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Mã Voucher</th>
+                    <th>Mức giảm</th>
+                    <th>Mô tả</th>
+                    <th>Hạn dùng</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="promoTableBody">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======== TAB 5: MINIGAME ======== -->
+        <section class="tab-content" id="tab-minigame">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🎡 Cấu hình Vòng Quay May Mắn (Lucky Wheel)</h3>
+              <div class="switch-wrap">
+                <span style="font-size: 13px; color: var(--text-muted);">Hiển thị nút Minigame trên web:</span>
+                <label class="switch">
+                  <input type="checkbox" id="minigameEnableToggle" checked />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 24px;">
+              Vòng quay may mắn giúp giữ chân khách hàng trên website và kích thích khách để lại số điện thoại nhận quà.
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 30px;">
+              <!-- LEFT: Prize Editor -->
+              <div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+                  <h4 style="font-size: 15px; color: #EDE5D8; margin: 0;">🎯 Danh sách ô quà tặng:</h4>
+                  <div style="display: flex; gap: 8px;">
+                    <button type="button" class="btn-secondary" id="addPrizeRowBtn" style="padding: 5px 12px; font-size: 12px;">+ Thêm ô</button>
+                    <button type="button" class="btn-secondary" id="resetPrizesBtn" style="padding: 5px 12px; font-size: 12px;">↺ Mặc định</button>
+                  </div>
+                </div>
+
+                <!-- Prize rows header -->
+                <div style="display: grid; grid-template-columns: 2fr 1.3fr 60px 26px; gap: 6px; margin-bottom: 8px; padding: 0 4px;">
+                  <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px;">Tên giải / Mô tả</span>
+                  <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px;">Mã code</span>
+                  <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; text-align:center;">Tỉ lệ %</span>
+                  <span></span>
+                </div>
+
+                <div id="prizeRowsContainer" style="display: flex; flex-direction: column; gap: 8px;"></div>
+
+                <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 10px;">
+                  💡 Tổng tỉ lệ nên = 100%. Tỉ lệ cao → xuất hiện nhiều hơn trên vòng quay.
+                  <span id="totalPctDisplay" style="font-weight: 700; color: #E59A55; margin-left: 6px;"></span>
+                </p>
+
+                <!-- Spin Settings -->
+                <div style="background: rgba(0,0,0,0.2); border-radius: 10px; padding: 16px; margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                  <div>
+                    <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Tiêu đề cửa sổ vòng quay</label>
+                    <input type="text" id="mgTitle" value="🎡 Vòng Quay May Mắn" style="font-size: 13px; padding: 7px 10px;" />
+                  </div>
+                  <div>
+                    <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Nút float trên web (label)</label>
+                    <input type="text" id="mgFloatLabel" value="🎰 Vòng Quay May Mắn" style="font-size: 13px; padding: 7px 10px;" />
+                  </div>
+                  <div>
+                    <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Số vòng quay tối thiểu</label>
+                    <input type="number" id="mgMinSpins" value="5" min="2" max="20" style="font-size: 13px; padding: 7px 10px;" />
+                  </div>
+                  <div>
+                    <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Thời gian quay (giây)</label>
+                    <input type="number" id="mgDuration" value="4.5" min="2" max="10" step="0.5" style="font-size: 13px; padding: 7px 10px;" />
+                  </div>
+                </div>
+
+                <div style="margin-top: 18px; display: flex; gap: 10px;">
+                  <button type="button" class="btn-primary" id="saveMinigameSettingsBtn" style="flex: 1;">
+                    💾 Lưu & Áp Dụng Lên Website
+                  </button>
+                </div>
+              </div>
+
+              <!-- RIGHT: Spin Leads -->
+              <div>
+                <h4 style="font-size: 15px; margin-bottom: 14px; color: #EDE5D8;">🎁 Lượt quay & khách trúng giải:</h4>
+                <div class="table-container" style="max-height: 420px; overflow-y: auto;">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Khách hàng</th>
+                        <th>SĐT</th>
+                        <th>Quà trúng</th>
+                        <th>Ngày</th>
+                      </tr>
+                    </thead>
+                    <tbody id="minigameLeadsTable">
+                      <!-- Injected via JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ======== TAB 6: CUSTOMERS ======== -->
+        <section class="tab-content" id="tab-customers">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">👥 Quản lý Khách Hàng (Leads & Contacts)</h3>
+              <div style="display: flex; gap: 10px;">
+                <button type="button" class="btn-secondary" id="exportCustomerCsvBtn">📥 Xuất CSV</button>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+              <input type="text" id="customerSearchInput" placeholder="🔍 Tìm kiếm khách hàng theo tên hoặc số điện thoại..." />
+            </div>
+
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Họ tên khách hàng</th>
+                    <th>Số điện thoại / Email</th>
+                    <th>Nguồn thu thập</th>
+                    <th>Ngày ghi nhận</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="customerTableBody">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======== TAB 7: CUSTOMIZER ======== -->
+        <section class="tab-content" id="tab-customizer">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">🎨 Thiết Kế Web & Thông Tin Cửa Hàng</h3>
+            </div>
+
+            <form id="storeSettingsForm" onsubmit="return false;" style="display: flex; flex-direction: column; gap: 20px;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                  <label style="font-size: 13px; font-weight: 600; margin-bottom: 6px; display: block;">Số điện thoại Hotline</label>
+                  <input type="text" id="settingHotline" value="0783657587" />
+                </div>
+                <div>
+                  <label style="font-size: 13px; font-weight: 600; margin-bottom: 6px; display: block;">Giờ mở cửa</label>
+                  <input type="text" id="settingHours" value="8:00 — 21:00 (Cả tuần)" />
+                </div>
+              </div>
+
+              <div>
+                <label style="font-size: 13px; font-weight: 600; margin-bottom: 6px; display: block;">Địa chỉ quán</label>
+                <input type="text" id="settingAddress" value="80/64a, Dương Quảng Hàm, An Nhơn, TP. Hồ Chí Minh 70000, Việt Nam" />
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <div>
+                  <label style="font-size: 13px; font-weight: 600; margin-bottom: 6px; display: block;">Email liên hệ</label>
+                  <input type="email" id="settingEmail" value="olioncoffee@gmail.com" />
+                </div>
+                <div>
+                  <label style="font-size: 13px; font-weight: 600; margin-bottom: 6px; display: block;">Tông màu điểm nhấn (Accent Theme)</label>
+                  <select id="settingAccentColor">
+                    <option value="#E59A55">Hổ phách ấm áp (#E59A55 - Mặc định)</option>
+                    <option value="#C59B63">Vàng đồng sang trọng (#C59B63)</option>
+                    <option value="#1B683F">Xanh lá trà thanh nhã (#1B683F)</option>
+                    <option value="#D36C2D">Cam cháy quyến rũ (#D36C2D)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style="margin-top: 14px;">
+                <button type="submit" class="btn-primary" id="saveStoreSettingsBtn">
+                  💾 Lưu Thiết Lập Cửa Hàng
+                </button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ======== TOAST NOTIFICATION ======== -->
+  <div class="toast" id="adminToast">
+    <span>✓</span>
+    <span id="toastMsg">Thao tác thành công!</span>
+  </div>
+
+  <!-- ======== JAVASCRIPT ======== -->
+  <script>
+    // ---- AUTHENTICATION CHECK ----
+    const loginContainer = document.getElementById('loginContainer');
+    const loginForm = document.getElementById('loginForm');
+    const loginUsername = document.getElementById('adminUsername');
+    const loginPassword = document.getElementById('adminPassword');
+    const loginError = document.getElementById('loginError');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    function checkAuth() {
+      const isAuth = sessionStorage.getItem('olion_admin_auth');
+      if (isAuth === 'true') {
+        loginContainer.classList.add('hidden');
+      } else {
+        loginContainer.classList.remove('hidden');
+      }
+    }
+    checkAuth();
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const u = (loginUsername.value || '').trim();
+      const p = (loginPassword.value || '').trim();
+
+      // Check credentials (admin / olion2024, admin, olion, 123456)
+      const validPasswords = ['olion2024', 'admin', 'olion', '123456', 'olioncoffee'];
+      if (u.toLowerCase() === 'admin' && validPasswords.includes(p)) {
+        sessionStorage.setItem('olion_admin_auth', 'true');
+        loginError.style.display = 'none';
+        loginContainer.classList.add('hidden');
+        showToast('Đăng nhập thành công! Chào mừng Quản trị viên.');
+        loadAllData();
+      } else {
+        loginError.style.display = 'block';
+        loginPassword.value = '';
+        loginPassword.focus();
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      sessionStorage.removeItem('olion_admin_auth');
+      loginContainer.classList.remove('hidden');
+      loginPassword.value = '';
+    });
+
+    // ---- TAB SWITCHING ----
+    const navItems = document.querySelectorAll('.nav-item');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const pageTitle = document.getElementById('pageTitle');
+
+    const tabTitles = {
+      overview: '📊 Bảng Điều Khiển Tổng Quan',
+      feedbacks: '💬 Quản Lý Góp Ý & Đánh Giá',
+      announcements: '📢 Quản Lý Dải Thông Báo Web',
+      promotions: '🎁 Chương Trình Ưu Đãi & Vouchers',
+      minigame: '🎡 Cấu Hình Vòng Quay Minigame',
+      customers: '👥 Quản Lý Khách Hàng',
+      customizer: '🎨 Thiết Kế Web & Thông Tin Quán'
+    };
+
+    function switchTab(tabKey) {
+      navItems.forEach(item => {
+        item.classList.toggle('active', item.dataset.tab === tabKey);
+      });
+      tabContents.forEach(content => {
+        content.classList.toggle('active', content.id === 'tab-' + tabKey);
+      });
+      if (pageTitle && tabTitles[tabKey]) {
+        pageTitle.innerHTML = `<span>${tabTitles[tabKey].slice(0, 2)}</span> <span>${tabTitles[tabKey].slice(3)}</span>`;
+      }
+    }
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => switchTab(item.dataset.tab));
+    });
+
+    // ---- TOAST UTILITY ----
+    const toast = document.getElementById('adminToast');
+    const toastMsg = document.getElementById('toastMsg');
+    let toastTimer;
+    function showToast(msg) {
+      toastMsg.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // ---- DATA STORAGE MANAGEMENT ----
+    function getFeedbacks() {
+      try {
+        return JSON.parse(localStorage.getItem('olion_feedbacks') || '[]');
+      } catch(e) { return []; }
+    }
+    function saveFeedbacks(arr) {
+      localStorage.setItem('olion_feedbacks', JSON.stringify(arr));
+      loadFeedbacks();
+      updateOverviewStats();
+    }
+
+    function getPromotions() {
+      try {
+        const p = localStorage.getItem('olion_promotions');
+        if (p) return JSON.parse(p);
+      } catch(e) {}
+      // Default sample vouchers
+      return [
+        { id: 1, code: 'OLION15', discount: 'Giảm 15%', desc: 'Ưu đãi check-in quán', expire: '31/12/2026', active: true },
+        { id: 2, code: 'CAPHEMUOI', discount: 'Tặng 1 ly Cà Phê Muối', desc: 'Dành cho hóa đơn từ 80k', expire: '15/10/2026', active: true },
+        { id: 3, code: 'FREESHIP', discount: 'Miễn phí giao hàng', desc: 'Bán kính 3km khu vực Gò Vấp', expire: '30/11/2026', active: false }
+      ];
+    }
+    function savePromotions(arr) {
+      localStorage.setItem('olion_promotions', JSON.stringify(arr));
+      loadPromotions();
+      updateOverviewStats();
+    }
+
+    function getCustomers() {
+      try {
+        return JSON.parse(localStorage.getItem('olion_customers') || '[]');
+      } catch(e) { return []; }
+    }
+    function saveCustomers(arr) {
+      localStorage.setItem('olion_customers', JSON.stringify(arr));
+      loadCustomers();
+      updateOverviewStats();
+    }
+
+    // ---- LOAD FEEDBACKS ----
+    function loadFeedbacks() {
+      const feedbacks = getFeedbacks();
+      const filter = document.getElementById('feedbackFilterStar').value;
+      const tbody = document.getElementById('feedbackTableBody');
+      const recentTbody = document.getElementById('overviewRecentFeedbackTable');
+      tbody.innerHTML = '';
+
+      let filtered = feedbacks;
+      if (filter === '5') filtered = feedbacks.filter(f => f.rating === 5);
+      else if (filter === '4') filtered = feedbacks.filter(f => f.rating === 4);
+      else if (filter === 'low') filtered = feedbacks.filter(f => f.rating <= 3);
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 30px;">Chưa có góp ý nào phù hợp</td></tr>`;
+      } else {
+        filtered.forEach(fb => {
+          const stars = '★'.repeat(fb.rating || 5) + '☆'.repeat(Math.max(0, 5 - (fb.rating || 5)));
+          const sampleBadge = fb.isSample
+            ? `<span style="display:inline-block;margin-left:6px;background:#5B6AEA;color:#fff;font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:999px;vertical-align:middle;letter-spacing:.5px;">✦ MẪU ADMIN</span>`
+            : `<span style="display:inline-block;margin-left:6px;background:#2ECC71;color:#fff;font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:999px;vertical-align:middle;letter-spacing:.5px;">👤 KHÁCH</span>`;
+          const photoCell = fb.imageDataUrl
+            ? `<a href="${fb.imageDataUrl}" target="_blank" title="Xem ảnh đầy đủ">
+                <img src="${fb.imageDataUrl}" alt="Ảnh góp ý" style="width:52px;height:52px;object-fit:cover;border-radius:6px;border:1px solid var(--border);cursor:pointer;transition:transform .2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'"/>
+               </a>`
+            : `<span style="color:var(--text-muted);font-size:11px;">—</span>`;
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${escapeHtml(fb.name || 'Khách hàng')}</strong>${sampleBadge}</td>
+            <td>${escapeHtml(fb.contact || 'Không để lại')}</td>
+            <td style="color: var(--accent); font-size: 15px;">${stars}</td>
+            <td style="max-width: 300px; line-height: 1.4;">${escapeHtml(fb.content || '')}</td>
+            <td style="text-align:center;">${photoCell}</td>
+            <td>${escapeHtml(fb.date || 'Gần đây')}</td>
+            <td>
+              <span class="badge ${fb.approved ? 'badge-success' : 'badge-warning'}">
+                ${fb.approved ? 'Đã duyệt web' : 'Ẩn trên web'}
+              </span>
+            </td>
+            <td>
+              <div style="display: flex; gap: 6px;">
+                <button type="button" class="btn-secondary" style="padding: 4px 8px; font-size: 11.5px;" onclick="toggleApproveFeedback(${fb.id})">
+                  ${fb.approved ? 'Ẩn' : 'Hiện'}
+                </button>
+                <button type="button" class="btn-sm-danger" onclick="deleteFeedback(${fb.id})">
+                  Xóa
+                </button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+
+      // Recent feedbacks in overview
+      if (recentTbody) {
+        recentTbody.innerHTML = '';
+        const recents = feedbacks.slice(0, 4);
+        if (recents.length === 0) {
+          recentTbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Chưa có góp ý nào</td></tr>`;
+        } else {
+          recents.forEach(fb => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td><strong>${escapeHtml(fb.name || 'Khách hàng')}</strong></td>
+              <td style="color: var(--accent);">${'★'.repeat(fb.rating || 5)}</td>
+              <td style="max-width: 280px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${escapeHtml(fb.content)}</td>
+              <td>${escapeHtml(fb.date || 'Gần đây')}</td>
+            `;
+            recentTbody.appendChild(tr);
+          });
+        }
+      }
+    }
+
+    window.toggleApproveFeedback = function(id) {
+      const fbs = getFeedbacks();
+      const target = fbs.find(f => f.id === id);
+      if (target) {
+        target.approved = !target.approved;
+        saveFeedbacks(fbs);
+        showToast(target.approved ? 'Đã duyệt hiển thị lên trang chủ!' : 'Đã ẩn góp ý khỏi trang chủ.');
+      }
+    };
+
+    window.deleteFeedback = function(id) {
+      if (confirm('Bạn có chắc muốn xóa góp ý này không?')) {
+        let fbs = getFeedbacks();
+        fbs = fbs.filter(f => f.id !== id);
+        saveFeedbacks(fbs);
+        showToast('Đã xóa góp ý thành công.');
+      }
+    };
+
+    document.getElementById('feedbackFilterStar').addEventListener('change', loadFeedbacks);
+
+    // Seed dummy feedbacks
+    document.getElementById('seedFeedbackBtn').addEventListener('click', () => {
+      const sampleFeedbacks = [
+        {
+          id: Date.now() + 1,
+          name: 'Phương Thảo',
+          contact: '0912 345 678',
+          rating: 5,
+          content: 'Cà phê muối ở đây đỉnh chóp, kem mặn mịn màng thơm lừng. Quán decor ấm cúng rất hợp chụp hình chill!',
+          date: new Date().toLocaleDateString('vi-VN'),
+          approved: true,
+          imageDataUrl: '',
+          isSample: true
+        },
+        {
+          id: Date.now() + 2,
+          name: 'Hải Đăng',
+          contact: 'haidang.design@gmail.com',
+          rating: 5,
+          content: 'Không gian yên tĩnh lý tưởng để làm việc với máy tính, nhạc nhẹ nhàng, nhân viên siêu chu đáo.',
+          date: new Date().toLocaleDateString('vi-VN'),
+          approved: true,
+          imageDataUrl: '',
+          isSample: true
+        }
+      ];
+      const existing = getFeedbacks();
+      saveFeedbacks([...sampleFeedbacks, ...existing]);
+      showToast('Đã thêm 2 đánh giá mẫu thành công!');
+    });
+
+    // Export feedbacks CSV
+    document.getElementById('exportFeedbackCsvBtn').addEventListener('click', () => {
+      const fbs = getFeedbacks();
+      if (fbs.length === 0) return alert('Chưa có dữ liệu để xuất!');
+      let csv = 'Họ tên,Liên hệ,Số sao,Nội dung,Ngày gửi,Duyệt web\n';
+      fbs.forEach(f => {
+        csv += `"${f.name || ''}","${f.contact || ''}","${f.rating || 5}","${(f.content || '').replace(/"/g, '""')}","${f.date || ''}","${f.approved ? 'Có' : 'Không'}"\n`;
+      });
+      downloadCsv(csv, 'olion_feedbacks.csv');
+    });
+
+    // ---- LOAD ANNOUNCEMENT BAR ----
+    const annToggle = document.getElementById('announcementEnableToggle');
+    const annBadge = document.getElementById('announcementBadgeInput');
+    const annLink = document.getElementById('announcementLinkInput');
+    const annText = document.getElementById('announcementTextInput');
+    const previewBadge = document.getElementById('previewBadge');
+    const previewText = document.getElementById('previewText');
+
+    function loadAnnouncement() {
+      try {
+        const raw = localStorage.getItem('olion_announcement');
+        if (raw) {
+          const data = JSON.parse(raw);
+          annToggle.checked = !!data.enabled;
+          annBadge.value = data.badge || 'Ưu đãi hot';
+          annLink.value = data.link || '#menu';
+          annText.value = data.text || '';
+          updatePreview();
+        }
+      } catch(e) {}
+    }
+
+    function updatePreview() {
+      previewBadge.textContent = annBadge.value || 'Ưu đãi';
+      previewText.textContent = annText.value || 'Nội dung thông báo';
+    }
+
+    annBadge.addEventListener('input', updatePreview);
+    annText.addEventListener('input', updatePreview);
+
+    document.getElementById('announcementForm').addEventListener('submit', () => {
+      const payload = {
+        enabled: annToggle.checked,
+        badge: annBadge.value.trim() || 'Ưu đãi hot',
+        link: annLink.value.trim() || '#menu',
+        text: annText.value.trim()
+      };
+      localStorage.setItem('olion_announcement', JSON.stringify(payload));
+      showToast('Đã cập nhật thông báo lên website thành công!');
+    });
+
+    // ---- LOAD PROMOTIONS ----
+    function loadPromotions() {
+      const promos = getPromotions();
+      const tbody = document.getElementById('promoTableBody');
+      tbody.innerHTML = '';
+
+      promos.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong style="font-family: monospace; font-size: 15px; color: var(--accent);">${escapeHtml(p.code)}</strong></td>
+          <td><strong>${escapeHtml(p.discount)}</strong></td>
+          <td>${escapeHtml(p.desc)}</td>
+          <td>${escapeHtml(p.expire || 'Không thời hạn')}</td>
+          <td>
+            <span class="badge ${p.active ? 'badge-success' : 'badge-warning'}">
+              ${p.active ? 'Đang chạy' : 'Tạm dừng'}
+            </span>
+          </td>
+          <td>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="btn-secondary" style="padding: 4px 8px; font-size: 11.5px;" onclick="togglePromo(${p.id})">
+                ${p.active ? 'Dừng' : 'Bật'}
+              </button>
+              <button type="button" class="btn-sm-danger" onclick="deletePromo(${p.id})">
+                Xóa
+              </button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    window.togglePromo = function(id) {
+      const promos = getPromotions();
+      const target = promos.find(p => p.id === id);
+      if (target) {
+        target.active = !target.active;
+        savePromotions(promos);
+        showToast(`Mã ${target.code} đã được ${target.active ? 'kích hoạt' : 'tạm dừng'}!`);
+      }
+    };
+
+    window.deletePromo = function(id) {
+      if (confirm('Xác nhận xóa voucher này?')) {
+        let promos = getPromotions();
+        promos = promos.filter(p => p.id !== id);
+        savePromotions(promos);
+        showToast('Đã xóa voucher thành công.');
+      }
+    };
+
+    document.getElementById('newPromoForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const code = document.getElementById('promoCodeInput').value.trim().toUpperCase();
+      const discount = document.getElementById('promoDiscountInput').value.trim();
+      const desc = document.getElementById('promoDescInput').value.trim();
+      const expire = document.getElementById('promoExpireInput').value.trim();
+
+      const promos = getPromotions();
+      promos.unshift({
+        id: Date.now(),
+        code,
+        discount,
+        desc,
+        expire: expire || '31/12/2026',
+        active: true
+      });
+      savePromotions(promos);
+      document.getElementById('newPromoForm').reset();
+      showToast(`Đã thêm mã ưu đãi mới: ${code}!`);
+    });
+
+    // ---- MINIGAME SETTINGS ----
+    const minigameToggle = document.getElementById('minigameEnableToggle');
+
+    const DEFAULT_PRIZES = [
+      { text: 'Giảm 15%',    code: 'OLION15',    desc: 'Giảm ngay 15% trên tổng hóa đơn!',            pct: 15, color: '#E59A55' },
+      { text: 'Free Thạch',  code: 'FREETHACH',  desc: 'Tặng 1 phần topping thạch bất kỳ!',           pct: 20, color: '#1B683F' },
+      { text: 'Giảm 20k',    code: 'OLION20K',   desc: 'Giảm 20.000đ cho đơn từ 60.000đ!',            pct: 15, color: '#C59B63' },
+      { text: 'Cà Phê Muối', code: 'FREECAPHE',  desc: 'Tặng 1 ly Cà Phê Muối đặc trưng Olion!',     pct: 10, color: '#D36C2D' },
+      { text: 'Giảm 10%',    code: 'OLION10',    desc: 'Giảm 10% cho mọi thức uống!',                 pct: 25, color: '#E59A55' },
+      { text: 'Trà Đào',     code: 'FREETRADAO', desc: 'Tặng 1 ly Trà Đào Cam Sả mát lạnh!',         pct: 15, color: '#1B683F' },
+    ];
+
+    let currentPrizes = [...DEFAULT_PRIZES.map(p => ({...p}))];
+
+    function updateTotalPct() {
+      const total = currentPrizes.reduce((s, p) => s + (parseFloat(p.pct) || 0), 0);
+      const el = document.getElementById('totalPctDisplay');
+      if (!el) return;
+      el.textContent = `Tổng: ${total.toFixed(1)}%`;
+      el.style.color = Math.abs(total - 100) < 0.1 ? '#2ECC71' : '#E59A55';
+    }
+
+    function renderPrizeRows() {
+      const container = document.getElementById('prizeRowsContainer');
+      if (!container) return;
+      container.innerHTML = '';
+      currentPrizes.forEach((prize, idx) => {
+        const row = document.createElement('div');
+        row.style.cssText = 'display:grid;grid-template-columns:2fr 1.3fr 60px 26px;gap:6px;align-items:center;background:rgba(0,0,0,0.25);padding:8px 10px;border-radius:8px;border-left:4px solid ' + (prize.color || '#E59A55');
+        row.innerHTML = `
+          <div style="display:flex;gap:6px;align-items:center;">
+            <input type="color" value="${prize.color || '#E59A55'}" data-idx="${idx}" data-field="color"
+              style="width:22px;height:22px;border:none;border-radius:4px;padding:0;cursor:pointer;background:transparent;flex-shrink:0;"
+              title="Màu ô" />
+            <input type="text" value="${escapeHtml(prize.text)}" data-idx="${idx}" data-field="text"
+              placeholder="Tên giải thưởng"
+              style="font-size:13px;padding:5px 8px;width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:5px;color:#fff;" />
+          </div>
+          <input type="text" value="${escapeHtml(prize.code)}" data-idx="${idx}" data-field="code"
+            placeholder="Mã code"
+            style="font-size:12px;font-family:monospace;padding:5px 8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:5px;color:#E59A55;" />
+          <input type="number" value="${prize.pct}" data-idx="${idx}" data-field="pct"
+            min="0" max="100" step="1"
+            style="font-size:13px;padding:5px 6px;text-align:center;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:5px;color:#fff;" />
+          <button type="button" data-idx="${idx}" class="prize-del-btn"
+            style="background:rgba(255,60,60,0.15);border:1px solid rgba(255,60,60,0.3);color:#ff6b6b;width:26px;height:26px;border-radius:5px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;padding:0;">✕</button>
+        `;
+        container.appendChild(row);
+      });
+
+      // Bind events
+      container.querySelectorAll('input[data-field]').forEach(inp => {
+        inp.addEventListener('input', e => {
+          const idx = +e.target.dataset.idx;
+          const field = e.target.dataset.field;
+          currentPrizes[idx][field] = field === 'pct' ? parseFloat(e.target.value) || 0 : e.target.value;
+          if (field === 'color') {
+            e.target.closest('div[style*="border-left"]').style.borderLeftColor = e.target.value;
+          }
+          updateTotalPct();
+        });
+      });
+      container.querySelectorAll('.prize-del-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const idx = +e.currentTarget.dataset.idx;
+          if (currentPrizes.length <= 2) { showToast('Cần ít nhất 2 ô quà!'); return; }
+          currentPrizes.splice(idx, 1);
+          renderPrizeRows();
+          updateTotalPct();
+        });
+      });
+
+      updateTotalPct();
+    }
+
+    function loadMinigame() {
+      try {
+        const raw = localStorage.getItem('olion_minigame');
+        if (raw) {
+          const data = JSON.parse(raw);
+          if (minigameToggle) minigameToggle.checked = data.enabled !== false;
+          if (data.prizes && Array.isArray(data.prizes) && data.prizes.length >= 2) {
+            currentPrizes = data.prizes.map(p => ({...p}));
+          }
+          if (data.title && document.getElementById('mgTitle')) document.getElementById('mgTitle').value = data.title;
+          if (data.floatLabel && document.getElementById('mgFloatLabel')) document.getElementById('mgFloatLabel').value = data.floatLabel;
+          if (data.minSpins && document.getElementById('mgMinSpins')) document.getElementById('mgMinSpins').value = data.minSpins;
+          if (data.duration && document.getElementById('mgDuration')) document.getElementById('mgDuration').value = data.duration;
+        }
+      } catch(e) {}
+      renderPrizeRows();
+
+      // Load leads from customer with source 'Minigame'
+      const customers = getCustomers();
+      const minigameLeads = customers.filter(c => (c.source || '').includes('Minigame'));
+      const tbody = document.getElementById('minigameLeadsTable');
+      tbody.innerHTML = '';
+      if (minigameLeads.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted); padding: 20px;">Chưa có lượt quay nào</td></tr>`;
+      } else {
+        minigameLeads.forEach(lead => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${escapeHtml(lead.name || 'Khách quay')}</strong></td>
+            <td>${escapeHtml(lead.contact || '')}</td>
+            <td><span class="badge badge-warning">${escapeHtml((lead.source || '').replace('Minigame: ', ''))}</span></td>
+            <td>${escapeHtml(lead.date || '')}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    }
+
+    // Add prize row
+    document.getElementById('addPrizeRowBtn').addEventListener('click', () => {
+      currentPrizes.push({ text: 'Quà mới', code: 'CODE', desc: 'Mô tả quà tặng', pct: 10, color: '#E59A55' });
+      renderPrizeRows();
+    });
+
+    // Reset to default
+    document.getElementById('resetPrizesBtn').addEventListener('click', () => {
+      if (confirm('Đặt lại danh sách ô quà về mặc định?')) {
+        currentPrizes = [...DEFAULT_PRIZES.map(p => ({...p}))];
+        renderPrizeRows();
+        showToast('Đã đặt lại về danh sách ô quà mặc định!');
+      }
+    });
+
+    document.getElementById('saveMinigameSettingsBtn').addEventListener('click', () => {
+      // Collect prize desc from inputs (prize text is main label on wheel)
+      const configToSave = {
+        enabled: minigameToggle ? minigameToggle.checked : true,
+        prizes: currentPrizes.map(p => ({
+          text: (p.text || '').trim(),
+          code: (p.code || '').trim(),
+          desc: p.desc || (p.text + ' từ Olion Coffee!'),
+          pct: parseFloat(p.pct) || 10,
+          color: p.color || '#E59A55'
+        })),
+        title: (document.getElementById('mgTitle')?.value || '🎡 Vòng Quay May Mắn').trim(),
+        floatLabel: (document.getElementById('mgFloatLabel')?.value || '🎰 Vòng Quay May Mắn').trim(),
+        minSpins: parseInt(document.getElementById('mgMinSpins')?.value) || 5,
+        duration: parseFloat(document.getElementById('mgDuration')?.value) || 4.5,
+      };
+      localStorage.setItem('olion_minigame', JSON.stringify(configToSave));
+      showToast('✅ Đã lưu cấu hình Minigame lên website!');
+    });
+
+    // ---- LOAD CUSTOMERS ----
+    function loadCustomers() {
+      const customers = getCustomers();
+      const tbody = document.getElementById('customerTableBody');
+      const search = (document.getElementById('customerSearchInput').value || '').toLowerCase();
+      tbody.innerHTML = '';
+
+      const filtered = customers.filter(c => 
+        (c.name || '').toLowerCase().includes(search) || 
+        (c.contact || '').toLowerCase().includes(search)
+      );
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 30px;">Chưa có khách hàng nào ghi nhận</td></tr>`;
+      } else {
+        filtered.forEach((c, idx) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${escapeHtml(c.name || 'Khách hàng')}</strong></td>
+            <td><span style="color: var(--accent);">${escapeHtml(c.contact || 'Chưa cập nhật')}</span></td>
+            <td><span class="badge badge-warning">${escapeHtml(c.source || 'Website')}</span></td>
+            <td>${escapeHtml(c.date || 'Gần đây')}</td>
+            <td>
+              <button type="button" class="btn-sm-danger" onclick="deleteCustomer(${c.id || idx})">Xóa</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      }
+    }
+
+    window.deleteCustomer = function(id) {
+      if (confirm('Xác nhận xóa khách hàng này?')) {
+        let customers = getCustomers();
+        customers = customers.filter(c => c.id !== id);
+        saveCustomers(customers);
+        showToast('Đã xóa khách hàng.');
+      }
+    };
+
+    document.getElementById('customerSearchInput').addEventListener('input', loadCustomers);
+
+    document.getElementById('exportCustomerCsvBtn').addEventListener('click', () => {
+      const customers = getCustomers();
+      if (customers.length === 0) return alert('Chưa có danh sách khách hàng để xuất!');
+      let csv = 'Họ tên,Số điện thoại/Email,Nguồn,Ngày\n';
+      customers.forEach(c => {
+        csv += `"${c.name || ''}","${c.contact || ''}","${c.source || ''}","${c.date || ''}"\n`;
+      });
+      downloadCsv(csv, 'olion_customers.csv');
+    });
+
+    // ---- STORE SETTINGS & CUSTOMIZER ----
+    document.getElementById('storeSettingsForm').addEventListener('submit', () => {
+      const settings = {
+        hotline: document.getElementById('settingHotline').value.trim(),
+        hours: document.getElementById('settingHours').value.trim(),
+        address: document.getElementById('settingAddress').value.trim(),
+        email: document.getElementById('settingEmail').value.trim(),
+        accentColor: document.getElementById('settingAccentColor').value
+      };
+      localStorage.setItem('olion_store_settings', JSON.stringify(settings));
+      showToast('Đã lưu thiết lập cửa hàng và màu giao diện!');
+    });
+
+    // ---- OVERVIEW STATS ----
+    function updateOverviewStats() {
+      const fbs = getFeedbacks();
+      const promos = getPromotions();
+      const customers = getCustomers();
+
+      document.getElementById('statFeedbackCount').textContent = fbs.length;
+      document.getElementById('statPromoCount').textContent = promos.filter(p => p.active).length;
+      document.getElementById('statCustomerCount').textContent = customers.length;
+
+      if (fbs.length > 0) {
+        const avg = (fbs.reduce((acc, f) => acc + (f.rating || 5), 0) / fbs.length).toFixed(1);
+        document.getElementById('statRatingAvg').textContent = avg + ' ★';
+      } else {
+        document.getElementById('statRatingAvg').textContent = '4.9 ★';
+      }
+    }
+
+    // ---- CSV DOWNLOAD HELPER ----
+    function downloadCsv(content, filename) {
+      const blob = new Blob(['\uFEFF' + content], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+      URL.revokeObjectURL(link.href);
+      showToast('Đã xuất file ' + filename + ' thành công!');
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    // ---- INITIAL DATA LOAD ----
+    function loadAllData() {
+      loadFeedbacks();
+      loadAnnouncement();
+      loadPromotions();
+      loadMinigame();
+      loadCustomers();
+      updateOverviewStats();
+    }
+    loadAllData();
+  </script>
+
+</body>
+</html>
