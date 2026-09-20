@@ -310,9 +310,14 @@ async function fetchMenuItemsFromCloud() {
         .select('*')
         .order('id', { ascending: true });
 
-      if (!error && data && data.length > 0) {
+      // Only accept cloud data if it is NOT the 8 old dummy test items!
+      if (!error && data && data.length >= 30) {
         localStorage.setItem('olion_menu_items', JSON.stringify(data));
         return { source: 'supabase', data };
+      } else if (!error && data && data.length > 0 && data.length < 30) {
+        console.warn('⚠️ [Supabase] Detected outdated dummy test items in database (< 30 items). Using official 39 DEFAULT_MENU_ITEMS.');
+        localStorage.removeItem('olion_menu_items');
+        return { source: 'local_default', data: DEFAULT_MENU_ITEMS };
       }
     } catch (err) {
       console.warn('⚠️ [Supabase] Lỗi fetch menu_items:', err.message);
@@ -322,7 +327,7 @@ async function fetchMenuItemsFromCloud() {
   // Fallback LocalStorage
   try {
     let local = JSON.parse(localStorage.getItem('olion_menu_items'));
-    if (!local || local.length === 0) {
+    if (!local || !Array.isArray(local) || local.length < 30 || local.some(i => i.name === 'Trà Đào Cam Sả Tươi' || i.name === 'Bánh Croissant Bơ Pháp')) {
       local = DEFAULT_MENU_ITEMS;
       localStorage.setItem('olion_menu_items', JSON.stringify(local));
     }

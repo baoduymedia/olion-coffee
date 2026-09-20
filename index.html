@@ -5351,6 +5351,14 @@
           const items = res.data;
           if (!items || !Array.isArray(items) || items.length === 0) return;
 
+          // Reject outdated dummy test items (e.g. 8 items from initial test)
+          const isDummyData = items.length < 30 || items.some(i => i.name === 'Trà Đào Cam Sả Tươi' || i.name === 'Bánh Croissant Bơ Pháp');
+          if (isDummyData) {
+            console.warn('⚠️ [Olion] Phát hiện dữ liệu mẫu cũ. Giữ nguyên 39 món chính thức của quán.');
+            localStorage.removeItem('olion_menu_items');
+            return;
+          }
+
           const grouped = {};
           items.forEach(item => {
             const cat = item.category || 'Cà phê';
