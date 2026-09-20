@@ -4,8 +4,8 @@
  * Tích hợp cơ chế tự động Fallback về LocalStorage khi offline hoặc chưa nhập API Key.
  */
 
-const DEFAULT_SUPABASE_URL = localStorage.getItem('olion_supabase_url') || '';
-const DEFAULT_SUPABASE_ANON_KEY = localStorage.getItem('olion_supabase_key') || '';
+const DEFAULT_SUPABASE_URL = localStorage.getItem('olion_supabase_url') || 'https://xwbrbesgnwcngzohprxt.supabase.co';
+const DEFAULT_SUPABASE_ANON_KEY = localStorage.getItem('olion_supabase_key') || 'sb_publishable_vWuV07_xPU0wNftK0lpnFQ_oA9XHPLS';
 
 let supabaseClient = null;
 

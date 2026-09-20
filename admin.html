@@ -1300,8 +1300,8 @@
     const supabaseBadgeStatus = document.getElementById('supabaseBadgeStatus');
 
     function checkSupabaseStatus() {
-      const url = localStorage.getItem('olion_supabase_url');
-      const key = localStorage.getItem('olion_supabase_key');
+      const url = localStorage.getItem('olion_supabase_url') || DEFAULT_SUPABASE_URL;
+      const key = localStorage.getItem('olion_supabase_key') || DEFAULT_SUPABASE_ANON_KEY;
 
       if (supabaseUrlInput) supabaseUrlInput.value = url || '';
       if (supabaseKeyInput) supabaseKeyInput.value = key || '';
