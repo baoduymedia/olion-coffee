@@ -1857,10 +1857,20 @@
       gap: 8px;
       box-shadow: 0 8px 24px rgba(216, 99, 38, 0.4);
       cursor: pointer;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .wheel-float-btn:hover { transform: translateY(-3px) scale(1.03); }
+    .wheel-float-btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 32px rgba(216, 99, 38, 0.55); }
+
+    /* Trên mobile: đẩy lên trên mobile bottom dock (64px) + thêm khoảng an toàn */
+    @media (max-width: 767px) {
+      .wheel-float-btn {
+        bottom: 80px;
+        left: 12px;
+        padding: 9px 14px;
+        font-size: 12px;
+      }
+    }
 
     /* ======== 8. NEWS & EVENTS (TIN TỨC & SỰ KIỆN) ======== */
     .news-section {
@@ -2261,7 +2271,7 @@
       bottom: 28px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: rgba(24, 16, 9, 0.95);
+      background: rgba(24, 16, 9, 0.97);
       border: 1px solid rgba(229, 154, 85, 0.35);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -2286,14 +2296,142 @@
       opacity: 1;
       pointer-events: auto;
     }
-    .olion-toast-icon {
-      font-size: 18px;
-      flex-shrink: 0;
+    .olion-toast-icon { font-size: 18px; flex-shrink: 0; }
+    .olion-toast-msg { line-height: 1.4; color: #F6F1E7; }
+
+    /* Trên mobile: Toast phải nằm trên dock + wheel button */
+    @media (max-width: 767px) {
+      .olion-toast {
+        bottom: 156px; /* trên dock (64px) + wheel btn (~60px) + margin */
+      }
     }
-    .olion-toast-msg {
-      line-height: 1.4;
-      color: #F6F1E7;
+
+    /* ======== GLOBAL SCROLL-MARGIN FIXES ======== */
+    /* Đảm bảo tất cả sections không bị header cố định 72px che khuất khi click nav */
+    #hero, #about, #signature, #menu, #spaces, #news, #faq, #reviews, #contact {
+      scroll-margin-top: 72px;
     }
+
+    /* ======== STATS SECTION FIX ======== */
+    /* Trên mobile, bỏ margin âm để tránh overlap không kiểm soát được */
+    @media (max-width: 640px) {
+      .stats-section { margin-top: 0; padding-top: 20px; }
+    }
+
+    /* ======== REVIEWS GRID FIX: thêm 2-col breakpoint cho tablet ======== */
+    @media (max-width: 900px) and (min-width: 600px) {
+      .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 599px) {
+      .reviews-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ======== FAQ INDENT FIX trên mobile ======== */
+    @media (max-width: 480px) {
+      .faq-body {
+        padding: 0 14px 16px 14px; /* Bỏ indent 56px gây chật */
+      }
+      .faq-question { font-size: 14px; }
+    }
+
+    /* ======== FORM INPUT MIN-HEIGHT WCAG 44px ======== */
+    .form-input, .form-textarea {
+      min-height: 44px;
+    }
+    .form-textarea { min-height: 100px; }
+
+    /* ======== CONTACT ICON MIN TAP TARGET ======== */
+    .contact-item-icon {
+      min-width: 44px;
+      min-height: 44px;
+    }
+
+    /* ======== ABOUT MOSAIC MOBILE FIX ======== */
+    @media (max-width: 480px) {
+      .about-mosaic {
+        grid-template-rows: 180px 140px;
+      }
+    }
+
+    /* ======== MENU CARD DESC visible on mobile with clamp ======== */
+    @media (max-width: 767px) {
+      .menu-card-desc {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        font-size: 11px;
+      }
+    }
+
+    /* ======== NEWS SECTION SPACING ĐỒng bộ với section-py ======== */
+    .news-section {
+      padding: var(--section-py) 0;
+    }
+
+    /* ======== SIGNATURE CARD MIN-HEIGHT MOBILE ======== */
+    @media (max-width: 480px) {
+      .signature-card { min-height: 260px; padding: 20px 18px; }
+    }
+
+    /* ======== SPACE CARD GRID TABLET ======== */
+    @media (max-width: 1024px) and (min-width: 641px) {
+      .spaces-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ======== FOOTER MOBILE IMPROVEMENT ======== */
+    @media (max-width: 480px) {
+      .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }
+    }
+
+    /* ======== MODAL MOBILE SAFE AREA ======== */
+    @media (max-width: 480px) {
+      .modal-overlay { padding: 12px; align-items: flex-end; }
+      .modal-box {
+        border-radius: var(--radius-md) var(--radius-md) 0 0;
+        max-height: 92vh;
+        padding: 20px 18px 28px;
+      }
+    }
+
+    /* ======== MOBILE HEADER HEIGHT đồng nhất ======== */
+    @media (max-width: 480px) {
+      .header-container { height: 60px; }
+      .header-brand img { height: 38px; }
+      #hero, #about, #signature, #menu, #spaces, #news, #faq, #reviews, #contact {
+        scroll-margin-top: 60px;
+      }
+    }
+
+    /* ======== HERO TITLE mobile readability ======== */
+    @media (max-width: 375px) {
+      .hero-title { font-size: 30px; }
+      .hero-subtitle { font-size: 13.5px; }
+    }
+
+    /* ======== SMOOTH FADE-IN ANIMATION cho các sections ======== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger delays for child elements */
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+    .reveal-delay-4 { transition-delay: 0.32s; }
   </style>
 </head>
 <body>
@@ -4310,6 +4448,58 @@
           alert('Đã sao chép liên kết bài viết vào bộ nhớ tạm!');
         }
       };
+
+      // ===== SCROLL REVEAL ANIMATION =====
+      // Gắn class .reveal cho các section headers, cards để animate fade-in khi scroll
+      const revealTargets = document.querySelectorAll(
+        '.section-header, .stat-card, .feature-pill, .signature-card, .menu-card, .space-card, .review-card, .faq-item, .contact-card, .hours-card, .news-card-main, .news-card-side'
+      );
+
+      if ('IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.12,
+          rootMargin: '0px 0px -40px 0px'
+        });
+
+        revealTargets.forEach((el, i) => {
+          el.classList.add('reveal');
+          // Stagger effect for grid items
+          const staggerIndex = i % 4;
+          if (staggerIndex > 0) el.classList.add(`reveal-delay-${staggerIndex}`);
+          revealObserver.observe(el);
+        });
+      } else {
+        // Fallback: hiện ngay nếu browser không hỗ trợ IO
+        revealTargets.forEach(el => el.classList.add('reveal', 'visible'));
+      }
+
+      // ===== ACTIVE NAV LINK highlight khi scroll qua section =====
+      const navLinks = document.querySelectorAll('.header-nav .nav-link');
+      const sectionIds = ['#about', '#signature', '#menu', '#spaces', '#news', '#faq', '#contact'];
+      const sections = sectionIds.map(id => document.querySelector(id)).filter(Boolean);
+
+      if ('IntersectionObserver' in window && sections.length) {
+        const navObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const id = '#' + entry.target.id;
+              navLinks.forEach(link => {
+                link.classList.toggle('active', link.getAttribute('href') === id);
+              });
+            }
+          });
+        }, { rootMargin: '-30% 0px -60% 0px' });
+
+        sections.forEach(s => navObserver.observe(s));
+      }
+
     });
   </script>
 </body>
