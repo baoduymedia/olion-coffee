@@ -16,13 +16,8 @@ CREATE TABLE IF NOT EXISTS public.feedbacks (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Bổ sung cột device_id nếu chưa có
-DO $$
-BEGIN
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='feedbacks' AND column_name='device_id') THEN
-        ALTER TABLE public.feedbacks ADD COLUMN device_id TEXT;
-    END IF;
-END $$;
+-- Đảm bảo cột device_id luôn tồn tại ngay cả khi bảng đã tạo từ trước
+ALTER TABLE public.feedbacks ADD COLUMN IF NOT EXISTS device_id TEXT;
 
 -- 2. BẢNG VÒNG QUAY MAY MẮN (lucky_spins)
 CREATE TABLE IF NOT EXISTS public.lucky_spins (
@@ -35,13 +30,8 @@ CREATE TABLE IF NOT EXISTS public.lucky_spins (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
--- Bổ sung cột device_id nếu chưa có
-DO $$
-BEGIN
-    IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema='public' AND table_name='lucky_spins' AND column_name='device_id') THEN
-        ALTER TABLE public.lucky_spins ADD COLUMN device_id TEXT;
-    END IF;
-END $$;
+-- Đảm bảo cột device_id luôn tồn tại ngay cả khi bảng đã tạo từ trước
+ALTER TABLE public.lucky_spins ADD COLUMN IF NOT EXISTS device_id TEXT;
 
 -- 3. BẢNG KHÁCH HÀNG & TÍCH ĐIỂM (customers)
 CREATE TABLE IF NOT EXISTS public.customers (
