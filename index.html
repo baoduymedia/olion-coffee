@@ -1317,60 +1317,30 @@
     }
 
     .spaces-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-    }
-
-    @media (max-width: 1024px) and (min-width: 641px) {
-      .spaces-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 640px) {
-      .spaces-grid { grid-template-columns: 1fr; }
+      columns: 2 300px;
+      column-gap: 16px;
     }
 
     .space-card {
+      break-inside: avoid;
+      margin-bottom: 16px;
       position: relative;
       border-radius: var(--radius-md);
       overflow: hidden;
-      aspect-ratio: 4 / 3;
       border: 1px solid var(--border-subtle);
       background: var(--bg-card);
+      cursor: pointer;
     }
 
     .space-card img {
+      display: block;
       width: 100%;
-      height: 100%;
+      height: auto;
       object-fit: cover;
       transition: transform 0.6s ease;
     }
 
-    .space-card:hover img { transform: scale(1.08); }
-
-    .space-card-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 40%, rgba(10, 15, 11, 0.9) 100%);
-      display: flex;
-      align-items: flex-end;
-      padding: 16px;
-    }
-
-    .space-card-title {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: #FFFFFF;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .space-card-title::before {
-      content: '✦';
-      color: var(--accent-gold);
-      font-size: 11px;
-    }
+    .space-card:hover img { transform: scale(1.04); }
 
     /* ======== FAQ ======== */
     .faq-section {
@@ -3438,31 +3408,19 @@
 
         <div class="spaces-grid">
           <div class="space-card">
-            <img src="assets/space-4.webp" alt="Toàn cảnh không gian ấm cúng và sang trọng tại Olion Coffee" width="600" height="450" loading="lazy" decoding="async" />
-            <div class="space-card-overlay">
-              <h3 class="space-card-title" data-i18n="space_card_4">Toàn cảnh ấm cúng</h3>
-            </div>
+            <img src="assets/space-4.webp" alt="Toàn cảnh không gian ấm cúng và sang trọng tại Olion Coffee" width="1024" height="768" loading="lazy" decoding="async" />
           </div>
 
           <div class="space-card">
-            <img src="assets/space-1.webp" alt="Quầy pha chế thủ công hiện đại tại Olion Coffee" width="600" height="450" loading="lazy" decoding="async" />
-            <div class="space-card-overlay">
-              <h3 class="space-card-title" data-i18n="space_card_1">Quầy pha chế thủ công</h3>
-            </div>
+            <img src="assets/space-1.webp" alt="Quầy pha chế thủ công hiện đại tại Olion Coffee" width="819" height="1024" loading="lazy" decoding="async" />
           </div>
 
           <div class="space-card">
-            <img src="assets/space-3.webp" alt="Góc ngồi yên tĩnh học tập và làm việc tại Olion Coffee Gò Vấp" width="600" height="450" loading="lazy" decoding="async" />
-            <div class="space-card-overlay">
-              <h3 class="space-card-title" data-i18n="space_card_3">Góc làm việc yên tĩnh</h3>
-            </div>
+            <img src="assets/space-3.webp" alt="Góc ngồi yên tĩnh học tập và làm việc tại Olion Coffee Gò Vấp" width="768" height="1024" loading="lazy" decoding="async" />
           </div>
 
           <div class="space-card">
-            <img src="assets/space-2.webp" alt="Góc thư giãn trò chuyện ấm cúng Olion Coffee" width="600" height="450" loading="lazy" decoding="async" />
-            <div class="space-card-overlay">
-              <h3 class="space-card-title" data-i18n="space_card_2">Góc thư giãn & chuyện trò</h3>
-            </div>
+            <img src="assets/space-2.webp" alt="Góc thư giãn trò chuyện ấm cúng Olion Coffee" width="768" height="1024" loading="lazy" decoding="async" />
           </div>
         </div>
       </div>
@@ -3599,10 +3557,10 @@
           <div class="faq-item active">
             <button type="button" class="faq-trigger" aria-expanded="true">
               <span class="faq-number">01</span>
-              <h3 class="faq-question">OLION COFFEE có giao hàng tận nơi không?</h3>
+              <h3 class="faq-question" data-i18n="faq_q1">OLION COFFEE có giao hàng tận nơi không?</h3>
               <span class="faq-icon">+</span>
             </button>
-            <div class="faq-body">
+            <div class="faq-body" data-i18n="faq_a1">
               Có! Chúng tôi nhận giao hàng nhanh chóng qua hotline 0783 657 587 và các ứng dụng đặt món phổ biến trong bán kính quanh khu vực Dương Quảng Hàm - Gò Vấp. Đồ uống luôn được đóng gói cẩn thận để giữ trọn vẹn hương vị khi đến tay bạn.
             </div>
           </div>
@@ -3610,10 +3568,10 @@
           <div class="faq-item">
             <button type="button" class="faq-trigger" aria-expanded="false">
               <span class="faq-number">02</span>
-              <h3 class="faq-question">Nguyên liệu và Cà phê của OLION có gì đặc biệt?</h3>
+              <h3 class="faq-question" data-i18n="faq_q2">Nguyên liệu và Cà phê của OLION có gì đặc biệt?</h3>
               <span class="faq-icon">+</span>
             </button>
-            <div class="faq-body">
+            <div class="faq-body" data-i18n="faq_a2">
               Olion Coffee sử dụng 100% hạt Robusta & Arabica rang mộc nguyên chất từ nông trại Cầu Đất, bột Matcha nhập khẩu Nhật Bản và trái cây tươi mỗi ngày, tuyệt đối không sử dụng hương liệu nhân tạo hay chất bảo quản.
             </div>
           </div>
@@ -3621,10 +3579,10 @@
           <div class="faq-item">
             <button type="button" class="faq-trigger" aria-expanded="false">
               <span class="faq-number">03</span>
-              <h3 class="faq-question">Có thể điều chỉnh độ ngọt và lượng đá theo khẩu vị không?</h3>
+              <h3 class="faq-question" data-i18n="faq_q3">Có thể điều chỉnh độ ngọt và lượng đá theo khẩu vị không?</h3>
               <span class="faq-icon">+</span>
             </button>
-            <div class="faq-body">
+            <div class="faq-body" data-i18n="faq_a3">
               Hoàn toàn được! Bạn có thể yêu cầu barista gia giảm mức ngọt (0%, 30%, 50%, 70%, 100%) và lượng đá tùy thích, hoặc yêu cầu đổi sang sữa yến mạch Oatside để phù hợp với chế độ ăn uống của mình.
             </div>
           </div>
@@ -3648,43 +3606,43 @@
         <div class="reviews-grid" id="reviewsGrid">
           <article class="review-card">
             <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
-            <p class="review-quote">"Quán nằm trong hẻm yên tĩnh ở Dương Quảng Hàm, bước vào cảm giác như tách biệt khỏi xô bồ ngoài kia. Đèn vàng ấm mắt, bàn ghế gỗ cao ngồi làm việc cả buổi rất thoải mái. Cà phê muối béo mặn cực kỳ vừa miệng!"</p>
+            <p class="review-quote" data-i18n="review_1_quote">"Quán nằm trong hẻm yên tĩnh ở Dương Quảng Hàm, bước vào cảm giác như tách biệt khỏi xô bồ ngoài kia. Đèn vàng ấm mắt, bàn ghế gỗ cao ngồi làm việc cả buổi rất thoải mái. Cà phê muối béo mặn cực kỳ vừa miệng!"</p>
             <div class="review-author">
               <div class="review-avatar">🐻</div>
               <div>
                 <h3 class="review-name">Minh Anh</h3>
-                <p class="review-role">Sinh viên ĐH Văn Lang</p>
+                <p class="review-role" data-i18n="review_1_role">Sinh viên ĐH Văn Lang</p>
               </div>
             </div>
           </article>
 
           <article class="review-card">
             <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
-            <p class="review-quote">"Matcha latte ở đây chuẩn vị Nhật, thơm đắng thanh nhẹ và không bị ngọt gắt như nhiều chỗ khác. Tụi mình hay ghé đây đọc sách và trò chuyện cuối tuần vì nhạc mở vừa phải rất dễ chịu."</p>
+            <p class="review-quote" data-i18n="review_2_quote">"Matcha latte ở đây chuẩn vị Nhật, thơm đắng thanh nhẹ và không bị ngọt gắt như nhiều chỗ khác. Tụi mình hay ghé đây đọc sách và trò chuyện cuối tuần vì nhạc mở vừa phải rất dễ chịu."</p>
             <div class="review-author">
               <div class="review-avatar">🌿</div>
               <div>
                 <h3 class="review-name">Thanh Trúc</h3>
-                <p class="review-role">Graphic Designer</p>
+                <p class="review-role" data-i18n="review_2_role">Graphic Designer</p>
               </div>
             </div>
           </article>
 
           <article class="review-card">
             <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
-            <p class="review-quote">"Bạc xỉu kem trứng ngon đỉnh chóp! Lớp bọt trứng béo mịn uống tới đâu dính tới đó. Nhân viên thân thiện, nhiệt tình châm trà liên tục. Chắc chắn sẽ là quán ruột của mình."</p>
+            <p class="review-quote" data-i18n="review_3_quote">"Bạc xỉu kem trứng ngon đỉnh chóp! Lớp bọt trứng béo mịn uống tới đâu dính tới đó. Nhân viên thân thiện, nhiệt tình châm trà liên tục. Chắc chắn sẽ là quán ruột của mình."</p>
             <div class="review-author">
               <div class="review-avatar">☕</div>
               <div>
                 <h3 class="review-name">Hoàng Nam</h3>
-                <p class="review-role">Freelancer Gò Vấp</p>
+                <p class="review-role" data-i18n="review_3_role">Freelancer Gò Vấp</p>
               </div>
             </div>
           </article>
         </div>
 
         <div style="text-align: center; margin-top: 32px;">
-          <button type="button" class="btn btn-primary" onclick="openFeedbackModal()">
+          <button type="button" class="btn btn-primary" onclick="openFeedbackModal()" data-i18n="review_btn">
             Gửi đánh giá của bạn →
           </button>
         </div>
@@ -4002,6 +3960,80 @@
             <textarea id="fbMessage" class="form-textarea" placeholder="Chia sẻ về đồ uống, không gian, âm nhạc hay sự phục vụ..."></textarea>
           </div>
 
+          <!-- Bổ sung tính năng tải ảnh đính kèm (chứng minh) -->
+          <div class="form-group">
+            <label class="form-label" for="fbImage">Đính kèm ảnh minh chứng (Tùy chọn)</label>
+            <div style="position: relative;">
+              <input type="file" id="fbImage" accept="image/png, image/jpeg, image/jpg, image/webp" style="display: none;" onchange="previewFeedbackImage(event)" />
+              <button type="button" class="btn" onclick="document.getElementById('fbImage').click()" style="width: 100%; border: 1px dashed var(--border-gold); background: transparent; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 8px;">
+                <span>📸</span> Tải ảnh lên
+              </button>
+              <div id="fbImagePreviewContainer" style="display: none; margin-top: 12px; position: relative;">
+                <img id="fbImagePreview" src="" alt="Preview" style="max-width: 100%; max-height: 200px; border-radius: 8px; border: 1px solid var(--border-light);" />
+                <button type="button" onclick="removeFeedbackImage()" style="position: absolute; top: -8px; right: -8px; background: red; color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px;">✕</button>
+              </div>
+            </div>
+            <!-- Hidden field to store compressed base64 -->
+            <input type="hidden" id="fbImageDataUrl" value="" />
+          </div>
+
+          <script>
+            // Hàm xử lý và resize ảnh trước khi lưu (giảm dung lượng)
+            function previewFeedbackImage(event) {
+              const file = event.target.files[0];
+              if (!file) return;
+
+              const reader = new FileReader();
+              reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                  // Nén ảnh bằng canvas
+                  const canvas = document.createElement('canvas');
+                  const MAX_WIDTH = 800;
+                  const MAX_HEIGHT = 800;
+                  let width = img.width;
+                  let height = img.height;
+
+                  if (width > height) {
+                    if (width > MAX_WIDTH) {
+                      height *= MAX_WIDTH / width;
+                      width = MAX_WIDTH;
+                    }
+                  } else {
+                    if (height > MAX_HEIGHT) {
+                      width *= MAX_HEIGHT / height;
+                      height = MAX_HEIGHT;
+                    }
+                  }
+
+                  canvas.width = width;
+                  canvas.height = height;
+                  const ctx = canvas.getContext('2d');
+                  ctx.drawImage(img, 0, 0, width, height);
+
+                  // Chuyển thành chuỗi Base64
+                  const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                  
+                  // Hiển thị Preview
+                  document.getElementById('fbImagePreview').src = dataUrl;
+                  document.getElementById('fbImagePreviewContainer').style.display = 'block';
+                  
+                  // Lưu vào input ẩn
+                  document.getElementById('fbImageDataUrl').value = dataUrl;
+                };
+                img.src = e.target.result;
+              };
+              reader.readAsDataURL(file);
+            }
+
+            function removeFeedbackImage() {
+              document.getElementById('fbImage').value = '';
+              document.getElementById('fbImageDataUrl').value = '';
+              document.getElementById('fbImagePreview').src = '';
+              document.getElementById('fbImagePreviewContainer').style.display = 'none';
+            }
+          </script>
+
           <button type="button" class="btn btn-primary" id="btnSubmitFeedback" style="width: 100%; justify-content: center;">
             Gửi đánh giá ngay ✨
           </button>
@@ -4169,9 +4201,22 @@
           news_read_more: "Xem chi tiết →",
           faq_eyebrow: "● Hỏi Đáp Nhanh",
           faq_title: 'Bạn <span class="accent">thắc mắc?</span>',
+          faq_q1: "OLION COFFEE có giao hàng tận nơi không?",
+          faq_a1: "Có! Chúng tôi nhận giao hàng nhanh chóng qua hotline 0783 657 587 và các ứng dụng đặt món phổ biến trong bán kính quanh khu vực Dương Quảng Hàm - Gò Vấp. Đồ uống luôn được đóng gói cẩn thận để giữ trọn vẹn hương vị khi đến tay bạn.",
+          faq_q2: "Nguyên liệu và Cà phê của OLION có gì đặc biệt?",
+          faq_a2: "Olion Coffee sử dụng 100% hạt Robusta & Arabica rang mộc nguyên chất từ nông trại Cầu Đất, bột Matcha nhập khẩu Nhật Bản và trái cây tươi mỗi ngày, tuyệt đối không sử dụng hương liệu nhân tạo hay chất bảo quản.",
+          faq_q3: "Có thể điều chỉnh độ ngọt và lượng đá theo khẩu vị không?",
+          faq_a3: "Hoàn toàn được! Bạn có thể yêu cầu barista gia giảm mức ngọt (0%, 30%, 50%, 70%, 100%) và lượng đá tùy thích, hoặc yêu cầu đổi sang sữa yến mạch Oatside để phù hợp với chế độ ăn uống của mình.",
           reviews_eyebrow: "● Cảm Nhận Khách Hàng",
           reviews_title: 'Khách hàng <span class="accent">nói gì</span> về Olion?',
           reviews_desc: "Được chấm 4.9/5.0★ từ hơn 280+ đánh giá thực tế trên Google Maps và Facebook.",
+          review_1_quote: '"Quán nằm trong hẻm yên tĩnh ở Dương Quảng Hàm, bước vào cảm giác như tách biệt khỏi xô bồ ngoài kia. Đèn vàng ấm mắt, bàn ghế gỗ cao ngồi làm việc cả buổi rất thoải mái. Cà phê muối béo mặn cực kỳ vừa miệng!"',
+          review_1_role: "Sinh viên ĐH Văn Lang",
+          review_2_quote: '"Matcha latte ở đây chuẩn vị Nhật, thơm đắng thanh nhẹ và không bị ngọt gắt như nhiều chỗ khác. Tụi mình hay ghé đây đọc sách và trò chuyện cuối tuần vì nhạc mở vừa phải rất dễ chịu."',
+          review_2_role: "Graphic Designer",
+          review_3_quote: '"Bạc xỉu kem trứng ngon đỉnh chóp! Lớp bọt trứng béo mịn uống tới đâu dính tới đó. Nhân viên thân thiện, nhiệt tình châm trà liên tục. Chắc chắn sẽ là quán ruột của mình."',
+          review_3_role: "Freelancer Gò Vấp",
+          review_btn: "Gửi đánh giá của bạn →",
           contact_eyebrow: "● Thông Tin Liên Hệ",
           contact_title: 'Bạn <span class="accent">muốn ghé</span> chơi?',
           contact_addr_title: "Địa chỉ quán",
@@ -4275,9 +4320,22 @@
           news_read_more: "Read more →",
           faq_eyebrow: "● FAQ",
           faq_title: 'Frequently Asked <span class="accent">Questions</span>',
+          faq_q1: "Does OLION COFFEE offer delivery?",
+          faq_a1: "Yes! We offer fast delivery via our hotline 0783 657 587 and popular food delivery apps within the Duong Quang Ham - Go Vap area. Drinks are always carefully packaged to preserve their full flavor when they reach you.",
+          faq_q2: "What is special about OLION's ingredients and coffee?",
+          faq_a2: "Olion Coffee uses 100% pure roasted Robusta & Arabica beans from Cau Dat farm, imported Japanese Matcha powder, and fresh fruit daily. We absolutely do not use artificial flavors or preservatives.",
+          faq_q3: "Can I adjust the sweetness and ice level?",
+          faq_a3: "Absolutely! You can ask the barista to adjust the sweetness level (0%, 30%, 50%, 70%, 100%) and ice amount as you prefer, or request a switch to Oatside oat milk to suit your diet.",
           reviews_eyebrow: "● Customer Voices",
           reviews_title: 'Guest <span class="accent">Impressions</span>',
           reviews_desc: "Heartfelt thoughts and genuine shares from friends who visit and love Olion.",
+          review_1_quote: '"The cafe is nestled in a quiet alley on Duong Quang Ham, stepping in feels like you\'re separated from the hustle and bustle outside. Warm amber lights, tall wooden chairs that are comfortable to sit and work in all day. The salted coffee is perfectly balanced!"',
+          review_1_role: "Van Lang University Student",
+          review_2_quote: '"The matcha latte here tastes authentically Japanese, refreshingly bitter and not overly sweet like many other places. We often drop by to read books and chat on weekends because the music is set at a very comfortable volume."',
+          review_2_role: "Graphic Designer",
+          review_3_quote: '"The egg cream bac xiu is top-notch! The creamy egg foam is addictive. The staff is friendly and enthusiastically refills our tea constantly. Will definitely be a regular here."',
+          review_3_role: "Freelancer in Go Vap",
+          review_btn: "Send your feedback →",
           contact_eyebrow: "● Visit Us",
           contact_title: 'Connect with <span class="accent">Olion</span>',
           contact_addr_title: "Our Address",
@@ -4706,9 +4764,10 @@
           const name = (document.getElementById('fbName').value || '').trim() || 'Khách ghé quán';
           const contact = (document.getElementById('fbContact').value || '').trim();
           const message = (document.getElementById('fbMessage').value || '').trim();
+          const imageDataUrl = document.getElementById('fbImageDataUrl') ? document.getElementById('fbImageDataUrl').value : '';
 
-          if (!message) {
-            showOlionToast('Vui lòng chia sẻ đôi lời cảm nhận của bạn nhé!', '✍️');
+          if (!message && !imageDataUrl) {
+            showOlionToast('Vui lòng chia sẻ đôi lời cảm nhận hoặc hình ảnh của bạn nhé!', '✍️');
             document.getElementById('fbMessage').focus();
             return;
           }
@@ -4736,12 +4795,18 @@
               name,
               contact,
               rating: chosenRating,
-              content: message
+              content: message,
+              imageDataUrl: imageDataUrl
             });
           }
 
           btnSubmitFeedback.disabled = false;
           btnSubmitFeedback.textContent = 'Gửi đánh giá ngay ✨';
+
+          // Reset image fields
+          if (typeof removeFeedbackImage === 'function') {
+            removeFeedbackImage();
+          }
 
           document.getElementById('feedbackFormArea').style.display = 'none';
           document.getElementById('feedbackSuccessArea').style.display = 'block';
