@@ -51,6 +51,10 @@
   <link rel="preload" as="image" href="assets/logo-white.webp" type="image/webp" fetchpriority="high" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
 
+  <!-- Supabase Cloud SDK (JS Client v2) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabaseClient.js" defer></script>
+
   <!-- ======== 6. STRUCTURED DATA: JSON-LD (CafeOrCoffeeShop + LocalBusiness + FAQPage) ======== -->
   <script type="application/ld+json">
   {
@@ -1389,7 +1393,26 @@
       .footer-grid { grid-template-columns: 1fr; gap: 24px; }
     }
 
+    .footer-brand {
+      display: inline-block;
+      cursor: pointer;
+      position: relative;
+    }
+
     .footer-brand img { height: 54px; width: auto; margin-bottom: 14px; }
+
+    /* Long-press visual ripple indicator for mobile admin entry */
+    .long-press-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: var(--accent-gold);
+      border-radius: 2px;
+      transition: width 0.1s linear;
+      pointer-events: none;
+    }
 
     .footer-tagline {
       font-family: 'Playfair Display', serif;
@@ -1625,6 +1648,37 @@
 
     .form-input:focus, .form-textarea:focus { border-color: var(--accent-gold); }
     .form-textarea { min-height: 100px; resize: vertical; }
+
+    /* Lucky Wheel Floating Button & Modal */
+    .wheel-float-btn {
+      position: fixed;
+      left: 18px;
+      bottom: 24px;
+      z-index: 990;
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-rust));
+      color: #FFF;
+      padding: 10px 18px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 24px rgba(216, 99, 38, 0.4);
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .wheel-float-btn:hover { transform: translateY(-3px) scale(1.03); }
+
+    @media (max-width: 767px) {
+      .wheel-float-btn {
+        bottom: 80px;
+        left: 14px;
+        padding: 8px 14px;
+        font-size: 12px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -2450,7 +2504,7 @@
           <p class="section-desc">Được chấm 4.9/5.0★ từ hơn 280+ đánh giá thực tế trên Google Maps và Facebook.</p>
         </div>
 
-        <div class="reviews-grid">
+        <div class="reviews-grid" id="reviewsGrid">
           <article class="review-card">
             <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
             <p class="review-quote">"Quán nằm trong hẻm yên tĩnh ở Dương Quảng Hàm, bước vào cảm giác như tách biệt khỏi xô bồ ngoài kia. Đèn vàng ấm mắt, bàn ghế gỗ cao ngồi làm việc cả buổi rất thoải mái. Cà phê muối béo mặn cực kỳ vừa miệng!"</p>
@@ -2595,9 +2649,11 @@
     <div class="shell">
       <div class="footer-grid">
         <div>
-          <a href="#hero" class="footer-brand" aria-label="Về đầu trang">
+          <!-- BRAND LOGO WITH LONG-PRESS / MULTI-TAP TRIGGER FOR ADMIN -->
+          <div class="footer-brand" id="footerBrandLogo" title="Nhấn giữ 2 giây hoặc nhấp 3 lần để vào Admin">
             <img src="assets/logo-white.webp" alt="Logo Olion Coffee" width="160" height="54" loading="lazy" decoding="async" />
-          </a>
+            <div class="long-press-progress" id="longPressProgress"></div>
+          </div>
           <p class="footer-tagline">Elegance in Every Sip</p>
           <p class="footer-desc">
             80/64a, Dương Quảng Hàm, An Nhơn, TP. Hồ Chí Minh.<br>
@@ -2620,7 +2676,7 @@
           <a href="https://www.facebook.com/profile.php?id=61594159312837&locale=vi_VN" target="_blank" rel="noopener noreferrer">Facebook ↗</a>
           <a href="https://www.tiktok.com/@olion.coffee" target="_blank" rel="noopener noreferrer">TikTok ↗</a>
           <a href="https://www.instagram.com/olion.coffee/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
-          <a href="admin.html">Quản trị viên (Admin)</a>
+          <a href="admin.html">Quản trị viên (Admin) 🔒</a>
         </div>
       </div>
 
@@ -2669,7 +2725,45 @@
     </a>
   </aside>
 
-  <!-- ======== 14. CUSTOMER FEEDBACK MODAL ======== -->
+  <!-- ======== 14. LUCKY WHEEL FLOATING BUTTON & MODAL ======== -->
+  <button type="button" class="wheel-float-btn" id="wheelFloatBtn" onclick="openWheelModal()" aria-label="Vòng quay may mắn">
+    <span>🎡</span>
+    <span>Quay Nhận Quà</span>
+  </button>
+
+  <div class="modal-overlay" id="wheelModal" aria-hidden="true" role="dialog" aria-labelledby="wheelTitle">
+    <div class="modal-box" style="text-align: center;">
+      <button type="button" class="modal-close" onclick="closeWheelModal()" aria-label="Đóng popup">✕</button>
+      <div class="section-eyebrow" style="margin-bottom: 8px;"><span>🎁</span> Tri Ân Khách Hàng</div>
+      <h3 class="font-serif" id="wheelTitle" style="font-size: 22px; margin-bottom: 6px; color: #FFFFFF;">Vòng Quay May Mắn Olion</h3>
+      <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 14px;">Nhập thông tin để nhận ngay mã ưu đãi đồ uống từ Olion Coffee!</p>
+
+      <div style="position: relative; width: 280px; height: 280px; margin: 0 auto 16px;">
+        <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 20px solid var(--accent-gold); z-index: 10;"></div>
+        <canvas id="wheelCanvas" width="280" height="280" style="width: 280px; height: 280px; border-radius: 50%; box-shadow: 0 8px 24px rgba(0,0,0,0.6);"></canvas>
+      </div>
+
+      <div id="wheelFormArea">
+        <div class="form-group" style="display: flex; gap: 8px;">
+          <input type="text" id="wheelName" class="form-input" placeholder="Tên của bạn" style="flex: 1;" />
+          <input type="tel" id="wheelPhone" class="form-input" placeholder="Số điện thoại *" style="flex: 1;" />
+        </div>
+        <button type="button" class="btn btn-primary" id="spinBtn" style="width: 100%; justify-content: center;">
+          Bắt đầu quay ngay 🎯
+        </button>
+      </div>
+
+      <div id="wheelResultArea" style="display: none; margin-top: 14px; background: rgba(229,154,85,0.12); border: 1px dashed var(--accent-gold); border-radius: var(--radius-md); padding: 16px;">
+        <div style="font-size: 32px; margin-bottom: 4px;">🎉</div>
+        <h4 id="wheelPrizeTitle" style="color: var(--accent-gold); font-size: 18px; font-weight: 700; margin-bottom: 4px;">Chúc mừng bạn!</h4>
+        <p id="wheelPrizeDesc" style="font-size: 13.5px; color: var(--text-cream); margin-bottom: 10px;">Bạn đã nhận được phần quà đặc biệt từ Olion Coffee</p>
+        <div id="wheelCode" style="background: #0A0F0B; border: 1px solid var(--border-gold); padding: 8px 16px; border-radius: 8px; font-family: monospace; font-size: 18px; font-weight: 800; color: var(--accent-gold); letter-spacing: 3px; display: inline-block; margin-bottom: 8px;">OLIONGIFT</div>
+        <p style="font-size: 12px; color: var(--text-muted);">Đưa mã này cho thu ngân khi thanh toán hoặc khi order qua Hotline nhé!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== 15. CUSTOMER FEEDBACK MODAL ======== -->
   <div class="modal-overlay" id="feedbackModal" aria-hidden="true" role="dialog" aria-labelledby="feedbackTitle">
     <div class="modal-box">
       <button type="button" class="modal-close" onclick="closeFeedbackModal()" aria-label="Đóng popup">✕</button>
@@ -2717,7 +2811,7 @@
     </div>
   </div>
 
-  <!-- ======== 15. PERFORMANCE OPTIMIZED SCRIPTS (DEFERRED / NON-BLOCKING) ======== -->
+  <!-- ======== 16. PERFORMANCE OPTIMIZED SCRIPTS ======== -->
   <script defer>
     document.addEventListener('DOMContentLoaded', () => {
       // 1. Scroll Progress Bar & Header Shrink
@@ -2819,7 +2913,7 @@
         });
       });
 
-      // 6. Customer Feedback Modal
+      // 6. Customer Feedback Modal & Supabase Cloud Sync
       const feedbackModal = document.getElementById('feedbackModal');
       let chosenRating = 5;
 
@@ -2859,7 +2953,7 @@
 
       const btnSubmitFeedback = document.getElementById('btnSubmitFeedback');
       if (btnSubmitFeedback) {
-        btnSubmitFeedback.addEventListener('click', () => {
+        btnSubmitFeedback.addEventListener('click', async () => {
           const name = (document.getElementById('fbName').value || '').trim() || 'Khách ghé quán';
           const contact = (document.getElementById('fbContact').value || '').trim();
           const message = (document.getElementById('fbMessage').value || '').trim();
@@ -2870,23 +2964,24 @@
             return;
           }
 
-          try {
-            const feedbacks = JSON.parse(localStorage.getItem('olion_feedbacks') || '[]');
-            feedbacks.unshift({
-              id: Date.now(),
+          btnSubmitFeedback.disabled = true;
+          btnSubmitFeedback.textContent = 'Đang gửi...';
+
+          // Tích hợp Supabase Cloud Insert (có Fallback LocalStorage)
+          if (typeof submitFeedbackToCloud === 'function') {
+            await submitFeedbackToCloud({
               name,
               contact,
               rating: chosenRating,
-              content: message,
-              date: new Date().toLocaleDateString('vi-VN')
+              content: message
             });
-            localStorage.setItem('olion_feedbacks', JSON.stringify(feedbacks));
-          } catch(e) {}
+          }
 
-          const formArea = document.getElementById('feedbackFormArea');
-          const successArea = document.getElementById('feedbackSuccessArea');
-          if (formArea) formArea.style.display = 'none';
-          if (successArea) successArea.style.display = 'block';
+          btnSubmitFeedback.disabled = false;
+          btnSubmitFeedback.textContent = 'Gửi đánh giá ngay ✨';
+
+          document.getElementById('feedbackFormArea').style.display = 'none';
+          document.getElementById('feedbackSuccessArea').style.display = 'block';
         });
       }
 
@@ -2896,25 +2991,200 @@
         });
       }
 
-      // 7. Active Dock Item Sync on Scroll
-      const dockItems = document.querySelectorAll('.dock-item');
-      const trackSections = document.querySelectorAll('section[id]');
+      // 7. Lucky Wheel Minigame Logic
+      const wheelModal = document.getElementById('wheelModal');
+      const wheelCanvas = document.getElementById('wheelCanvas');
+      const spinBtn = document.getElementById('spinBtn');
 
-      window.addEventListener('scroll', () => {
-        let currentSection = '';
-        const scrollPos = window.scrollY + 200;
+      window.openWheelModal = function() {
+        if (wheelModal) {
+          wheelModal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+          drawWheel(0);
+        }
+      };
 
-        trackSections.forEach(section => {
-          if (scrollPos >= section.offsetTop) {
-            currentSection = section.id;
+      window.closeWheelModal = function() {
+        if (wheelModal) {
+          wheelModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      };
+
+      const prizes = [
+        { text: 'Giảm 10% Tổng Bill', code: 'OLION10', color: '#E59A55' },
+        { text: 'Tặng 1 Topping Free', code: 'FREETOP', color: '#141D16' },
+        { text: 'Giảm 15% Cà Phê Muối', code: 'MUOI15', color: '#D86326' },
+        { text: 'Voucher 20.000đ', code: 'GIFT20K', color: '#1D5A38' },
+        { text: 'Tặng 1 Ly Bạc Xỉu', code: 'FREEBACXIU', color: '#E59A55' },
+        { text: 'Chúc Bạn May Mắn', code: 'THANKYOU', color: '#141D16' }
+      ];
+
+      let wheelAngle = 0;
+      let isSpinning = false;
+
+      function drawWheel(angle) {
+        if (!wheelCanvas) return;
+        const ctx = wheelCanvas.getContext('2d');
+        const numSlices = prizes.length;
+        const arc = (2 * Math.PI) / numSlices;
+        const cx = 140;
+        const cy = 140;
+        const radius = 135;
+
+        ctx.clearRect(0, 0, 280, 280);
+
+        for (let i = 0; i < numSlices; i++) {
+          const sliceAngle = angle + i * arc;
+          ctx.beginPath();
+          ctx.fillStyle = prizes[i].color;
+          ctx.moveTo(cx, cy);
+          ctx.arc(cx, cy, radius, sliceAngle, sliceAngle + arc);
+          ctx.lineTo(cx, cy);
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(229,154,85,0.4)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          // Text
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.rotate(sliceAngle + arc / 2);
+          ctx.textAlign = 'right';
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = 'bold 11px Plus Jakarta Sans, sans-serif';
+          ctx.fillText(prizes[i].text, radius - 15, 4);
+          ctx.restore();
+        }
+
+        // Center hub
+        ctx.beginPath();
+        ctx.arc(cx, cy, 20, 0, 2 * Math.PI);
+        ctx.fillStyle = '#E59A55';
+        ctx.fill();
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+
+      if (spinBtn) {
+        spinBtn.addEventListener('click', async () => {
+          if (isSpinning) return;
+          const name = (document.getElementById('wheelName').value || '').trim();
+          const phone = (document.getElementById('wheelPhone').value || '').trim();
+
+          if (!phone) {
+            alert('Vui lòng nhập số điện thoại để nhận quà nhé!');
+            document.getElementById('wheelPhone').focus();
+            return;
+          }
+
+          isSpinning = true;
+          spinBtn.disabled = true;
+
+          const prizeIndex = Math.floor(Math.random() * (prizes.length - 1)); // Always win something nice
+          const arc = (2 * Math.PI) / prizes.length;
+          const targetSliceAngle = (1.5 * Math.PI) - (prizeIndex * arc + arc / 2);
+          const totalRotations = (6 + Math.floor(Math.random() * 3)) * 2 * Math.PI;
+          const finalAngle = totalRotations + targetSliceAngle;
+
+          const duration = 4000;
+          const start = performance.now();
+
+          function animate(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const currentA = finalAngle * easeOut;
+
+            drawWheel(currentA);
+
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              isSpinning = false;
+              spinBtn.disabled = false;
+              const prize = prizes[prizeIndex];
+
+              document.getElementById('wheelPrizeTitle').textContent = `Chúc Mừng ${name || 'Bạn'}!`;
+              document.getElementById('wheelPrizeDesc').textContent = `Bạn đã trúng thưởng: ${prize.text}`;
+              document.getElementById('wheelCode').textContent = prize.code;
+
+              document.getElementById('wheelFormArea').style.display = 'none';
+              document.getElementById('wheelResultArea').style.display = 'block';
+
+              // Lưu lên Supabase Cloud Database
+              if (typeof recordLuckySpinToCloud === 'function') {
+                recordLuckySpinToCloud({
+                  customer_name: name || 'Khách quay minigame',
+                  customer_phone: phone,
+                  prize_name: prize.text,
+                  promo_code: prize.code
+                });
+              }
+            }
+          }
+          requestAnimationFrame(animate);
+        });
+      }
+
+      // 8. Mobile Admin Entry Triggers (Long Press & Multi-tap)
+      const footerBrand = document.getElementById('footerBrandLogo');
+      const longPressBar = document.getElementById('longPressProgress');
+      let pressTimer = null;
+      let pressProgressInterval = null;
+      let pressProgress = 0;
+      let clickCount = 0;
+      let clickTimer = null;
+
+      function startLongPress() {
+        pressProgress = 0;
+        if (longPressBar) longPressBar.style.width = '0%';
+        
+        pressProgressInterval = setInterval(() => {
+          pressProgress += 5;
+          if (longPressBar) longPressBar.style.width = pressProgress + '%';
+        }, 100);
+
+        pressTimer = setTimeout(() => {
+          clearInterval(pressProgressInterval);
+          if (navigator.vibrate) navigator.vibrate(100);
+          window.location.href = 'admin.html';
+        }, 2000); // 2 seconds hold
+      }
+
+      function cancelLongPress() {
+        clearTimeout(pressTimer);
+        clearInterval(pressProgressInterval);
+        if (longPressBar) longPressBar.style.width = '0%';
+      }
+
+      if (footerBrand) {
+        // Touch events for mobile
+        footerBrand.addEventListener('touchstart', startLongPress, { passive: true });
+        footerBrand.addEventListener('touchend', cancelLongPress);
+        footerBrand.addEventListener('touchcancel', cancelLongPress);
+
+        // Click backup for desktop
+        footerBrand.addEventListener('click', () => {
+          clickCount++;
+          clearTimeout(clickTimer);
+          if (clickCount >= 3) {
+            clickCount = 0;
+            window.location.href = 'admin.html';
+          } else {
+            clickTimer = setTimeout(() => { clickCount = 0; }, 1200);
           }
         });
+      }
 
-        dockItems.forEach(item => {
-          const href = item.getAttribute('href');
-          item.classList.toggle('active', href === `#${currentSection}`);
-        });
-      }, { passive: true });
+      // Keyboard Shortcut: Ctrl+Shift+A or Cmd+Shift+A
+      document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'a' || e.key === 'A')) {
+          e.preventDefault();
+          window.location.href = 'admin.html';
+        }
+      });
     });
   </script>
 </body>
