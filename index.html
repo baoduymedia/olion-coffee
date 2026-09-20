@@ -873,8 +873,12 @@
 
     .signature-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
+    }
+
+    @media (max-width: 1024px) and (min-width: 768px) {
+      .signature-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
     }
 
     @media (max-width: 767px) {
@@ -2863,7 +2867,7 @@
           <h2 class="section-title" data-i18n="sig_title">
             Món <span class="accent">Signature</span> của quán
           </h2>
-          <p class="section-desc" data-i18n="sig_desc">Hai công thức độc quyền được khách hàng yêu thích nhất tại Olion Coffee.</p>
+          <p class="section-desc" data-i18n="sig_desc">Ba công thức độc quyền được khách hàng yêu thích nhất tại Olion Coffee.</p>
         </div>
 
         <div class="signature-grid">
@@ -2888,6 +2892,18 @@
               <span class="signature-badge">SIGNATURE</span>
               <h3 class="signature-card-title" data-i18n="sig_item_2_name">BẠC XỈU KEM TRỨNG</h3>
               <p class="signature-card-desc" data-i18n="sig_item_2_desc">Cà phê sữa thơm nồng kết hợp lớp foam kem trứng béo ngậy ngọt dịu, đánh thức mọi giác quan trong từng ngụm thưởng thức.</p>
+            </div>
+          </article>
+
+          <article class="signature-card">
+            <div class="signature-card-bg">
+              <img src="assets/menu/matcha_latte.webp" alt="Matcha Latte Olion — Đồ uống Signature thanh mát chuẩn Nhật" width="800" height="600" loading="lazy" decoding="async" />
+            </div>
+            <div class="signature-card-scrim"></div>
+            <div class="signature-card-content">
+              <span class="signature-badge">SIGNATURE</span>
+              <h3 class="signature-card-title" data-i18n="sig_item_3_name">MATCHA LATTE</h3>
+              <p class="signature-card-desc" data-i18n="sig_item_3_desc">Matcha Nhật Bản thượng hạng thơm thanh đậm vị quyện cùng sữa tươi béo dịu, tạo nên cảm giác thư thái tươi mát trọn vẹn.</p>
             </div>
           </article>
         </div>
@@ -4184,11 +4200,13 @@
           about_feat_4_desc: "Nụ cười và sự chu đáo mỗi ngày",
           sig_eyebrow: "✦ Món Bán Chạy",
           sig_title: 'Món <span class="accent">Signature</span> của quán',
-          sig_desc: "Hai công thức độc quyền được khách hàng yêu thích nhất tại Olion Coffee.",
+          sig_desc: "Ba công thức độc quyền được khách hàng yêu thích nhất tại Olion Coffee.",
           sig_item_1_name: "CÀ PHÊ MUỐI OLION",
           sig_item_1_desc: "Cà phê Robusta rang mộc đậm đà hòa quyện cùng lớp kem muối béo mặn độc quyền của Olion, tạo nên trải nghiệm vị giác đầy lôi cuốn.",
           sig_item_2_name: "BẠC XỈU KEM TRỨNG",
           sig_item_2_desc: "Cà phê sữa thơm nồng kết hợp lớp foam kem trứng béo ngậy ngọt dịu, đánh thức mọi giác quan trong từng ngụm thưởng thức.",
+          sig_item_3_name: "MATCHA LATTE",
+          sig_item_3_desc: "Matcha Nhật Bản thượng hạng thơm thanh đậm vị quyện cùng sữa tươi béo dịu, tạo nên cảm giác thư thái tươi mát trọn vẹn.",
           menu_eyebrow: "● Thực Đơn Đa Dạng",
           menu_title: 'Khám phá <span class="accent">món ngon</span> yêu thích',
           menu_desc: "Cà phê rang xay, trà sữa đậm vị, nước ép và sữa chua tươi mát — chọn danh mục để xem chi tiết.",
@@ -4303,11 +4321,13 @@
           about_feat_4_desc: "Warm smiles and attentive care every day",
           sig_eyebrow: "✦ Bestsellers",
           sig_title: 'House <span class="accent">Signature</span> Drinks',
-          sig_desc: "Two exclusive recipes most beloved by guests at Olion Coffee.",
+          sig_desc: "Three exclusive recipes most beloved by guests at Olion Coffee.",
           sig_item_1_name: "OLION SALTED CREAM COFFEE",
           sig_item_1_desc: "Bold artisanal Robusta coffee harmoniously blended with Olion's proprietary velvety salted cream, creating an irresistible flavor journey.",
           sig_item_2_name: "EGG FOAM WHITE COFFEE",
           sig_item_2_desc: "Aromatic sweet milk coffee topped with rich, airy egg custard foam, awakening every sensation with each velvety sip.",
+          sig_item_3_name: "JAPANESE MATCHA LATTE",
+          sig_item_3_desc: "Premium ceremonial-grade Japanese matcha infused with silky fresh milk, delivering a crisp, refreshing, and calming indulgence.",
           menu_eyebrow: "● Diverse Menu",
           menu_title: 'Discover your <span class="accent">favorite drink</span>',
           menu_desc: "From bold traditional coffee and refreshing fruit teas to creamy ice-blended frappes and delightful snacks.",
