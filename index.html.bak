@@ -42,9 +42,6 @@
   <link rel="icon" href="assets/logo-transparent.png" type="image/png" />
   <link rel="apple-touch-icon" href="assets/logo-transparent.png" />
 
-  <!-- Vercel Web Analytics -->
-  <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
-
   <!-- Structured Data: Local Business + Cafe + FAQ -->
   <script type="application/ld+json">
   {
