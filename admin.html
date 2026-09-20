@@ -843,7 +843,7 @@
         </div>
         <div class="nav-item" data-tab="customers">
           <span class="nav-icon">👑</span>
-          <span class="nav-text">Khách hàng & Tích điểm</span>
+          <span class="nav-text">Quản lý Tích điểm</span>
           <span class="nav-pill-badge" id="sidebarCustomerBadge">4</span>
         </div>
         <div class="nav-item" data-tab="feedbacks">
@@ -1061,13 +1061,13 @@
           </div>
         </section>
 
-        <!-- ======== TAB 3: KHÁCH HÀNG & TÍCH ĐIỂM (LOYALTY) ======== -->
+        <!-- ======== TAB 3: QUẢN LÝ TÍCH ĐIỂM (LOYALTY) ======== -->
         <section class="tab-content" id="tab-customers">
           <div class="card">
             <div class="card-header">
               <div>
-                <h3 class="card-title">👑 Khách Hàng Thân Thiết & Tích Điểm (Loyalty Program)</h3>
-                <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Tra cứu số điện thoại, cộng điểm khi mua nước, trừ điểm đổi voucher và quản lý hạng thẻ</p>
+                <h3 class="card-title">👑 Quản Lý Tích Điểm (Loyalty Program)</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Tra cứu số điện thoại khách hàng, cộng điểm khi mua nước và đổi thưởng trừ điểm</p>
               </div>
               <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                 <button type="button" class="btn-primary" onclick="openLoyaltyModal()" style="background: linear-gradient(135deg, #9B59B6, #8E44AD);">
@@ -2339,6 +2339,13 @@
         reason,
         loyaltyMode === 'earn' ? 'earn' : 'redeem'
       );
+
+      // Đồng bộ vào bảng loyalty_members nếu có
+      if (loyaltyMode === 'earn' && window.addLoyaltyMemberPoints) {
+        await window.addLoyaltyMemberPoints(targetPhone, pointsDelta, selectedLoyaltyCustomer?.name || 'Khách hàng');
+      } else if (loyaltyMode === 'redeem' && window.redeemLoyaltyMemberPoints) {
+        await window.redeemLoyaltyMemberPoints(targetPhone, Math.abs(pointsDelta), reason);
+      }
 
       showToast(pointsDelta > 0 ? `🎉 Đã cộng +${pointsDelta} điểm cho khách ${targetPhone}!` : `✨ Đã trừ ${Math.abs(pointsDelta)} điểm thành công!`);
       closeLoyaltyModal();

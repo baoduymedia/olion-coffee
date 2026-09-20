@@ -885,3 +885,284 @@ async function fetchLuckySpinsFromCloud() {
   const minigameLeads = customers.filter(c => (c.source || '').includes('Minigame'));
   return { source: 'local', data: minigameLeads };
 }
+
+// =========================================================================
+// 5. MODULE THÀNH VIÊN TÍCH ĐIỂM (LOYALTY MEMBERS)
+// =========================================================================
+
+const DEFAULT_LOYALTY_MEMBERS = [
+  { id: 1, phone_number: '0908123456', customer_name: 'Nguyễn Minh Anh', points: 80, total_visits: 5 },
+  { id: 2, phone_number: '0912334455', customer_name: 'Trần Hoàng Nam', points: 35, total_visits: 2 },
+  { id: 3, phone_number: '0912345678', customer_name: 'Lê Thanh Trúc', points: 120, total_visits: 9 },
+  { id: 4, phone_number: '0978999888', customer_name: 'Phạm Quốc Bảo', points: 15, total_visits: 1 }
+];
+
+/**
+ * Tra cứu thông tin điểm tích lũy của khách hàng theo số điện thoại
+ */
+async function lookupLoyaltyMember(phone) {
+  const cleanPhone = (phone || '').replace(/[^0-9]/g, '').trim();
+  if (!cleanPhone) {
+    return { success: false, error: 'Vui lòng nhập số điện thoại hợp lệ.' };
+  }
+
+  const client = supabaseClient || initSupabase();
+
+  // 1. Tìm trên Supabase table 'loyalty_members'
+  if (client) {
+    try {
+      const { data, error } = await client
+        .from('loyalty_members')
+        .select('*')
+        .eq('phone_number', cleanPhone)
+        .maybeSingle();
+
+      if (!error && data) {
+        return {
+          success: true,
+          source: 'supabase',
+          member: {
+            id: data.id,
+            phone_number: data.phone_number,
+            customer_name: data.customer_name || 'Khách hàng thân thiết',
+            points: Number(data.points) || 0,
+            total_visits: Number(data.total_visits) || 1
+          }
+        };
+      }
+
+      // Fallback kiểm tra bảng 'customers' nếu chưa có trong 'loyalty_members'
+      const { data: custData } = await client
+        .from('customers')
+        .select('*')
+        .eq('contact', cleanPhone)
+        .maybeSingle();
+
+      if (custData) {
+        return {
+          success: true,
+          source: 'supabase_customers',
+          member: {
+            id: custData.id,
+            phone_number: custData.contact,
+            customer_name: custData.name || 'Khách hàng thân thiết',
+            points: Number(custData.points) || 0,
+            total_visits: 1
+          }
+        };
+      }
+    } catch (err) {
+      console.warn('⚠️ [Supabase] Lỗi tra cứu loyalty_members:', err.message);
+    }
+  }
+
+  // 2. Fallback LocalStorage
+  try {
+    let local = JSON.parse(localStorage.getItem('olion_loyalty_members') || '[]');
+    if (!local || local.length === 0) {
+      local = DEFAULT_LOYALTY_MEMBERS;
+      localStorage.setItem('olion_loyalty_members', JSON.stringify(local));
+    }
+    const match = local.find(m => m.phone_number === cleanPhone);
+    if (match) {
+      return { success: true, source: 'local', member: match };
+    }
+
+    // Kiểm tra olion_customers
+    let localCusts = JSON.parse(localStorage.getItem('olion_customers') || '[]');
+    const matchCust = localCusts.find(c => c.contact === cleanPhone);
+    if (matchCust) {
+      return {
+        success: true,
+        source: 'local_customers',
+        member: {
+          phone_number: matchCust.contact,
+          customer_name: matchCust.name || 'Khách hàng thân thiết',
+          points: Number(matchCust.points) || 0,
+          total_visits: 1
+        }
+      };
+    }
+  } catch (e) {}
+
+  return { success: false, not_found: true, message: 'Chưa tìm thấy thông tin tích điểm với số điện thoại này. Bạn có thể ghé quán order đồ uống để tích điểm ngay lần đầu tiên!' };
+}
+
+/**
+ * Cộng điểm tích lũy cho khách hàng (khi mua nước)
+ */
+async function addLoyaltyMemberPoints(phone, pointsDelta, customerName = '') {
+  const cleanPhone = (phone || '').replace(/[^0-9]/g, '').trim();
+  const delta = Math.max(1, Number(pointsDelta) || 0);
+  if (!cleanPhone) return { success: false, error: 'Số điện thoại không hợp lệ' };
+
+  const client = supabaseClient || initSupabase();
+  let updatedMember = null;
+
+  // Cập nhật LocalStorage
+  try {
+    let local = JSON.parse(localStorage.getItem('olion_loyalty_members') || '[]');
+    if (!local.length) local = DEFAULT_LOYALTY_MEMBERS;
+    let idx = local.findIndex(m => m.phone_number === cleanPhone);
+    if (idx !== -1) {
+      local[idx].points = (Number(local[idx].points) || 0) + delta;
+      local[idx].total_visits = (Number(local[idx].total_visits) || 1) + 1;
+      if (customerName) local[idx].customer_name = customerName;
+      updatedMember = local[idx];
+    } else {
+      updatedMember = {
+        id: Date.now(),
+        phone_number: cleanPhone,
+        customer_name: customerName || 'Khách hàng thân thiết',
+        points: delta,
+        total_visits: 1
+      };
+      local.unshift(updatedMember);
+    }
+    localStorage.setItem('olion_loyalty_members', JSON.stringify(local));
+  } catch (e) {}
+
+  if (client) {
+    try {
+      const { data: existing } = await client
+        .from('loyalty_members')
+        .select('*')
+        .eq('phone_number', cleanPhone)
+        .maybeSingle();
+
+      if (existing) {
+        const newPoints = (Number(existing.points) || 0) + delta;
+        const newVisits = (Number(existing.total_visits) || 1) + 1;
+        const { data, error } = await client
+          .from('loyalty_members')
+          .update({
+            points: newPoints,
+            total_visits: newVisits,
+            customer_name: customerName || existing.customer_name,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', existing.id)
+          .select()
+          .single();
+
+        if (!error && data) return { success: true, source: 'supabase', member: data };
+      } else {
+        const { data, error } = await client
+          .from('loyalty_members')
+          .insert([{
+            phone_number: cleanPhone,
+            customer_name: customerName || 'Khách hàng thân thiết',
+            points: delta,
+            total_visits: 1
+          }])
+          .select()
+          .single();
+
+        if (!error && data) return { success: true, source: 'supabase', member: data };
+      }
+    } catch (err) {
+      console.warn('⚠️ [Supabase] Lỗi cộng điểm loyalty_members:', err.message);
+    }
+  }
+
+  return { success: true, source: 'local', member: updatedMember };
+}
+
+/**
+ * Đổi thưởng (Trừ điểm khi khách dùng voucher/ly miễn phí)
+ */
+async function redeemLoyaltyMemberPoints(phone, pointsToRedeem, rewardReason = 'Đổi quà') {
+  const cleanPhone = (phone || '').replace(/[^0-9]/g, '').trim();
+  const redeemAmount = Math.max(1, Number(pointsToRedeem) || 0);
+  if (!cleanPhone) return { success: false, error: 'Số điện thoại không hợp lệ' };
+
+  const client = supabaseClient || initSupabase();
+  let updatedMember = null;
+
+  // LocalStorage check & update
+  try {
+    let local = JSON.parse(localStorage.getItem('olion_loyalty_members') || '[]');
+    if (!local.length) local = DEFAULT_LOYALTY_MEMBERS;
+    let idx = local.findIndex(m => m.phone_number === cleanPhone);
+    if (idx !== -1) {
+      if ((local[idx].points || 0) < redeemAmount) {
+        return { success: false, error: `Số điểm hiện tại (${local[idx].points}) không đủ để đổi ưu đãi này (${redeemAmount} điểm).` };
+      }
+      local[idx].points -= redeemAmount;
+      updatedMember = local[idx];
+      localStorage.setItem('olion_loyalty_members', JSON.stringify(local));
+    }
+  } catch (e) {}
+
+  if (client) {
+    try {
+      const { data: existing, error: fetchErr } = await client
+        .from('loyalty_members')
+        .select('*')
+        .eq('phone_number', cleanPhone)
+        .maybeSingle();
+
+      if (!fetchErr && existing) {
+        if ((existing.points || 0) < redeemAmount) {
+          return { success: false, error: `Số điểm hiện tại (${existing.points}) không đủ để đổi ưu đãi này (${redeemAmount} điểm).` };
+        }
+        const newPoints = existing.points - redeemAmount;
+        const { data, error } = await client
+          .from('loyalty_members')
+          .update({ points: newPoints, updated_at: new Date().toISOString() })
+          .eq('id', existing.id)
+          .select()
+          .single();
+
+        if (!error && data) return { success: true, source: 'supabase', member: data };
+      }
+    } catch (err) {
+      console.warn('⚠️ [Supabase] Lỗi trừ điểm loyalty_members:', err.message);
+    }
+  }
+
+  if (updatedMember) {
+    return { success: true, source: 'local', member: updatedMember };
+  }
+  return { success: false, error: 'Không tìm thấy khách hàng để trừ điểm.' };
+}
+
+/**
+ * Lấy danh sách thành viên tích điểm cho Admin
+ */
+async function fetchLoyaltyMembersFromCloud() {
+  const client = supabaseClient || initSupabase();
+  if (client) {
+    try {
+      const { data, error } = await client
+        .from('loyalty_members')
+        .select('*')
+        .order('points', { ascending: false });
+
+      if (!error && data && data.length > 0) {
+        localStorage.setItem('olion_loyalty_members', JSON.stringify(data));
+        return { source: 'supabase', data };
+      }
+    } catch (err) {
+      console.warn('⚠️ [Supabase] Lỗi tải danh sách loyalty_members:', err.message);
+    }
+  }
+
+  try {
+    let local = JSON.parse(localStorage.getItem('olion_loyalty_members') || '[]');
+    if (!local || local.length === 0) {
+      local = DEFAULT_LOYALTY_MEMBERS;
+      localStorage.setItem('olion_loyalty_members', JSON.stringify(local));
+    }
+    return { source: 'local', data: local };
+  } catch (e) {
+    return { source: 'local', data: DEFAULT_LOYALTY_MEMBERS };
+  }
+}
+
+// Gán các hàm lên window để truy cập từ index.html và admin.html
+window.lookupLoyaltyMember = lookupLoyaltyMember;
+window.addLoyaltyMemberPoints = addLoyaltyMemberPoints;
+window.redeemLoyaltyMemberPoints = redeemLoyaltyMemberPoints;
+window.fetchLoyaltyMembersFromCloud = fetchLoyaltyMembersFromCloud;
+

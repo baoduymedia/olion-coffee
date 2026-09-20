@@ -2432,6 +2432,63 @@
     .reveal-delay-2 { transition-delay: 0.16s; }
     .reveal-delay-3 { transition-delay: 0.24s; }
     .reveal-delay-4 { transition-delay: 0.32s; }
+
+    /* ======== LANGUAGE TOGGLE BUTTON ======== */
+    .lang-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-full);
+      padding: 3px 5px;
+      gap: 3px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.25s ease;
+    }
+    .lang-toggle-btn:hover {
+      background: rgba(229, 154, 85, 0.12);
+      border-color: var(--accent-gold-light);
+    }
+    .lang-pill {
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .lang-pill.active {
+      background: var(--accent-gold);
+      color: #0A0F0B;
+      box-shadow: 0 2px 8px rgba(229, 154, 85, 0.3);
+    }
+
+    /* Loyalty Nav Button */
+    .loyalty-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border-color: rgba(229, 154, 85, 0.35);
+      color: var(--accent-gold-light);
+    }
+    .loyalty-nav-btn:hover {
+      border-color: var(--accent-gold);
+      color: #FFFFFF;
+      background: rgba(229, 154, 85, 0.15);
+    }
+
+    /* Loyalty Modal Progress Box */
+    .loyalty-progress-box {
+      background: rgba(229, 154, 85, 0.08);
+      border: 1px solid rgba(229, 154, 85, 0.25);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      margin-top: 14px;
+    }
   </style>
 </head>
 <body>
@@ -2453,22 +2510,33 @@
       </a>
 
       <nav class="header-nav" id="headerNav" aria-label="Thanh điều hướng chính">
-        <a href="#about" class="nav-link">Về Olion</a>
-        <a href="#signature" class="nav-link">Signature</a>
-        <a href="#menu" class="nav-link">Thực đơn</a>
-        <a href="#spaces" class="nav-link">Không gian</a>
-        <a href="#news" class="nav-link">Tin tức</a>
-        <a href="#faq" class="nav-link">Hỏi đáp</a>
-        <a href="#contact" class="nav-link">Liên hệ</a>
+        <a href="#about" class="nav-link" data-i18n="nav_about">Về Olion</a>
+        <a href="#signature" class="nav-link" data-i18n="nav_signature">Signature</a>
+        <a href="#menu" class="nav-link" data-i18n="nav_menu">Thực đơn</a>
+        <a href="#spaces" class="nav-link" data-i18n="nav_spaces">Không gian</a>
+        <a href="#news" class="nav-link" data-i18n="nav_news">Tin tức</a>
+        <a href="#faq" class="nav-link" data-i18n="nav_faq">Hỏi đáp</a>
+        <a href="#contact" class="nav-link" data-i18n="nav_contact">Liên hệ</a>
       </nav>
 
       <div class="header-actions">
+        <!-- Language Switcher -->
+        <div class="lang-toggle-btn" id="langToggleBtn" onclick="toggleLanguage()" title="Chuyển đổi ngôn ngữ / Switch Language" role="button" tabindex="0" aria-label="Đổi ngôn ngữ">
+          <span class="lang-pill active" id="langPillVi">🇻🇳 VI</span>
+          <span class="lang-pill" id="langPillEn">🇬🇧 EN</span>
+        </div>
+
+        <!-- Loyalty Points Lookup Button -->
+        <button type="button" class="btn btn-ghost loyalty-nav-btn" onclick="openLoyaltyModal()" style="padding: 8px 14px; min-height: 38px; font-size: 12.5px;" aria-label="Tra cứu điểm tích lũy">
+          <span>👑</span> <span data-i18n="nav_loyalty">Tích điểm</span>
+        </button>
+
         <a href="tel:0783657587" class="header-phone-pill" title="Gọi Hotline đặt bàn và giao hàng">
           <span>📞</span>
           <span>0783 657 587</span>
         </a>
-        <button type="button" class="btn btn-ghost" onclick="openFeedbackModal()" style="padding: 8px 18px; min-height: 38px; font-size: 12.5px;" aria-label="Mở bảng góp ý quán">
-          Góp ý quán
+        <button type="button" class="btn btn-ghost" onclick="openFeedbackModal()" style="padding: 8px 16px; min-height: 38px; font-size: 12.5px;" aria-label="Mở bảng góp ý quán">
+          <span data-i18n="nav_feedback">Góp ý quán</span>
         </button>
         <button type="button" class="burger-btn" id="burgerBtn" aria-label="Mở menu điều hướng mobile">
           <span></span>
@@ -2484,22 +2552,32 @@
   <aside class="mobile-drawer" id="mobileDrawer" aria-label="Menu di động">
     <button type="button" class="drawer-close" id="drawerClose" aria-label="Đóng menu">✕</button>
     <div class="drawer-nav">
-      <a href="#hero" class="drawer-link">Trang chủ <span>→</span></a>
-      <a href="#about" class="drawer-link">Về Olion Coffee <span>→</span></a>
-      <a href="#signature" class="drawer-link">Món Signature <span>→</span></a>
-      <a href="#menu" class="drawer-link">Thực đơn đồ uống <span>→</span></a>
-      <a href="javascript:void(0)" onclick="toggleDrawer(false); openMenuBoard();" class="drawer-link" style="color: var(--accent-gold); font-weight: 700;">📋 Bảng Menu Tổng (Toàn Trang) <span>→</span></a>
-      <a href="#spaces" class="drawer-link">Không gian quán <span>→</span></a>
-      <a href="#news" class="drawer-link">Tin tức & Sự kiện <span>→</span></a>
-      <a href="#faq" class="drawer-link">Hỏi đáp <span>→</span></a>
-      <a href="#contact" class="drawer-link">Thông tin liên hệ <span>→</span></a>
+      <!-- Mobile Language Switcher Row -->
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0 14px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+        <span style="font-size: 13px; color: var(--text-muted);" data-i18n="drawer_lang_label">Ngôn ngữ / Language:</span>
+        <div class="lang-toggle-btn" onclick="toggleLanguage()">
+          <span class="lang-pill active" id="langPillViMobile">🇻🇳 VI</span>
+          <span class="lang-pill" id="langPillEnMobile">🇬🇧 EN</span>
+        </div>
+      </div>
+
+      <a href="#hero" class="drawer-link"><span data-i18n="drawer_home">Trang chủ</span> <span>→</span></a>
+      <a href="#about" class="drawer-link"><span data-i18n="drawer_about">Về Olion Coffee</span> <span>→</span></a>
+      <a href="#signature" class="drawer-link"><span data-i18n="drawer_signature">Món Signature</span> <span>→</span></a>
+      <a href="#menu" class="drawer-link"><span data-i18n="drawer_menu">Thực đơn đồ uống</span> <span>→</span></a>
+      <a href="javascript:void(0)" onclick="toggleDrawer(false); openMenuBoard();" class="drawer-link" style="color: var(--accent-gold); font-weight: 700;"><span data-i18n="drawer_menu_board">📋 Bảng Menu Tổng (Toàn Trang)</span> <span>→</span></a>
+      <a href="javascript:void(0)" onclick="toggleDrawer(false); openLoyaltyModal();" class="drawer-link" style="color: #F3B378; font-weight: 700;"><span data-i18n="drawer_loyalty">👑 Tra Cứu Điểm Tích Lũy</span> <span>→</span></a>
+      <a href="#spaces" class="drawer-link"><span data-i18n="drawer_spaces">Không gian quán</span> <span>→</span></a>
+      <a href="#news" class="drawer-link"><span data-i18n="drawer_news">Tin tức & Sự kiện</span> <span>→</span></a>
+      <a href="#faq" class="drawer-link"><span data-i18n="drawer_faq">Hỏi đáp</span> <span>→</span></a>
+      <a href="#contact" class="drawer-link"><span data-i18n="drawer_contact">Thông tin liên hệ</span> <span>→</span></a>
     </div>
     <div class="drawer-footer">
       <a href="tel:0783657587" class="btn btn-primary" style="width: 100%;">
-        Gọi Hotline: 0783 657 587
+        <span data-i18n="drawer_call">Gọi Hotline: 0783 657 587</span>
       </a>
       <button type="button" class="btn btn-ghost" onclick="toggleDrawer(); openFeedbackModal();" style="width: 100%;">
-        Góp ý & Đánh giá
+        <span data-i18n="drawer_feedback">Góp ý & Đánh giá</span>
       </button>
     </div>
   </aside>
@@ -2521,20 +2599,20 @@
       <div class="hero-overlay"></div>
 
       <div class="shell hero-content">
-        <div class="section-eyebrow">
+        <div class="section-eyebrow" data-i18n="hero_eyebrow">
           <span>✦</span> OLION COFFEE · ELEGANCE IN EVERY SIP
         </div>
         <!-- SINGLE PRIMARY H1 FOR TECHNICAL & LOCAL SEO -->
-        <h1 class="hero-title">
+        <h1 class="hero-title" data-i18n="hero_title">
           OLION COFFEE <span style="color: var(--accent-gold); font-weight: 300;">—</span><br>
           <span class="italic-gold">Elegance in Every Sip</span>
         </h1>
-        <p class="hero-subtitle">
+        <p class="hero-subtitle" data-i18n="hero_subtitle">
           Quán cà phê đẹp ở Dương Quảng Hàm, Gò Vấp với không gian sang trọng và đồ uống thủ công tinh tế. Thưởng thức hương vị nguyên bản, đắm chìm trong góc nhỏ tĩnh lặng giữa lòng Sài Gòn.
         </p>
         <div class="hero-cta-group">
-          <a href="#menu" class="btn btn-primary">Khám phá thực đơn →</a>
-          <a href="#about" class="btn btn-ghost">Câu chuyện quán</a>
+          <a href="#menu" class="btn btn-primary" data-i18n="hero_cta_menu">Khám phá thực đơn →</a>
+          <a href="#about" class="btn btn-ghost" data-i18n="hero_cta_about">Câu chuyện quán</a>
         </div>
       </div>
 
@@ -2551,19 +2629,19 @@
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-number">39<span class="plus">+</span></div>
-            <div class="stat-label">Món trong menu</div>
+            <div class="stat-label" data-i18n="stats_items_count">Món trong menu</div>
           </div>
           <div class="stat-card">
             <div class="stat-number">7</div>
-            <div class="stat-label">Danh mục đồ uống</div>
+            <div class="stat-label" data-i18n="stats_categories">Danh mục đồ uống</div>
           </div>
           <div class="stat-card">
             <div class="stat-number">100<span class="plus">%</span></div>
-            <div class="stat-label">Pha thủ công</div>
+            <div class="stat-label" data-i18n="stats_handcrafted">Pha thủ công</div>
           </div>
           <div class="stat-card">
             <div class="stat-number">365</div>
-            <div class="stat-label">Ngày mở cửa/năm</div>
+            <div class="stat-label" data-i18n="stats_days_open">Ngày mở cửa/năm</div>
           </div>
         </div>
       </div>
@@ -2608,43 +2686,43 @@
       <div class="shell">
         <div class="about-grid">
           <div class="about-text-col">
-            <div class="section-eyebrow">
+            <div class="section-eyebrow" data-i18n="about_eyebrow">
               <span>●</span> Về Olion Coffee
             </div>
-            <h2 class="section-title">
+            <h2 class="section-title" data-i18n="about_title">
               Chắt chiu từng giọt,<br>
               <span class="accent">trao hương vị tinh tế</span>.
             </h2>
-            <p class="about-desc">
+            <p class="about-desc" data-i18n="about_desc">
               Trời trưa hơi gắt, ghé OLION thả lưng xuống chiếc ghế quen, ngắm ánh đèn vàng dịu mắt và làm ngụm nước mát lạnh rồi tỉnh tiếp nha. Không chỉ là cà phê, OLION muốn đem tới trải nghiệm trọn vẹn: đồ uống pha tay tỉ mỉ, không gian ấm cúng và những khoảnh khắc thật chậm.
             </p>
             <div class="about-features-grid">
               <div class="feature-pill">
                 <div class="feature-pill-icon">☕</div>
                 <div>
-                  <h3 class="feature-pill-title">Pha thủ công</h3>
-                  <p class="feature-pill-desc">Từng ly được pha chế tỉ mỉ tại quầy</p>
+                  <h3 class="feature-pill-title" data-i18n="about_feat_1_title">Pha thủ công</h3>
+                  <p class="feature-pill-desc" data-i18n="about_feat_1_desc">Từng ly được pha chế tỉ mỉ tại quầy</p>
                 </div>
               </div>
               <div class="feature-pill">
                 <div class="feature-pill-icon">🌿</div>
                 <div>
-                  <h3 class="feature-pill-title">Nguyên liệu chọn lọc</h3>
-                  <p class="feature-pill-desc">Hạt mộc rang xay & trà cao cấp</p>
+                  <h3 class="feature-pill-title" data-i18n="about_feat_2_title">Nguyên liệu chọn lọc</h3>
+                  <p class="feature-pill-desc" data-i18n="about_feat_2_desc">Hạt mộc rang xay & trà cao cấp</p>
                 </div>
               </div>
               <div class="feature-pill">
                 <div class="feature-pill-icon">🪑</div>
                 <div>
-                  <h3 class="feature-pill-title">Không gian yên tĩnh</h3>
-                  <p class="feature-pill-desc">Góc làm việc & thư giãn ấm cúng</p>
+                  <h3 class="feature-pill-title" data-i18n="about_feat_3_title">Không gian yên tĩnh</h3>
+                  <p class="feature-pill-desc" data-i18n="about_feat_3_desc">Góc làm việc & thư giãn ấm cúng</p>
                 </div>
               </div>
               <div class="feature-pill">
                 <div class="feature-pill-icon">✨</div>
                 <div>
-                  <h3 class="feature-pill-title">Phục vụ tận tâm</h3>
-                  <p class="feature-pill-desc">Nụ cười và sự chu đáo mỗi ngày</p>
+                  <h3 class="feature-pill-title" data-i18n="about_feat_4_title">Phục vụ tận tâm</h3>
+                  <p class="feature-pill-desc" data-i18n="about_feat_4_desc">Nụ cười và sự chu đáo mỗi ngày</p>
                 </div>
               </div>
             </div>
@@ -2669,13 +2747,13 @@
     <section class="signature-section" id="signature" aria-label="Món Signature đặc sắc">
       <div class="shell">
         <div class="section-header">
-          <div class="section-eyebrow">
+          <div class="section-eyebrow" data-i18n="sig_eyebrow">
             <span>✦</span> Món Bán Chạy
           </div>
-          <h2 class="section-title">
+          <h2 class="section-title" data-i18n="sig_title">
             Món <span class="accent">Signature</span> của quán
           </h2>
-          <p class="section-desc">Hai công thức độc quyền được khách hàng yêu thích nhất tại Olion Coffee.</p>
+          <p class="section-desc" data-i18n="sig_desc">Hai công thức độc quyền được khách hàng yêu thích nhất tại Olion Coffee.</p>
         </div>
 
         <div class="signature-grid">
@@ -2686,8 +2764,8 @@
             <div class="signature-card-scrim"></div>
             <div class="signature-card-content">
               <span class="signature-badge">SIGNATURE</span>
-              <h3 class="signature-card-title">CÀ PHÊ MUỐI OLION</h3>
-              <p class="signature-card-desc">Cà phê Robusta rang mộc đậm đà hòa quyện cùng lớp kem muối béo mặn độc quyền của Olion, tạo nên trải nghiệm vị giác đầy lôi cuốn.</p>
+              <h3 class="signature-card-title" data-i18n="sig_item_1_name">CÀ PHÊ MUỐI OLION</h3>
+              <p class="signature-card-desc" data-i18n="sig_item_1_desc">Cà phê Robusta rang mộc đậm đà hòa quyện cùng lớp kem muối béo mặn độc quyền của Olion, tạo nên trải nghiệm vị giác đầy lôi cuốn.</p>
             </div>
           </article>
 
@@ -2698,8 +2776,8 @@
             <div class="signature-card-scrim"></div>
             <div class="signature-card-content">
               <span class="signature-badge">SIGNATURE</span>
-              <h3 class="signature-card-title">BẠC XỈU KEM TRỨNG</h3>
-              <p class="signature-card-desc">Cà phê sữa thơm nồng kết hợp lớp foam kem trứng béo ngậy ngọt dịu, đánh thức mọi giác quan trong từng ngụm thưởng thức.</p>
+              <h3 class="signature-card-title" data-i18n="sig_item_2_name">BẠC XỈU KEM TRỨNG</h3>
+              <p class="signature-card-desc" data-i18n="sig_item_2_desc">Cà phê sữa thơm nồng kết hợp lớp foam kem trứng béo ngậy ngọt dịu, đánh thức mọi giác quan trong từng ngụm thưởng thức.</p>
             </div>
           </article>
         </div>
@@ -2710,28 +2788,28 @@
     <section class="menu-section" id="menu" aria-label="Thực đơn đồ uống Olion Coffee">
       <div class="shell">
         <div class="section-header">
-          <div class="section-eyebrow">
+          <div class="section-eyebrow" data-i18n="menu_eyebrow">
             <span>●</span> Thực Đơn Đa Dạng
           </div>
-          <h2 class="section-title">
+          <h2 class="section-title" data-i18n="menu_title">
             Khám phá <span class="accent">món ngon</span> yêu thích
           </h2>
-          <p class="section-desc">Cà phê rang xay, trà sữa đậm vị, nước ép và sữa chua tươi mát — chọn danh mục để xem chi tiết.</p>
+          <p class="section-desc" data-i18n="menu_desc">Cà phê rang xay, trà sữa đậm vị, nước ép và sữa chua tươi mát — chọn danh mục để xem chi tiết.</p>
         </div>
 
         <!-- Category Filter Tabs -->
         <div class="menu-tabs-wrapper">
           <div class="menu-tabs" id="menuTabs">
             <button type="button" class="menu-tab-btn menu-board-trigger" id="openMenuBoardBtn" aria-label="Xem Menu Tổng ảnh lớn toàn trang" title="Bấm để xem Menu Tổng toàn bộ món">
-              <span>📋</span> MENU TỔNG
+              <span>📋</span> <span data-i18n="menu_tab_board">MENU TỔNG</span>
             </button>
-            <button type="button" class="menu-tab-btn active" data-cat="coffee">Cà Phê</button>
-            <button type="button" class="menu-tab-btn" data-cat="tea">Trà Trái Cây</button>
-            <button type="button" class="menu-tab-btn" data-cat="matcha">Matcha</button>
-            <button type="button" class="menu-tab-btn" data-cat="cacao">Cacao</button>
-            <button type="button" class="menu-tab-btn" data-cat="juice">Nước Ép</button>
-            <button type="button" class="menu-tab-btn" data-cat="yagout">Sữa Chua</button>
-            <button type="button" class="menu-tab-btn" data-cat="topping">Topping</button>
+            <button type="button" class="menu-tab-btn active" data-cat="coffee" data-i18n="menu_tab_coffee">Cà Phê</button>
+            <button type="button" class="menu-tab-btn" data-cat="tea" data-i18n="menu_tab_tea">Trà Trái Cây</button>
+            <button type="button" class="menu-tab-btn" data-cat="matcha" data-i18n="menu_tab_matcha">Matcha</button>
+            <button type="button" class="menu-tab-btn" data-cat="cacao" data-i18n="menu_tab_cacao">Cacao</button>
+            <button type="button" class="menu-tab-btn" data-cat="juice" data-i18n="menu_tab_juice">Nước Ép</button>
+            <button type="button" class="menu-tab-btn" data-cat="yagout" data-i18n="menu_tab_yagout">Sữa Chua</button>
+            <button type="button" class="menu-tab-btn" data-cat="topping" data-i18n="menu_tab_topping">Topping</button>
           </div>
         </div>
 
@@ -3162,45 +3240,45 @@
       </div>
     </section>
 
-    <!-- ======== 7. AMBIANCE & SPACES ======== -->
+    <!-- ======== 7. SPACES SECTION ======== -->
     <section class="spaces-section" id="spaces" aria-label="Không gian quán Olion Coffee">
       <div class="shell">
         <div class="section-header">
-          <div class="section-eyebrow">
+          <div class="section-eyebrow" data-i18n="spaces_eyebrow">
             <span>●</span> Không Gian Quán
           </div>
-          <h2 class="section-title">
-            Một góc <span class="accent">yên</span> mỗi ngày
+          <h2 class="section-title" data-i18n="spaces_title">
+            Nơi dừng chân <span class="accent">ấm áp</span>
           </h2>
-          <p class="section-desc">Sạc đầy năng lượng trong góc nhỏ ấm cúng rồi, chúc bạn có một buổi chiều làm việc thật mượt mà!</p>
+          <p class="section-desc" data-i18n="spaces_desc">Góc nhỏ tĩnh lặng để làm việc, trò chuyện cùng bạn bè hoặc đơn giản là ngắm nhìn phố thị qua khung kính.</p>
         </div>
 
         <div class="spaces-grid">
           <div class="space-card">
-            <img src="assets/space-4.webp" alt="Toàn cảnh không gian quán cà phê đẹp ở Dương Quảng Hàm Olion Coffee" width="600" height="450" loading="lazy" decoding="async" />
+            <img src="assets/space-4.webp" alt="Toàn cảnh không gian ấm cúng và sang trọng tại Olion Coffee" width="600" height="450" loading="lazy" decoding="async" />
             <div class="space-card-overlay">
-              <h3 class="space-card-title">Toàn cảnh ấm cúng</h3>
+              <h3 class="space-card-title" data-i18n="space_card_4">Toàn cảnh ấm cúng</h3>
             </div>
           </div>
 
           <div class="space-card">
             <img src="assets/space-1.webp" alt="Quầy pha chế thủ công hiện đại tại Olion Coffee" width="600" height="450" loading="lazy" decoding="async" />
             <div class="space-card-overlay">
-              <h3 class="space-card-title">Quầy pha chế thủ công</h3>
+              <h3 class="space-card-title" data-i18n="space_card_1">Quầy pha chế thủ công</h3>
             </div>
           </div>
 
           <div class="space-card">
             <img src="assets/space-3.webp" alt="Góc ngồi yên tĩnh học tập và làm việc tại Olion Coffee Gò Vấp" width="600" height="450" loading="lazy" decoding="async" />
             <div class="space-card-overlay">
-              <h3 class="space-card-title">Góc làm việc yên tĩnh</h3>
+              <h3 class="space-card-title" data-i18n="space_card_3">Góc làm việc yên tĩnh</h3>
             </div>
           </div>
 
           <div class="space-card">
             <img src="assets/space-2.webp" alt="Góc thư giãn trò chuyện ấm cúng Olion Coffee" width="600" height="450" loading="lazy" decoding="async" />
             <div class="space-card-overlay">
-              <h3 class="space-card-title">Góc thư giãn & chuyện trò</h3>
+              <h3 class="space-card-title" data-i18n="space_card_2">Góc thư giãn & chuyện trò</h3>
             </div>
           </div>
         </div>
@@ -3211,13 +3289,13 @@
     <section class="news-section" id="news" aria-label="Tin tức và sự kiện Olion Coffee">
       <div class="shell">
         <div class="section-header">
-          <div class="section-eyebrow">
+          <div class="section-eyebrow" data-i18n="news_eyebrow">
             <span>●</span> Bản Tin & Sự Kiện
           </div>
-          <h2 class="section-title">
+          <h2 class="section-title" data-i18n="news_title">
             Tin tức & <span class="accent">Sự kiện</span>
           </h2>
-          <p class="section-desc">Khám phá những khoảnh khắc đáng nhớ, câu chuyện thức uống và các hoạt động mới nhất tại Olion Coffee.</p>
+          <p class="section-desc" data-i18n="news_desc">Khám phá những khoảnh khắc đáng nhớ, câu chuyện thức uống và các hoạt động mới nhất tại Olion Coffee.</p>
         </div>
 
         <div class="news-main-grid">
@@ -3246,7 +3324,7 @@
                   <img src="assets/news/news-1-barista.webp" alt="Barista quầy pha chế" />
                 </div>
                 <button type="button" class="btn-read-more" aria-label="Xem chi tiết bài viết">
-                  Đọc toàn bộ bài viết <span>→</span>
+                  <span data-i18n="news_read_more">Đọc toàn bộ bài viết →</span>
                 </button>
               </div>
             </div>
@@ -3266,7 +3344,7 @@
                 </div>
                 <h4 class="news-sub-title">Khám Phá Bộ Đôi Matcha Latte & Cà Phê Muối Chuẩn Vị</h4>
                 <p class="news-sub-desc">Hương vị hòa quyện giữa lớp bọt béo ngậy mịn màng và matcha Nhật Bản thơm dịu tại 80/64A Dương Quảng Hàm.</p>
-                <span class="news-sub-link">Xem chi tiết →</span>
+                <span class="news-sub-link" data-i18n="news_read_more">Xem chi tiết →</span>
               </div>
             </article>
 
@@ -3282,7 +3360,7 @@
                 </div>
                 <h4 class="news-sub-title">Góc Yên Bình Giữa Lòng Gò Vấp Cho Những Buổi Chiều Làm Việc</h4>
                 <p class="news-sub-desc">Không gian ấm cúng với ánh đèn lồng dịu mắt, bàn ghế tiêu chuẩn và âm nhạc nhẹ nhàng thư giãn.</p>
-                <span class="news-sub-link">Xem chi tiết →</span>
+                <span class="news-sub-link" data-i18n="news_read_more">Xem chi tiết →</span>
               </div>
             </article>
 
@@ -3298,7 +3376,7 @@
                 </div>
                 <h4 class="news-sub-title">Grand Opening Recap — Tuần Lễ Khai Trương Rực Rỡ Ưu Đãi</h4>
                 <p class="news-sub-desc">Chương trình Mua 2 Tặng 1 cùng hàng trăm voucher tri ân những vị khách đầu tiên đến với Olion.</p>
-                <span class="news-sub-link">Xem chi tiết →</span>
+                <span class="news-sub-link" data-i18n="news_read_more">Xem chi tiết →</span>
               </div>
             </article>
 
@@ -3314,7 +3392,7 @@
                 </div>
                 <h4 class="news-sub-title">Nghệ Thuật Chọn Lọc Hạt Cà Phê Mộc Nguyên Chất Tại Olion</h4>
                 <p class="news-sub-desc">Từng mẻ hạt Arabica Cầu Đất và Robusta được rang mộc tỉ mỉ để giữ trọn vẹn hậu vị ngọt ngào sâu lắng.</p>
-                <span class="news-sub-link">Xem chi tiết →</span>
+                <span class="news-sub-link" data-i18n="news_read_more">Xem chi tiết →</span>
               </div>
             </article>
           </div>
@@ -3326,10 +3404,10 @@
     <section class="faq-section" id="faq" aria-label="Hỏi đáp thường gặp">
       <div class="shell">
         <div class="section-header">
-          <div class="section-eyebrow">
+          <div class="section-eyebrow" data-i18n="faq_eyebrow">
             <span>●</span> Hỏi Đáp Nhanh
           </div>
-          <h2 class="section-title">
+          <h2 class="section-title" data-i18n="faq_title">
             Bạn <span class="accent">thắc mắc?</span>
           </h2>
         </div>
@@ -3375,13 +3453,13 @@
     <section class="reviews-section" id="reviews" aria-label="Đánh giá từ khách hàng">
       <div class="shell">
         <div class="section-header">
-          <div class="section-eyebrow">
+          <div class="section-eyebrow" data-i18n="reviews_eyebrow">
             <span>●</span> Cảm Nhận Khách Hàng
           </div>
-          <h2 class="section-title">
+          <h2 class="section-title" data-i18n="reviews_title">
             Khách hàng <span class="accent">nói gì</span> về Olion?
           </h2>
-          <p class="section-desc">Được chấm 4.9/5.0★ từ hơn 280+ đánh giá thực tế trên Google Maps và Facebook.</p>
+          <p class="section-desc" data-i18n="reviews_desc">Được chấm 4.9/5.0★ từ hơn 280+ đánh giá thực tế trên Google Maps và Facebook.</p>
         </div>
 
         <div class="reviews-grid" id="reviewsGrid">
@@ -3434,10 +3512,10 @@
     <section class="contact-section" id="contact" aria-label="Thông tin liên hệ quán">
       <div class="shell">
         <div class="section-header">
-          <div class="section-eyebrow">
+          <div class="section-eyebrow" data-i18n="contact_eyebrow">
             <span>●</span> Thông Tin Liên Hệ
           </div>
-          <h2 class="section-title">
+          <h2 class="section-title" data-i18n="contact_title">
             Bạn <span class="accent">muốn ghé</span> chơi?
           </h2>
         </div>
@@ -3447,7 +3525,7 @@
             <div class="contact-item">
               <div class="contact-item-icon">📍</div>
               <div>
-                <h3 class="contact-item-title">Địa chỉ quán</h3>
+                <h3 class="contact-item-title" data-i18n="contact_addr_title">Địa chỉ quán</h3>
                 <p class="contact-item-text">
                   80/64a, Dương Quảng Hàm, An Nhơn, TP. Hồ Chí Minh
                 </p>
@@ -3460,7 +3538,7 @@
             <div class="contact-item">
               <div class="contact-item-icon">📞</div>
               <div>
-                <h3 class="contact-item-title">Hotline đặt món & giao hàng</h3>
+                <h3 class="contact-item-title" data-i18n="contact_hotline_title">Hotline đặt món & giao hàng</h3>
                 <p class="contact-item-text">
                   <a href="tel:0783657587" style="font-weight: 700; font-size: 16px; color: var(--accent-gold);">0783 657 587</a>
                 </p>
@@ -3478,7 +3556,7 @@
             </div>
 
             <div>
-              <h3 class="contact-item-title" style="margin-bottom: 8px;">Kênh mạng xã hội</h3>
+              <h3 class="contact-item-title" style="margin-bottom: 8px;" data-i18n="contact_social_title">Kênh mạng xã hội</h3>
               <div class="contact-social-row">
                 <a href="https://www.facebook.com/profile.php?id=61594159312837&locale=vi_VN" target="_blank" rel="noopener noreferrer" class="social-btn" title="Facebook Olion Coffee" aria-label="Facebook">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><circle cx="12" cy="12" r="12" fill="#1877F2"/><path d="M13.397 19.997v-7.196h2.465l.361-2.809h-2.826V8.198c0-.81.228-1.36 1.387-1.36h1.484V4.327A19.5 19.5 0 0 0 14.201 4.2c-2.138 0-3.606 1.305-3.606 3.702v2.091H8.165v2.809h2.43v7.195h2.802z" fill="#FFFFFF"/></svg>
@@ -3498,24 +3576,24 @@
 
           <div class="hours-card">
             <div>
-              <h3 class="hours-title">Giờ mở cửa</h3>
+              <h3 class="hours-title" data-i18n="hours_title">Giờ mở cửa</h3>
               <div style="margin-top: 14px;">
                 <div class="hours-row">
-                  <span style="color: var(--text-muted);">Thứ 2 — Thứ 6</span>
+                  <span style="color: var(--text-muted);" data-i18n="hours_weekday_label">Thứ 2 — Thứ 6</span>
                   <span style="font-weight: 700; color: #FFFFFF;">08:00 — 21:00</span>
                 </div>
                 <div class="hours-row">
-                  <span style="color: var(--text-muted);">Thứ 7 — Chủ Nhật</span>
+                  <span style="color: var(--text-muted);" data-i18n="hours_weekend_label">Thứ 7 — Chủ Nhật</span>
                   <span style="font-weight: 700; color: #FFFFFF;">08:00 — 21:00</span>
                 </div>
                 <div class="hours-row">
-                  <span style="color: var(--text-muted);">Các ngày Lễ / Tết</span>
-                  <span style="font-weight: 700; color: var(--accent-gold);">Mở cửa bình thường</span>
+                  <span style="color: var(--text-muted);" data-i18n="hours_holiday_label">Các ngày Lễ / Tết</span>
+                  <span style="font-weight: 700; color: var(--accent-gold);" data-i18n="hours_holiday_val">Mở cửa bình thường</span>
                 </div>
               </div>
             </div>
 
-            <div class="quote-box">
+            <div class="quote-box" data-i18n="hours_quote">
               "Trời trưa hơi gắt, ghé OLION thả lưng xuống chiếc ghế quen, ngắm ánh đèn vàng dịu mắt và làm ngụm nước mát lạnh rồi tỉnh tiếp nha."
             </div>
           </div>
@@ -3542,16 +3620,16 @@
         </div>
 
         <div class="footer-col">
-          <h3 class="footer-col-title">Khám Phá</h3>
-          <a href="#about">Về Olion Coffee</a>
-          <a href="#signature">Món Bán Chạy</a>
-          <a href="#menu">Thực Đơn</a>
-          <a href="#spaces">Không Gian</a>
-          <a href="#faq">Hỏi Đáp</a>
+          <h3 class="footer-col-title" data-i18n="footer_explore">Khám Phá</h3>
+          <a href="#about" data-i18n="nav_about">Về Olion Coffee</a>
+          <a href="#signature" data-i18n="nav_signature">Món Bán Chạy</a>
+          <a href="#menu" data-i18n="nav_menu">Thực Đơn</a>
+          <a href="#spaces" data-i18n="nav_spaces">Không Gian</a>
+          <a href="#faq" data-i18n="nav_faq">Hỏi Đáp</a>
         </div>
 
         <div class="footer-col">
-          <h3 class="footer-col-title">Liên Kết</h3>
+          <h3 class="footer-col-title" data-i18n="footer_links">Liên Kết</h3>
           <a href="https://maps.app.goo.gl/vfqfzV82xyswVRTm6" target="_blank" rel="noopener noreferrer">Google Maps ↗</a>
           <a href="https://www.facebook.com/profile.php?id=61594159312837&locale=vi_VN" target="_blank" rel="noopener noreferrer">Facebook ↗</a>
           <a href="https://www.tiktok.com/@olion.coffee" target="_blank" rel="noopener noreferrer">TikTok ↗</a>
@@ -3561,8 +3639,8 @@
       </div>
 
       <div class="footer-bottom">
-        <p>© 2024 Olion Coffee. All rights reserved.</p>
-        <p>Thiết kế & Vận hành bởi Olion Creative Studio</p>
+        <p data-i18n="footer_rights">© 2024 Olion Coffee. All rights reserved.</p>
+        <p data-i18n="footer_credit">Thiết kế & Vận hành bởi Olion Creative Studio</p>
       </div>
     </div>
   </footer>
@@ -3571,11 +3649,11 @@
   <nav class="mobile-bottom-dock" aria-label="Điều hướng nhanh mobile">
     <a href="#hero" class="dock-item active">
       <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-      <span>Trang chủ</span>
+      <span data-i18n="dock_home">Trang chủ</span>
     </a>
     <a href="#menu" class="dock-item">
       <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
-      <span>Thực đơn</span>
+      <span data-i18n="dock_menu">Thực đơn</span>
     </a>
     
     <a href="tel:0783657587" class="dock-center-btn" aria-label="Gọi hotline Olion Coffee">
@@ -3584,11 +3662,11 @@
 
     <a href="#spaces" class="dock-item">
       <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-      <span>Không gian</span>
+      <span data-i18n="dock_spaces">Không gian</span>
     </a>
     <a href="#contact" class="dock-item">
       <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      <span>Liên hệ</span>
+      <span data-i18n="dock_contact">Liên hệ</span>
     </a>
   </nav>
 
@@ -3605,10 +3683,69 @@
     </a>
   </aside>
 
+  <!-- ======== MODAL: TRA CỨU ĐIỂM TÍCH LŨY (LOYALTY PROGRAM) ======== -->
+  <div class="modal-overlay" id="loyaltyLookupModal" aria-hidden="true" role="dialog" aria-labelledby="loyaltyTitle">
+    <div class="modal-box" style="max-width: 480px;">
+      <button type="button" class="modal-close" onclick="closeLoyaltyModal()" aria-label="Đóng popup">✕</button>
+      <div class="section-eyebrow" style="margin-bottom: 8px;"><span>👑</span> <span data-i18n="loyalty_eyebrow">Thành Viên Olion</span></div>
+      <h3 class="font-serif" id="loyaltyTitle" style="font-size: 22px; margin-bottom: 6px; color: #FFFFFF;" data-i18n="loyalty_title">Tra Cứu Điểm Tích Lũy</h3>
+      <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 18px;" data-i18n="loyalty_desc">Nhập số điện thoại để kiểm tra số điểm hiện có và các ưu đãi đang chờ bạn!</p>
+      
+      <form id="loyaltyLookupForm" onsubmit="handleLoyaltyLookup(event)">
+        <div class="form-group">
+          <label class="form-label" for="loyaltySearchPhone" data-i18n="loyalty_input_label">Số điện thoại của bạn</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="tel" class="form-input" id="loyaltySearchPhone" placeholder="Ví dụ: 0908123456" required pattern="[0-9]{9,11}" data-i18n-placeholder="loyalty_phone_placeholder" />
+            <button type="submit" class="btn btn-primary" id="loyaltySearchBtn" style="white-space: nowrap; padding: 0 20px;">
+              <span data-i18n="loyalty_btn_lookup">Tra Cứu</span>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div id="loyaltyResultCard" style="display: none; margin-top: 18px; text-align: left;">
+        <div style="background: rgba(14, 22, 17, 0.9); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 18px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <div>
+              <h4 id="loyaltyResName" style="font-size: 17px; color: #FFFFFF; font-weight: 700;">Nguyễn Minh Anh</h4>
+              <div id="loyaltyResPhone" style="font-size: 13px; color: var(--text-muted);">0908 123 456</div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.06em;" data-i18n="loyalty_current_points">Điểm tích lũy</div>
+              <div id="loyaltyResPoints" style="font-size: 26px; font-weight: 800; color: var(--accent-gold); line-height: 1.1;">80 <span style="font-size: 13px; font-weight: 600;" data-i18n="loyalty_pts_unit">điểm</span></div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 8px; margin-bottom: 14px; font-size: 12px;">
+            <span class="badge-best" id="loyaltyResTier" style="position: static; padding: 4px 10px;">Hạng Vàng</span>
+            <span style="background: rgba(255,255,255,0.06); color: var(--text-cream); padding: 4px 10px; border-radius: 6px;" id="loyaltyResVisits">Đã ghé: 5 lần</span>
+          </div>
+
+          <!-- Progress & Next Reward Box -->
+          <div class="loyalty-progress-box" id="loyaltyProgressBox">
+            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
+              <span id="loyaltyRewardStatus" style="font-weight: 600; color: var(--accent-gold-light);">Đổi 1 ly Signature miễn phí</span>
+              <span id="loyaltyRewardTarget" style="color: var(--text-muted);">80 / 100 điểm</span>
+            </div>
+            <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 99px; overflow: hidden; margin-bottom: 10px;">
+              <div id="loyaltyProgressBar" style="height: 100%; width: 80%; background: linear-gradient(90deg, var(--accent-gold), var(--accent-rust)); border-radius: 99px; transition: width 0.4s ease;"></div>
+            </div>
+            <p id="loyaltyRewardNotice" style="font-size: 12.5px; color: var(--text-body); line-height: 1.5; margin: 0;">
+              Bạn cần thêm <strong>20 điểm</strong> nữa để nhận ngay 1 ly Signature miễn phí (Cà Phê Muối hoặc Bạc Xỉu Kem Trứng).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div id="loyaltyErrorCard" style="display: none; margin-top: 16px; padding: 14px; background: rgba(231, 76, 60, 0.1); border: 1px solid rgba(231, 76, 60, 0.3); border-radius: var(--radius-md); font-size: 13px; color: #FF9B90; text-align: center;">
+      </div>
+    </div>
+  </div>
+
   <!-- ======== 14. LUCKY WHEEL FLOATING BUTTON & MODAL ======== -->
   <button type="button" class="wheel-float-btn" id="wheelFloatBtn" onclick="openWheelModal()" aria-label="Vòng quay may mắn">
     <span>🎡</span>
-    <span>Quay Nhận Quà</span>
+    <span data-i18n="wheel_float">Quay Nhận Quà</span>
   </button>
 
   <div class="modal-overlay" id="wheelModal" aria-hidden="true" role="dialog" aria-labelledby="wheelTitle">
@@ -3767,6 +3904,398 @@
   </div>
   <script defer>
     document.addEventListener('DOMContentLoaded', () => {
+      // =========================================================================
+      // 0. MULTI-LANGUAGE (i18n VI / EN) SYSTEM
+      // =========================================================================
+      const I18N_DICT = {
+        vi: {
+          nav_about: "Về Olion",
+          nav_signature: "Signature",
+          nav_menu: "Thực đơn",
+          nav_spaces: "Không gian",
+          nav_news: "Tin tức",
+          nav_faq: "Hỏi đáp",
+          nav_contact: "Liên hệ",
+          nav_feedback: "Góp ý quán",
+          nav_loyalty: "Tích điểm",
+          drawer_home: "Trang chủ",
+          drawer_about: "Về Olion Coffee",
+          drawer_signature: "Món Signature",
+          drawer_menu: "Thực đơn đồ uống",
+          drawer_menu_board: "📋 Bảng Menu Tổng (Toàn Trang)",
+          drawer_spaces: "Không gian quán",
+          drawer_news: "Tin tức & Sự kiện",
+          drawer_faq: "Hỏi đáp",
+          drawer_contact: "Thông tin liên hệ",
+          drawer_call: "Gọi Hotline: 0783 657 587",
+          drawer_feedback: "Góp ý & Đánh giá",
+          drawer_loyalty: "👑 Tra Cứu Điểm Tích Lũy",
+          drawer_lang_label: "Ngôn ngữ / Language:",
+          dock_home: "Trang chủ",
+          dock_menu: "Thực đơn",
+          dock_spaces: "Không gian",
+          dock_contact: "Liên hệ",
+          hero_eyebrow: "✦ OLION COFFEE · ELEGANCE IN EVERY SIP",
+          hero_title: 'OLION COFFEE <span style="color: var(--accent-gold); font-weight: 300;">—</span><br><span class="italic-gold">Elegance in Every Sip</span>',
+          hero_subtitle: "Quán cà phê đẹp ở Dương Quảng Hàm, Gò Vấp với không gian sang trọng và đồ uống thủ công tinh tế. Thưởng thức hương vị nguyên bản, đắm chìm trong góc nhỏ tĩnh lặng giữa lòng Sài Gòn.",
+          hero_cta_menu: "Khám phá thực đơn →",
+          hero_cta_about: "Câu chuyện quán",
+          stats_items_count: "Món trong menu",
+          stats_categories: "Danh mục đồ uống",
+          stats_handcrafted: "Pha thủ công",
+          stats_days_open: "Ngày mở cửa/năm",
+          about_eyebrow: "● Về Olion Coffee",
+          about_title: 'Chắt chiu từng giọt,<br><span class="accent">trao hương vị tinh tế</span>.',
+          about_desc: "Trời trưa hơi gắt, ghé OLION thả lưng xuống chiếc ghế quen, ngắm ánh đèn vàng dịu mắt và làm ngụm nước mát lạnh rồi tỉnh tiếp nha. Không chỉ là cà phê, OLION muốn đem tới trải nghiệm trọn vẹn: đồ uống pha tay tỉ mỉ, không gian ấm cúng và những khoảnh khắc thật chậm.",
+          about_feat_1_title: "Pha thủ công",
+          about_feat_1_desc: "Từng ly được pha chế tỉ mỉ tại quầy",
+          about_feat_2_title: "Nguyên liệu chọn lọc",
+          about_feat_2_desc: "Hạt mộc rang xay & trà cao cấp",
+          about_feat_3_title: "Không gian yên tĩnh",
+          about_feat_3_desc: "Góc làm việc & thư giãn ấm cúng",
+          about_feat_4_title: "Phục vụ tận tâm",
+          about_feat_4_desc: "Nụ cười và sự chu đáo mỗi ngày",
+          sig_eyebrow: "✦ Món Bán Chạy",
+          sig_title: 'Món <span class="accent">Signature</span> của quán',
+          sig_desc: "Hai công thức độc quyền được khách hàng yêu thích nhất tại Olion Coffee.",
+          sig_item_1_name: "CÀ PHÊ MUỐI OLION",
+          sig_item_1_desc: "Cà phê Robusta rang mộc đậm đà hòa quyện cùng lớp kem muối béo mặn độc quyền của Olion, tạo nên trải nghiệm vị giác đầy lôi cuốn.",
+          sig_item_2_name: "BẠC XỈU KEM TRỨNG",
+          sig_item_2_desc: "Cà phê sữa thơm nồng kết hợp lớp foam kem trứng béo ngậy ngọt dịu, đánh thức mọi giác quan trong từng ngụm thưởng thức.",
+          menu_eyebrow: "● Thực Đơn Đa Dạng",
+          menu_title: 'Khám phá <span class="accent">món ngon</span> yêu thích',
+          menu_desc: "Cà phê rang xay, trà sữa đậm vị, nước ép và sữa chua tươi mát — chọn danh mục để xem chi tiết.",
+          menu_tab_board: "MENU TỔNG",
+          menu_tab_coffee: "Cà Phê",
+          menu_tab_tea: "Trà Trái Cây",
+          menu_tab_matcha: "Matcha",
+          menu_tab_cacao: "Cacao",
+          menu_tab_juice: "Nước Ép",
+          menu_tab_yagout: "Sữa Chua",
+          menu_tab_topping: "Topping",
+          spaces_eyebrow: "● Không Gian Quán",
+          spaces_title: 'Nơi dừng chân <span class="accent">ấm áp</span>',
+          spaces_desc: "Góc nhỏ tĩnh lặng để làm việc, trò chuyện cùng bạn bè hoặc đơn giản là ngắm nhìn phố thị qua khung kính.",
+          space_card_1: "Quầy pha chế thủ công",
+          space_card_2: "Góc thư giãn & chuyện trò",
+          space_card_3: "Góc làm việc yên tĩnh",
+          space_card_4: "Toàn cảnh ấm cúng",
+          news_eyebrow: "● Bản Tin & Sự Kiện",
+          news_title: 'Tin tức & <span class="accent">Sự kiện</span>',
+          news_desc: "Khám phá những khoảnh khắc đáng nhớ, câu chuyện thức uống và các hoạt động mới nhất tại Olion Coffee.",
+          news_read_more: "Xem chi tiết →",
+          faq_eyebrow: "● Hỏi Đáp Nhanh",
+          faq_title: 'Bạn <span class="accent">thắc mắc?</span>',
+          reviews_eyebrow: "● Cảm Nhận Khách Hàng",
+          reviews_title: 'Khách hàng <span class="accent">nói gì</span> về Olion?',
+          reviews_desc: "Được chấm 4.9/5.0★ từ hơn 280+ đánh giá thực tế trên Google Maps và Facebook.",
+          contact_eyebrow: "● Thông Tin Liên Hệ",
+          contact_title: 'Bạn <span class="accent">muốn ghé</span> chơi?',
+          contact_addr_title: "Địa chỉ quán",
+          contact_hotline_title: "Hotline đặt món & giao hàng",
+          contact_social_title: "Kênh mạng xã hội",
+          hours_title: "Giờ mở cửa",
+          hours_weekday_label: "Thứ 2 — Thứ 6",
+          hours_weekend_label: "Thứ 7 — Chủ Nhật",
+          hours_holiday_label: "Các ngày Lễ / Tết",
+          hours_holiday_val: "Mở cửa bình thường",
+          hours_quote: '"Trời trưa hơi gắt, ghé OLION thả lưng xuống chiếc ghế quen, ngắm ánh đèn vàng dịu mắt và làm ngụm nước mát lạnh rồi tỉnh tiếp nha."',
+          footer_explore: "Khám Phá",
+          footer_links: "Liên Kết",
+          footer_rights: "© 2024 Olion Coffee. All rights reserved.",
+          footer_credit: "Thiết kế & Vận hành bởi Olion Creative Studio",
+          loyalty_eyebrow: "Thành Viên Olion",
+          loyalty_title: "Tra Cứu Điểm Tích Lũy",
+          loyalty_desc: "Nhập số điện thoại để kiểm tra số điểm hiện có và các ưu đãi đang chờ bạn!",
+          loyalty_input_label: "Số điện thoại của bạn",
+          loyalty_phone_placeholder: "Ví dụ: 0908123456",
+          loyalty_btn_lookup: "Tra Cứu",
+          loyalty_current_points: "Điểm tích lũy",
+          loyalty_pts_unit: "điểm",
+          wheel_float: "Quay Nhận Quà"
+        },
+        en: {
+          nav_about: "About Us",
+          nav_signature: "Signatures",
+          nav_menu: "Menu",
+          nav_spaces: "Ambiance",
+          nav_news: "News",
+          nav_faq: "FAQ",
+          nav_contact: "Contact",
+          nav_feedback: "Feedback",
+          nav_loyalty: "Loyalty",
+          drawer_home: "Home",
+          drawer_about: "About Olion Coffee",
+          drawer_signature: "Signature Drinks",
+          drawer_menu: "Beverage Menu",
+          drawer_menu_board: "📋 Full Menu Board (Fullscreen)",
+          drawer_spaces: "Our Spaces",
+          drawer_news: "News & Events",
+          drawer_faq: "FAQ",
+          drawer_contact: "Contact Info",
+          drawer_call: "Call Hotline: 0783 657 587",
+          drawer_feedback: "Feedback & Reviews",
+          drawer_loyalty: "👑 Check Loyalty Points",
+          drawer_lang_label: "Ngôn ngữ / Language:",
+          dock_home: "Home",
+          dock_menu: "Menu",
+          dock_spaces: "Spaces",
+          dock_contact: "Contact",
+          hero_eyebrow: "✦ OLION COFFEE · ELEGANCE IN EVERY SIP",
+          hero_title: 'OLION COFFEE <span style="color: var(--accent-gold); font-weight: 300;">—</span><br><span class="italic-gold">Elegance in Every Sip</span>',
+          hero_subtitle: "An exquisite boutique cafe on Duong Quang Ham, Go Vap, offering a luxurious ambiance and meticulously handcrafted beverages. Taste authentic flavors and immerse in serene tranquility in the heart of Saigon.",
+          hero_cta_menu: "Explore Menu →",
+          hero_cta_about: "Our Story",
+          stats_items_count: "Items in Menu",
+          stats_categories: "Drink Categories",
+          stats_handcrafted: "Handcrafted",
+          stats_days_open: "Days Open / Year",
+          about_eyebrow: "● About Olion Coffee",
+          about_title: 'Crafting every drop,<br><span class="accent">delivering pure elegance</span>.',
+          about_desc: "When noon gets too hectic, drop by OLION, sink into your favorite armchair, admire the gentle amber glow, and enjoy a crisp iced beverage before continuing your day. More than just coffee, OLION is dedicated to a complete experience: meticulously handcrafted drinks, cozy space, and slow, meaningful moments.",
+          about_feat_1_title: "Handcrafted",
+          about_feat_1_desc: "Every single cup prepared with care at the bar",
+          about_feat_2_title: "Selected Ingredients",
+          about_feat_2_desc: "Artisan roasted beans & premium whole-leaf tea",
+          about_feat_3_title: "Tranquil Space",
+          about_feat_3_desc: "Cozy nook for productive work & gentle relaxation",
+          about_feat_4_title: "Heartfelt Service",
+          about_feat_4_desc: "Warm smiles and attentive care every day",
+          sig_eyebrow: "✦ Bestsellers",
+          sig_title: 'House <span class="accent">Signature</span> Drinks',
+          sig_desc: "Two exclusive recipes most beloved by guests at Olion Coffee.",
+          sig_item_1_name: "OLION SALTED CREAM COFFEE",
+          sig_item_1_desc: "Bold artisanal Robusta coffee harmoniously blended with Olion's proprietary velvety salted cream, creating an irresistible flavor journey.",
+          sig_item_2_name: "EGG FOAM WHITE COFFEE",
+          sig_item_2_desc: "Aromatic sweet milk coffee topped with rich, airy egg custard foam, awakening every sensation with each velvety sip.",
+          menu_eyebrow: "● Diverse Menu",
+          menu_title: 'Discover your <span class="accent">favorite drink</span>',
+          menu_desc: "From bold traditional coffee and refreshing fruit teas to creamy ice-blended frappes and delightful snacks.",
+          menu_tab_board: "FULL MENU",
+          menu_tab_coffee: "Coffee",
+          menu_tab_tea: "Fruit Tea",
+          menu_tab_matcha: "Matcha",
+          menu_tab_cacao: "Cacao",
+          menu_tab_juice: "Juice",
+          menu_tab_yagout: "Yogurt",
+          menu_tab_topping: "Topping",
+          spaces_eyebrow: "● Our Spaces",
+          spaces_title: 'A <span class="accent">warm & cozy</span> sanctuary',
+          spaces_desc: "A serene corner to work, catch up with friends, or simply gaze out at the city streets through the glass window.",
+          space_card_1: "Artisanal Brew Bar",
+          space_card_2: "Cozy Chat & Relax Corner",
+          space_card_3: "Quiet Workspace Corner",
+          space_card_4: "Panoramic Cozy Atmosphere",
+          news_eyebrow: "● News & Events",
+          news_title: 'Life at <span class="accent">Olion</span>',
+          news_desc: "Stay updated with promotions, acoustic nights, and stories behind every cup of coffee.",
+          news_read_more: "Read more →",
+          faq_eyebrow: "● FAQ",
+          faq_title: 'Frequently Asked <span class="accent">Questions</span>',
+          reviews_eyebrow: "● Customer Voices",
+          reviews_title: 'Guest <span class="accent">Impressions</span>',
+          reviews_desc: "Heartfelt thoughts and genuine shares from friends who visit and love Olion.",
+          contact_eyebrow: "● Visit Us",
+          contact_title: 'Connect with <span class="accent">Olion</span>',
+          contact_addr_title: "Our Address",
+          contact_hotline_title: "Hotline Order & Delivery",
+          contact_social_title: "Social Media Channels",
+          hours_title: "Opening Hours",
+          hours_weekday_label: "Monday — Friday",
+          hours_weekend_label: "Saturday — Sunday",
+          hours_holiday_label: "Public Holidays / Tet",
+          hours_holiday_val: "Open as Normal",
+          hours_quote: '"When noon gets too hectic, drop by OLION, sink into your favorite armchair, admire the gentle amber glow, and enjoy a crisp iced beverage before continuing your day."',
+          footer_explore: "Explore",
+          footer_links: "Links",
+          footer_rights: "© 2024 Olion Coffee. All rights reserved.",
+          footer_credit: "Designed & Operated by Olion Creative Studio",
+          loyalty_eyebrow: "Olion Member Club",
+          loyalty_title: "Check Loyalty Points",
+          loyalty_desc: "Enter your phone number to check your current points and available rewards!",
+          loyalty_input_label: "Your Phone Number",
+          loyalty_phone_placeholder: "e.g. 0908123456",
+          loyalty_btn_lookup: "Check Points",
+          loyalty_current_points: "Current Points",
+          loyalty_pts_unit: "pts",
+          wheel_float: "Spin & Win"
+        }
+      };
+
+      let currentLang = localStorage.getItem('olion_lang') || 'vi';
+
+      window.setLanguage = function(lang) {
+        if (!I18N_DICT[lang]) lang = 'vi';
+        currentLang = lang;
+        localStorage.setItem('olion_lang', lang);
+
+        const dict = I18N_DICT[lang];
+
+        // Update elements with data-i18n
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (dict[key] !== undefined) {
+            el.innerHTML = dict[key];
+          }
+        });
+
+        // Update placeholders with data-i18n-placeholder
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+          const key = el.getAttribute('data-i18n-placeholder');
+          if (dict[key] !== undefined) {
+            el.placeholder = dict[key];
+          }
+        });
+
+        // Update active class on toggle buttons
+        const isVi = lang === 'vi';
+        const pillVi = document.getElementById('langPillVi');
+        const pillEn = document.getElementById('langPillEn');
+        const pillViMobile = document.getElementById('langPillViMobile');
+        const pillEnMobile = document.getElementById('langPillEnMobile');
+
+        if (pillVi) pillVi.classList.toggle('active', isVi);
+        if (pillEn) pillEn.classList.toggle('active', !isVi);
+        if (pillViMobile) pillViMobile.classList.toggle('active', isVi);
+        if (pillEnMobile) pillEnMobile.classList.toggle('active', !isVi);
+
+        document.documentElement.setAttribute('lang', lang);
+      };
+
+      window.toggleLanguage = function() {
+        const next = currentLang === 'vi' ? 'en' : 'vi';
+        window.setLanguage(next);
+        if (window.showOlionToast) {
+          window.showOlionToast(next === 'vi' ? 'Đã đổi sang Tiếng Việt 🇻🇳' : 'Switched to English 🇬🇧', '🌐');
+        }
+      };
+
+      // Initialize saved language
+      setLanguage(currentLang);
+
+      // =========================================================================
+      // 0.2 LOYALTY POINTS LOOKUP SYSTEM (MODAL & API)
+      // =========================================================================
+      const loyaltyModal = document.getElementById('loyaltyLookupModal');
+      const loyaltyPhoneInput = document.getElementById('loyaltySearchPhone');
+      const loyaltyResultCard = document.getElementById('loyaltyResultCard');
+      const loyaltyErrorCard = document.getElementById('loyaltyErrorCard');
+      const loyaltySearchBtn = document.getElementById('loyaltySearchBtn');
+
+      window.openLoyaltyModal = function(initialPhone = '') {
+        if (!loyaltyModal) return;
+        loyaltyModal.classList.add('active');
+        loyaltyModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+
+        if (loyaltyResultCard) loyaltyResultCard.style.display = 'none';
+        if (loyaltyErrorCard) loyaltyErrorCard.style.display = 'none';
+
+        if (loyaltyPhoneInput) {
+          loyaltyPhoneInput.value = initialPhone;
+          setTimeout(() => loyaltyPhoneInput.focus(), 150);
+          if (initialPhone) {
+            handleLoyaltyLookup();
+          }
+        }
+      };
+
+      window.closeLoyaltyModal = function() {
+        if (!loyaltyModal) return;
+        loyaltyModal.classList.remove('active');
+        loyaltyModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      };
+
+      if (loyaltyModal) {
+        loyaltyModal.addEventListener('click', (e) => {
+          if (e.target === loyaltyModal) closeLoyaltyModal();
+        });
+      }
+
+      window.handleLoyaltyLookup = async function(e) {
+        if (e && e.preventDefault) e.preventDefault();
+        const phone = (loyaltyPhoneInput ? loyaltyPhoneInput.value : '').trim();
+        if (!phone) {
+          if (loyaltyErrorCard) {
+            loyaltyErrorCard.textContent = currentLang === 'vi' ? 'Vui lòng nhập số điện thoại để tra cứu.' : 'Please enter your phone number.';
+            loyaltyErrorCard.style.display = 'block';
+          }
+          return;
+        }
+
+        if (loyaltySearchBtn) {
+          loyaltySearchBtn.disabled = true;
+          loyaltySearchBtn.textContent = currentLang === 'vi' ? 'Đang tìm...' : 'Searching...';
+        }
+        if (loyaltyErrorCard) loyaltyErrorCard.style.display = 'none';
+        if (loyaltyResultCard) loyaltyResultCard.style.display = 'none';
+
+        try {
+          let res = null;
+          if (window.lookupLoyaltyMember) {
+            res = await window.lookupLoyaltyMember(phone);
+          } else {
+            const local = JSON.parse(localStorage.getItem('olion_loyalty_members') || '[]');
+            const m = local.find(x => x.phone_number === phone);
+            res = m ? { success: true, member: m } : { success: false, not_found: true };
+          }
+
+          if (res && res.success && res.member) {
+            const m = res.member;
+            const pts = Number(m.points) || 0;
+            const visits = Number(m.total_visits) || 1;
+
+            document.getElementById('loyaltyResName').textContent = m.customer_name || (currentLang === 'vi' ? 'Khách hàng thân thiết' : 'Loyal Member');
+            document.getElementById('loyaltyResPhone').textContent = m.phone_number;
+            document.getElementById('loyaltyResPoints').innerHTML = `${pts} <span style="font-size: 13px; font-weight: 600;">${currentLang === 'vi' ? 'điểm' : 'pts'}</span>`;
+
+            let tierName = 'Thành viên';
+            if (pts >= 200) tierName = 'Kim Cương 💎';
+            else if (pts >= 100) tierName = 'Hạng Vàng 👑';
+            else if (pts >= 50) tierName = 'Hạng Bạc ⭐';
+            document.getElementById('loyaltyResTier').textContent = tierName;
+            document.getElementById('loyaltyResVisits').textContent = currentLang === 'vi' ? `Đã ghé: ${visits} lần` : `Visits: ${visits} times`;
+
+            const target = 100;
+            const pct = Math.min(100, Math.round((pts / target) * 100));
+            document.getElementById('loyaltyProgressBar').style.width = `${pct}%`;
+            document.getElementById('loyaltyRewardTarget').textContent = `${pts} / ${target} ${currentLang === 'vi' ? 'điểm' : 'pts'}`;
+
+            const statusEl = document.getElementById('loyaltyRewardStatus');
+            const noticeEl = document.getElementById('loyaltyRewardNotice');
+
+            if (pts >= 100) {
+              statusEl.textContent = currentLang === 'vi' ? '🎉 ĐỦ ĐIỀU KIỆN ĐỔI LY SIGNATURE MIỄN PHÍ' : '🎉 READY FOR FREE SIGNATURE DRINK';
+              noticeEl.innerHTML = currentLang === 'vi'
+                ? `Chúc mừng bạn! Bạn đang có <strong>${pts} điểm</strong>, đủ điều kiện đổi 1 ly Signature miễn phí (Cà Phê Muối hoặc Bạc Xỉu Kem Trứng). Hãy thông báo cho thu ngân khi thanh toán nhé!`
+                : `Congratulations! You have <strong>${pts} points</strong>, eligible for a free Signature drink. Please inform our cashier when ordering!`;
+            } else {
+              const diff = target - pts;
+              statusEl.textContent = currentLang === 'vi' ? 'Đổi 1 ly Signature miễn phí' : 'Redeem 1 Free Signature Drink';
+              noticeEl.innerHTML = currentLang === 'vi'
+                ? `Bạn đang có <strong>${pts} điểm</strong>. Cần thêm <strong>${diff} điểm</strong> nữa để đổi 1 ly Signature miễn phí (100 điểm).`
+                : `You currently have <strong>${pts} points</strong>. Need <strong>${diff} more points</strong> to redeem a free Signature drink (100 pts).`;
+            }
+
+            loyaltyResultCard.style.display = 'block';
+          } else {
+            loyaltyErrorCard.textContent = (res && res.message) || (currentLang === 'vi'
+              ? 'Chưa tìm thấy thông tin tích điểm với số điện thoại này. Bạn hãy ghé quán order đồ uống để bắt đầu tích điểm nhé!'
+              : 'No loyalty member found with this phone number. Visit our cafe and order to start earning points!');
+            loyaltyErrorCard.style.display = 'block';
+          }
+        } catch (err) {
+          loyaltyErrorCard.textContent = currentLang === 'vi' ? 'Có lỗi xảy ra khi tra cứu. Vui lòng thử lại sau.' : 'An error occurred. Please try again.';
+          loyaltyErrorCard.style.display = 'block';
+        } finally {
+          if (loyaltySearchBtn) {
+            loyaltySearchBtn.disabled = false;
+            loyaltySearchBtn.textContent = currentLang === 'vi' ? 'Tra Cứu' : 'Check Points';
+          }
+        }
+      };
+
       // 1. Scroll Progress Bar & Header Shrink
       const scrollProgress = document.getElementById('scrollProgress');
       const siteHeader = document.getElementById('siteHeader');
