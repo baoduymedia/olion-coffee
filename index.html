@@ -1593,6 +1593,27 @@
       border-left: 3px solid var(--accent-gold);
       padding: 14px 16px;
       border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      transition: all 0.3s ease;
+    }
+
+    .quote-time-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent-gold);
+      background: rgba(229, 154, 85, 0.15);
+      border: 1px solid rgba(229, 154, 85, 0.3);
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+      font-style: normal;
+    }
+
+    .quote-text {
       font-size: 13.5px;
       line-height: 1.6;
       color: var(--text-body);
@@ -3762,8 +3783,13 @@
               </div>
             </div>
 
-            <div class="quote-box" data-i18n="hours_quote">
-              "Trời trưa hơi gắt, ghé OLION thả lưng xuống chiếc ghế quen, ngắm ánh đèn vàng dịu mắt và làm ngụm nước mát lạnh rồi tỉnh tiếp nha."
+            <div class="quote-box" id="dynamicQuoteBox">
+              <div class="quote-time-tag" id="quoteTimeTag">
+                <span id="quoteIcon">☀️</span> <span id="quoteTimeLabel">Buổi trưa mát lành</span>
+              </div>
+              <div id="quoteText" class="quote-text">
+                "Trời trưa hơi gắt, ghé OLION thả lưng xuống chiếc ghế quen, ngắm ánh đèn vàng dịu mắt và làm ngụm nước mát lạnh rồi tỉnh tiếp nha."
+              </div>
             </div>
           </div>
         </div>
@@ -4433,6 +4459,113 @@
         if (pillEnMobile) pillEnMobile.classList.toggle('active', !isVi);
 
         document.documentElement.setAttribute('lang', lang);
+        if (typeof window.updateDynamicGreeting === 'function') {
+          window.updateDynamicGreeting(lang);
+        }
+      };
+
+      // =========================================================================
+      // DYNAMIC TIME-OF-DAY & PERSONALIZED GREETING (SÁNG, TRƯA, XẾ CHIỀU, TỐI)
+      // =========================================================================
+      try {
+        let visits = parseInt(localStorage.getItem('olion_visit_count') || '0', 10) + 1;
+        localStorage.setItem('olion_visit_count', visits.toString());
+      } catch(e) {}
+
+      function getGreetingData(lang = currentLang) {
+        const now = new Date();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        const timeNum = hour + minute / 60;
+
+        let customerName = '';
+        try {
+          customerName = (localStorage.getItem('olion_customer_name') || '').trim();
+          if (!customerName) {
+            const fb = JSON.parse(localStorage.getItem('olion_feedbacks') || '[]');
+            if (fb.length > 0 && fb[0].name && fb[0].name !== 'Khách ghé quán') {
+              customerName = fb[0].name.trim();
+            }
+          }
+        } catch(e) {}
+
+        const isVi = lang === 'vi';
+        const prefix = customerName ? (isVi ? `Chào ${customerName}! ` : `Hi ${customerName}! `) : '';
+
+        // 1. Sáng sớm & Sáng (06:00 - 10:30)
+        if (timeNum >= 6 && timeNum < 10.5) {
+          return {
+            icon: '🌅',
+            tag: isVi ? 'Chào Buổi Sáng' : 'Good Morning',
+            quote: isVi
+              ? `${prefix}"Sáng sớm trong lành, ghé OLION nhâm nhi một tách cà phê thơm nồng, khởi động ngày mới tràn đầy hứng khởi và năng lượng tích cực nhé!"`
+              : `${prefix}"Crisp morning air pairs best with a fragrant brew at OLION. Kick off your brand-new day filled with positive energy and clarity!"`
+          };
+        }
+        // 2. Trưa (10:30 - 13:30)
+        else if (timeNum >= 10.5 && timeNum < 13.5) {
+          return {
+            icon: '☀️',
+            tag: isVi ? 'Buổi Trưa Mát Lành' : 'Midday Cool Breeze',
+            quote: isVi
+              ? `${prefix}"Trời trưa hơi gắt, ghé OLION thả lưng xuống chiếc ghế quen, ngắm ánh đèn vàng dịu mắt và làm ngụm nước mát lạnh rồi tỉnh tiếp nha."`
+              : `${prefix}"When the midday sun gets a bit intense, find your nook at OLION, unwind in a cozy chair, and recharge with an icy crisp beverage."`
+          };
+        }
+        // 3. Xế chiều (13:30 - 17:00)
+        else if (timeNum >= 13.5 && timeNum < 17.0) {
+          return {
+            icon: '🌤️',
+            tag: isVi ? 'Xế Chiều Năng Lượng' : 'Afternoon Boost',
+            quote: isVi
+              ? `${prefix}"Đầu giờ chiều hơi uể oải, hãy tự thưởng cho mình một ly Trà Trái Cây mát lạnh hoặc Cà Phê Muối đậm vị để nạp lại 100% cảm hứng làm việc nhé."`
+              : `${prefix}"Beat the afternoon slump with a refreshing fruit tea or our signature salted cream coffee. 100% inspiration restored!"`
+          };
+        }
+        // 4. Chiều tối / Hoàng hôn (17:00 - 19:00)
+        else if (timeNum >= 17.0 && timeNum < 19.0) {
+          return {
+            icon: '🌆',
+            tag: isVi ? 'Chiều Tà Thảnh Thơi' : 'Golden Hour Dusk',
+            quote: isVi
+              ? `${prefix}"Tan ca rồi, bỏ lại sau lưng mọi deadline bộn bề. Ghé OLION chuyện trò cùng bạn bè hoặc ngắm phố xá lên đèn bên ly Bạc Xỉu ngọt ngào nhé."`
+              : `${prefix}"Clock-out time! Leave the deadlines behind, gather with friends, or watch the city lights awaken over a sweet, soothing egg-foam coffee."`
+          };
+        }
+        // 5. Tối (19:00 - 21:30)
+        else if (timeNum >= 19.0 && timeNum < 21.5) {
+          return {
+            icon: '🌙',
+            tag: isVi ? 'Buổi Tối Ấm Cúng' : 'Cozy Evening Vibe',
+            quote: isVi
+              ? `${prefix}"Phố xá về đêm thật đẹp. Trong không gian đèn vàng ấm cúng và giai điệu nhạc êm đềm tại OLION, cùng nhâm nhi ly nước yêu thích và chill thôi nào."`
+              : `${prefix}"The city glimmers at night. Sink into our warm amber glow, enjoy mellow acoustic tunes, and savor your favorite handcrafted drink."`
+          };
+        }
+        // 6. Đêm muộn & Khung giờ nghỉ (21:30 - 06:00)
+        else {
+          return {
+            icon: '✨',
+            tag: isVi ? 'Chúc Bạn Ngủ Ngon' : 'Good Night & Sweet Dreams',
+            quote: isVi
+              ? `${prefix}"OLION đã khép lại sau một ngày phục vụ thân thương. Chúc bạn một giấc ngủ thật ngon và hẹn gặp lại bạn vào sớm mai với những tách cà phê thơm lừng!"`
+              : `${prefix}"OLION has closed for the night. Rest well tonight, and we look forward to welcoming you tomorrow morning with fresh artisanal brews!"`
+          };
+        }
+      }
+
+      window.updateDynamicGreeting = function(lang = currentLang) {
+        const box = document.getElementById('dynamicQuoteBox');
+        if (!box) return;
+
+        const data = getGreetingData(lang);
+        const iconEl = document.getElementById('quoteIcon');
+        const tagEl = document.getElementById('quoteTimeLabel');
+        const textEl = document.getElementById('quoteText');
+
+        if (iconEl) iconEl.textContent = data.icon;
+        if (tagEl) tagEl.textContent = data.tag;
+        if (textEl) textEl.textContent = data.quote;
       };
 
       window.toggleLanguage = function() {
@@ -4443,8 +4576,16 @@
         }
       };
 
-      // Initialize saved language
+      // Initialize saved language & dynamic greeting
       setLanguage(currentLang);
+      updateDynamicGreeting(currentLang);
+
+      // Cập nhật lại greeting mỗi 5 phút
+      setInterval(() => {
+        if (typeof window.updateDynamicGreeting === 'function') {
+          window.updateDynamicGreeting(currentLang);
+        }
+      }, 5 * 60 * 1000);
 
       // =========================================================================
       // 0.2 LOYALTY POINTS LOOKUP SYSTEM (MODAL & API)
@@ -4794,6 +4935,14 @@
           }
 
           const name = (document.getElementById('fbName').value || '').trim() || 'Khách ghé quán';
+          if (name && name !== 'Khách ghé quán') {
+            try {
+              localStorage.setItem('olion_customer_name', name);
+              if (typeof window.updateDynamicGreeting === 'function') {
+                window.updateDynamicGreeting();
+              }
+            } catch(e) {}
+          }
           const contact = (document.getElementById('fbContact').value || '').trim();
           const message = (document.getElementById('fbMessage').value || '').trim();
           const imageDataUrl = document.getElementById('fbImageDataUrl') ? document.getElementById('fbImageDataUrl').value : '';
