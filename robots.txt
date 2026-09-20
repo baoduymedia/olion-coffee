@@ -1,0 +1,6 @@
+# robots.txt for Olion Coffee
+User-agent: *
+Allow: /
+Disallow: /admin.html
+
+Sitemap: https://baoduymedia.github.io/olion-coffee/sitemap.xml

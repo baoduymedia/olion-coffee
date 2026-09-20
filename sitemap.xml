@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://baoduymedia.github.io/olion-coffee/</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://baoduymedia.github.io/olion-coffee/assets/space-4.jpg</image:loc>
+      <image:title>Không gian quán Olion Coffee</image:title>
+      <image:caption>Toàn cảnh không gian Olion Coffee Dương Quảng Hàm Gò Vấp</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://baoduymedia.github.io/olion-coffee/assets/menu/ca_phe_muoi.jpg</image:loc>
+      <image:title>Cà Phê Muối Olion</image:title>
+      <image:caption>Cà phê muối đặc trưng Olion Coffee</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://baoduymedia.github.io/olion-coffee/assets/menu/bac_xiu.jpg</image:loc>
+      <image:title>Bạc Xỉu Kem Trứng</image:title>
+      <image:caption>Bạc xỉu kem trứng Olion Coffee</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://baoduymedia.github.io/olion-coffee/assets/menu/matcha_latte.jpg</image:loc>
+      <image:title>Matcha Latte</image:title>
+      <image:caption>Matcha Latte chuẩn vị Nhật Bản Olion Coffee</image:caption>
+    </image:image>
+  </url>
+</urlset>
