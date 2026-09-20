@@ -717,28 +717,22 @@
       border-color: rgba(229, 154, 85, 0.45);
     }
     .menu-item-img-box {
-      height: clamp(190px, 24vh, 250px);
+      height: clamp(210px, 26vh, 275px);
       position: relative;
       overflow: hidden;
-      background: radial-gradient(circle at center, #FAF6EE 0%, #F4EEDF 65%, #EADBCA 100%);
+      background: #18100A;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 16px;
     }
     .menu-item-img {
-      max-width: 92%;
-      max-height: 92%;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 10px 18px rgba(30, 20, 10, 0.18));
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
-      image-rendering: -webkit-optimize-contrast;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .menu-item-card:hover .menu-item-img {
-      transform: scale(1.1) translateY(-6px);
-      filter: drop-shadow(0 16px 26px rgba(30, 20, 10, 0.28));
+      transform: scale(1.08);
     }
     .menu-item-badge {
       position: absolute;
@@ -840,12 +834,14 @@
       background: #2ECC71;
       box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
     }
-    @media (max-width: 960px) {
-      .menu-item-card { flex-basis: calc((100% - 18px) / 2); }
+    @media (max-width: 1024px) {
+      .menu-item-card { flex-basis: calc((100% - 20px) / 2); }
+      .menu-item-img-box { height: 220px; }
     }
     @media (max-width: 640px) {
-      .menu-item-card { flex-basis: 86%; }
-      .menu-item-img-box { height: 180px; }
+      .menu-item-card { flex-basis: 78vw; min-width: 260px; max-width: 320px; }
+      .menu-item-img-box { height: 210px; }
+      .menu-cards-track { gap: 14px; padding: 4px 4px 14px 4px; }
     }
 
     /* ======== SIGNATURE SHOWCASE (HOVER ACCORDION) ======== */
@@ -1935,12 +1931,24 @@
     }
     @media (max-width: 640px) {
       .floating-social-dock {
-        right: 10px;
+        right: 12px;
+        bottom: 24px;
+        top: auto;
+        transform: none;
+        flex-direction: column;
         gap: 8px;
+        background: rgba(18, 10, 5, 0.75);
+        padding: 6px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        z-index: 995;
       }
       .floating-social-item {
-        width: 40px;
-        height: 40px;
+        width: 38px;
+        height: 38px;
       }
       .floating-social-tooltip { display: none; }
     }
@@ -2320,7 +2328,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">BEST</span>
-                <img src="assets/menu/espresso.png" alt="Espresso" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=800&auto=format&fit=crop&q=80" alt="Espresso" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">ESPRESSO</h3>
@@ -2332,7 +2340,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">POPULAR</span>
-                <img src="assets/menu/espresso_sua.png" alt="Espresso Sữa" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=800&auto=format&fit=crop&q=80" alt="Espresso Sữa" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">ESPRESSO SỮA</h3>
@@ -2344,7 +2352,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">HOT</span>
-                <img src="assets/menu/bac_xiu.png" alt="Bạc Xỉu" class="menu-item-img" loading="lazy" />
+                <img src="assets/menu/bac_xiu.jpg" alt="Bạc Xỉu" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">BẠC XỈU</h3>
@@ -2355,7 +2363,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/latte_hanh_nhan.png" alt="Latte Hạnh Nhân" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1534778101976-62847782c213?w=800&auto=format&fit=crop&q=80" alt="Latte Hạnh Nhân" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">LATTE HẠNH NHÂN</h3>
@@ -2366,7 +2374,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/caramel_latte.png" alt="Caramel Latte" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?w=800&auto=format&fit=crop&q=80" alt="Caramel Latte" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">CARAMEL LATTE</h3>
@@ -2377,7 +2385,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/americano.png" alt="Americano" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80" alt="Americano" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">AMERICANO</h3>
@@ -2389,7 +2397,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">SIGNATURE</span>
-                <img src="assets/menu/ca_phe_muoi.png" alt="Cà Phê Muối" class="menu-item-img" loading="lazy" />
+                <img src="assets/menu/ca_phe_muoi.jpg" alt="Cà Phê Muối" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">CÀ PHÊ MUỐI</h3>
@@ -2400,7 +2408,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/ca_phe_bac_ha.png" alt="Cà Phê Bạc Hà" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=800&auto=format&fit=crop&q=80" alt="Cà Phê Bạc Hà" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">CÀ PHÊ BẠC HÀ</h3>
@@ -2412,7 +2420,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">NEW</span>
-                <img src="assets/menu/ca_phe_sua_oatside.png" alt="Cà Phê Sữa Oatside" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1524350876685-274059332603?w=800&auto=format&fit=crop&q=80" alt="Cà Phê Sữa Oatside" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">CÀ PHÊ SỮA OATSIDE</h3>
@@ -2431,7 +2439,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">BEST</span>
-                <img src="assets/menu/tra_vai_hoa_hong.png" alt="Trà Vải Hoa Hồng" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800&auto=format&fit=crop&q=80" alt="Trà Vải Hoa Hồng" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">TRÀ VẢI HOA HỒNG</h3>
@@ -2443,7 +2451,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">HOT</span>
-                <img src="assets/menu/tra_buoi_hong_chanh_vang.png" alt="Trà Bưởi Hồng Chanh Vàng" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=800&auto=format&fit=crop&q=80" alt="Trà Bưởi Hồng Chanh Vàng" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">TRÀ BƯỞI HỒNG CHANH VÀNG</h3>
@@ -2455,7 +2463,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">POPULAR</span>
-                <img src="assets/menu/tra_chanh_day_nhiet_doi.png" alt="Trà Chanh Dây Nhiệt Đới" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1546173159-315724a31696?w=800&auto=format&fit=crop&q=80" alt="Trà Chanh Dây Nhiệt Đới" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">TRÀ CHANH DÂY NHIỆT ĐỚI</h3>
@@ -2466,7 +2474,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/tra_xoai_chanh_day.png" alt="Trà Xoài Chanh Dây" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?w=800&auto=format&fit=crop&q=80" alt="Trà Xoài Chanh Dây" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">TRÀ XOÀI CHANH DÂY</h3>
@@ -2477,7 +2485,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/luc_tra_nhan.png" alt="Lục Trà Nhãn" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=800&auto=format&fit=crop&q=80" alt="Lục Trà Nhãn" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">LỤC TRÀ NHÃN</h3>
@@ -2489,7 +2497,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge" style="background:#1B683F;">ĐẶC BIỆT</span>
-                <img src="assets/menu/luc_tra_tran_chau_trang.png" alt="Lục Trà Trân Châu Trắng" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1558857563-b37cf05d8a58?w=800&auto=format&fit=crop&q=80" alt="Lục Trà Trân Châu Trắng" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">LỤC TRÀ TRÂN CHÂU TRẮNG</h3>
@@ -2508,7 +2516,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">BEST</span>
-                <img src="assets/menu/matcha_latte.png" alt="Matcha Latte" class="menu-item-img" loading="lazy" />
+                <img src="assets/menu/matcha_latte.jpg" alt="Matcha Latte" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">MATCHA LATTE</h3>
@@ -2519,7 +2527,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/matcha_caramel.png" alt="Matcha Caramel" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=800&auto=format&fit=crop&q=80" alt="Matcha Caramel" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">MATCHA CARAMEL</h3>
@@ -2530,7 +2538,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/matcha_bac_ha.png" alt="Matcha Bạc Hà" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?w=800&auto=format&fit=crop&q=80" alt="Matcha Bạc Hà" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">MATCHA BẠC HÀ</h3>
@@ -2542,7 +2550,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">SIGNATURE</span>
-                <img src="assets/menu/matcha_kem_muoi.png" alt="Matcha Kem Muối" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1546173159-315724a31696?w=800&auto=format&fit=crop&q=80" alt="Matcha Kem Muối" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">MATCHA KEM MUỐI</h3>
@@ -2553,7 +2561,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/matcha_que_hoa.png" alt="Matcha Quế Hoa" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=800&auto=format&fit=crop&q=80" alt="Matcha Quế Hoa" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">MATCHA QUẾ HOA</h3>
@@ -2565,7 +2573,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">HOT</span>
-                <img src="assets/menu/matcha_cold_whisk.png" alt="Matcha Cold Whisk" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=800&auto=format&fit=crop&q=80" alt="Matcha Cold Whisk" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">MATCHA COLD WHISK</h3>
@@ -2576,7 +2584,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/matcha_dua.png" alt="Matcha Dừa" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?w=800&auto=format&fit=crop&q=80" alt="Matcha Dừa" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">MATCHA DỪA</h3>
@@ -2588,7 +2596,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">NEW</span>
-                <img src="assets/menu/matcha_dau.png" alt="Matcha Dâu" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800&auto=format&fit=crop&q=80" alt="Matcha Dâu" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">MATCHA DÂU</h3>
@@ -2599,7 +2607,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/matcha_oatside.png" alt="Matcha Oatside" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=800&auto=format&fit=crop&q=80" alt="Matcha Oatside" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">MATCHA OATSIDE</h3>
@@ -2618,7 +2626,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">BEST</span>
-                <img src="assets/menu/cacao_latte.png" alt="Cacao Latte" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=800&auto=format&fit=crop&q=80" alt="Cacao Latte" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">CACAO LATTE</h3>
@@ -2630,7 +2638,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">SIGNATURE</span>
-                <img src="assets/menu/cacao_kem_muoi.png" alt="Cacao Kem Muối" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1541167760496-1628856ab772?w=800&auto=format&fit=crop&q=80" alt="Cacao Kem Muối" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">CACAO KEM MUỐI</h3>
@@ -2641,7 +2649,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/cacao_bac_ha.png" alt="Cacao Bạc Hà" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&auto=format&fit=crop&q=80" alt="Cacao Bạc Hà" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">CACAO BẠC HÀ</h3>
@@ -2660,7 +2668,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">BEST</span>
-                <img src="assets/menu/nuoc_ep_cam.png" alt="Nước Ép Cam" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1613478223719-2ab802602423?w=800&auto=format&fit=crop&q=80" alt="Nước Ép Cam" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">NƯỚC ÉP CAM</h3>
@@ -2672,7 +2680,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">POPULAR</span>
-                <img src="assets/menu/nuoc_ep_chanh_day.png" alt="Nước Ép Chanh Dây" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1546173159-315724a31696?w=800&auto=format&fit=crop&q=80" alt="Nước Ép Chanh Dây" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">NƯỚC ÉP CHANH DÂY</h3>
@@ -2691,7 +2699,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">BEST</span>
-                <img src="assets/menu/yagout_dao_chanh_day.png" alt="Yagout Đào Chanh Dây" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&auto=format&fit=crop&q=80" alt="Yagout Đào Chanh Dây" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">YAGOUT ĐÀO CHANH DÂY</h3>
@@ -2703,7 +2711,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">HOT</span>
-                <img src="assets/menu/yagout_viet_quat.png" alt="Yagout Việt Quất" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=800&auto=format&fit=crop&q=80" alt="Yagout Việt Quất" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">YAGOUT VIỆT QUẤT</h3>
@@ -2714,7 +2722,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/yagout_xoai_chanh_day.png" alt="Yagout Xoài Chanh Dây" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1536935338788-846bb9981813?w=800&auto=format&fit=crop&q=80" alt="Yagout Xoài Chanh Dây" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">YAGOUT XOÀI CHANH DÂY</h3>
@@ -2726,7 +2734,7 @@
             <div class="menu-item-card">
               <div class="menu-item-img-box">
                 <span class="menu-item-badge">NEW</span>
-                <img src="assets/menu/yagout_dau.png" alt="Yagout Dâu" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800&auto=format&fit=crop&q=80" alt="Yagout Dâu" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">YAGOUT DÂU</h3>
@@ -2744,7 +2752,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/tran_chau_trang.png" alt="Trân Châu Trắng" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1558857563-b37cf05d8a58?w=800&auto=format&fit=crop&q=80" alt="Trân Châu Trắng" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">TRÂN CHÂU TRẮNG</h3>
@@ -2755,7 +2763,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/tran_chau_o_long.png" alt="Trân Châu Ô Long" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=800&auto=format&fit=crop&q=80" alt="Trân Châu Ô Long" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">TRÂN CHÂU Ô LONG</h3>
@@ -2766,7 +2774,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/thach_suong_sao.png" alt="Thạch Sương Sáo" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?w=800&auto=format&fit=crop&q=80" alt="Thạch Sương Sáo" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">THẠCH SƯƠNG SÁO</h3>
@@ -2777,7 +2785,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/thach_que_hoa.png" alt="Thạch Quế Hoa" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&auto=format&fit=crop&q=80" alt="Thạch Quế Hoa" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">THẠCH QUẾ HOA</h3>
@@ -2788,7 +2796,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/thach_vai_hoa_hong.png" alt="Thạch Vải Hoa Hồng" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=800&auto=format&fit=crop&q=80" alt="Thạch Vải Hoa Hồng" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">THẠCH VẢI HOA HỒNG</h3>
@@ -2799,7 +2807,7 @@
 
             <div class="menu-item-card">
               <div class="menu-item-img-box">
-                <img src="assets/menu/thach_ca_phe.png" alt="Thạch Cà Phê" class="menu-item-img" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80" alt="Thạch Cà Phê" class="menu-item-img" loading="lazy" />
               </div>
               <div class="menu-item-body"><div>
                 <h3 class="menu-item-name">THẠCH CÀ PHÊ</h3>
