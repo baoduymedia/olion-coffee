@@ -2,5 +2,7 @@ node_modules/
 .tmp_chrome*/
 .DS_Store
 .env
-*.png
+shot_*.png
+admin_*.png
+mobile_*.png
 skills-lock.json

@@ -953,6 +953,184 @@
       box-shadow: 0 4px 16px var(--accent-gold-glow);
     }
 
+    /* MENU TỔNG SPECIAL TAG & MODAL */
+    .menu-tab-btn.menu-board-trigger {
+      background: linear-gradient(135deg, rgba(229, 154, 85, 0.22), rgba(197, 155, 99, 0.12));
+      border: 1px solid var(--accent-gold);
+      color: var(--accent-gold);
+      font-weight: 800;
+      box-shadow: 0 4px 14px rgba(229, 154, 85, 0.15);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+    .menu-tab-btn.menu-board-trigger::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transform: skewX(-25deg);
+      animation: shineTab 3.5s infinite;
+    }
+    @keyframes shineTab {
+      0% { left: -100%; }
+      25% { left: 150%; }
+      100% { left: 150%; }
+    }
+    .menu-tab-btn.menu-board-trigger:hover {
+      background: var(--accent-gold);
+      color: #0A0F0B;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--accent-gold-glow);
+    }
+
+    /* FULLSCREEN MENU BOARD MODAL */
+    .menu-board-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 12, 9, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      z-index: 100000;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+    .menu-board-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .menu-board-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      background: rgba(14, 22, 17, 0.9);
+      border-bottom: 1px solid rgba(197, 155, 99, 0.25);
+      z-index: 10;
+      flex-shrink: 0;
+      gap: 12px;
+    }
+    .menu-board-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(15px, 2vw, 19px);
+      font-weight: 700;
+      color: #FFFFFF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .menu-board-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .menu-board-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(197, 155, 99, 0.3);
+      color: var(--text-cream);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .menu-board-btn:hover {
+      background: var(--accent-gold);
+      color: #0A0F0B;
+      border-color: var(--accent-gold);
+    }
+    .menu-board-close {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #FFF;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .menu-board-close:hover {
+      background: #E74C3C;
+      border-color: #E74C3C;
+      transform: rotate(90deg);
+    }
+    .menu-board-viewport {
+      flex: 1;
+      overflow: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      position: relative;
+      cursor: zoom-in;
+      -webkit-overflow-scrolling: touch;
+    }
+    .menu-board-viewport.zoomed {
+      cursor: zoom-out;
+      align-items: flex-start;
+    }
+    .menu-board-img {
+      max-width: 95vw;
+      max-height: calc(100vh - 90px);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(197, 155, 99, 0.3);
+      transition: transform 0.3s ease, max-width 0.3s ease, max-height 0.3s ease;
+      user-select: none;
+    }
+    .menu-board-viewport.zoomed .menu-board-img {
+      max-width: 1600px;
+      max-height: none;
+      width: 100%;
+    }
+    .menu-board-hint {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(14, 22, 17, 0.9);
+      border: 1px solid rgba(197, 155, 99, 0.4);
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      pointer-events: none;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      z-index: 20;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 600px) {
+      .menu-board-topbar { padding: 10px 14px; gap: 8px; }
+      .menu-board-title { font-size: 14px; }
+      .menu-board-title span:last-child { display: none; }
+      .menu-board-btn { padding: 6px 10px; font-size: 11.5px; }
+      .menu-board-close { width: 34px; height: 34px; font-size: 16px; }
+      .menu-board-hint { font-size: 11px; padding: 6px 14px; bottom: 14px; }
+    }
+
     .menu-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -2113,6 +2291,7 @@
       <a href="#about" class="drawer-link">Về Olion Coffee <span>→</span></a>
       <a href="#signature" class="drawer-link">Món Signature <span>→</span></a>
       <a href="#menu" class="drawer-link">Thực đơn đồ uống <span>→</span></a>
+      <a href="javascript:void(0)" onclick="toggleDrawer(false); openMenuBoard();" class="drawer-link" style="color: var(--accent-gold); font-weight: 700;">📋 Bảng Menu Tổng (Toàn Trang) <span>→</span></a>
       <a href="#spaces" class="drawer-link">Không gian quán <span>→</span></a>
       <a href="#news" class="drawer-link">Tin tức & Sự kiện <span>→</span></a>
       <a href="#faq" class="drawer-link">Hỏi đáp <span>→</span></a>
@@ -2346,6 +2525,9 @@
         <!-- Category Filter Tabs -->
         <div class="menu-tabs-wrapper">
           <div class="menu-tabs" id="menuTabs">
+            <button type="button" class="menu-tab-btn menu-board-trigger" id="openMenuBoardBtn" aria-label="Xem Menu Tổng ảnh lớn toàn trang" title="Bấm để xem Menu Tổng toàn bộ món">
+              <span>📋</span> MENU TỔNG
+            </button>
             <button type="button" class="menu-tab-btn active" data-cat="coffee">Cà Phê</button>
             <button type="button" class="menu-tab-btn" data-cat="tea">Trà Trái Cây</button>
             <button type="button" class="menu-tab-btn" data-cat="matcha">Matcha</button>
@@ -3358,7 +3540,28 @@
     </div>
   </div>
 
-  <!-- ======== 17. PERFORMANCE OPTIMIZED SCRIPTS ======== -->
+  <!-- ======== 17. FULLSCREEN MENU BOARD MODAL (BẢNG MENU TỔNG) ======== -->
+  <div class="menu-board-modal" id="menuBoardModal" aria-hidden="true" role="dialog" aria-labelledby="menuBoardTitle">
+    <div class="menu-board-topbar">
+      <div class="menu-board-title" id="menuBoardTitle">
+        <span>📋</span>
+        <span>Bảng Thực Đơn Tổng Quát — <span class="accent">Olion Coffee</span></span>
+      </div>
+      <div class="menu-board-actions">
+        <button type="button" class="menu-board-btn" id="menuBoardZoomBtn" title="Phóng to / Thu nhỏ">
+          <span>🔍</span> <span id="menuBoardZoomText">Phóng to</span>
+        </button>
+        <a href="assets/olion-menu-board.png" download="Olion_Coffee_Menu_Tong.png" class="menu-board-btn" title="Tải ảnh menu độ phân giải cao">
+          <span>📥</span> <span>Tải ảnh</span>
+        </a>
+        <button type="button" class="menu-board-close" id="menuBoardCloseBtn" onclick="closeMenuBoard()" aria-label="Đóng menu">✕</button>
+      </div>
+    </div>
+    <div class="menu-board-viewport" id="menuBoardViewport">
+      <img src="assets/olion-menu-board.png" alt="Bảng menu tổng Olion Coffee đầy đủ các món" class="menu-board-img" id="menuBoardImg" />
+    </div>
+    <div class="menu-board-hint" id="menuBoardHint">💡 Nhấp vào ảnh hoặc bấm nút [Phóng to] để xem chi tiết từng món</div>
+  </div>
   <script defer>
     document.addEventListener('DOMContentLoaded', () => {
       // 1. Scroll Progress Bar & Header Shrink
@@ -3427,13 +3630,21 @@
         heroTimer = setInterval(nextHeroSlide, 5000);
       }
 
-      // 4. Menu Category Filter Tabs
-      const menuTabBtns = document.querySelectorAll('.menu-tab-btn');
+      // 4. Menu Category Filter Tabs & Fullscreen Menu Board
+      const menuTabBtns = document.querySelectorAll('.menu-tab-btn[data-cat]');
       const menuPanels = document.querySelectorAll('.menu-category-panel');
+      const openMenuBoardBtn = document.getElementById('openMenuBoardBtn');
+      const menuBoardModal = document.getElementById('menuBoardModal');
+      const menuBoardCloseBtn = document.getElementById('menuBoardCloseBtn');
+      const menuBoardViewport = document.getElementById('menuBoardViewport');
+      const menuBoardImg = document.getElementById('menuBoardImg');
+      const menuBoardZoomBtn = document.getElementById('menuBoardZoomBtn');
+      const menuBoardZoomText = document.getElementById('menuBoardZoomText');
 
       menuTabBtns.forEach(btn => {
         btn.addEventListener('click', () => {
           const targetCat = btn.getAttribute('data-cat');
+          if (!targetCat) return;
           menuTabBtns.forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
 
@@ -3441,6 +3652,52 @@
             panel.classList.toggle('active', panel.id === `cat-${targetCat}`);
           });
         });
+      });
+
+      window.openMenuBoard = function() {
+        if (!menuBoardModal) return;
+        menuBoardModal.classList.add('active');
+        menuBoardModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      };
+
+      window.closeMenuBoard = function() {
+        if (!menuBoardModal) return;
+        menuBoardModal.classList.remove('active');
+        menuBoardModal.setAttribute('aria-hidden', 'true');
+        if (menuBoardViewport) menuBoardViewport.classList.remove('zoomed');
+        if (menuBoardZoomText) menuBoardZoomText.textContent = 'Phóng to';
+        document.body.style.overflow = '';
+      };
+
+      function toggleMenuBoardZoom() {
+        if (!menuBoardViewport) return;
+        const isZoomed = menuBoardViewport.classList.toggle('zoomed');
+        if (menuBoardZoomText) menuBoardZoomText.textContent = isZoomed ? 'Thu nhỏ' : 'Phóng to';
+      }
+
+      if (openMenuBoardBtn) openMenuBoardBtn.addEventListener('click', openMenuBoard);
+      if (menuBoardCloseBtn) menuBoardCloseBtn.addEventListener('click', closeMenuBoard);
+      if (menuBoardZoomBtn) menuBoardZoomBtn.addEventListener('click', toggleMenuBoardZoom);
+
+      if (menuBoardImg) {
+        menuBoardImg.addEventListener('click', (e) => {
+          e.stopPropagation();
+          toggleMenuBoardZoom();
+        });
+      }
+
+      if (menuBoardViewport) {
+        menuBoardViewport.addEventListener('click', (e) => {
+          if (e.target === menuBoardViewport) closeMenuBoard();
+        });
+      }
+
+      // Close Menu Board on ESC
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && menuBoardModal && menuBoardModal.classList.contains('active')) {
+          closeMenuBoard();
+        }
       });
 
       // 5. FAQ Accordion
