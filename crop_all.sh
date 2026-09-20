@@ -1,5 +1,5 @@
 #!/bin/bash
-SRC="/Users/thanhduy/.gemini/antigravity/brain/1f8b9f5c-6d23-4a96-aeca-464b2f6f43a0/.user_uploaded/media_1789917213060.png"
+SRC="/Users/thanhduy/.gemini/antigravity/brain/1f8b9f5c-6d23-4a96-aeca-464b2f6f43a0/.user_uploaded/media_1789919122384.png"
 OUT_DIR="/Users/thanhduy/Documents/olion-coffee/assets/menu"
 
 mkdir -p "$OUT_DIR"
@@ -10,7 +10,13 @@ crop_item() {
   local y="$3"
   local w="${4:-86}"
   local h="${5:-84}"
-  sips --cropToHeightWidth "$h" "$w" --cropOffset "$y" "$x" "$SRC" --out "$OUT_DIR/$name.png" > /dev/null
+  local target="$OUT_DIR/$name.png"
+  
+  # Step 1: Crop precisely
+  sips --cropToHeightWidth "$h" "$w" --cropOffset "$y" "$x" "$SRC" --out "$target" > /dev/null
+  
+  # Step 2: High quality resample to 320px
+  sips --resampleHeightWidthMax 320 "$target" > /dev/null
 }
 
 # Row 1 (y: 158)
@@ -60,4 +66,4 @@ crop_item "yagout_viet_quat" 715 578
 crop_item "yagout_xoai_chanh_day" 812 578
 crop_item "yagout_dau" 910 578
 
-echo "Fine-tuned crop completed for all 39 items!"
+echo "Successfully cropped and resampled all 39 authentic menu drinks!"
