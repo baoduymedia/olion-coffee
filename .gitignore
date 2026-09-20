@@ -1,5 +1,3 @@
+node_modules/
+.tmp_chrome/
 .DS_Store
-*.swp
-*.log
-.vscode/
-.idea/
