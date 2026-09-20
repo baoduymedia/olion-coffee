@@ -1317,25 +1317,37 @@
     }
 
     .spaces-grid {
-      columns: 2 300px;
-      column-gap: 16px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 1024px) {
+      .spaces-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .spaces-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .space-card {
-      break-inside: avoid;
-      margin-bottom: 16px;
       position: relative;
       border-radius: var(--radius-md);
       overflow: hidden;
       border: 1px solid var(--border-subtle);
       background: var(--bg-card);
       cursor: pointer;
+      aspect-ratio: 3 / 4;
     }
 
     .space-card img {
       display: block;
       width: 100%;
-      height: auto;
+      height: 100%;
       object-fit: cover;
       transition: transform 0.6s ease;
     }
