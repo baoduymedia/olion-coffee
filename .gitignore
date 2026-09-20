@@ -1,4 +1,6 @@
 node_modules/
-.tmp_chrome/
+.tmp_chrome*/
 .DS_Store
 .env
+*.png
+skills-lock.json
