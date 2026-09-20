@@ -243,14 +243,53 @@ async function testSupabaseConnection(url, key) {
 // =========================================================================
 
 const DEFAULT_MENU_ITEMS = [
-  { id: 1, name: 'Cà Phê Muối Olion', price: 35000, category: 'Cà phê', image_url: 'assets/news/news-1-drinks.webp', badge: 'Signature', description: 'Lớp kem muối béo mặn hòa quyện cà phê Robusta & Arabica đậm đà.', is_available: true },
-  { id: 2, name: 'Matcha Latte Kem Trứng', price: 45000, category: 'Trà sữa & Matcha', image_url: 'assets/news/news-1-drinks.webp', badge: 'Bán chạy', description: 'Matcha Uji Nhật Bản kết hợp lớp foam kem trứng béo ngậy thủ công.', is_available: true },
-  { id: 3, name: 'Bạc Xỉu Kem Béo', price: 32000, category: 'Cà phê', image_url: 'assets/hero1.jpg', badge: 'Bán chạy', description: 'Cà phê sữa tươi nhiều tầng ngọt dịu, thích hợp cho buổi sáng nhẹ nhàng.', is_available: true },
-  { id: 4, name: 'Cà Phê Đen Đá Pha Phin', price: 25000, category: 'Cà phê', image_url: 'assets/news/news-1-barista.webp', badge: '', description: 'Hạt cà phê Cầu Đất rang mộc, đậm đà chuẩn vị truyền thống.', is_available: true },
-  { id: 5, name: 'Trà Đào Cam Sả Tươi', price: 38000, category: 'Trà trái cây', image_url: 'assets/hero2.jpg', badge: 'Món mới', description: 'Trà đen hảo hạng ủ lạnh, cam vàng mọng nước và sả thơm ngát thanh nhiệt.', is_available: true },
-  { id: 6, name: 'Trà Ô Long Dâu Tằm Macchiato', price: 42000, category: 'Trà trái cây', image_url: 'assets/hero3.jpg', badge: 'Signature', description: 'Trà Ô Long thượng hạng kết hợp sốt dâu tằm tự nhiên và kem cheese béo mịn.', is_available: true },
-  { id: 7, name: 'Cold Brew Cam Vàng Hạnh Nhân', price: 45000, category: 'Cà phê', image_url: 'assets/news/news-1-serving.webp', badge: 'Món mới', description: 'Cà phê ủ lạnh 18 tiếng thanh khiết, điểm xuyết lát cam sấy thơm lừng.', is_available: true },
-  { id: 8, name: 'Bánh Croissant Bơ Pháp', price: 30000, category: 'Bánh & Ăn vặt', image_url: 'assets/news/news-1-flowers.webp', badge: 'Bán chạy', description: 'Bánh sừng bò ngàn lớp thơm bơ giòn rụm nướng nóng mỗi sáng.', is_available: true }
+  // Cà phê
+  { id: 1, name: 'ESPRESSO', price: 28000, category: 'Cà phê', image_url: 'assets/menu/espresso.webp', badge: 'BEST', description: 'Nóng / Đá. Espresso nguyên chất đậm đà, hương thơm nồng nàn.', is_available: true },
+  { id: 2, name: 'ESPRESSO SỮA', price: 35000, category: 'Cà phê', image_url: 'assets/menu/espresso_sua.webp', badge: 'POPULAR', description: 'Nóng / Đá. Espresso kết hợp sữa tươi béo ngậy thơm lừng.', is_available: true },
+  { id: 3, name: 'BẠC XỈU', price: 35000, category: 'Cà phê', image_url: 'assets/menu/bac_xiu.webp', badge: 'HOT', description: 'Nóng / Đá. Cà phê sữa đặc truyền thống đậm đà, ngọt thanh.', is_available: true },
+  { id: 4, name: 'LATTE HẠNH NHÂN', price: 39000, category: 'Cà phê', image_url: 'assets/menu/latte_hanh_nhan.webp', badge: '', description: 'Nóng / Đá. Sữa hạnh nhân thơm béo quyện cùng espresso.', is_available: true },
+  { id: 5, name: 'CARAMEL LATTE', price: 39000, category: 'Cà phê', image_url: 'assets/menu/caramel_latte.webp', badge: '', description: 'Nóng / Đá. Caramel ngọt thơm hòa quyện cùng latte mịn màng.', is_available: true },
+  { id: 6, name: 'AMERICANO', price: 30000, category: 'Cà phê', image_url: 'assets/menu/americano.webp', badge: '', description: 'Nóng / Đá. Espresso pha loãng thanh nhẹ, vị đắng dịu dàng.', is_available: true },
+  { id: 7, name: 'CÀ PHÊ MUỐI', price: 39000, category: 'Cà phê', image_url: 'assets/menu/ca_phe_muoi.webp', badge: 'SIGNATURE', description: 'Nóng / Đá. Cà phê đậm đà phủ lớp kem muối béo mặn đặc trưng.', is_available: true },
+  { id: 8, name: 'CÀ PHÊ BẠC HÀ', price: 39000, category: 'Cà phê', image_url: 'assets/menu/ca_phe_bac_ha.webp', badge: '', description: 'Đá. Cà phê mát lạnh với hương bạc hà the mát sảng khoái.', is_available: true },
+  { id: 9, name: 'CÀ PHÊ SỮA OATSIDE', price: 40000, category: 'Cà phê', image_url: 'assets/menu/ca_phe_sua_oatside.webp', badge: 'NEW', description: 'Nóng / Đá. Sữa yến mạch Oatside thanh nhẹ kết hợp espresso.', is_available: true },
+
+  // Trà trái cây
+  { id: 10, name: 'TRÀ VẢI HOA HỒNG', price: 39000, category: 'Trà trái cây', image_url: 'assets/menu/tra_vai_hoa_hong.webp', badge: 'BEST', description: 'Vải ngọt mọng nước kết hợp hương hoa hồng thanh tao dịu nhẹ.', is_available: true },
+  { id: 11, name: 'TRÀ CHANH DÂY NHIỆT ĐỚI', price: 39000, category: 'Trà trái cây', image_url: 'assets/menu/tra_chanh_day_nhiet_doi.webp', badge: 'HOT', description: 'Chua ngọt bùng nổ, tươi mát sảng khoái ngày hè.', is_available: true },
+  { id: 12, name: 'TRÀ BƯỞI HỒNG CHANH VÀNG', price: 39000, category: 'Trà trái cây', image_url: 'assets/menu/tra_buoi_hong_chanh_vang.webp', badge: '', description: 'Bưởi hồng mọng nước hòa cùng chanh vàng thơm mát.', is_available: true },
+  { id: 13, name: 'TRÀ XOÀI CHANH DÂY', price: 39000, category: 'Trà trái cây', image_url: 'assets/menu/tra_xoai_chanh_day.webp', badge: '', description: 'Xoài chín ngọt thanh quyện cùng chanh dây đậm đà.', is_available: true },
+  { id: 14, name: 'LỤC TRÀ NHÃN', price: 39000, category: 'Trà trái cây', image_url: 'assets/menu/luc_tra_nhan.webp', badge: '', description: 'Nhãn giòn ngọt ngào kết hợp nền lục trà lài thanh tao.', is_available: true },
+  { id: 15, name: 'LỤC TRÀ TRÂN CHÂU TRẮNG', price: 39000, category: 'Trà trái cây', image_url: 'assets/menu/luc_tra_tran_chau_trang.webp', badge: '', description: 'Lục trà lài thanh mát cùng trân châu trắng giòn sần sật.', is_available: true },
+
+  // Trà sữa & Matcha
+  { id: 16, name: 'MATCHA LATTE', price: 39000, category: 'Trà sữa & Matcha', image_url: 'assets/menu/matcha_latte.webp', badge: 'SIGNATURE', description: 'Matcha Nhật Bản nguyên chất thơm lừng quyện sữa tươi béo dịu.', is_available: true },
+  { id: 17, name: 'MATCHA DÂU', price: 45000, category: 'Trà sữa & Matcha', image_url: 'assets/menu/matcha_dau.webp', badge: 'HOT', description: 'Sự hòa quyện tuyệt hảo giữa matcha thơm đắng và mứt dâu tây ngọt ngào.', is_available: true },
+  { id: 18, name: 'MATCHA KEM MUỐI', price: 45000, category: 'Trà sữa & Matcha', image_url: 'assets/menu/matcha_kem_muoi.webp', badge: '', description: 'Lớp kem muối béo ngậy mằn mặn phủ trên nền matcha đậm đà.', is_available: true },
+  { id: 19, name: 'MATCHA DỪA', price: 45000, category: 'Trà sữa & Matcha', image_url: 'assets/menu/matcha_dua.webp', badge: '', description: 'Vị thơm bùi của nước cốt dừa tươi quyện cùng bột matcha thượng hạng.', is_available: true },
+  { id: 20, name: 'MATCHA COLD WHISK', price: 45000, category: 'Trà sữa & Matcha', image_url: 'assets/menu/matcha_cold_whisk.webp', badge: '', description: 'Đánh bọt matcha lạnh thủ công truyền thống, chuẩn vị Nhật.', is_available: true },
+  { id: 21, name: 'MATCHA OATSIDE', price: 45000, category: 'Trà sữa & Matcha', image_url: 'assets/menu/matcha_oatside.webp', badge: '', description: 'Kết hợp sữa yến mạch Oatside thơm bùi thuần thực vật.', is_available: true },
+
+  // Cacao
+  { id: 22, name: 'CACAO LATTE', price: 39000, category: 'Cacao', image_url: 'assets/menu/cacao_latte.webp', badge: 'BEST', description: 'Cacao nguyên chất béo thơm, ấm áp và giàu năng lượng.', is_available: true },
+  { id: 23, name: 'CACAO KEM MUỐI', price: 45000, category: 'Cacao', image_url: 'assets/menu/cacao_kem_muoi.webp', badge: 'HOT', description: 'Cacao đậm đà hòa quyện cùng lớp kem muối béo ngậy.', is_available: true },
+  { id: 24, name: 'CACAO BẠC HÀ', price: 45000, category: 'Cacao', image_url: 'assets/menu/cacao_bac_ha.webp', badge: '', description: 'Hương bạc hà the mát sảng khoái quyện cùng vị ngọt đắng cacao.', is_available: true },
+
+  // Nước ép
+  { id: 25, name: 'NƯỚC ÉP CAM', price: 35000, category: 'Nước ép', image_url: 'assets/menu/nuoc_ep_cam.webp', badge: 'BEST', description: 'Cam sành tươi vắt nguyên chất, dồi dào Vitamin C.', is_available: true },
+  { id: 26, name: 'NƯỚC ÉP CHANH DÂY', price: 35000, category: 'Nước ép', image_url: 'assets/menu/nuoc_ep_chanh_day.webp', badge: 'HOT', description: 'Chanh dây tươi thơm nồng, chua ngọt giải nhiệt cực đã.', is_available: true },
+
+  // Sữa chua
+  { id: 27, name: 'YAGOUT DÂU', price: 39000, category: 'Sữa chua', image_url: 'assets/menu/yagout_dau.webp', badge: 'BEST', description: 'Sữa chua sánh mịn kết hợp mứt dâu tây chua ngọt thanh mát.', is_available: true },
+  { id: 28, name: 'YAGOUT VIỆT QUẤT', price: 39000, category: 'Sữa chua', image_url: 'assets/menu/yagout_viet_quat.webp', badge: 'HOT', description: 'Việt quất bổ dưỡng thơm lừng quyện cùng sữa chua tươi mát.', is_available: true },
+  { id: 29, name: 'YAGOUT XOÀI CHANH DÂY', price: 39000, category: 'Sữa chua', image_url: 'assets/menu/yagout_xoai_chanh_day.webp', badge: '', description: 'Xoài chín thơm ngọt hòa quyện cùng chanh dây nhiệt đới.', is_available: true },
+  { id: 30, name: 'YAGOUT ĐÀO CHANH DÂY', price: 39000, category: 'Sữa chua', image_url: 'assets/menu/yagout_dao_chanh_day.webp', badge: '', description: 'Đào mọng nước thơm ngọt hòa cùng vị chua dịu nhẹ của chanh dây.', is_available: true },
+
+  // Topping
+  { id: 31, name: 'TRÂN CHÂU TRẮNG', price: 6000, category: 'Topping', image_url: 'assets/menu/tran_chau_trang.webp', badge: '', description: 'Trân châu trắng ngọc trai giòn dai thơm ngon.', is_available: true },
+  { id: 32, name: 'TRÂN CHÂU Ô LONG', price: 6000, category: 'Topping', image_url: 'assets/menu/tran_chau_o_long.webp', badge: '', description: 'Đậm hương trà ô long rang mộc, mềm dẻo.', is_available: true },
+  { id: 33, name: 'THẠCH CÀ PHÊ', price: 6000, category: 'Topping', image_url: 'assets/menu/thach_ca_phe.webp', badge: '', description: 'Thạch cà phê nấu thủ công giòn thơm đậm vị.', is_available: true },
+  { id: 34, name: 'THẠCH QUẾ HOA', price: 6000, category: 'Topping', image_url: 'assets/menu/thach_que_hoa.webp', badge: '', description: 'Thơm thanh hương hoa quế tự nhiên.', is_available: true }
 ];
 
 /**

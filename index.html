@@ -2489,6 +2489,77 @@
       padding: 14px;
       margin-top: 14px;
     }
+
+    /* Announcement Banner */
+    .announcement-banner {
+      background: linear-gradient(90deg, #1A130E 0%, #3D2210 50%, #1A130E 100%);
+      border-bottom: 1px solid rgba(229, 154, 85, 0.35);
+      color: #EDE5D8;
+      font-size: 13px;
+      padding: 8px 16px;
+      position: relative;
+      z-index: 1001;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .announcement-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .announcement-badge {
+      background: var(--accent-gold);
+      color: #0A0F0B;
+      font-weight: 800;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .announcement-text {
+      font-weight: 500;
+      color: #FFFFFF;
+    }
+    .announcement-link {
+      color: var(--accent-gold-light);
+      text-decoration: underline;
+      font-weight: 700;
+      transition: color 0.2s ease;
+    }
+    .announcement-link:hover {
+      color: #FFFFFF;
+    }
+    .announcement-close {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      font-size: 14px;
+      padding: 2px 6px;
+      margin-left: 8px;
+      border-radius: 4px;
+      line-height: 1;
+    }
+    .announcement-close:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Out of stock card styling */
+    .menu-card.is-sold-out {
+      opacity: 0.58;
+      filter: grayscale(45%);
+      position: relative;
+    }
+    .badge-sold-out {
+      background: rgba(231, 76, 60, 0.95) !important;
+      color: #FFFFFF !important;
+      font-weight: 800 !important;
+      box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+    }
   </style>
 </head>
 <body>
@@ -2501,6 +2572,16 @@
 
   <!-- Scroll Progress Indicator -->
   <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Announcement Banner (Controlled from Admin) -->
+  <div id="announcementBanner" class="announcement-banner" style="display: none;" role="region" aria-label="Thông báo ưu đãi">
+    <div class="shell announcement-content">
+      <span class="announcement-badge" id="announcementBadge">ƯU ĐÃI</span>
+      <span class="announcement-text" id="announcementText"></span>
+      <a href="#menu" class="announcement-link" id="announcementLink">Xem ngay →</a>
+      <button type="button" class="announcement-close" onclick="dismissAnnouncement()" aria-label="Đóng thông báo">✕</button>
+    </div>
+  </div>
 
   <!-- ======== 1. SITE HEADER (SEMANTIC NAV) ======== -->
   <header class="site-header" id="siteHeader">
@@ -2526,8 +2607,8 @@
           <span class="lang-pill" id="langPillEn">🇬🇧 EN</span>
         </div>
 
-        <!-- Loyalty Points Lookup Button -->
-        <button type="button" class="btn btn-ghost loyalty-nav-btn" onclick="openLoyaltyModal()" style="padding: 8px 14px; min-height: 38px; font-size: 12.5px;" aria-label="Tra cứu điểm tích lũy">
+        <!-- Loyalty Points Lookup Button (Hidden) -->
+        <button type="button" class="btn btn-ghost loyalty-nav-btn" onclick="openLoyaltyModal()" style="display: none !important; padding: 8px 14px; min-height: 38px; font-size: 12.5px;" aria-label="Tra cứu điểm tích lũy">
           <span>👑</span> <span data-i18n="nav_loyalty">Tích điểm</span>
         </button>
 
@@ -2566,7 +2647,7 @@
       <a href="#signature" class="drawer-link"><span data-i18n="drawer_signature">Món Signature</span> <span>→</span></a>
       <a href="#menu" class="drawer-link"><span data-i18n="drawer_menu">Thực đơn đồ uống</span> <span>→</span></a>
       <a href="javascript:void(0)" onclick="toggleDrawer(false); openMenuBoard();" class="drawer-link" style="color: var(--accent-gold); font-weight: 700;"><span data-i18n="drawer_menu_board">📋 Bảng Menu Tổng (Toàn Trang)</span> <span>→</span></a>
-      <a href="javascript:void(0)" onclick="toggleDrawer(false); openLoyaltyModal();" class="drawer-link" style="color: #F3B378; font-weight: 700;"><span data-i18n="drawer_loyalty">👑 Tra Cứu Điểm Tích Lũy</span> <span>→</span></a>
+      <a href="javascript:void(0)" onclick="toggleDrawer(false); openLoyaltyModal();" class="drawer-link" style="display: none !important; color: #F3B378; font-weight: 700;"><span data-i18n="drawer_loyalty">👑 Tra Cứu Điểm Tích Lũy</span> <span>→</span></a>
       <a href="#spaces" class="drawer-link"><span data-i18n="drawer_spaces">Không gian quán</span> <span>→</span></a>
       <a href="#news" class="drawer-link"><span data-i18n="drawer_news">Tin tức & Sự kiện</span> <span>→</span></a>
       <a href="#faq" class="drawer-link"><span data-i18n="drawer_faq">Hỏi đáp</span> <span>→</span></a>
@@ -3683,8 +3764,8 @@
     </a>
   </aside>
 
-  <!-- ======== MODAL: TRA CỨU ĐIỂM TÍCH LŨY (LOYALTY PROGRAM) ======== -->
-  <div class="modal-overlay" id="loyaltyLookupModal" aria-hidden="true" role="dialog" aria-labelledby="loyaltyTitle">
+  <!-- ======== MODAL: TRA CỨU ĐIỂM TÍCH LŨY (LOYALTY PROGRAM - HIDDEN) ======== -->
+  <div class="modal-overlay" id="loyaltyLookupModal" aria-hidden="true" role="dialog" aria-labelledby="loyaltyTitle" style="display: none !important;">
     <div class="modal-box" style="max-width: 480px;">
       <button type="button" class="modal-close" onclick="closeLoyaltyModal()" aria-label="Đóng popup">✕</button>
       <div class="section-eyebrow" style="margin-bottom: 8px;"><span>👑</span> <span data-i18n="loyalty_eyebrow">Thành Viên Olion</span></div>
@@ -4592,7 +4673,7 @@
         }
       };
 
-      const prizes = [
+      let prizes = [
         { text: 'Giảm 10% Tổng Bill', code: 'OLION10', color: '#E59A55' },
         { text: 'Tặng 1 Topping Free', code: 'FREETOP', color: '#141D16' },
         { text: 'Giảm 15% Cà Phê Muối', code: 'MUOI15', color: '#D86326' },
@@ -4600,6 +4681,50 @@
         { text: 'Tặng 1 Ly Bạc Xỉu', code: 'FREEBACXIU', color: '#E59A55' },
         { text: 'Chúc Bạn May Mắn', code: 'THANKYOU', color: '#141D16' }
       ];
+
+      function applyMinigameConfig() {
+        try {
+          const raw = localStorage.getItem('olion_minigame');
+          const floatBtn = document.getElementById('wheelFloatBtn');
+          if (!floatBtn) return;
+          if (raw) {
+            const config = JSON.parse(raw);
+            if (config.enabled === false) {
+              floatBtn.style.setProperty('display', 'none', 'important');
+              if (typeof closeWheelModal === 'function') closeWheelModal();
+              return;
+            } else {
+              floatBtn.style.removeProperty('display');
+              floatBtn.style.display = 'flex';
+            }
+
+            if (config.floatLabel) {
+              const labelSpan = floatBtn.querySelector('[data-i18n="wheel_float"]') || floatBtn.querySelector('span:last-child');
+              if (labelSpan) labelSpan.textContent = config.floatLabel;
+            }
+
+            if (config.title) {
+              const titleEl = document.getElementById('wheelTitle');
+              if (titleEl) titleEl.textContent = config.title;
+            }
+
+            if (config.prizes && Array.isArray(config.prizes) && config.prizes.length >= 2) {
+              prizes = config.prizes.map(p => ({
+                text: p.text || 'Quà tặng',
+                code: p.code || 'OLIONGIFT',
+                color: p.color || '#E59A55',
+                desc: p.desc || (p.text + ' từ Olion Coffee!')
+              }));
+              if (typeof drawWheel === 'function') drawWheel(0);
+            }
+          } else {
+            floatBtn.style.removeProperty('display');
+            floatBtn.style.display = 'flex';
+          }
+        } catch (e) {
+          console.warn('Lỗi applyMinigameConfig:', e);
+        }
+      }
 
       let wheelAngle = 0;
       let isSpinning = false;
@@ -5028,6 +5153,210 @@
 
         sections.forEach(s => navObserver.observe(s));
       }
+
+      // ===== 10. ADMIN PORTAL DEEP INTEGRATION & REALTIME SYNC =====
+      function escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+      }
+
+      // A. Announcement Banner
+      window.dismissAnnouncement = function() {
+        const banner = document.getElementById('announcementBanner');
+        if (banner) banner.style.display = 'none';
+        sessionStorage.setItem('olion_announcement_dismissed', 'true');
+      };
+
+      function applyAnnouncementConfig() {
+        try {
+          const banner = document.getElementById('announcementBanner');
+          if (!banner) return;
+          if (sessionStorage.getItem('olion_announcement_dismissed') === 'true') {
+            banner.style.display = 'none';
+            return;
+          }
+          const raw = localStorage.getItem('olion_announcement');
+          if (raw) {
+            const data = JSON.parse(raw);
+            if (data.enabled && data.text) {
+              const badgeEl = document.getElementById('announcementBadge');
+              const textEl = document.getElementById('announcementText');
+              const linkEl = document.getElementById('announcementLink');
+              if (badgeEl) badgeEl.textContent = data.badge || 'ƯU ĐÃI';
+              if (textEl) textEl.textContent = data.text;
+              if (linkEl) {
+                linkEl.href = data.link || '#menu';
+                linkEl.style.display = data.link ? 'inline' : 'none';
+              }
+              banner.style.display = 'block';
+              return;
+            }
+          }
+          banner.style.display = 'none';
+        } catch (e) {
+          console.warn('Lỗi applyAnnouncementConfig:', e);
+        }
+      }
+
+      // B. Store Settings
+      function applyStoreSettings() {
+        try {
+          const raw = localStorage.getItem('olion_store_settings');
+          if (!raw) return;
+          const s = JSON.parse(raw);
+          if (s.hotline) {
+            const cleanPhone = s.hotline.replace(/\s+/g, '');
+            document.querySelectorAll('a[href^="tel:"]').forEach(a => {
+              a.href = 'tel:' + cleanPhone;
+              const numSpan = a.querySelector('span:last-child');
+              if (numSpan && !a.classList.contains('btn')) numSpan.textContent = s.hotline;
+            });
+            const footerTel = document.querySelector('.contact-item a[href^="tel:"]');
+            if (footerTel) footerTel.textContent = s.hotline;
+          }
+          if (s.address) {
+            const addrEls = document.querySelectorAll('.contact-item-text');
+            if (addrEls.length > 0) addrEls[0].textContent = s.address;
+          }
+          if (s.hours) {
+            const hourEl = document.querySelector('.hours-badge');
+            if (hourEl) hourEl.textContent = s.hours;
+          }
+          if (s.accentColor) {
+            document.documentElement.style.setProperty('--accent-gold', s.accentColor);
+          }
+        } catch (e) {
+          console.warn('Lỗi applyStoreSettings:', e);
+        }
+      }
+
+      // C. Dynamic Menu & Availability Sync
+      const CAT_PANEL_MAP = {
+        'Cà phê': 'cat-coffee',
+        'Trà trái cây': 'cat-tea',
+        'Trà sữa & Matcha': 'cat-matcha',
+        'Matcha': 'cat-matcha',
+        'Cacao': 'cat-cacao',
+        'Nước ép': 'cat-juice',
+        'Sữa chua': 'cat-yagout',
+        'Topping': 'cat-topping'
+      };
+
+      async function syncMenuFromCloud() {
+        try {
+          if (typeof fetchMenuItemsFromCloud !== 'function') return;
+          const res = await fetchMenuItemsFromCloud();
+          const items = res.data;
+          if (!items || !Array.isArray(items) || items.length === 0) return;
+
+          const grouped = {};
+          items.forEach(item => {
+            const cat = item.category || 'Cà phê';
+            const panelId = CAT_PANEL_MAP[cat] || 'cat-coffee';
+            if (!grouped[panelId]) grouped[panelId] = [];
+            grouped[panelId].push(item);
+          });
+
+          Object.keys(grouped).forEach(panelId => {
+            const panel = document.getElementById(panelId);
+            if (!panel) return;
+            const grid = panel.querySelector('.menu-grid');
+            if (!grid) return;
+
+            const catItems = grouped[panelId];
+            let html = '';
+            catItems.forEach(item => {
+              const isSoldOut = item.is_available === false;
+              let badgeHtml = '';
+              if (isSoldOut) {
+                badgeHtml = '<span class="menu-badge badge-sold-out">HẾT MÓN</span>';
+              } else if (item.badge) {
+                const b = item.badge.toUpperCase();
+                let bClass = 'badge-best';
+                if (b.includes('HOT') || b.includes('CHẠY')) bClass = 'badge-hot';
+                else if (b.includes('NEW') || b.includes('MỚI')) bClass = 'badge-new';
+                else if (b.includes('SIGNATURE')) bClass = 'badge-signature';
+                badgeHtml = `<span class="menu-badge ${bClass}">${escapeHtml(item.badge)}</span>`;
+              }
+
+              const priceFmt = (Number(item.price) || 0).toLocaleString('vi-VN') + 'đ';
+
+              html += `
+                <article class="menu-card ${isSoldOut ? 'is-sold-out' : ''}">
+                  <div class="menu-card-img-wrap">
+                    ${badgeHtml}
+                    <img src="${escapeHtml(item.image_url || 'assets/menu/espresso.webp')}" alt="${escapeHtml(item.name)} — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" onerror="this.src='assets/menu/espresso.webp'" />
+                  </div>
+                  <div class="menu-card-body">
+                    <h3 class="menu-card-name">${escapeHtml(item.name)}</h3>
+                    <div class="menu-card-price">${priceFmt}</div>
+                    <p class="menu-card-desc">${escapeHtml(item.description || '')}</p>
+                  </div>
+                </article>
+              `;
+            });
+
+            grid.innerHTML = html;
+          });
+        } catch (err) {
+          console.warn('Lỗi syncMenuFromCloud:', err);
+        }
+      }
+
+      // D. Approved Reviews Sync
+      async function syncApprovedReviews() {
+        try {
+          if (typeof fetchApprovedFeedbacksFromCloud !== 'function') return;
+          const res = await fetchApprovedFeedbacksFromCloud();
+          const feedbacks = res.data;
+          if (!feedbacks || !Array.isArray(feedbacks) || feedbacks.length === 0) return;
+
+          const reviewsGrid = document.getElementById('reviewsGrid');
+          if (!reviewsGrid) return;
+
+          feedbacks.slice(0, 4).reverse().forEach(fb => {
+            const fbId = 'fb-card-' + fb.id;
+            if (document.getElementById(fbId)) return;
+
+            const card = document.createElement('article');
+            card.id = fbId;
+            card.className = 'review-card reveal visible';
+            const stars = '★'.repeat(Math.min(5, Math.max(1, fb.rating || 5)));
+            const avatarIcons = ['☕', '🌿', '🐻', '✨', '🌸', '💫'];
+            const randomIcon = avatarIcons[Math.floor(Math.random() * avatarIcons.length)];
+
+            card.innerHTML = `
+              <div class="review-stars" aria-label="${fb.rating || 5} trên 5 sao">${stars}</div>
+              <p class="review-quote">"${escapeHtml(fb.content)}"</p>
+              <div class="review-author">
+                <div class="review-avatar">${randomIcon}</div>
+                <div>
+                  <h3 class="review-name">${escapeHtml(fb.name || 'Khách ghé quán')}</h3>
+                  <p class="review-role">Đánh giá xác thực tại quán</p>
+                </div>
+              </div>
+            `;
+            reviewsGrid.prepend(card);
+          });
+        } catch (err) {
+          console.warn('Lỗi syncApprovedReviews:', err);
+        }
+      }
+
+      // E. Cross-tab Realtime Sync
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'olion_minigame') applyMinigameConfig();
+        if (e.key === 'olion_announcement') applyAnnouncementConfig();
+        if (e.key === 'olion_store_settings') applyStoreSettings();
+        if (e.key === 'olion_menu_items') syncMenuFromCloud();
+      });
+
+      // Initial Sync Calls
+      applyMinigameConfig();
+      applyAnnouncementConfig();
+      applyStoreSettings();
+      syncMenuFromCloud();
+      syncApprovedReviews();
 
     });
   </script>

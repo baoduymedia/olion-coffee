@@ -2954,6 +2954,21 @@
       return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
+    // Store Settings Loader
+    function loadStoreSettings() {
+      try {
+        const raw = localStorage.getItem('olion_store_settings');
+        if (raw) {
+          const settings = JSON.parse(raw);
+          if (settings.hotline && document.getElementById('settingHotline')) document.getElementById('settingHotline').value = settings.hotline;
+          if (settings.hours && document.getElementById('settingHours')) document.getElementById('settingHours').value = settings.hours;
+          if (settings.address && document.getElementById('settingAddress')) document.getElementById('settingAddress').value = settings.address;
+          if (settings.email && document.getElementById('settingEmail')) document.getElementById('settingEmail').value = settings.email;
+          if (settings.accentColor && document.getElementById('settingAccentColor')) document.getElementById('settingAccentColor').value = settings.accentColor;
+        }
+      } catch (e) {}
+    }
+
     // Initial Data Load
     function loadAllData() {
       checkSupabaseStatus();
@@ -2963,6 +2978,7 @@
       loadAnnouncement();
       loadPromotions();
       loadMinigame();
+      loadStoreSettings();
     }
     loadAllData();
   </script>
