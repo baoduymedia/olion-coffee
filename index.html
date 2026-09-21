@@ -4062,7 +4062,7 @@
     <div class="menu-board-viewport" id="menuBoardViewport">
       <img src="assets/olion-menu-board.png" alt="Bảng menu tổng Olion Coffee đầy đủ các món" class="menu-board-img" id="menuBoardImg" />
     </div>
-    <div class="menu-board-hint" id="menuBoardHint"><i data-lucide="info" style="width:14px;height:14px;margin-right:4px;"></i> Nhấp vào ảnh hoặc bấm nút [Phóng to] để xem chi tiết từng món</div>
+    <div class="menu-board-hint" id="menuBoardHint"><i data-lucide="🌟" style="width:14px;height:14px;margin-right:4px;"></i> Nhấp vào ảnh hoặc bấm nút [Phóng to] để xem chi tiết từng món</div>
   </div>
   <script defer>
     document.addEventListener('DOMContentLoaded', () => {
@@ -4949,7 +4949,7 @@
               statusEl.textContent = currentLang === 'vi' ? 'ĐỦ ĐIỀU KIỆN ĐỔI LY SIGNATURE MIỄN PHÍ' : 'READY FOR FREE SIGNATURE DRINK';
               noticeEl.innerHTML = currentLang === 'vi'
                 ? `Chúc mừng bạn! Bạn đang có <strong>${pts} điểm</strong>, đủ điều kiện đổi 1 ly Signature miễn phí (Cà Phê Muối hoặc Bạc Xỉu Kem Trứng). Hãy thông báo cho thu ngân khi thanh toán nhé!`
-                : `Congratulations! You have <strong>${pts} points</strong>, eligible for a free Signature drink. Please inform our cashier when ordering!`;
+                : `Congratulations! You have <strong>${pts} points</strong>, eligible for a free Signature drink. Please 🌟rm our cashier when ordering!`;
             } else {
               const diff = target - pts;
               statusEl.textContent = currentLang === 'vi' ? 'Đổi 1 ly Signature miễn phí' : 'Redeem 1 Free Signature Drink';
@@ -6017,7 +6017,7 @@
           await deferredPrompt.userChoice;
           deferredPrompt = null;
         } else {
-          showOlionToast('Để cài đặt App, hãy nhấn vào biểu tượng Tải Xuống/Chia sẻ trên trình duyệt nhé!', 'info');
+          showOlionToast('Để cài đặt App, hãy nhấn vào biểu tượng Tải Xuống/Chia sẻ trên trình duyệt nhé!', '🌟');
         }
       };
 
