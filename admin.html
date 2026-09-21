@@ -2747,11 +2747,11 @@
       }
     }
 
-    document.getElementById('saveMinigameBtn').addEventListener('click', async () => {
+    document.getElementById('saveMinigameSettingsBtn').addEventListener('click', async () => {
       const is_wheel_active = minigameToggle ? minigameToggle.checked : true;
       if (currentPrizes.length < 2) { showToast('Cần ít nhất 2 ô quà!'); return; }
       
-      const btn = document.getElementById('saveMinigameBtn');
+      const btn = document.getElementById('saveMinigameSettingsBtn');
       btn.textContent = 'Đang lưu...';
       if (typeof updateSiteSettingsToCloud === 'function') {
         await updateSiteSettingsToCloud({ is_wheel_active, wheel_prizes: currentPrizes });
