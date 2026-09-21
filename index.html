@@ -4811,10 +4811,77 @@
       let welcomeAutoCloseTimer = null;
       let weatherDataCache = null;
 
-      // 1. Fetch thời tiết TP.HCM từ Open-Meteo (Miễn phí, không cần API Key)
-      async function fetchHcmWeather() {
+      // 1. Định vị Quận/Huyện siêu cục bộ & Fetch thời tiết thực tế
+      const HCM_DISTRICT_COORDS = [
+        { name: 'Gò Vấp', lat: 10.8386, lon: 106.6653, isHome: true },
+        { name: 'Bình Thạnh', lat: 10.8106, lon: 106.7091 },
+        { name: 'Phú Nhuận', lat: 10.7992, lon: 106.6802 },
+        { name: 'Tân Bình', lat: 10.8015, lon: 106.6550 },
+        { name: 'Tân Phú', lat: 10.7900, lon: 106.6280 },
+        { name: 'Quận 12', lat: 10.8672, lon: 106.6412 },
+        { name: 'Thủ Đức', lat: 10.8494, lon: 106.7537 },
+        { name: 'Quận 1', lat: 10.7756, lon: 106.7004 },
+        { name: 'Quận 3', lat: 10.7844, lon: 106.6844 },
+        { name: 'Quận 10', lat: 10.7716, lon: 106.6674 },
+        { name: 'Quận 5', lat: 10.7554, lon: 106.6631 },
+        { name: 'Quận 7', lat: 10.7340, lon: 106.7218 },
+        { name: 'Bình Tân', lat: 10.7653, lon: 106.6037 },
+        { name: 'Hóc Môn', lat: 10.8841, lon: 106.5925 }
+      ];
+
+      function calculateNearestDistrict(lat, lon) {
+        let bestDistrict = 'TP.HCM';
+        let minDist = 999999;
+        let isHome = false;
+
+        HCM_DISTRICT_COORDS.forEach(d => {
+          const dist = Math.hypot(lat - d.lat, lon - d.lon);
+          if (dist < minDist) {
+            minDist = dist;
+            bestDistrict = d.name;
+            isHome = Boolean(d.isHome);
+          }
+        });
+
+        if (minDist > 0.4) {
+          return { district: 'TP.HCM', isHome: false, isNear: false };
+        }
+
+        return {
+          district: bestDistrict,
+          isHome: isHome || bestDistrict === 'Gò Vấp',
+          isNear: ['Gò Vấp', 'Bình Thạnh', 'Phú Nhuận', 'Tân Bình', 'Quận 12', 'Tân Phú'].includes(bestDistrict)
+        };
+      }
+
+      async function fetchHyperLocalWeather() {
+        let lat = 10.8231;
+        let lon = 106.6297;
+        let locationName = 'TP.HCM';
+        let isHome = false;
+        let isNear = true;
+
         try {
-          const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=10.8231&longitude=106.6297&current=temperature_2m,weather_code,is_day&timezone=Asia%2FHo_Chi_Minh');
+          // Lấy toạ độ IP thực tế qua GeoJS (CORS mở, không cần key)
+          const geoRes = await fetch('https://get.geojs.io/v1/ip/geo.json');
+          if (geoRes.ok) {
+            const geoData = await geoRes.json();
+            if (geoData.latitude && geoData.longitude) {
+              lat = parseFloat(geoData.latitude);
+              lon = parseFloat(geoData.longitude);
+              const districtInfo = calculateNearestDistrict(lat, lon);
+              locationName = districtInfo.district;
+              isHome = districtInfo.isHome;
+              isNear = districtInfo.isNear;
+            }
+          }
+        } catch (err) {
+          console.warn('Geo lookup fallback to default HCM:', err);
+        }
+
+        // Lấy thời tiết thực tế tại toạ độ đó qua Open-Meteo
+        try {
+          const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,is_day,relative_humidity_2m&timezone=Asia%2FHo_Chi_Minh`);
           if (!res.ok) throw new Error('Weather fetch failed');
           const data = await res.json();
           const temp = Math.round(data.current.temperature_2m);
@@ -4833,64 +4900,98 @@
             statusText = 'trời mát mẻ có mây';
             icon = '🌤️';
           } else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) {
-            statusText = 'trời đang mưa lất phất';
+            statusText = 'trời đang mưa rào';
             icon = '🌧️';
             isRain = true;
           } else if ([95, 96, 99].includes(code)) {
-            statusText = 'trời đang mưa dông';
+            statusText = 'trời có dông mưa';
             icon = '⛈️';
             isRain = true;
           }
 
-          weatherDataCache = { temp, statusText, icon, isRain, isHot };
+          weatherDataCache = {
+            temp,
+            statusText,
+            icon,
+            isRain,
+            isHot,
+            locationName,
+            isHome,
+            isNear
+          };
           return weatherDataCache;
         } catch (e) {
           console.warn('Weather API fallback:', e);
-          weatherDataCache = { temp: 31, statusText: 'nắng nhẹ', icon: '🌤️', isRain: false, isHot: false };
+          weatherDataCache = {
+            temp: 27,
+            statusText: 'mát dịu',
+            icon: '🌤️',
+            isRain: false,
+            isHot: false,
+            locationName,
+            isHome,
+            isNear
+          };
           return weatherDataCache;
         }
       }
 
-      // 2. Logic phân mảnh 7 khung giờ và sinh lời chào tinh tế theo ngữ cảnh
+      // 2. Logic phân mảnh 7 khung giờ và sinh lời chào tinh tế theo ngữ cảnh vị trí & thời tiết
       function generateSmartWelcomeMessage(name, weather) {
         const now = new Date();
         const hour = now.getHours();
-        const { temp, statusText, isRain, isHot } = weather;
+        const { temp, statusText, isRain, isHot, locationName, isHome } = weather;
 
         let timeSlot = '';
         let greetingPrefix = name ? `Chào ${name}` : `Chào bạn`;
         let recommendation = '';
 
-        // Phân mảnh 7 khung giờ cụ thể:
+        // Phân mảnh 7 khung giờ cụ thể (Đã xóa khung giờ trong ngoặc theo yêu cầu)
         if (hour >= 5 && hour < 8) {
-          timeSlot = 'Sáng Sớm (05h - 08h)';
+          timeSlot = 'Sáng Sớm';
           if (isRain) {
-            recommendation = `Sáng sớm trời mưa nhẹ ${temp}°C, ghé Olion nhâm nhi một tách Cà phê nóng đánh thức mọi giác quan nhé!`;
+            recommendation = `Khu vực ${locationName} sáng sớm trời mưa nhẹ ${temp}°C. Ghé Olion trú mưa nhâm nhi tách Cà phê nóng đánh thức mọi giác quan nhé!`;
           } else {
-            recommendation = `Sáng sớm trong lành ${temp}°C, một ly Espresso hay Cà phê pha thủ công tại Olion sẽ thức tỉnh ngày mới tràn đầy năng lượng.`;
+            recommendation = isHome
+              ? `Sáng sớm Gò Vấp trong lành ${temp}°C! Quán ở 80/64A Dương Quảng Hàm rất gần bạn đấy, ghé Olion làm ly Espresso pha thủ công thức tỉnh ngày mới nhé.`
+              : `Sáng sớm tại ${locationName} thật trong lành (${temp}°C). Một ly Cà phê mộc pha thủ công tại Olion sẽ nạp đầy năng lượng cho bạn!`;
           }
         } else if (hour >= 8 && hour < 11) {
-          timeSlot = 'Buổi Sáng (08h - 11h)';
-          recommendation = `Buổi sáng ngập tràn hứng khởi (${temp}°C, ${statusText}). Hãy nạp 100% năng lượng ngày mới với một ly Cà Phê Muối béo mặn độc quyền của Olion!`;
-        } else if (hour >= 11 && hour < 14) {
-          timeSlot = 'Buổi Trưa (11h - 14h)';
-          if (isHot) {
-            recommendation = `Ngoài trời đang ${temp}°C khá oi ả, ghé Olion trốn nắng trong không gian mát lành và làm ngay một ly Trà Trái Cây giải nhiệt mát lạnh nhé.`;
+          timeSlot = 'Buổi Sáng';
+          if (isRain) {
+            recommendation = `Trời ${locationName} đang mưa rào (${temp}°C). Trú mưa tại góc quán ấm cúng Olion cùng một ly Cà Phê Muối béo mặn nhé!`;
           } else {
-            recommendation = `Trời trưa êm dịu ${temp}°C, thả lưng xuống chiếc ghế quen tại Olion, thưởng thức đồ uống mát lạnh và nạp lại năng lượng tiếp tục ngày dài.`;
+            recommendation = isHome
+              ? `Buổi sáng Gò Vấp đầy hứng khởi (${temp}°C, ${statusText})! Ghé ngay 80/64A Dương Quảng Hàm nạp năng lượng với Cà Phê Muối hay Bạc Xỉu Olion nha.`
+              : `Buổi sáng tại ${locationName} ngập tràn hứng khởi (${temp}°C, ${statusText}). Nạp 100% năng lượng ngày mới cùng Cà Phê Muối độc quyền Olion!`;
+          }
+        } else if (hour >= 11 && hour < 14) {
+          timeSlot = 'Buổi Trưa';
+          if (isHot) {
+            recommendation = `Trời ${locationName} trưa nay khá oi bức (${temp}°C). Ghé Olion trốn nắng trong không gian mát lành và thưởng thức ly Trà Trái Cây mát lạnh giải nhiệt tức thì!`;
+          } else {
+            recommendation = isHome
+              ? `Trưa nay ở Gò Vấp (${temp}°C), ghé Olion thả lưng xuống chiếc ghế quen, ngắm ánh đèn vàng dịu mắt và làm ngụm nước mát lạnh rồi tiếp tục ngày dài nhé.`
+              : `Trời trưa ${locationName} êm dịu ${temp}°C. Ghé Olion thả lưng xuống chiếc ghế quen, thưởng thức đồ uống mát lạnh và nạp lại năng lượng nhé.`;
           }
         } else if (hour >= 14 && hour < 17) {
-          timeSlot = 'Xế Chiều (14h - 17h)';
-          recommendation = `Giờ xế chiều dễ uể oải (${temp}°C), tự thưởng cho mình một ly Matcha Latte thanh mát hay Trà Đào thanh dịu để xua tan mệt mỏi nhé!`;
+          timeSlot = 'Xế Chiều';
+          if (isRain) {
+            recommendation = `Chiều ${locationName} có mưa lất phất (${temp}°C). Một ly Matcha Latte ấm thơm sẽ giúp bạn thư giãn và xua tan mệt mỏi!`;
+          } else {
+            recommendation = `Xế chiều tại ${locationName} dễ uể oải (${temp}°C). Tự thưởng cho mình một ly Matcha Latte thanh mát hay Trà Đào thanh dịu để lấy lại cảm hứng làm việc nhé!`;
+          }
         } else if (hour >= 17 && hour < 19) {
-          timeSlot = 'Chiều Tối (17h - 19h)';
-          recommendation = `Tan tầm rồi, gác lại mọi deadline bộn bề! Ghé Olion ngắm phố xá lên đèn (${temp}°C) và nhâm nhi ly Bạc Xỉu ngọt ngào xả stress thôi nào.`;
+          timeSlot = 'Chiều Tối';
+          recommendation = isHome
+            ? `Tan tầm rồi! Gác lại deadline, ghé ngay Olion 80/64A Dương Quảng Hàm (${temp}°C) ngắm phố xá lên đèn và thưởng thức ly Bạc Xỉu ngọt ngào xả stress nhé.`
+            : `Tan tầm rồi (${locationName} ${temp}°C)! Gác lại mọi deadline, cùng bạn bè ghé Olion ngắm phố xá lên đèn và thưởng thức ly Bạc Xỉu ngọt ngào xả stress thôi nào.`;
         } else if (hour >= 19 && hour < 22) {
-          timeSlot = 'Buổi Tối (19h - 22h)';
-          recommendation = `Phố đêm lung linh trong tiết trời ${temp}°C dễ chịu. Không gian đèn vàng ấm áp và những giai điệu êm dịu tại Olion đang chờ bạn ghé chơi.`;
+          timeSlot = 'Buổi Tối';
+          recommendation = `Phố đêm ${locationName} lung linh trong tiết trời ${temp}°C dễ chịu. Không gian đèn vàng ấm cúng và những giai điệu êm dịu tại Olion đang chờ bạn ghé chơi.`;
         } else {
-          timeSlot = 'Đêm Muộn (22h - 05h)';
-          recommendation = `Đêm muộn yên tĩnh (${temp}°C). Chúc bạn một buổi tối an lành, thư thái và ngủ thật ngon nhé!`;
+          timeSlot = 'Đêm Muộn';
+          recommendation = `Đêm muộn tại ${locationName} thật yên tĩnh (${temp}°C). Chúc bạn một buổi tối an lành, thư thái và có một giấc ngủ thật ngon nhé!`;
         }
 
         return {
@@ -4911,8 +5012,8 @@
         const modal = document.getElementById('welcomeModal');
         if (!modal) return;
 
-        // Lấy dữ liệu thời tiết
-        const weather = await fetchHcmWeather();
+        // Lấy dữ liệu thời tiết siêu cục bộ theo vị trí
+        const weather = await fetchHyperLocalWeather();
 
         // Kiểm tra khách cũ (đã có tên) hay khách mới
         const customerName = (localStorage.getItem('olion_customer_name') || '').trim();
@@ -4927,7 +5028,7 @@
         const msgEl = document.getElementById('welcomeMessage');
 
         if (iconEl) iconEl.textContent = weather.icon;
-        if (textEl) textEl.textContent = `TP.HCM ${weather.temp}°C • ${smartData.timeSlot}`;
+        if (textEl) textEl.textContent = `${weather.locationName} ${weather.temp}°C • ${smartData.timeSlot}`;
         if (titleEl) titleEl.textContent = smartData.title;
         if (msgEl) msgEl.textContent = smartData.message;
 
