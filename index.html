@@ -42,7 +42,7 @@
   <meta name="twitter:image" content="https://baoduymedia.github.io/olion-coffee/assets/space-4.webp" />
 
   <!-- ======== 4. THEME & FAVICONS ======== -->
-  <meta name="theme-color" content="#0A0F0B" />
+  <meta name="theme-color" content="#F6F1E7" />
   <link rel="icon" href="assets/logo-transparent.webp" type="image/webp" />
   <link rel="apple-touch-icon" href="assets/logo-transparent.webp" />
 
@@ -175,26 +175,28 @@
     :root {
       --font-heading: 'Cormorant Garamond', 'Playfair Display', Didot, Garamond, serif;
       --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      --bg-darkest: #0A0F0B;
-      --bg-dark: #0E1510;
-      --bg-card: #141D16;
-      --bg-card-hover: #1A261D;
       
-      --accent-gold: #E59A55;
-      --accent-gold-light: #F3B378;
-      --accent-gold-glow: rgba(229, 154, 85, 0.25);
-      --accent-rust: #D86326;
-      --accent-green: #1D5A38;
-      --accent-green-bright: #2ECC71;
+      /* Brand Guideline Tone of Voice */
+      --bg-darkest: #F6F1E7; /* Warm Ivory (Nền chủ đạo) */
+      --bg-dark: #FFFFFF;    /* Surface / White */
+      --bg-card: #F9F6F0;    /* Slightly offset for cards */
+      --bg-card-hover: #FFFFFF;
       
-      --text-white: #FFFFFF;
-      --text-cream: #F5EFE6;
-      --text-body: #D4CDC3;
-      --text-muted: #8F968E;
+      --accent-gold: #B8A58B;       /* Warm Taupe */
+      --accent-gold-light: #CBAF8D;
+      --accent-gold-glow: rgba(184, 165, 139, 0.25);
+      --accent-rust: #D32F2F;       /* Scarlet Red */
+      --accent-green: #7C8268;      /* Muted Sage */
+      --accent-green-bright: #9CA385;
       
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-gold: rgba(229, 154, 85, 0.25);
-      --border-green: rgba(46, 204, 113, 0.2);
+      --text-white: #2C211B;  /* Espresso Brown (Chữ, menu, bao bì) */
+      --text-cream: #3A2B23;
+      --text-body: #514238;
+      --text-muted: #84766C;
+      
+      --border-subtle: rgba(44, 33, 27, 0.1);
+      --border-gold: rgba(184, 165, 139, 0.3);
+      --border-green: rgba(124, 130, 104, 0.2);
       
       --radius-sm: 8px;
       --radius-md: 14px;
@@ -260,7 +262,7 @@
     ::-webkit-scrollbar-track { background: var(--bg-darkest); }
     ::-webkit-scrollbar-thumb { background: #253328; border-radius: 4px; border: 2px solid var(--bg-darkest); }
     ::-webkit-scrollbar-thumb:hover { background: var(--accent-gold); }
-    ::selection { background: var(--accent-gold); color: #0A0F0B; }
+    ::selection { background: var(--accent-gold); color: var(--text-white); }
 
     .shell {
       width: 100%;
@@ -356,7 +358,7 @@
     .btn-ghost:hover {
       background: rgba(255, 255, 255, 0.12);
       border-color: rgba(255, 255, 255, 0.2);
-      color: #FFFFFF;
+      color: var(--text-white);
       transform: translateY(-2px);
     }
 
@@ -379,7 +381,7 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      background: rgba(10, 15, 11, 0.82);
+      background: rgba(246, 241, 231, 0.82);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.07);
@@ -393,9 +395,9 @@
     }
 
     .site-header.scrolled {
-      background: rgba(10, 15, 11, 0.96);
+      background: rgba(246, 241, 231, 0.96);
       border-bottom-color: rgba(229, 154, 85, 0.25);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     }
 
     .header-container {
@@ -418,7 +420,7 @@
       width: auto;
       max-width: 150px;
       object-fit: contain;
-      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
       transition: transform 0.25s ease;
     }
 
@@ -543,7 +545,7 @@
     .mobile-drawer-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.75);
+      background: rgba(0, 0, 0, 0.15);
       backdrop-filter: blur(8px);
       z-index: 1050;
       opacity: 0;
@@ -567,7 +569,7 @@
       flex-direction: column;
       transform: translateX(100%);
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.2);
     }
 
     .mobile-drawer.active { transform: translateX(0); }
@@ -652,10 +654,10 @@
       inset: 0;
       background: linear-gradient(
         180deg,
-        rgba(10, 15, 11, 0.65) 0%,
-        rgba(10, 15, 11, 0.45) 40%,
-        rgba(10, 15, 11, 0.85) 85%,
-        #0A0F0B 100%
+        rgba(246, 241, 231, 0.65) 0%,
+        rgba(246, 241, 231, 0.45) 40%,
+        rgba(246, 241, 231, 0.85) 85%,
+        var(--bg-darkest) 100%
       );
       z-index: 2;
     }
@@ -671,7 +673,7 @@
       font-size: clamp(34px, 6.5vw, 68px);
       font-weight: 700;
       line-height: 1.15;
-      color: #FFFFFF;
+      color: var(--text-white);
       margin: 14px 0;
       letter-spacing: -0.02em;
     }
@@ -745,7 +747,7 @@
       padding: 18px 16px;
       text-align: center;
       transition: transform 0.3s ease, border-color 0.3s ease;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     }
 
     .stat-card:hover { transform: translateY(-3px); border-color: var(--border-gold); }
@@ -771,7 +773,7 @@
 
     /* Marquee */
     .brand-marquee {
-      background: #0E1510;
+      background: var(--bg-dark);
       border-top: 1px solid rgba(229, 154, 85, 0.15);
       border-bottom: 1px solid rgba(229, 154, 85, 0.15);
       padding: 14px 0;
@@ -891,7 +893,7 @@
     /* ======== SIGNATURE ======== */
     .signature-section {
       padding: var(--section-py) 0;
-      background: #0E1510;
+      background: var(--bg-dark);
       border-top: 1px solid var(--border-subtle);
       border-bottom: 1px solid var(--border-subtle);
     }
@@ -927,7 +929,7 @@
     .signature-card:hover {
       transform: translateY(-4px);
       border-color: var(--accent-gold);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
     }
 
     .signature-card-bg { position: absolute; inset: 0; z-index: 1; }
@@ -946,9 +948,9 @@
       inset: 0;
       background: linear-gradient(
         180deg,
-        rgba(10, 15, 11, 0.2) 0%,
-        rgba(10, 15, 11, 0.6) 40%,
-        rgba(10, 15, 11, 0.95) 90%
+        rgba(246, 241, 231, 0.2) 0%,
+        rgba(246, 241, 231, 0.6) 40%,
+        rgba(246, 241, 231, 0.95) 90%
       );
       z-index: 2;
     }
@@ -959,7 +961,7 @@
       display: inline-block;
       padding: 4px 10px;
       background: var(--accent-gold);
-      color: #0A0F0B;
+      color: var(--text-white);
       font-size: 11px;
       font-weight: 800;
       letter-spacing: 0.08em;
@@ -971,7 +973,7 @@
       font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: clamp(20px, 2.5vw, 26px);
       font-weight: 700;
-      color: #FFFFFF;
+      color: var(--text-white);
       margin-bottom: 6px;
     }
 
@@ -1031,7 +1033,7 @@
     .menu-tab-btn.active {
       background: var(--accent-gold);
       border-color: var(--accent-gold);
-      color: #0A0F0B;
+      color: var(--text-white);
       box-shadow: 0 4px 16px var(--accent-gold-glow);
     }
 
@@ -1064,7 +1066,7 @@
     }
     .menu-tab-btn.menu-board-trigger:hover {
       background: var(--accent-gold);
-      color: #0A0F0B;
+      color: var(--text-white);
       transform: translateY(-2px);
       box-shadow: 0 6px 20px var(--accent-gold-glow);
     }
@@ -1105,7 +1107,7 @@
       font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: clamp(15px, 2vw, 19px);
       font-weight: 700;
-      color: #FFFFFF;
+      color: var(--text-white);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -1133,7 +1135,7 @@
     }
     .menu-board-btn:hover {
       background: var(--accent-gold);
-      color: #0A0F0B;
+      color: var(--text-white);
       border-color: var(--accent-gold);
     }
     .menu-board-close {
@@ -1142,7 +1144,7 @@
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      color: #FFF;
+      color: var(--text-white);
       font-size: 18px;
       display: flex;
       align-items: center;
@@ -1203,7 +1205,7 @@
       font-size: 12px;
       pointer-events: none;
       backdrop-filter: blur(8px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
       z-index: 20;
       white-space: nowrap;
     }
@@ -1244,7 +1246,7 @@
     .menu-card:hover {
       transform: translateY(-3px);
       border-color: var(--border-gold);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
     }
 
     .menu-card-img-wrap {
@@ -1284,7 +1286,7 @@
       text-transform: uppercase;
     }
 
-    .badge-best { background: var(--accent-gold); color: #0A0F0B; }
+    .badge-best { background: var(--accent-gold); color: var(--text-white); }
     .badge-hot { background: var(--accent-rust); color: #FFFFFF; }
     .badge-signature { background: var(--accent-green); color: #FFFFFF; border: 1px solid var(--border-green); }
     .badge-new { background: #3498DB; color: #FFFFFF; }
@@ -1305,7 +1307,7 @@
       font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: 14.5px;
       font-weight: 700;
-      color: #FFFFFF;
+      color: var(--text-white);
       line-height: 1.3;
       margin-bottom: 4px;
     }
@@ -1341,7 +1343,7 @@
     /* ======== SPACES ======== */
     .spaces-section {
       padding: var(--section-py) 0;
-      background: #0E1510;
+      background: var(--bg-dark);
       border-top: 1px solid var(--border-subtle);
     }
 
@@ -1459,7 +1461,7 @@
     /* ======== REVIEWS ======== */
     .reviews-section {
       padding: var(--section-py) 0;
-      background: #0E1510;
+      background: var(--bg-dark);
       border-top: 1px solid var(--border-subtle);
     }
 
@@ -1748,7 +1750,7 @@
         align-items: center;
         justify-content: space-around;
         padding: 0 10px;
-        box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.1);
       }
 
       .dock-item {
@@ -1781,7 +1783,7 @@
         height: 48px;
         border-radius: 50%;
         background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-rust) 100%);
-        color: #FFFFFF;
+        color: var(--text-white);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -1819,8 +1821,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #FFFFFF;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+      color: var(--text-white);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
       backdrop-filter: blur(8px);
       transition: all 0.3s ease;
     }
@@ -1828,7 +1830,7 @@
     .float-icon-btn:hover {
       background: var(--accent-gold);
       transform: scale(1.08);
-      color: #0A0F0B;
+      color: var(--text-white);
     }
 
     .float-icon-btn img { width: 22px; height: 22px; object-fit: contain; }
@@ -1836,7 +1838,7 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.2);
       backdrop-filter: blur(8px);
       z-index: 2000;
       display: flex;
@@ -1851,7 +1853,7 @@
     .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
     .modal-box {
-      background: #141D16;
+      background: var(--bg-card);
       border: 1px solid var(--border-gold);
       border-radius: var(--radius-lg);
       padding: clamp(24px, 4vw, 36px);
@@ -1910,7 +1912,7 @@
       width: 100%;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 35px rgba(196, 178, 154, 0.12);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15), 0 0 35px rgba(196, 178, 154, 0.12);
       transform: translateY(24px) scale(0.96);
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -1939,7 +1941,7 @@
 
     .welcome-close:hover {
       background: rgba(196, 178, 154, 0.25);
-      color: #FFFFFF;
+      color: var(--text-white);
       transform: rotate(90deg);
     }
 
@@ -1964,7 +1966,7 @@
     .welcome-title {
       font-size: 23px;
       line-height: 1.35;
-      color: #FFFFFF;
+      color: var(--text-white);
       margin-bottom: 10px;
     }
 
@@ -1987,7 +1989,7 @@
       border-bottom: 1.5px solid rgba(196, 178, 154, 0.35);
       padding: 10px 4px;
       font-size: 15px;
-      color: #FFFFFF;
+      color: var(--text-white);
       outline: none;
       transition: border-color 0.3s ease;
       font-family: inherit;
@@ -2076,11 +2078,11 @@
 
     .form-input, .form-textarea {
       width: 100%;
-      background: #0E1510;
+      background: var(--bg-dark);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-sm);
       padding: 12px 14px;
-      color: #FFFFFF;
+      color: var(--text-white);
       font-family: inherit;
       font-size: 14px;
       outline: none;
@@ -2097,7 +2099,7 @@
       bottom: 24px;
       z-index: 990;
       background: linear-gradient(135deg, var(--accent-gold), var(--accent-rust));
-      color: #FFF;
+      color: var(--text-white);
       padding: 10px 18px;
       border-radius: var(--radius-full);
       font-size: 13px;
@@ -2164,7 +2166,7 @@
     .news-featured-card:hover {
       transform: translateY(-6px);
       border-color: var(--accent-gold);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(229, 154, 85, 0.15);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), 0 0 25px rgba(229, 154, 85, 0.15);
     }
 
     .news-featured-img-wrap {
@@ -2196,14 +2198,14 @@
       top: 16px;
       left: 16px;
       background: linear-gradient(135deg, #E59A55, #D36C2D);
-      color: #FFFFFF;
+      color: var(--text-white);
       font-size: 11.5px;
       font-weight: 800;
       letter-spacing: 0.05em;
       text-transform: uppercase;
       padding: 6px 14px;
       border-radius: 999px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       z-index: 2;
     }
 
@@ -2256,7 +2258,7 @@
       font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: clamp(20px, 2.5vw, 26px);
       font-weight: 700;
-      color: #FFFFFF;
+      color: var(--text-white);
       margin-bottom: 12px;
       line-height: 1.35;
       transition: color 0.3s;
@@ -2317,7 +2319,7 @@
 
     .news-featured-card:hover .btn-read-more {
       gap: 12px;
-      color: #FFFFFF;
+      color: var(--text-white);
     }
 
     /* Sub Grid Cards */
@@ -2334,7 +2336,7 @@
     }
 
     .news-sub-card {
-      background: #141D16;
+      background: var(--bg-card);
       border: 1px solid rgba(184, 165, 139, 0.14);
       border-radius: var(--radius-md);
       overflow: hidden;
@@ -2347,7 +2349,7 @@
     .news-sub-card:hover {
       transform: translateY(-4px);
       border-color: var(--accent-gold);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
     }
 
     .news-sub-img-wrap {
@@ -2437,7 +2439,7 @@
 
     /* News Modal Box & Gallery */
     .news-modal-box {
-      background: #141D16;
+      background: var(--bg-card);
       border: 1px solid var(--accent-gold);
       border-radius: var(--radius-lg);
       max-width: 720px;
@@ -2525,10 +2527,10 @@
       border: 1px solid rgba(229, 154, 85, 0.35);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      color: #FFFFFF;
+      color: var(--text-white);
       padding: 12px 24px;
       border-radius: 50px;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 15px rgba(229, 154, 85, 0.2);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12), 0 0 15px rgba(229, 154, 85, 0.2);
       display: flex;
       align-items: center;
       gap: 12px;
@@ -2713,7 +2715,7 @@
     }
     .lang-pill.active {
       background: var(--accent-gold);
-      color: #0A0F0B;
+      color: var(--text-white);
       box-shadow: 0 2px 8px rgba(229, 154, 85, 0.3);
     }
 
@@ -2727,7 +2729,7 @@
     }
     .loyalty-nav-btn:hover {
       border-color: var(--accent-gold);
-      color: #FFFFFF;
+      color: var(--text-white);
       background: rgba(229, 154, 85, 0.15);
     }
 
@@ -2761,7 +2763,7 @@
     }
     .announcement-badge {
       background: var(--accent-gold);
-      color: #0A0F0B;
+      color: var(--text-white);
       font-weight: 800;
       font-size: 11px;
       padding: 3px 10px;
@@ -2771,7 +2773,7 @@
     }
     .announcement-text {
       font-weight: 500;
-      color: #FFFFFF;
+      color: var(--text-white);
     }
     .announcement-link {
       color: var(--accent-gold-light);
@@ -2780,7 +2782,7 @@
       transition: color 0.2s ease;
     }
     .announcement-link:hover {
-      color: #FFFFFF;
+      color: var(--text-white);
     }
     .announcement-close {
       background: none;
@@ -2794,7 +2796,7 @@
       line-height: 1;
     }
     .announcement-close:hover {
-      color: #FFFFFF;
+      color: var(--text-white);
       background: rgba(255, 255, 255, 0.1);
     }
 
@@ -2806,7 +2808,7 @@
     }
     .badge-sold-out {
       background: rgba(231, 76, 60, 0.95) !important;
-      color: #FFFFFF !important;
+      color: var(--text-white) !important;
       font-weight: 800 !important;
       box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
     }
@@ -3607,11 +3609,11 @@
               <div style="margin-top: 14px;">
                 <div class="hours-row">
                   <span style="color: var(--text-muted);" data-i18n="hours_weekday_label">Thứ 2 — Thứ 6</span>
-                  <span style="font-weight: 700; color: #FFFFFF;">08:00 — 21:00</span>
+                  <span style="font-weight: 700; color: var(--text-white);">08:00 — 21:00</span>
                 </div>
                 <div class="hours-row">
                   <span style="color: var(--text-muted);" data-i18n="hours_weekend_label">Thứ 7 — Chủ Nhật</span>
-                  <span style="font-weight: 700; color: #FFFFFF;">08:00 — 21:00</span>
+                  <span style="font-weight: 700; color: var(--text-white);">08:00 — 21:00</span>
                 </div>
                 <div class="hours-row">
                   <span style="color: var(--text-muted);" data-i18n="hours_holiday_label">Các ngày Lễ / Tết</span>
@@ -3767,7 +3769,7 @@
     <div class="modal-box" style="max-width: 480px;">
       <button type="button" class="modal-close" onclick="closeLoyaltyModal()" aria-label="Đóng popup"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
       <div class="section-eyebrow" style="margin-bottom: 8px;"><i data-lucide="crown" style="width:14px;height:14px;margin-right:4px;"></i> <span data-i18n="loyalty_eyebrow">Thành Viên Olion</span></div>
-      <h3 class="font-serif" id="loyaltyTitle" style="font-size: 22px; margin-bottom: 6px; color: #FFFFFF;" data-i18n="loyalty_title">Tra Cứu Điểm Tích Lũy</h3>
+      <h3 class="font-serif" id="loyaltyTitle" style="font-size: 22px; margin-bottom: 6px; color: var(--text-white);" data-i18n="loyalty_title">Tra Cứu Điểm Tích Lũy</h3>
       <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 18px;" data-i18n="loyalty_desc">Nhập số điện thoại để kiểm tra số điểm hiện có và các ưu đãi đang chờ bạn!</p>
       
       <form id="loyaltyLookupForm" onsubmit="handleLoyaltyLookup(event)">
@@ -3786,7 +3788,7 @@
         <div style="background: rgba(14, 22, 17, 0.9); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 18px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
             <div>
-              <h4 id="loyaltyResName" style="font-size: 17px; color: #FFFFFF; font-weight: 700;">Nguyễn Minh Anh</h4>
+              <h4 id="loyaltyResName" style="font-size: 17px; color: var(--text-white); font-weight: 700;">Nguyễn Minh Anh</h4>
               <div id="loyaltyResPhone" style="font-size: 13px; color: var(--text-muted);">0908 123 456</div>
             </div>
             <div style="text-align: right;">
@@ -3831,7 +3833,7 @@
     <div class="modal-box" style="text-align: center;">
       <button type="button" class="modal-close" onclick="closeWheelModal()" aria-label="Đóng popup"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
       <div class="section-eyebrow" style="margin-bottom: 8px;"><i data-lucide="gift" style="width:14px;height:14px;margin-right:4px;"></i> Tri Ân Khách Hàng</div>
-      <h3 class="font-serif" id="wheelTitle" style="font-size: 22px; margin-bottom: 6px; color: #FFFFFF;">Vòng Quay May Mắn Olion</h3>
+      <h3 class="font-serif" id="wheelTitle" style="font-size: 22px; margin-bottom: 6px; color: var(--text-white);">Vòng Quay May Mắn Olion</h3>
       <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 14px;">Nhập thông tin để nhận ngay mã ưu đãi đồ uống từ Olion Coffee!</p>
 
       <div style="position: relative; width: 280px; height: 280px; margin: 0 auto 16px;">
@@ -3853,7 +3855,7 @@
         <div style="margin-bottom: 8px; color: var(--accent-gold);"><i data-lucide="gift" style="width:36px;height:36px;"></i></div>
         <h4 id="wheelPrizeTitle" style="color: var(--accent-gold); font-size: 18px; font-weight: 700; margin-bottom: 4px;">Chúc mừng bạn!</h4>
         <p id="wheelPrizeDesc" style="font-size: 13.5px; color: var(--text-cream); margin-bottom: 10px;">Bạn đã nhận được phần quà đặc biệt từ Olion Coffee</p>
-        <div id="wheelCode" style="background: #0A0F0B; border: 1px solid var(--border-gold); padding: 8px 16px; border-radius: 8px; font-family: monospace; font-size: 18px; font-weight: 800; color: var(--accent-gold); letter-spacing: 3px; display: inline-block; margin-bottom: 8px;">OLIONGIFT</div>
+        <div id="wheelCode" style="background: var(--bg-card); border: 1px solid var(--border-gold); padding: 8px 16px; border-radius: 8px; font-family: monospace; font-size: 18px; font-weight: 800; color: var(--accent-gold); letter-spacing: 3px; display: inline-block; margin-bottom: 8px;">OLIONGIFT</div>
         <p style="font-size: 12px; color: var(--text-muted);">Đưa mã này cho thu ngân khi thanh toán hoặc khi order qua Hotline nhé!</p>
       </div>
     </div>
@@ -3865,7 +3867,7 @@
       <button type="button" class="modal-close" onclick="closeFeedbackModal()" aria-label="Đóng popup"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
       <div id="feedbackFormArea">
         <div class="section-eyebrow" style="margin-bottom: 8px;"><i data-lucide="message-square" style="width:14px;height:14px;margin-right:4px;"></i> Góp Ý & Đánh Giá</div>
-        <h3 class="font-serif" id="feedbackTitle" style="font-size: 22px; margin-bottom: 6px; color: #FFFFFF;">Bạn thấy OLION hôm nay thế nào?</h3>
+        <h3 class="font-serif" id="feedbackTitle" style="font-size: 22px; margin-bottom: 6px; color: var(--text-white);">Bạn thấy OLION hôm nay thế nào?</h3>
         <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 12px;">Mọi góp ý của bạn đều là nguồn động lực lớn để tụi mình hoàn thiện hơn mỗi ngày.</p>
 
         <div class="star-picker" id="starPicker" aria-label="Chọn số sao đánh giá">
@@ -3997,7 +3999,7 @@
         <span class="news-category" id="newsModalCategory">Sự Kiện & Nhật Ký Quán</span>
       </div>
 
-      <h3 class="font-serif" id="newsModalTitle" style="font-size: clamp(22px, 3vw, 28px); color: #FFFFFF; margin-bottom: 16px; line-height: 1.35;">
+      <h3 class="font-serif" id="newsModalTitle" style="font-size: clamp(22px, 3vw, 28px); color: var(--text-white); margin-bottom: 16px; line-height: 1.35;">
         OLION’S FIRST WEEK
       </h3>
 
@@ -5280,11 +5282,11 @@
 
       let prizes = [
         { text: 'Giảm 10% Tổng Bill', code: 'OLION10', color: '#E59A55' },
-        { text: 'Tặng 1 Topping Free', code: 'FREETOP', color: '#141D16' },
+        { text: 'Tặng 1 Topping Free', code: 'FREETOP', color: 'var(--bg-card)' },
         { text: 'Giảm 15% Cà Phê Muối', code: 'MUOI15', color: '#D86326' },
         { text: 'Voucher 20.000đ', code: 'GIFT20K', color: '#1D5A38' },
         { text: 'Tặng 1 Ly Bạc Xỉu', code: 'FREEBACXIU', color: '#E59A55' },
-        { text: 'Chúc Bạn May Mắn', code: 'THANKYOU', color: '#141D16' }
+        { text: 'Chúc Bạn May Mắn', code: 'THANKYOU', color: 'var(--bg-card)' }
       ];
 
       function applyMinigameConfig() {
@@ -5548,23 +5550,23 @@
               <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
                 <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(229,154,85,0.2);">
                   <img src="assets/news/news-1-flowers.webp" alt="Hoa khai trương & Bánh kem" style="width: 100%; height: 170px; object-fit: cover;" />
-                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.4);">1. Lẵng hoa & Bánh kem Khai Trương Hồng Phát</p>
+                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.08);">1. Lẵng hoa & Bánh kem Khai Trương Hồng Phát</p>
                 </div>
                 <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(229,154,85,0.2);">
                   <img src="assets/news/news-1-drinks.webp" alt="Bộ đôi Signature" style="width: 100%; height: 170px; object-fit: cover;" />
-                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.4);">2. Bộ đôi Matcha Latte & Cà Phê Muối</p>
+                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.08);">2. Bộ đôi Matcha Latte & Cà Phê Muối</p>
                 </div>
                 <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(229,154,85,0.2);">
                   <img src="assets/news/news-1-serving.webp" alt="Phục vụ tại bàn" style="width: 100%; height: 170px; object-fit: cover;" />
-                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.4);">3. Phục vụ tận bàn tại 80/64A Dương Quảng Hàm</p>
+                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.08);">3. Phục vụ tận bàn tại 80/64A Dương Quảng Hàm</p>
                 </div>
                 <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(229,154,85,0.2);">
                   <img src="assets/news/news-1-recap.webp" alt="Poster Grand Opening" style="width: 100%; height: 170px; object-fit: cover;" />
-                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.4);">4. Khung ảnh Grand Opening Recap</p>
+                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.08);">4. Khung ảnh Grand Opening Recap</p>
                 </div>
                 <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(229,154,85,0.2);">
                   <img src="assets/news/news-1-barista.webp" alt="Barista quầy pha chế" style="width: 100%; height: 170px; object-fit: cover;" />
-                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.4);">5. Barista bên quầy máy pha cà phê Hambach</p>
+                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.08);">5. Barista bên quầy máy pha cà phê Hambach</p>
                 </div>
               </div>
             </div>
