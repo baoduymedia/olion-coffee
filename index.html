@@ -42,7 +42,7 @@
   <meta name="twitter:image" content="https://baoduymedia.github.io/olion-coffee/assets/space-4.webp" />
 
   <!-- ======== 4. THEME & FAVICONS ======== -->
-  <meta name="theme-color" content="#F6F1E7" />
+  <meta name="theme-color" content="#0A0F0B" />
   <link rel="icon" href="assets/logo-transparent.webp" type="image/webp" />
   <link rel="apple-touch-icon" href="assets/logo-transparent.webp" />
 
@@ -175,27 +175,26 @@
       --font-heading: 'Cormorant Garamond', 'Playfair Display', Didot, Garamond, serif;
       --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       
-      /* Brand Guideline Tone of Voice */
-      --bg-darkest: #F6F1E7; /* Warm Ivory (Nền chủ đạo) */
-      --bg-dark: #FFFFFF;    /* Surface / White */
-      --bg-card: #F9F6F0;    /* Slightly offset for cards */
-      --bg-card-hover: #FFFFFF;
+      --bg-darkest: #0A0F0B;
+      --bg-dark: #0E1510;
+      --bg-card: #141D16;
+      --bg-card-hover: #1A261D;
       
-      --accent-gold: #B8A58B;       /* Warm Taupe */
-      --accent-gold-light: #CBAF8D;
-      --accent-gold-glow: rgba(184, 165, 139, 0.25);
-      --accent-rust: #D32F2F;       /* Scarlet Red */
-      --accent-green: #7C8268;      /* Muted Sage */
-      --accent-green-bright: #9CA385;
+      --accent-gold: #E59A55;
+      --accent-gold-light: #F3B378;
+      --accent-gold-glow: rgba(229, 154, 85, 0.25);
+      --accent-rust: #D86326;
+      --accent-green: #1D5A38;
+      --accent-green-bright: #2ECC71;
       
-      --text-white: #2C211B;  /* Espresso Brown (Chữ, menu, bao bì) */
-      --text-cream: #3A2B23;
-      --text-body: #514238;
-      --text-muted: #84766C;
+      --text-white: #FFFFFF;
+      --text-cream: #F5EFE6;
+      --text-body: #D4CDC3;
+      --text-muted: #8F968E;
       
-      --border-subtle: rgba(44, 33, 27, 0.1);
-      --border-gold: rgba(184, 165, 139, 0.3);
-      --border-green: rgba(124, 130, 104, 0.2);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(229, 154, 85, 0.25);
+      --border-green: rgba(46, 204, 113, 0.2);
       
       --radius-sm: 8px;
       --radius-md: 14px;
@@ -380,7 +379,7 @@
       left: 0;
       right: 0;
       z-index: 1000;
-      background: rgba(246, 241, 231, 0.82);
+      background: rgba(10, 15, 11, 0.82);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.07);
@@ -394,9 +393,9 @@
     }
 
     .site-header.scrolled {
-      background: rgba(246, 241, 231, 0.96);
+      background: rgba(10, 15, 11, 0.96);
       border-bottom-color: rgba(229, 154, 85, 0.25);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.65);
     }
 
     .header-container {
@@ -419,7 +418,7 @@
       width: auto;
       max-width: 150px;
       object-fit: contain;
-      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
       transition: transform 0.25s ease;
     }
 
@@ -544,7 +543,7 @@
     .mobile-drawer-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.15);
+      background: rgba(0, 0, 0, 0.65);
       backdrop-filter: blur(8px);
       z-index: 1050;
       opacity: 0;
@@ -568,7 +567,7 @@
       flex-direction: column;
       transform: translateX(100%);
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.2);
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
     }
 
     .mobile-drawer.active { transform: translateX(0); }
@@ -653,9 +652,9 @@
       inset: 0;
       background: linear-gradient(
         180deg,
-        rgba(246, 241, 231, 0.65) 0%,
-        rgba(246, 241, 231, 0.45) 40%,
-        rgba(246, 241, 231, 0.85) 85%,
+        rgba(10, 15, 11, 0.65) 0%,
+        rgba(10, 15, 11, 0.45) 40%,
+        rgba(10, 15, 11, 0.85) 85%,
         var(--bg-darkest) 100%
       );
       z-index: 2;
@@ -746,7 +745,7 @@
       padding: 18px 16px;
       text-align: center;
       transition: transform 0.3s ease, border-color 0.3s ease;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     }
 
     .stat-card:hover { transform: translateY(-3px); border-color: var(--border-gold); }
@@ -928,7 +927,7 @@
     .signature-card:hover {
       transform: translateY(-4px);
       border-color: var(--accent-gold);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
     }
 
     .signature-card-bg { position: absolute; inset: 0; z-index: 1; }
@@ -947,9 +946,9 @@
       inset: 0;
       background: linear-gradient(
         180deg,
-        rgba(246, 241, 231, 0.2) 0%,
-        rgba(246, 241, 231, 0.6) 40%,
-        rgba(246, 241, 231, 0.95) 90%
+        rgba(10, 15, 11, 0.2) 0%,
+        rgba(10, 15, 11, 0.6) 40%,
+        rgba(10, 15, 11, 0.95) 90%
       );
       z-index: 2;
     }
@@ -1204,7 +1203,7 @@
       font-size: 12px;
       pointer-events: none;
       backdrop-filter: blur(8px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
       z-index: 20;
       white-space: nowrap;
     }
@@ -1245,7 +1244,7 @@
     .menu-card:hover {
       transform: translateY(-3px);
       border-color: var(--border-gold);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     }
 
     .menu-card-img-wrap {
@@ -1749,7 +1748,7 @@
         align-items: center;
         justify-content: space-around;
         padding: 0 10px;
-        box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.5);
       }
 
       .dock-item {
@@ -1821,7 +1820,7 @@
       align-items: center;
       justify-content: center;
       color: var(--text-white);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
       backdrop-filter: blur(8px);
       transition: all 0.3s ease;
     }
@@ -1837,7 +1836,7 @@
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(8px);
       z-index: 2000;
       display: flex;
@@ -1911,7 +1910,7 @@
       width: 100%;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15), 0 0 35px rgba(196, 178, 154, 0.12);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 35px rgba(196, 178, 154, 0.12);
       transform: translateY(24px) scale(0.96);
       transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -2165,7 +2164,7 @@
     .news-featured-card:hover {
       transform: translateY(-6px);
       border-color: var(--accent-gold);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12), 0 0 25px rgba(229, 154, 85, 0.15);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(229, 154, 85, 0.15);
     }
 
     .news-featured-img-wrap {
@@ -2204,7 +2203,7 @@
       text-transform: uppercase;
       padding: 6px 14px;
       border-radius: 999px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
       z-index: 2;
     }
 
@@ -2348,7 +2347,7 @@
     .news-sub-card:hover {
       transform: translateY(-4px);
       border-color: var(--accent-gold);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
     }
 
     .news-sub-img-wrap {
@@ -2529,7 +2528,7 @@
       color: var(--text-white);
       padding: 12px 24px;
       border-radius: 50px;
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12), 0 0 15px rgba(229, 154, 85, 0.2);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 15px rgba(229, 154, 85, 0.2);
       display: flex;
       align-items: center;
       gap: 12px;
@@ -5557,23 +5556,23 @@
               <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">
                 <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(229,154,85,0.2);">
                   <img src="assets/news/news-1-flowers.webp" alt="Hoa khai trương & Bánh kem" style="width: 100%; height: 170px; object-fit: cover;" />
-                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.08);">1. Lẵng hoa & Bánh kem Khai Trương Hồng Phát</p>
+                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.4);">1. Lẵng hoa & Bánh kem Khai Trương Hồng Phát</p>
                 </div>
                 <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(229,154,85,0.2);">
                   <img src="assets/news/news-1-drinks.webp" alt="Bộ đôi Signature" style="width: 100%; height: 170px; object-fit: cover;" />
-                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.08);">2. Bộ đôi Matcha Latte & Cà Phê Muối</p>
+                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.4);">2. Bộ đôi Matcha Latte & Cà Phê Muối</p>
                 </div>
                 <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(229,154,85,0.2);">
                   <img src="assets/news/news-1-serving.webp" alt="Phục vụ tại bàn" style="width: 100%; height: 170px; object-fit: cover;" />
-                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.08);">3. Phục vụ tận bàn tại 80/64A Dương Quảng Hàm</p>
+                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.4);">3. Phục vụ tận bàn tại 80/64A Dương Quảng Hàm</p>
                 </div>
                 <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(229,154,85,0.2);">
                   <img src="assets/news/news-1-recap.webp" alt="Poster Grand Opening" style="width: 100%; height: 170px; object-fit: cover;" />
-                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.08);">4. Khung ảnh Grand Opening Recap</p>
+                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.4);">4. Khung ảnh Grand Opening Recap</p>
                 </div>
                 <div style="border-radius: 10px; overflow: hidden; border: 1px solid rgba(229,154,85,0.2);">
                   <img src="assets/news/news-1-barista.webp" alt="Barista quầy pha chế" style="width: 100%; height: 170px; object-fit: cover;" />
-                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.08);">5. Barista bên quầy máy pha cà phê Hambach</p>
+                  <p style="font-size: 11.5px; color: var(--text-muted); padding: 6px 10px; margin: 0; background: rgba(0,0,0,0.4);">5. Barista bên quầy máy pha cà phê Hambach</p>
                 </div>
               </div>
             </div>

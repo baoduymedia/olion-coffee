@@ -19,20 +19,19 @@
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      /* Bảng màu Brand Guideline cho Admin (Dark/Light hybrid) */
-      --bg-dark: #F6F1E7;
-      --bg-sidebar: #EBE5D8;
-      --bg-card: #FFFFFF;
-      --bg-hover: #FDFBFC;
-      --accent: #B8A58B;
-      --accent-hover: #CBAF8D;
-      --gold: #B8A58B;
-      --text: #2C211B;
-      --text-muted: #7C8268;
-      --border: rgba(44, 33, 27, 0.1);
-      --success: #7C8268;
-      --danger: #D32F2F;
-      --purple: #B8A58B;
+      --bg-dark: #190D07;
+      --bg-sidebar: #22120A;
+      --bg-card: #2C1810;
+      --bg-hover: #382015;
+      --accent: #E59A55;
+      --accent-hover: #F2AC6D;
+      --gold: #C59B63;
+      --text: #F6F1E7;
+      --text-muted: #B8A58B;
+      --border: rgba(184, 165, 139, 0.18);
+      --success: #2ECC71;
+      --danger: #E74C3C;
+      --purple: #9B59B6;
     }
     body {
       font-family: 'Inter', -apple-system, sans-serif;
@@ -46,7 +45,7 @@
     button { font-family: inherit; cursor: pointer; border: none; }
     input, textarea, select {
       font-family: inherit;
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(0, 0, 0, 0.25);
       border: 1px solid var(--border);
       color: var(--text);
       border-radius: 8px;
@@ -363,7 +362,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(0, 0, 0, 0.25);
       border: 1px solid var(--border);
       padding: 6px 14px;
       border-radius: 999px;
@@ -1302,7 +1301,7 @@
                 </p>
 
                 <!-- Spin Settings -->
-                <div style="background: rgba(255,255,255,0.8); border-radius: 10px; padding: 16px; margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                <div style="background: rgba(0, 0, 0, 0.2); border-radius: 10px; padding: 16px; margin-top: 18px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
                   <div>
                     <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Tiêu đề cửa sổ vòng quay</label>
                     <input type="text" id="mgTitle" value="🎡 Vòng Quay May Mắn" style="font-size: 13px; padding: 7px 10px;" />
