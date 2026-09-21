@@ -985,6 +985,7 @@
     /* ======== MENU SECTION ======== */
     .menu-section {
       padding: var(--section-py) 0;
+      scroll-margin-top: 90px;
       background-color: var(--bg-darkest);
     }
 
@@ -4055,7 +4056,7 @@
       </div>
     </div>
     <div class="menu-board-viewport" id="menuBoardViewport">
-      <img src="assets/olion-menu-board.png" alt="Bảng menu tổng Olion Coffee đầy đủ các món" class="menu-board-img" id="menuBoardImg" />
+      <img src="assets/olion-menu-board.webp" alt="Bảng menu tổng Olion Coffee đầy đủ các món" class="menu-board-img" id="menuBoardImg" />
     </div>
     <div class="menu-board-hint" id="menuBoardHint"><i data-lucide="🌟" style="width:14px;height:14px;margin-right:4px;"></i> Nhấp vào ảnh hoặc bấm nút [Phóng to] để xem chi tiết từng món</div>
   </div>
@@ -5224,7 +5225,8 @@
           }
 
           btnSubmitFeedback.disabled = true;
-          btnSubmitFeedback.textContent = 'Đang gửi...';
+          btnSubmitFeedback.innerHTML = '<i data-lucide="loader-2" class="icon-spinner" style="width:16px;height:16px;margin-right:6px;"></i> Đang gửi...';
+          lucide.createIcons();
 
           // 3. Thực thi reCAPTCHA v3 Token (nếu có cấu hình)
           if (typeof executeReCaptcha === 'function') {
@@ -5405,7 +5407,8 @@
           // 1. Chống Lạm Dụng Vòng Quay: Kiểm tra Cooldown 24h (1 lượt/ngày qua Device ID & SĐT)
           if (typeof canUserSpinToday === 'function') {
             spinBtn.disabled = true;
-            spinBtn.textContent = 'Đang kiểm tra...';
+            spinBtn.innerHTML = '<i data-lucide="loader-2" class="icon-spinner" style="width:16px;height:16px;margin-right:6px;"></i> Đang tải...';
+            lucide.createIcons();
             const check = await canUserSpinToday(phone);
             if (!check.can_spin) {
               spinBtn.disabled = false;
@@ -5413,11 +5416,11 @@
               showOlionToast(check.message, 'clock');
               return;
             }
-            spinBtn.textContent = 'ĐANG QUAY...';
           }
 
           isSpinning = true;
           spinBtn.disabled = true;
+          spinBtn.textContent = 'ĐANG QUAY...';
 
           const prizeIndex = Math.floor(Math.random() * (prizes.length - 1)); // Always win something nice
           const arc = (2 * Math.PI) / prizes.length;
