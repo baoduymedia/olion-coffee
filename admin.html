@@ -2114,7 +2114,7 @@
             </td>
             <td style="text-align: right;">
               <div style="display: inline-flex; gap: 6px;">
-                <button type="button" class="btn-sm-primary" onclick="openEditMenuModal(${item.id})">✏️ Sửa</button>
+                <button type="button" class="btn-sm-primary" onclick="openEditMenuModal(\'${item.id}\')">✏️ Sửa</button>
                 <button type="button" class="btn-sm-danger" onclick="handleDeleteMenuItem(\'${item.id}\')">🗑️ Xóa</button>
               </div>
             </td>
@@ -2271,7 +2271,7 @@
             <td style="text-align: right;">
               <div style="display: inline-flex; gap: 6px;">
                 <button type="button" class="btn-sm-primary" style="background: rgba(155, 89, 182, 0.2); color: #D2A8E8; border-color: rgba(155, 89, 182, 0.4);" onclick="openLoyaltyModal('${c.contact}')">💎 Tích điểm</button>
-                <button type="button" class="btn-sm-primary" onclick="openPointHistoryModal(${c.id}, '${c.contact}', '${escapeHtml(c.name)}')">📜 Lịch sử</button>
+                <button type="button" class="btn-sm-primary" onclick="openPointHistoryModal(\'${c.id}\', '${c.contact}', '${escapeHtml(c.name)}')">📜 Lịch sử</button>
                 <button type="button" class="btn-sm-danger" onclick="handleDeleteCustomer(\'${c.id}\')">Xóa</button>
               </div>
             </td>
@@ -2810,10 +2810,10 @@
           </td>
           <td>
             <div style="display: flex; gap: 6px;">
-              <button type="button" class="btn-secondary" style="padding: 4px 8px; font-size: 11.5px;" onclick="togglePromo(${p.id})">
+              <button type="button" class="btn-secondary" style="padding: 4px 8px; font-size: 11.5px;" onclick="togglePromo(\'${p.id}\')">
                 ${p.active ? 'Dừng' : 'Bật'}
               </button>
-              <button type="button" class="btn-sm-danger" onclick="deletePromo(${p.id})">
+              <button type="button" class="btn-sm-danger" onclick="deletePromo(\'${p.id}\')">
                 Xóa
               </button>
             </div>
