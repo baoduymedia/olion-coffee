@@ -5456,12 +5456,26 @@
 
               // Lưu lên Supabase Cloud Database (kèm Device ID)
               if (typeof recordLuckySpinToCloud === 'function') {
-                recordLuckySpinToCloud({
+                const insertedData = await recordLuckySpinToCloud({
                   customer_name: name || 'Khách quay minigame',
                   customer_phone: phone,
                   prize_name: prize.text,
                   promo_code: prize.code
                 });
+                
+                // Generate QR Code
+                const qrContainer = document.getElementById('qrCodeContainer');
+                qrContainer.innerHTML = '';
+                if (insertedData && insertedData.id) {
+                  new QRCode(qrContainer, {
+                    text: 'olion-voucher:' + insertedData.id,
+                    width: 150,
+                    height: 150,
+                    colorDark : "#190D07",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                  });
+                }
               }
 
               showOlionToast(`Chúc mừng bạn nhận được ưu đãi ${prize.code}!`, 'gift');
