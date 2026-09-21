@@ -49,7 +49,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="image" href="assets/space-4.webp" type="image/webp" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/logo-white.webp" type="image/webp" fetchpriority="high" />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400;1,600;1,700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <!-- Google Fonts: Cormorant Garamond (Heading - luxury fine dining serif akin to The Seasons) & Poppins (Body text, UI, Buttons) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+  <!-- Lucide Icons CDN for elegant minimalist vector icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <!-- Supabase Cloud SDK (JS Client v2) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -165,7 +168,11 @@
     /* ==========================================================================
        CSS VARIABLES & THEME SYSTEM (Fine Dining / Boutique Cafe)
        ========================================================================== */
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
     :root {
+      --font-heading: 'Cormorant Garamond', 'Playfair Display', Didot, Garamond, serif;
+      --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --bg-darkest: #0A0F0B;
       --bg-dark: #0E1510;
       --bg-card: #141D16;
@@ -210,9 +217,25 @@
       -moz-osx-font-smoothing: grayscale;
       background-color: var(--bg-darkest);
       color: var(--text-cream);
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: var(--font-body);
       font-size: 16px;
-      line-height: 1.6;
+      line-height: 1.65;
+      letter-spacing: 0.01em;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-heading);
+      letter-spacing: 0.03em;
+      font-weight: 600;
+    }
+
+    p, span, a, input, textarea, select, label {
+      font-family: var(--font-body);
+    }
+
+    button {
+      font-family: var(--font-body);
+      letter-spacing: 0.04em;
     }
 
     body {
@@ -246,7 +269,7 @@
       padding-right: var(--shell-px);
     }
 
-    .font-serif { font-family: 'Playfair Display', Georgia, serif; }
+    .font-serif { font-family: var(--font-heading); letter-spacing: 0.03em; }
 
     .section-header {
       text-align: center;
@@ -270,7 +293,7 @@
     }
 
     .section-title {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: clamp(26px, 4.2vw, 44px);
       font-weight: 700;
       line-height: 1.25;
@@ -642,7 +665,7 @@
     }
 
     .hero-title {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: clamp(34px, 6.5vw, 68px);
       font-weight: 700;
       line-height: 1.15;
@@ -726,7 +749,7 @@
     .stat-card:hover { transform: translateY(-3px); border-color: var(--border-gold); }
 
     .stat-number {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: clamp(24px, 3.2vw, 36px);
       font-weight: 700;
       color: var(--accent-gold);
@@ -770,7 +793,7 @@
       align-items: center;
       gap: 24px;
       padding-right: 24px;
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: clamp(14px, 1.8vw, 18px);
       font-weight: 600;
       text-transform: uppercase;
@@ -943,7 +966,7 @@
     }
 
     .signature-card-title {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: clamp(20px, 2.5vw, 26px);
       font-weight: 700;
       color: #FFFFFF;
@@ -1077,7 +1100,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: clamp(15px, 2vw, 19px);
       font-weight: 700;
       color: #FFFFFF;
@@ -1277,7 +1300,7 @@
     }
 
     .menu-card-name {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: 14.5px;
       font-weight: 700;
       color: #FFFFFF;
@@ -1394,7 +1417,7 @@
     }
 
     .faq-number {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: 16px;
       font-weight: 700;
       color: var(--accent-gold);
@@ -1571,7 +1594,7 @@
     }
 
     .hours-title {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: 22px;
       font-weight: 700;
       color: var(--accent-gold);
@@ -1660,7 +1683,7 @@
     }
 
     .footer-tagline {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: 15px;
       font-style: italic;
       color: var(--accent-gold);
@@ -2228,7 +2251,7 @@
     }
 
     .news-featured-title {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: clamp(20px, 2.5vw, 26px);
       font-weight: 700;
       color: #FFFFFF;
@@ -2367,7 +2390,7 @@
     }
 
     .news-sub-title {
-      font-family: 'Playfair Display', serif;
+      font-family: var(--font-heading); letter-spacing: 0.02em;
       font-size: 15px;
       font-weight: 700;
       color: #EDE5D8;
@@ -2791,7 +2814,7 @@
 
   <!-- Toast Notification -->
   <div class="olion-toast" id="olionToast" role="alert" aria-live="polite">
-    <span class="olion-toast-icon" id="olionToastIcon">✨</span>
+    <span class="olion-toast-icon" id="olionToastIcon"><i data-lucide="sparkles" style="width:18px;height:18px;"></i></span>
     <span class="olion-toast-msg" id="olionToastMsg">Thông báo</span>
   </div>
 
@@ -2804,7 +2827,7 @@
       <span class="announcement-badge" id="announcementBadge">ƯU ĐÃI</span>
       <span class="announcement-text" id="announcementText"></span>
       <a href="#menu" class="announcement-link" id="announcementLink">Xem ngay →</a>
-      <button type="button" class="announcement-close" onclick="dismissAnnouncement()" aria-label="Đóng thông báo">✕</button>
+      <button type="button" class="announcement-close" onclick="dismissAnnouncement()" aria-label="Đóng thông báo"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
     </div>
   </div>
 
@@ -2828,17 +2851,17 @@
       <div class="header-actions">
         <!-- Language Switcher -->
         <div class="lang-toggle-btn" id="langToggleBtn" onclick="toggleLanguage()" title="Chuyển đổi ngôn ngữ / Switch Language" role="button" tabindex="0" aria-label="Đổi ngôn ngữ">
-          <span class="lang-pill active" id="langPillVi">🇻🇳 VI</span>
-          <span class="lang-pill" id="langPillEn">🇬🇧 EN</span>
+          <span class="lang-pill active" id="langPillVi">VI</span>
+          <span class="lang-pill" id="langPillEn">EN</span>
         </div>
 
         <!-- Loyalty Points Lookup Button (Hidden) -->
         <button type="button" class="btn btn-ghost loyalty-nav-btn" onclick="openLoyaltyModal()" style="display: none !important; padding: 8px 14px; min-height: 38px; font-size: 12.5px;" aria-label="Tra cứu điểm tích lũy">
-          <span>👑</span> <span data-i18n="nav_loyalty">Tích điểm</span>
+          <i data-lucide="crown" style="width:16px;height:16px;"></i> <span data-i18n="nav_loyalty">Tích điểm</span>
         </button>
 
         <a href="tel:0783657587" class="header-phone-pill" title="Gọi Hotline đặt bàn và giao hàng">
-          <span>📞</span>
+          <i data-lucide="phone" style="width:16px;height:16px;"></i>
           <span>0783 657 587</span>
         </a>
         <button type="button" class="btn btn-ghost header-feedback-btn" onclick="openFeedbackModal()" style="padding: 8px 16px; min-height: 38px; font-size: 12.5px;" aria-label="Mở bảng góp ý quán">
@@ -2856,14 +2879,14 @@
   <!-- Mobile Drawer Overlay & Menu -->
   <div class="mobile-drawer-overlay" id="drawerOverlay"></div>
   <aside class="mobile-drawer" id="mobileDrawer" aria-label="Menu di động">
-    <button type="button" class="drawer-close" id="drawerClose" aria-label="Đóng menu">✕</button>
+    <button type="button" class="drawer-close" id="drawerClose" aria-label="Đóng menu"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
     <div class="drawer-nav">
       <!-- Mobile Language Switcher Row -->
       <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0 14px; border-bottom: 1px solid rgba(255,255,255,0.08);">
         <span style="font-size: 13px; color: var(--text-muted);" data-i18n="drawer_lang_label">Ngôn ngữ / Language:</span>
         <div class="lang-toggle-btn" onclick="toggleLanguage()">
-          <span class="lang-pill active" id="langPillViMobile">🇻🇳 VI</span>
-          <span class="lang-pill" id="langPillEnMobile">🇬🇧 EN</span>
+          <span class="lang-pill active" id="langPillViMobile">VI</span>
+          <span class="lang-pill" id="langPillEnMobile">EN</span>
         </div>
       </div>
 
@@ -2871,8 +2894,8 @@
       <a href="#about" class="drawer-link"><span data-i18n="drawer_about">Về Olion Coffee</span> <span>→</span></a>
       <a href="#signature" class="drawer-link"><span data-i18n="drawer_signature">Món Signature</span> <span>→</span></a>
       <a href="#menu" class="drawer-link"><span data-i18n="drawer_menu">Thực đơn đồ uống</span> <span>→</span></a>
-      <a href="javascript:void(0)" onclick="toggleDrawer(false); openMenuBoard();" class="drawer-link" style="color: var(--accent-gold); font-weight: 700;"><span data-i18n="drawer_menu_board">📋 Bảng Menu Tổng (Toàn Trang)</span> <span>→</span></a>
-      <a href="javascript:void(0)" onclick="toggleDrawer(false); openLoyaltyModal();" class="drawer-link" style="display: none !important; color: #F3B378; font-weight: 700;"><span data-i18n="drawer_loyalty">👑 Tra Cứu Điểm Tích Lũy</span> <span>→</span></a>
+      <a href="javascript:void(0)" onclick="toggleDrawer(false); openMenuBoard();" class="drawer-link" style="color: var(--accent-gold); font-weight: 700;"><i data-lucide="file-text" style="width:16px;height:16px;margin-right:6px;"></i><span data-i18n="drawer_menu_board">Bảng Menu Tổng (Toàn Trang)</span> <span>→</span></a>
+      <a href="javascript:void(0)" onclick="toggleDrawer(false); openLoyaltyModal();" class="drawer-link" style="display: none !important; color: #F3B378; font-weight: 700;"><i data-lucide="crown" style="width:16px;height:16px;margin-right:6px;"></i><span data-i18n="drawer_loyalty">Tra Cứu Điểm Tích Lũy</span> <span>→</span></a>
       <a href="#spaces" class="drawer-link"><span data-i18n="drawer_spaces">Không gian quán</span> <span>→</span></a>
       <a href="#news" class="drawer-link"><span data-i18n="drawer_news">Tin tức & Sự kiện</span> <span>→</span></a>
       <a href="#faq" class="drawer-link"><span data-i18n="drawer_faq">Hỏi đáp</span> <span>→</span></a>
@@ -2906,7 +2929,7 @@
 
       <div class="shell hero-content">
         <div class="section-eyebrow" data-i18n="hero_eyebrow">
-          <span>✦</span> OLION COFFEE · ELEGANCE IN EVERY SIP
+          <i data-lucide="sparkles" style="width:13px;height:13px;"></i> OLION COFFEE · ELEGANCE IN EVERY SIP
         </div>
         <!-- SINGLE PRIMARY H1 FOR TECHNICAL & LOCAL SEO -->
         <h1 class="hero-title" data-i18n="hero_title">
@@ -2957,31 +2980,31 @@
         <div class="marquee-track">
           <div class="marquee-item">
             <span class="highlight">Elegance in Every Sip</span>
-            <span class="star">✦</span>
+            <i data-lucide="sparkle" style="width:10px;height:10px;color:var(--accent-gold);opacity:0.6;"></i>
             <span>Cafe Đẹp Dương Quảng Hàm</span>
-            <span class="star">✦</span>
+            <i data-lucide="sparkle" style="width:10px;height:10px;color:var(--accent-gold);opacity:0.6;"></i>
             <span class="highlight">Cà Phê Muối</span>
-            <span class="star">✦</span>
+            <i data-lucide="sparkle" style="width:10px;height:10px;color:var(--accent-gold);opacity:0.6;"></i>
             <span>Bạc Xỉu Kem Trứng</span>
-            <span class="star">✦</span>
+            <i data-lucide="sparkle" style="width:10px;height:10px;color:var(--accent-gold);opacity:0.6;"></i>
             <span class="highlight">Không Gian Sang Trọng TP.HCM</span>
-            <span class="star">✦</span>
+            <i data-lucide="sparkle" style="width:10px;height:10px;color:var(--accent-gold);opacity:0.6;"></i>
             <span>Trà Trái Cây Tươi</span>
-            <span class="star">✦</span>
+            <i data-lucide="sparkle" style="width:10px;height:10px;color:var(--accent-gold);opacity:0.6;"></i>
           </div>
           <div class="marquee-item" aria-hidden="true">
             <span class="highlight">Elegance in Every Sip</span>
-            <span class="star">✦</span>
+            <i data-lucide="sparkle" style="width:10px;height:10px;color:var(--accent-gold);opacity:0.6;"></i>
             <span>Cafe Đẹp Dương Quảng Hàm</span>
-            <span class="star">✦</span>
+            <i data-lucide="sparkle" style="width:10px;height:10px;color:var(--accent-gold);opacity:0.6;"></i>
             <span class="highlight">Cà Phê Muối</span>
-            <span class="star">✦</span>
+            <i data-lucide="sparkle" style="width:10px;height:10px;color:var(--accent-gold);opacity:0.6;"></i>
             <span>Bạc Xỉu Kem Trứng</span>
-            <span class="star">✦</span>
+            <i data-lucide="sparkle" style="width:10px;height:10px;color:var(--accent-gold);opacity:0.6;"></i>
             <span class="highlight">Không Gian Sang Trọng TP.HCM</span>
-            <span class="star">✦</span>
+            <i data-lucide="sparkle" style="width:10px;height:10px;color:var(--accent-gold);opacity:0.6;"></i>
             <span>Trà Trái Cây Tươi</span>
-            <span class="star">✦</span>
+            <i data-lucide="sparkle" style="width:10px;height:10px;color:var(--accent-gold);opacity:0.6;"></i>
           </div>
         </div>
       </div>
@@ -3004,28 +3027,28 @@
             </p>
             <div class="about-features-grid">
               <div class="feature-pill">
-                <div class="feature-pill-icon">☕</div>
+                <div class="feature-pill-icon"><i data-lucide="coffee" style="width:20px;height:20px;"></i></div>
                 <div>
                   <h3 class="feature-pill-title" data-i18n="about_feat_1_title">Pha thủ công</h3>
                   <p class="feature-pill-desc" data-i18n="about_feat_1_desc">Từng ly được pha chế tỉ mỉ tại quầy</p>
                 </div>
               </div>
               <div class="feature-pill">
-                <div class="feature-pill-icon">🌿</div>
+                <div class="feature-pill-icon"><i data-lucide="leaf" style="width:20px;height:20px;"></i></div>
                 <div>
                   <h3 class="feature-pill-title" data-i18n="about_feat_2_title">Nguyên liệu chọn lọc</h3>
                   <p class="feature-pill-desc" data-i18n="about_feat_2_desc">Hạt mộc rang xay & trà cao cấp</p>
                 </div>
               </div>
               <div class="feature-pill">
-                <div class="feature-pill-icon">🪑</div>
+                <div class="feature-pill-icon"><i data-lucide="armchair" style="width:20px;height:20px;"></i></div>
                 <div>
                   <h3 class="feature-pill-title" data-i18n="about_feat_3_title">Không gian yên tĩnh</h3>
                   <p class="feature-pill-desc" data-i18n="about_feat_3_desc">Góc làm việc & thư giãn ấm cúng</p>
                 </div>
               </div>
               <div class="feature-pill">
-                <div class="feature-pill-icon">✨</div>
+                <div class="feature-pill-icon"><i data-lucide="sparkles" style="width:20px;height:20px;"></i></div>
                 <div>
                   <h3 class="feature-pill-title" data-i18n="about_feat_4_title">Phục vụ tận tâm</h3>
                   <p class="feature-pill-desc" data-i18n="about_feat_4_desc">Nụ cười và sự chu đáo mỗi ngày</p>
@@ -3054,7 +3077,7 @@
       <div class="shell">
         <div class="section-header">
           <div class="section-eyebrow" data-i18n="sig_eyebrow">
-            <span>✦</span> Món Bán Chạy
+            <i data-lucide="flame" style="width:14px;height:14px;"></i> Món Bán Chạy
           </div>
           <h2 class="section-title" data-i18n="sig_title">
             Món <span class="accent">Signature</span> của quán
@@ -3119,7 +3142,7 @@
         <div class="menu-tabs-wrapper">
           <div class="menu-tabs" id="menuTabs">
             <button type="button" class="menu-tab-btn menu-board-trigger" id="openMenuBoardBtn" aria-label="Xem Menu Tổng ảnh lớn toàn trang" title="Bấm để xem Menu Tổng toàn bộ món">
-              <span>📋</span> <span data-i18n="menu_tab_board">MENU TỔNG</span>
+              <i data-lucide="book-open" style="width:15px;height:15px;"></i> <span data-i18n="menu_tab_board">MENU TỔNG</span>
             </button>
             <button type="button" class="menu-tab-btn active" data-cat="coffee" data-i18n="menu_tab_coffee">Cà Phê</button>
             <button type="button" class="menu-tab-btn" data-cat="tea" data-i18n="menu_tab_tea">Trà Trái Cây</button>
@@ -3664,17 +3687,17 @@
           <article class="news-featured-card" onclick="openNewsModal('news-first-week')">
             <div class="news-featured-img-wrap">
               <img src="assets/news/news-1-flowers.webp" alt="OLION’S FIRST WEEK - Nhật ký tuần đầu tiên tại Olion Coffee" class="news-featured-img" width="800" height="600" loading="lazy" decoding="async" />
-              <div class="news-featured-badge">🌟 Sự kiện đặc biệt</div>
-              <div class="news-img-count-badge">📸 Trọn bộ 5 ảnh</div>
+              <div class="news-featured-badge"><i data-lucide="award" style="width:13px;height:13px;"></i> Sự kiện đặc biệt</div>
+              <div class="news-img-count-badge"><i data-lucide="camera" style="width:13px;height:13px;"></i> Trọn bộ 5 ảnh</div>
             </div>
             <div class="news-featured-content">
               <div class="news-meta">
-                <span class="news-date">📅 19/09/2026</span>
+                <span class="news-date"><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;"></i>19/09/2026</span>
                 <span class="news-category">Nhật Ký Quán</span>
               </div>
-              <h3 class="news-featured-title">OLION’S FIRST WEEK 🤎</h3>
+              <h3 class="news-featured-title">OLION’S FIRST WEEK</h3>
               <p class="news-featured-excerpt">
-                Một tuần đầu tiên thật nhiều yêu thương. Cảm ơn bạn đã ghé Olion, dành cho chúng mình những lời nhắn và sự ủng hộ thật dễ thương ☕️ Nếu có điều gì chưa trọn vẹn, mong bạn nhẹ nhàng nhắn nhủ và thương Olion bỏ qua nhé 🫶🏻...
+                Một tuần đầu tiên thật nhiều yêu thương. Cảm ơn bạn đã ghé Olion, dành cho chúng mình những lời nhắn và sự ủng hộ thật dễ thương. Nếu có điều gì chưa trọn vẹn, mong bạn nhẹ nhàng nhắn nhủ và thương Olion bỏ qua nhé....
               </p>
               <div class="news-featured-footer">
                 <div class="news-thumbnails-preview" title="Xem trọn bộ 5 ảnh câu chuyện">
@@ -3701,7 +3724,7 @@
               </div>
               <div class="news-sub-content">
                 <div class="news-meta">
-                  <span class="news-date">📅 18/09/2026</span>
+                  <span class="news-date"><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;"></i>18/09/2026</span>
                 </div>
                 <h4 class="news-sub-title">Khám Phá Bộ Đôi Matcha Latte & Cà Phê Muối Chuẩn Vị</h4>
                 <p class="news-sub-desc">Hương vị hòa quyện giữa lớp bọt béo ngậy mịn màng và matcha Nhật Bản thơm dịu tại 80/64A Dương Quảng Hàm.</p>
@@ -3717,7 +3740,7 @@
               </div>
               <div class="news-sub-content">
                 <div class="news-meta">
-                  <span class="news-date">📅 15/09/2026</span>
+                  <span class="news-date"><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;"></i>15/09/2026</span>
                 </div>
                 <h4 class="news-sub-title">Góc Yên Bình Giữa Lòng Gò Vấp Cho Những Buổi Chiều Làm Việc</h4>
                 <p class="news-sub-desc">Không gian ấm cúng với ánh đèn lồng dịu mắt, bàn ghế tiêu chuẩn và âm nhạc nhẹ nhàng thư giãn.</p>
@@ -3733,7 +3756,7 @@
               </div>
               <div class="news-sub-content">
                 <div class="news-meta">
-                  <span class="news-date">📅 12/09/2026</span>
+                  <span class="news-date"><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;"></i>12/09/2026</span>
                 </div>
                 <h4 class="news-sub-title">Grand Opening Recap — Tuần Lễ Khai Trương Rực Rỡ Ưu Đãi</h4>
                 <p class="news-sub-desc">Chương trình Mua 2 Tặng 1 cùng hàng trăm voucher tri ân những vị khách đầu tiên đến với Olion.</p>
@@ -3749,7 +3772,7 @@
               </div>
               <div class="news-sub-content">
                 <div class="news-meta">
-                  <span class="news-date">📅 10/09/2026</span>
+                  <span class="news-date"><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;"></i>10/09/2026</span>
                 </div>
                 <h4 class="news-sub-title">Nghệ Thuật Chọn Lọc Hạt Cà Phê Mộc Nguyên Chất Tại Olion</h4>
                 <p class="news-sub-desc">Từng mẻ hạt Arabica Cầu Đất và Robusta được rang mộc tỉ mỉ để giữ trọn vẹn hậu vị ngọt ngào sâu lắng.</p>
@@ -3820,7 +3843,7 @@
           <h2 class="section-title" data-i18n="reviews_title">
             Khách hàng <span class="accent">nói gì</span> về Olion?
           </h2>
-          <p class="section-desc" data-i18n="reviews_desc">Được chấm 4.9/5.0★ từ hơn 280+ đánh giá thực tế trên Google Maps và Facebook.</p>
+          <p class="section-desc" data-i18n="reviews_desc">Được chấm 4.9/5.0 từ hơn 280+ đánh giá thực tế trên Google Maps và Facebook.</p>
         </div>
 
         <div class="reviews-grid" id="reviewsGrid">
@@ -3828,7 +3851,7 @@
             <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
             <p class="review-quote" data-i18n="review_1_quote">"Quán nằm trong hẻm yên tĩnh ở Dương Quảng Hàm, bước vào cảm giác như tách biệt khỏi xô bồ ngoài kia. Đèn vàng ấm mắt, bàn ghế gỗ cao ngồi làm việc cả buổi rất thoải mái. Cà phê muối béo mặn cực kỳ vừa miệng!"</p>
             <div class="review-author">
-              <div class="review-avatar">🐻</div>
+              <div class="review-avatar"><i data-lucide="user" style="width:20px;height:20px;"></i></div>
               <div>
                 <h3 class="review-name">Minh Anh</h3>
                 <p class="review-role" data-i18n="review_1_role">Sinh viên ĐH Văn Lang</p>
@@ -3840,7 +3863,7 @@
             <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
             <p class="review-quote" data-i18n="review_2_quote">"Matcha latte ở đây chuẩn vị Nhật, thơm đắng thanh nhẹ và không bị ngọt gắt như nhiều chỗ khác. Tụi mình hay ghé đây đọc sách và trò chuyện cuối tuần vì nhạc mở vừa phải rất dễ chịu."</p>
             <div class="review-author">
-              <div class="review-avatar">🌿</div>
+              <div class="review-avatar"><i data-lucide="user-check" style="width:20px;height:20px;"></i></div>
               <div>
                 <h3 class="review-name">Thanh Trúc</h3>
                 <p class="review-role" data-i18n="review_2_role">Graphic Designer</p>
@@ -3852,7 +3875,7 @@
             <div class="review-stars" aria-label="5 trên 5 sao">★★★★★</div>
             <p class="review-quote" data-i18n="review_3_quote">"Bạc xỉu kem trứng ngon đỉnh chóp! Lớp bọt trứng béo mịn uống tới đâu dính tới đó. Nhân viên thân thiện, nhiệt tình châm trà liên tục. Chắc chắn sẽ là quán ruột của mình."</p>
             <div class="review-author">
-              <div class="review-avatar">☕</div>
+              <div class="review-avatar"><i data-lucide="smile" style="width:20px;height:20px;"></i></div>
               <div>
                 <h3 class="review-name">Hoàng Nam</h3>
                 <p class="review-role" data-i18n="review_3_role">Freelancer Gò Vấp</p>
@@ -3884,7 +3907,7 @@
         <div class="contact-grid">
           <div class="contact-card">
             <div class="contact-item">
-              <div class="contact-item-icon">📍</div>
+              <div class="contact-item-icon"><i data-lucide="map-pin" style="width:20px;height:20px;"></i></div>
               <div>
                 <h3 class="contact-item-title" data-i18n="contact_addr_title">Địa chỉ quán</h3>
                 <p class="contact-item-text">
@@ -3897,7 +3920,7 @@
             </div>
 
             <div class="contact-item">
-              <div class="contact-item-icon">📞</div>
+              <div class="contact-item-icon"><i data-lucide="phone" style="width:20px;height:20px;"></i></div>
               <div>
                 <h3 class="contact-item-title" data-i18n="contact_hotline_title">Hotline đặt món & giao hàng</h3>
                 <p class="contact-item-text">
@@ -3907,7 +3930,7 @@
             </div>
 
             <div class="contact-item">
-              <div class="contact-item-icon">✉️</div>
+              <div class="contact-item-icon"><i data-lucide="mail" style="width:20px;height:20px;"></i></div>
               <div>
                 <h3 class="contact-item-title">Email</h3>
                 <p class="contact-item-text">
@@ -3956,7 +3979,7 @@
 
             <div class="quote-box" id="dynamicQuoteBox">
               <div class="quote-time-tag" id="quoteTimeTag">
-                <span id="quoteIcon">☀️</span> <span id="quoteTimeLabel">Buổi trưa mát lành</span>
+                <span id="quoteIcon"><i data-lucide="sun" style="width:16px;height:16px;"></i></span> <span id="quoteTimeLabel">Buổi trưa mát lành</span>
               </div>
               <div id="quoteText" class="quote-text">
                 "Trời trưa hơi gắt, ghé OLION thả lưng xuống chiếc ghế quen, ngắm ánh đèn vàng dịu mắt và làm ngụm nước mát lạnh rồi tỉnh tiếp nha."
@@ -4000,7 +4023,7 @@
           <a href="https://www.facebook.com/profile.php?id=61594159312837&locale=vi_VN" target="_blank" rel="noopener noreferrer">Facebook ↗</a>
           <a href="https://www.tiktok.com/@olion.coffee" target="_blank" rel="noopener noreferrer">TikTok ↗</a>
           <a href="https://www.instagram.com/olion.coffee/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
-          <a href="admin.html">Quản trị viên (Admin) 🔒</a>
+          <a href="admin.html">Quản trị viên (Admin) <i data-lucide="lock" style="width:12px;height:12px;margin-left:4px;"></i></a>
         </div>
       </div>
 
@@ -4052,11 +4075,11 @@
   <!-- ======== SMART WELCOME POPUP (POPUP CHÀO MỪNG THÔNG MINH) ======== -->
   <div class="welcome-overlay" id="welcomeModal" aria-hidden="true" role="dialog" aria-labelledby="welcomeTitle">
     <div class="welcome-box" id="welcomeBox">
-      <button type="button" class="welcome-close" onclick="closeWelcomeModal()" aria-label="Đóng popup">✕</button>
+      <button type="button" class="welcome-close" onclick="closeWelcomeModal()" aria-label="Đóng popup"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
       
       <div class="welcome-badge-wrap">
         <span class="welcome-weather-pill" id="welcomeWeatherPill">
-          <span id="welcomeWeatherIcon">🌤️</span>
+          <span id="welcomeWeatherIcon"><i data-lucide="sun-medium" style="width:18px;height:18px;"></i></span>
           <span id="welcomeWeatherText">TP.HCM 32°C • Đang tải...</span>
         </span>
       </div>
@@ -4079,7 +4102,7 @@
             <input type="tel" id="welcomePhone" class="welcome-input" placeholder="Số điện thoại (10 số để nhận quà tri ân)" required pattern="^(03|05|07|08|09)[0-9]{8}$" autocomplete="tel" />
           </div>
           <button type="submit" class="welcome-btn" id="welcomeSubmitBtn">
-            Bắt đầu trải nghiệm ✨
+            Bắt đầu trải nghiệm
           </button>
         </form>
       </div>
@@ -4087,7 +4110,7 @@
       <!-- Khách quen: Lời chào thân thiết & Nút xem Menu -->
       <div id="welcomeReturningUserArea" style="display: none;">
         <button type="button" class="welcome-btn" onclick="welcomeExploreMenu()">
-          Khám phá Thực Đơn ngay ☕
+          Khám phá Thực Đơn ngay
         </button>
       </div>
 
@@ -4099,8 +4122,8 @@
   <!-- ======== MODAL: TRA CỨU ĐIỂM TÍCH LŨY (LOYALTY PROGRAM - HIDDEN) ======== -->
   <div class="modal-overlay" id="loyaltyLookupModal" aria-hidden="true" role="dialog" aria-labelledby="loyaltyTitle" style="display: none !important;">
     <div class="modal-box" style="max-width: 480px;">
-      <button type="button" class="modal-close" onclick="closeLoyaltyModal()" aria-label="Đóng popup">✕</button>
-      <div class="section-eyebrow" style="margin-bottom: 8px;"><span>👑</span> <span data-i18n="loyalty_eyebrow">Thành Viên Olion</span></div>
+      <button type="button" class="modal-close" onclick="closeLoyaltyModal()" aria-label="Đóng popup"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
+      <div class="section-eyebrow" style="margin-bottom: 8px;"><i data-lucide="crown" style="width:14px;height:14px;margin-right:4px;"></i> <span data-i18n="loyalty_eyebrow">Thành Viên Olion</span></div>
       <h3 class="font-serif" id="loyaltyTitle" style="font-size: 22px; margin-bottom: 6px; color: #FFFFFF;" data-i18n="loyalty_title">Tra Cứu Điểm Tích Lũy</h3>
       <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 18px;" data-i18n="loyalty_desc">Nhập số điện thoại để kiểm tra số điểm hiện có và các ưu đãi đang chờ bạn!</p>
       
@@ -4157,14 +4180,14 @@
 
   <!-- ======== 14. LUCKY WHEEL FLOATING BUTTON & MODAL ======== -->
   <button type="button" class="wheel-float-btn" id="wheelFloatBtn" onclick="openWheelModal()" aria-label="Vòng quay may mắn">
-    <span>🎡</span>
+    <i data-lucide="disc" style="width:16px;height:16px;"></i>
     <span data-i18n="wheel_float">Quay Nhận Quà</span>
   </button>
 
   <div class="modal-overlay" id="wheelModal" aria-hidden="true" role="dialog" aria-labelledby="wheelTitle">
     <div class="modal-box" style="text-align: center;">
-      <button type="button" class="modal-close" onclick="closeWheelModal()" aria-label="Đóng popup">✕</button>
-      <div class="section-eyebrow" style="margin-bottom: 8px;"><span>🎁</span> Tri Ân Khách Hàng</div>
+      <button type="button" class="modal-close" onclick="closeWheelModal()" aria-label="Đóng popup"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
+      <div class="section-eyebrow" style="margin-bottom: 8px;"><i data-lucide="gift" style="width:14px;height:14px;margin-right:4px;"></i> Tri Ân Khách Hàng</div>
       <h3 class="font-serif" id="wheelTitle" style="font-size: 22px; margin-bottom: 6px; color: #FFFFFF;">Vòng Quay May Mắn Olion</h3>
       <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 14px;">Nhập thông tin để nhận ngay mã ưu đãi đồ uống từ Olion Coffee!</p>
 
@@ -4179,12 +4202,12 @@
           <input type="tel" id="wheelPhone" class="form-input" placeholder="Số điện thoại *" style="flex: 1;" />
         </div>
         <button type="button" class="btn btn-primary" id="spinBtn" style="width: 100%; justify-content: center;">
-          Bắt đầu quay ngay 🎯
+          Bắt đầu quay ngay
         </button>
       </div>
 
       <div id="wheelResultArea" style="display: none; margin-top: 14px; background: rgba(229,154,85,0.12); border: 1px dashed var(--accent-gold); border-radius: var(--radius-md); padding: 16px;">
-        <div style="font-size: 32px; margin-bottom: 4px;">🎉</div>
+        <div style="margin-bottom: 8px; color: var(--accent-gold);"><i data-lucide="gift" style="width:36px;height:36px;"></i></div>
         <h4 id="wheelPrizeTitle" style="color: var(--accent-gold); font-size: 18px; font-weight: 700; margin-bottom: 4px;">Chúc mừng bạn!</h4>
         <p id="wheelPrizeDesc" style="font-size: 13.5px; color: var(--text-cream); margin-bottom: 10px;">Bạn đã nhận được phần quà đặc biệt từ Olion Coffee</p>
         <div id="wheelCode" style="background: #0A0F0B; border: 1px solid var(--border-gold); padding: 8px 16px; border-radius: 8px; font-family: monospace; font-size: 18px; font-weight: 800; color: var(--accent-gold); letter-spacing: 3px; display: inline-block; margin-bottom: 8px;">OLIONGIFT</div>
@@ -4196,9 +4219,9 @@
   <!-- ======== 15. CUSTOMER FEEDBACK MODAL ======== -->
   <div class="modal-overlay" id="feedbackModal" aria-hidden="true" role="dialog" aria-labelledby="feedbackTitle">
     <div class="modal-box">
-      <button type="button" class="modal-close" onclick="closeFeedbackModal()" aria-label="Đóng popup">✕</button>
+      <button type="button" class="modal-close" onclick="closeFeedbackModal()" aria-label="Đóng popup"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
       <div id="feedbackFormArea">
-        <div class="section-eyebrow" style="margin-bottom: 8px;"><span>✦</span> Góp Ý & Đánh Giá</div>
+        <div class="section-eyebrow" style="margin-bottom: 8px;"><i data-lucide="message-square" style="width:14px;height:14px;margin-right:4px;"></i> Góp Ý & Đánh Giá</div>
         <h3 class="font-serif" id="feedbackTitle" style="font-size: 22px; margin-bottom: 6px; color: #FFFFFF;">Bạn thấy OLION hôm nay thế nào?</h3>
         <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 12px;">Mọi góp ý của bạn đều là nguồn động lực lớn để tụi mình hoàn thiện hơn mỗi ngày.</p>
 
@@ -4238,7 +4261,7 @@
             <div style="position: relative;">
               <input type="file" id="fbImage" accept="image/png, image/jpeg, image/jpg, image/webp" style="display: none;" onchange="previewFeedbackImage(event)" />
               <button type="button" class="btn" onclick="document.getElementById('fbImage').click()" style="width: 100%; border: 1px dashed var(--border-gold); background: transparent; color: var(--text-muted); display: flex; align-items: center; justify-content: center; gap: 8px;">
-                <span>📸</span> Tải ảnh lên
+                <i data-lucide="camera" style="width:15px;height:15px;margin-right:4px;"></i> Tải ảnh lên
               </button>
               <div id="fbImagePreviewContainer" style="display: none; margin-top: 12px; position: relative;">
                 <img id="fbImagePreview" src="" alt="Preview" style="max-width: 100%; max-height: 200px; border-radius: 8px; border: 1px solid var(--border-light);" />
@@ -4307,13 +4330,13 @@
           </script>
 
           <button type="button" class="btn btn-primary" id="btnSubmitFeedback" style="width: 100%; justify-content: center;">
-            Gửi đánh giá ngay ✨
+            Gửi đánh giá ngay
           </button>
         </form>
       </div>
 
       <div id="feedbackSuccessArea" style="display: none; text-align: center; padding: 20px 0;">
-        <div style="font-size: 40px; margin-bottom: 10px;">🎉</div>
+        <div style="margin-bottom: 12px; color: var(--accent-gold);"><i data-lucide="check-circle" style="width:44px;height:44px;"></i></div>
         <h4 class="font-serif" style="font-size: 22px; color: var(--accent-gold); margin-bottom: 8px;">Cảm ơn bạn rất nhiều!</h4>
         <p style="font-size: 14px; color: var(--text-body); margin-bottom: 20px;">OLION Coffee đã nhận được lời nhắn và sẽ luôn nỗ lực để mang lại trải nghiệm tuyệt vời nhất cho bạn.</p>
         <button type="button" class="btn btn-primary" onclick="closeFeedbackModal()">Đóng lại</button>
@@ -4324,15 +4347,15 @@
   <!-- ======== 16. NEWS DETAIL MODAL (POPUP BÀI VIẾT TIN TỨC & BỘ ẢNH) ======== -->
   <div class="modal-overlay" id="newsModal" aria-hidden="true" role="dialog" aria-labelledby="newsModalTitle">
     <div class="news-modal-box">
-      <button type="button" class="modal-close" onclick="closeNewsModal()" aria-label="Đóng bài viết">✕</button>
+      <button type="button" class="modal-close" onclick="closeNewsModal()" aria-label="Đóng bài viết"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
       
       <div class="news-meta" style="margin-bottom: 8px;">
-        <span class="news-date" id="newsModalDate">📅 19/09/2026</span>
+        <span class="news-date" id="newsModalDate"><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;"></i>19/09/2026</span>
         <span class="news-category" id="newsModalCategory">Sự Kiện & Nhật Ký Quán</span>
       </div>
 
       <h3 class="font-serif" id="newsModalTitle" style="font-size: clamp(22px, 3vw, 28px); color: #FFFFFF; margin-bottom: 16px; line-height: 1.35;">
-        OLION’S FIRST WEEK 🤎
+        OLION’S FIRST WEEK
       </h3>
 
       <!-- Gallery Main Viewer -->
@@ -4354,14 +4377,14 @@
       <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.1); justify-content: space-between; align-items: center;">
         <div style="display: flex; gap: 8px;">
           <a href="#menu" class="btn btn-primary" onclick="closeNewsModal()" style="font-size: 13px; padding: 10px 18px;">
-            Xem Thực Đơn ☕
+            Xem Thực Đơn
           </a>
           <a href="tel:0783657587" class="btn btn-ghost" style="font-size: 13px; padding: 10px 18px;">
-            📞 0783 657 587
+            <i data-lucide="phone" style="width:13px;height:13px;margin-right:4px;"></i> 0783 657 587
           </a>
         </div>
         <button type="button" class="btn btn-secondary" onclick="shareNewsArticle()" style="font-size: 13px; padding: 10px 16px;">
-          🔗 Chia sẻ bài viết
+          <i data-lucide="share-2" style="width:13px;height:13px;margin-right:4px;"></i> Chia sẻ bài viết
         </button>
       </div>
     </div>
@@ -4371,26 +4394,29 @@
   <div class="menu-board-modal" id="menuBoardModal" aria-hidden="true" role="dialog" aria-labelledby="menuBoardTitle">
     <div class="menu-board-topbar">
       <div class="menu-board-title" id="menuBoardTitle">
-        <span>📋</span>
+        <i data-lucide="menu" style="width:15px;height:15px;"></i>
         <span>Bảng Thực Đơn Tổng Quát — <span class="accent">Olion Coffee</span></span>
       </div>
       <div class="menu-board-actions">
         <button type="button" class="menu-board-btn" id="menuBoardZoomBtn" title="Phóng to / Thu nhỏ">
-          <span>🔍</span> <span id="menuBoardZoomText">Phóng to</span>
+          <i data-lucide="zoom-in" style="width:15px;height:15px;"></i> <span id="menuBoardZoomText">Phóng to</span>
         </button>
         <a href="assets/olion-menu-board.png" download="Olion_Coffee_Menu_Tong.png" class="menu-board-btn" title="Tải ảnh menu độ phân giải cao">
-          <span>📥</span> <span>Tải ảnh</span>
+          <i data-lucide="download" style="width:15px;height:15px;"></i> <span>Tải ảnh</span>
         </a>
-        <button type="button" class="menu-board-close" id="menuBoardCloseBtn" onclick="closeMenuBoard()" aria-label="Đóng menu">✕</button>
+        <button type="button" class="menu-board-close" id="menuBoardCloseBtn" onclick="closeMenuBoard()" aria-label="Đóng menu"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
       </div>
     </div>
     <div class="menu-board-viewport" id="menuBoardViewport">
       <img src="assets/olion-menu-board.png" alt="Bảng menu tổng Olion Coffee đầy đủ các món" class="menu-board-img" id="menuBoardImg" />
     </div>
-    <div class="menu-board-hint" id="menuBoardHint">💡 Nhấp vào ảnh hoặc bấm nút [Phóng to] để xem chi tiết từng món</div>
+    <div class="menu-board-hint" id="menuBoardHint"><i data-lucide="info" style="width:14px;height:14px;margin-right:4px;"></i> Nhấp vào ảnh hoặc bấm nút [Phóng to] để xem chi tiết từng món</div>
   </div>
   <script defer>
     document.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) {
+        window.lucide.createIcons();
+      }
       // =========================================================================
       // 0. MULTI-LANGUAGE (i18n VI / EN) SYSTEM
       // =========================================================================
@@ -4409,20 +4435,20 @@
           drawer_about: "Về Olion Coffee",
           drawer_signature: "Món Signature",
           drawer_menu: "Thực đơn đồ uống",
-          drawer_menu_board: "📋 Bảng Menu Tổng (Toàn Trang)",
+          drawer_menu_board: "Bảng Menu Tổng (Toàn Trang)",
           drawer_spaces: "Không gian quán",
           drawer_news: "Tin tức & Sự kiện",
           drawer_faq: "Hỏi đáp",
           drawer_contact: "Thông tin liên hệ",
           drawer_call: "Gọi Hotline: 0783 657 587",
           drawer_feedback: "Góp ý & Đánh giá",
-          drawer_loyalty: "👑 Tra Cứu Điểm Tích Lũy",
+          drawer_loyalty: "Tra Cứu Điểm Tích Lũy",
           drawer_lang_label: "Ngôn ngữ / Language:",
           dock_home: "Trang chủ",
           dock_menu: "Thực đơn",
           dock_spaces: "Không gian",
           dock_contact: "Liên hệ",
-          hero_eyebrow: "✦ OLION COFFEE · ELEGANCE IN EVERY SIP",
+          hero_eyebrow: "OLION COFFEE · ELEGANCE IN EVERY SIP",
           hero_title: 'OLION COFFEE <span style="color: var(--accent-gold); font-weight: 300;">—</span><br><span class="italic-gold">Elegance in Every Sip</span>',
           hero_subtitle: "Quán cà phê đẹp ở Dương Quảng Hàm, Gò Vấp với không gian sang trọng và đồ uống thủ công tinh tế. Thưởng thức hương vị nguyên bản, đắm chìm trong góc nhỏ tĩnh lặng giữa lòng Sài Gòn.",
           hero_cta_menu: "Khám phá thực đơn →",
@@ -4442,7 +4468,7 @@
           about_feat_3_desc: "Góc làm việc & thư giãn ấm cúng",
           about_feat_4_title: "Phục vụ tận tâm",
           about_feat_4_desc: "Nụ cười và sự chu đáo mỗi ngày",
-          sig_eyebrow: "✦ Món Bán Chạy",
+          sig_eyebrow: "Món Bán Chạy",
           sig_title: 'Món <span class="accent">Signature</span> của quán',
           sig_desc: "Ba công thức độc quyền được khách hàng yêu thích nhất tại Olion Coffee.",
           sig_item_1_name: "CÀ PHÊ MUỐI OLION",
@@ -4483,7 +4509,7 @@
           faq_a3: "Hoàn toàn được! Bạn có thể yêu cầu barista gia giảm mức ngọt (0%, 30%, 50%, 70%, 100%) và lượng đá tùy thích, hoặc yêu cầu đổi sang sữa yến mạch Oatside để phù hợp với chế độ ăn uống của mình.",
           reviews_eyebrow: "● Cảm Nhận Khách Hàng",
           reviews_title: 'Khách hàng <span class="accent">nói gì</span> về Olion?',
-          reviews_desc: "Được chấm 4.9/5.0★ từ hơn 280+ đánh giá thực tế trên Google Maps và Facebook.",
+          reviews_desc: "Được chấm 4.9/5.0 từ hơn 280+ đánh giá thực tế trên Google Maps và Facebook.",
           review_1_quote: '"Quán nằm trong hẻm yên tĩnh ở Dương Quảng Hàm, bước vào cảm giác như tách biệt khỏi xô bồ ngoài kia. Đèn vàng ấm mắt, bàn ghế gỗ cao ngồi làm việc cả buổi rất thoải mái. Cà phê muối béo mặn cực kỳ vừa miệng!"',
           review_1_role: "Sinh viên ĐH Văn Lang",
           review_2_quote: '"Matcha latte ở đây chuẩn vị Nhật, thơm đắng thanh nhẹ và không bị ngọt gắt như nhiều chỗ khác. Tụi mình hay ghé đây đọc sách và trò chuyện cuối tuần vì nhạc mở vừa phải rất dễ chịu."',
@@ -4530,20 +4556,20 @@
           drawer_about: "About Olion Coffee",
           drawer_signature: "Signature Drinks",
           drawer_menu: "Beverage Menu",
-          drawer_menu_board: "📋 Full Menu Board (Fullscreen)",
+          drawer_menu_board: "Full Menu Board (Fullscreen)",
           drawer_spaces: "Our Spaces",
           drawer_news: "News & Events",
           drawer_faq: "FAQ",
           drawer_contact: "Contact Info",
           drawer_call: "Call Hotline: 0783 657 587",
           drawer_feedback: "Feedback & Reviews",
-          drawer_loyalty: "👑 Check Loyalty Points",
+          drawer_loyalty: "Check Loyalty Points",
           drawer_lang_label: "Ngôn ngữ / Language:",
           dock_home: "Home",
           dock_menu: "Menu",
           dock_spaces: "Spaces",
           dock_contact: "Contact",
-          hero_eyebrow: "✦ OLION COFFEE · ELEGANCE IN EVERY SIP",
+          hero_eyebrow: "OLION COFFEE · ELEGANCE IN EVERY SIP",
           hero_title: 'OLION COFFEE <span style="color: var(--accent-gold); font-weight: 300;">—</span><br><span class="italic-gold">Elegance in Every Sip</span>',
           hero_subtitle: "An exquisite boutique cafe on Duong Quang Ham, Go Vap, offering a luxurious ambiance and meticulously handcrafted beverages. Taste authentic flavors and immerse in serene tranquility in the heart of Saigon.",
           hero_cta_menu: "Explore Menu →",
@@ -4563,7 +4589,7 @@
           about_feat_3_desc: "Cozy nook for productive work & gentle relaxation",
           about_feat_4_title: "Heartfelt Service",
           about_feat_4_desc: "Warm smiles and attentive care every day",
-          sig_eyebrow: "✦ Bestsellers",
+          sig_eyebrow: "Bestsellers",
           sig_title: 'House <span class="accent">Signature</span> Drinks',
           sig_desc: "Three exclusive recipes most beloved by guests at Olion Coffee.",
           sig_item_1_name: "OLION SALTED CREAM COFFEE",
@@ -4713,7 +4739,7 @@
         // 1. Sáng sớm & Sáng (06:00 - 10:30)
         if (timeNum >= 6 && timeNum < 10.5) {
           return {
-            icon: '🌅',
+            icon: 'sunrise',
             tag: isVi ? 'Chào Buổi Sáng' : 'Good Morning',
             quote: isVi
               ? `${prefix}"Sáng sớm trong lành, ghé OLION nhâm nhi một tách cà phê thơm nồng, khởi động ngày mới tràn đầy hứng khởi và năng lượng tích cực nhé!"`
@@ -4723,7 +4749,7 @@
         // 2. Trưa (10:30 - 13:30)
         else if (timeNum >= 10.5 && timeNum < 13.5) {
           return {
-            icon: '☀️',
+            icon: 'sun',
             tag: isVi ? 'Buổi Trưa Mát Lành' : 'Midday Cool Breeze',
             quote: isVi
               ? `${prefix}"Trời trưa hơi gắt, ghé OLION thả lưng xuống chiếc ghế quen, ngắm ánh đèn vàng dịu mắt và làm ngụm nước mát lạnh rồi tỉnh tiếp nha."`
@@ -4733,7 +4759,7 @@
         // 3. Xế chiều (13:30 - 17:00)
         else if (timeNum >= 13.5 && timeNum < 17.0) {
           return {
-            icon: '🌤️',
+            icon: 'sun-medium',
             tag: isVi ? 'Xế Chiều Năng Lượng' : 'Afternoon Boost',
             quote: isVi
               ? `${prefix}"Đầu giờ chiều hơi uể oải, hãy tự thưởng cho mình một ly Trà Trái Cây mát lạnh hoặc Cà Phê Muối đậm vị để nạp lại 100% cảm hứng làm việc nhé."`
@@ -4743,7 +4769,7 @@
         // 4. Chiều tối / Hoàng hôn (17:00 - 19:00)
         else if (timeNum >= 17.0 && timeNum < 19.0) {
           return {
-            icon: '🌆',
+            icon: 'sunset',
             tag: isVi ? 'Chiều Tà Thảnh Thơi' : 'Golden Hour Dusk',
             quote: isVi
               ? `${prefix}"Tan ca rồi, bỏ lại sau lưng mọi deadline bộn bề. Ghé OLION chuyện trò cùng bạn bè hoặc ngắm phố xá lên đèn bên ly Bạc Xỉu ngọt ngào nhé."`
@@ -4753,7 +4779,7 @@
         // 5. Tối (19:00 - 21:30)
         else if (timeNum >= 19.0 && timeNum < 21.5) {
           return {
-            icon: '🌙',
+            icon: 'moon',
             tag: isVi ? 'Buổi Tối Ấm Cúng' : 'Cozy Evening Vibe',
             quote: isVi
               ? `${prefix}"Phố xá về đêm thật đẹp. Trong không gian đèn vàng ấm cúng và giai điệu nhạc êm đềm tại OLION, cùng nhâm nhi ly nước yêu thích và chill thôi nào."`
@@ -4763,7 +4789,7 @@
         // 6. Đêm muộn & Khung giờ nghỉ (21:30 - 06:00)
         else {
           return {
-            icon: '✨',
+            icon: 'sparkles',
             tag: isVi ? 'Chúc Bạn Ngủ Ngon' : 'Good Night & Sweet Dreams',
             quote: isVi
               ? `${prefix}"OLION đã khép lại sau một ngày phục vụ thân thương. Chúc bạn một giấc ngủ thật ngon và hẹn gặp lại bạn vào sớm mai với những tách cà phê thơm lừng!"`
@@ -4781,7 +4807,10 @@
         const tagEl = document.getElementById('quoteTimeLabel');
         const textEl = document.getElementById('quoteText');
 
-        if (iconEl) iconEl.textContent = data.icon;
+        if (iconEl) {
+          iconEl.innerHTML = `<i data-lucide="${data.icon}" style="width:16px;height:16px;"></i>`;
+          if (window.lucide) window.lucide.createIcons();
+        }
         if (tagEl) tagEl.textContent = data.tag;
         if (textEl) textEl.textContent = data.quote;
       };
@@ -4889,23 +4918,23 @@
           const isDay = data.current.is_day;
 
           let statusText = 'trời đẹp';
-          let icon = isDay ? '☀️' : '🌙';
+          let icon = isDay ? 'sun' : 'moon';
           let isRain = false;
           let isHot = temp >= 32;
 
           if (code === 0) {
             statusText = isDay ? 'trời nắng trong' : 'trời quang đãng';
-            icon = isDay ? '☀️' : '✨';
+            icon = isDay ? 'sun' : 'sparkles';
           } else if ([1, 2, 3].includes(code)) {
             statusText = 'trời mát mẻ có mây';
-            icon = '🌤️';
+            icon = 'cloud-sun';
           } else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) {
             statusText = 'trời đang mưa rào';
-            icon = '🌧️';
+            icon = 'cloud-rain';
             isRain = true;
           } else if ([95, 96, 99].includes(code)) {
             statusText = 'trời có dông mưa';
-            icon = '⛈️';
+            icon = 'cloud-lightning';
             isRain = true;
           }
 
@@ -4925,7 +4954,7 @@
           weatherDataCache = {
             temp: 27,
             statusText: 'mát dịu',
-            icon: '🌤️',
+            icon: 'sun-medium',
             isRain: false,
             isHot: false,
             locationName,
@@ -4996,7 +5025,7 @@
 
         return {
           timeSlot,
-          title: name ? `Chào mừng ${name} trở lại! 👋` : `Chào mừng bạn ghé chơi! ✨`,
+          title: name ? `Chào mừng ${name} trở lại!` : `Chào mừng bạn ghé chơi!`,
           message: `${greetingPrefix}! ${recommendation}`
         };
       }
@@ -5027,7 +5056,10 @@
         const titleEl = document.getElementById('welcomeTitle');
         const msgEl = document.getElementById('welcomeMessage');
 
-        if (iconEl) iconEl.textContent = weather.icon;
+        if (iconEl) {
+          iconEl.innerHTML = `<i data-lucide="${weather.icon}" style="width:18px;height:18px;"></i>`;
+          if (window.lucide) window.lucide.createIcons();
+        }
         if (textEl) textEl.textContent = `${weather.locationName} ${weather.temp}°C • ${smartData.timeSlot}`;
         if (titleEl) titleEl.textContent = smartData.title;
         if (msgEl) msgEl.textContent = smartData.message;
@@ -5107,7 +5139,7 @@
         // Validate 10 số chuẩn Việt Nam
         const phoneRegex = /^(03|05|07|08|09)[0-9]{8}$/;
         if (!phoneRegex.test(phone)) {
-          if (window.showOlionToast) window.showOlionToast('Vui lòng nhập đúng số điện thoại (10 số)!', '⚠️');
+          if (window.showOlionToast) window.showOlionToast('Vui lòng nhập đúng số điện thoại (10 số)!', 'alert-circle');
           phoneInput?.focus();
           return;
         }
@@ -5140,13 +5172,13 @@
 
         if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Bắt đầu trải nghiệm ✨';
+          submitBtn.textContent = 'Bắt đầu trải nghiệm';
         }
 
         closeWelcomeModal();
 
         if (window.showOlionToast) {
-          window.showOlionToast(`Chào mừng ${name} đến với OLION COFFEE! 🎉`, '☕');
+          window.showOlionToast(`Chào mừng ${name} đến với OLION COFFEE!`, 'coffee');
         }
 
         // Cập nhật lời chào ở khung Giờ mở cửa ngay lập tức
@@ -5247,9 +5279,9 @@
             document.getElementById('loyaltyResPoints').innerHTML = `${pts} <span style="font-size: 13px; font-weight: 600;">${currentLang === 'vi' ? 'điểm' : 'pts'}</span>`;
 
             let tierName = 'Thành viên';
-            if (pts >= 200) tierName = 'Kim Cương 💎';
-            else if (pts >= 100) tierName = 'Hạng Vàng 👑';
-            else if (pts >= 50) tierName = 'Hạng Bạc ⭐';
+            if (pts >= 200) tierName = 'Kim Cương';
+            else if (pts >= 100) tierName = 'Hạng Vàng';
+            else if (pts >= 50) tierName = 'Hạng Bạc';
             document.getElementById('loyaltyResTier').textContent = tierName;
             document.getElementById('loyaltyResVisits').textContent = currentLang === 'vi' ? `Đã ghé: ${visits} lần` : `Visits: ${visits} times`;
 
@@ -5262,7 +5294,7 @@
             const noticeEl = document.getElementById('loyaltyRewardNotice');
 
             if (pts >= 100) {
-              statusEl.textContent = currentLang === 'vi' ? '🎉 ĐỦ ĐIỀU KIỆN ĐỔI LY SIGNATURE MIỄN PHÍ' : '🎉 READY FOR FREE SIGNATURE DRINK';
+              statusEl.textContent = currentLang === 'vi' ? 'ĐỦ ĐIỀU KIỆN ĐỔI LY SIGNATURE MIỄN PHÍ' : 'READY FOR FREE SIGNATURE DRINK';
               noticeEl.innerHTML = currentLang === 'vi'
                 ? `Chúc mừng bạn! Bạn đang có <strong>${pts} điểm</strong>, đủ điều kiện đổi 1 ly Signature miễn phí (Cà Phê Muối hoặc Bạc Xỉu Kem Trứng). Hãy thông báo cho thu ngân khi thanh toán nhé!`
                 : `Congratulations! You have <strong>${pts} points</strong>, eligible for a free Signature drink. Please inform our cashier when ordering!`;
@@ -5539,7 +5571,7 @@
           if (typeof canUserSubmitFeedback === 'function') {
             const check = await canUserSubmitFeedback(contact);
             if (!check.can_submit) {
-              showOlionToast(check.message, '⏳');
+              showOlionToast(check.message, 'clock');
               return;
             }
           }
@@ -5564,7 +5596,7 @@
           }
 
           btnSubmitFeedback.disabled = false;
-          btnSubmitFeedback.textContent = 'Gửi đánh giá ngay ✨';
+          btnSubmitFeedback.textContent = 'Gửi đánh giá ngay';
 
           // Reset image fields
           if (typeof removeFeedbackImage === 'function') {
@@ -5573,7 +5605,7 @@
 
           document.getElementById('feedbackFormArea').style.display = 'none';
           document.getElementById('feedbackSuccessArea').style.display = 'block';
-          showOlionToast('Cảm ơn bạn đã gửi đánh giá quý báu cho Olion Coffee!', '🎉');
+          showOlionToast('Cảm ơn bạn đã gửi đánh giá quý báu cho Olion Coffee!', 'check-circle');
         });
       }
 
@@ -5710,7 +5742,7 @@
           const phone = (document.getElementById('wheelPhone').value || '').trim();
 
           if (!phone) {
-            showOlionToast('Vui lòng nhập số điện thoại để nhận quà nhé!', '📱');
+            showOlionToast('Vui lòng nhập số điện thoại để nhận quà nhé!', 'phone');
             document.getElementById('wheelPhone').focus();
             return;
           }
@@ -5718,7 +5750,7 @@
           // Kiểm tra sơ bộ định dạng SĐT
           const cleanPhone = phone.replace(/[^0-9]/g, '');
           if (cleanPhone.length < 9) {
-            showOlionToast('Số điện thoại không hợp lệ (tối thiểu 9-10 chữ số)!', '⚠️');
+            showOlionToast('Số điện thoại không hợp lệ (tối thiểu 9-10 chữ số)!', 'alert-circle');
             document.getElementById('wheelPhone').focus();
             return;
           }
@@ -5730,8 +5762,8 @@
             const check = await canUserSpinToday(phone);
             if (!check.can_spin) {
               spinBtn.disabled = false;
-              spinBtn.textContent = 'QUAY NGAY 🎁';
-              showOlionToast(check.message, '⏳');
+              spinBtn.textContent = 'QUAY NGAY';
+              showOlionToast(check.message, 'clock');
               return;
             }
             spinBtn.textContent = 'ĐANG QUAY...';
@@ -5762,7 +5794,7 @@
             } else {
               isSpinning = false;
               spinBtn.disabled = false;
-              spinBtn.textContent = 'QUAY NGAY 🎁';
+              spinBtn.textContent = 'QUAY NGAY';
               const prize = prizes[prizeIndex];
 
               document.getElementById('wheelPrizeTitle').textContent = `Chúc Mừng ${name || 'Bạn'}!`;
@@ -5850,7 +5882,7 @@
       // 9. News & Events Modal & Gallery Logic
       const newsArticlesData = {
         'news-first-week': {
-          title: 'OLION’S FIRST WEEK 🤎',
+          title: 'OLION’S FIRST WEEK',
           date: '19/09/2026',
           category: 'Nhật Ký Quán & Sự Kiện',
           images: [
@@ -5863,9 +5895,9 @@
           contentHtml: `
             <div class="news-quote-box">
               "Một tuần đầu tiên thật nhiều yêu thương.<br>
-              Cảm ơn bạn đã ghé Olion, dành cho chúng mình những lời nhắn và sự ủng hộ thật dễ thương ☕️"
+              Cảm ơn bạn đã ghé Olion, dành cho chúng mình những lời nhắn và sự ủng hộ thật dễ thương."
             </div>
-            <p>Nếu có điều gì chưa trọn vẹn, mong bạn nhẹ nhàng nhắn nhủ và thương Olion bỏ qua nhé 🫶🏻</p>
+            <p>Nếu có điều gì chưa trọn vẹn, mong bạn nhẹ nhàng nhắn nhủ và thương Olion bỏ qua nhé.</p>
             <p>Cảm ơn vì đã cùng Olion tạo nên những ngày đầu tiên thật đẹp!</p>
 
             <div style="margin: 24px 0;">
@@ -5895,8 +5927,8 @@
             </div>
 
             <div style="margin-top: 24px; padding: 16px; background: rgba(0,0,0,0.3); border-radius: 10px; border: 1px dashed var(--border-gold);">
-              <p style="margin: 0; font-size: 13.5px; color: var(--accent-gold);"><strong>📍 Địa chỉ quán:</strong> 80/64A Dương Quảng Hàm, Phường An Nhơn, TP. Hồ Chí Minh</p>
-              <p style="margin: 6px 0 0; font-size: 13.5px; color: #EDE5D8;"><strong>⏰ Giờ mở cửa:</strong> 08:00 — 21:00 (Cả tuần)</p>
+              <p style="margin: 0; font-size: 13.5px; color: var(--accent-gold);"><strong><i data-lucide="map-pin" style="width:14px;height:14px;margin-right:4px;vertical-align:middle;"></i>Địa chỉ quán:</strong> 80/64A Dương Quảng Hàm, Phường An Nhơn, TP. Hồ Chí Minh</p>
+              <p style="margin: 6px 0 0; font-size: 13.5px; color: #EDE5D8;"><strong><i data-lucide="clock" style="width:14px;height:14px;margin-right:4px;vertical-align:middle;"></i>Giờ mở cửa:</strong> 08:00 — 21:00 (Cả tuần)</p>
             </div>
           `
         },
@@ -5970,7 +6002,7 @@
         if (!newsModal || !article) return;
 
         newsModalTitle.textContent = article.title;
-        newsModalDate.textContent = `📅 ${article.date}`;
+        newsModalDate.textContent = article.date;
         newsModalCategory.textContent = article.category;
         newsModalMainImg.src = article.images[0] || 'assets/news/news-1-recap.webp';
         newsModalBody.innerHTML = article.contentHtml;
@@ -6259,8 +6291,8 @@
             const card = document.createElement('article');
             card.id = fbId;
             card.className = 'review-card reveal visible';
-            const stars = '★'.repeat(Math.min(5, Math.max(1, fb.rating || 5)));
-            const avatarIcons = ['☕', '🌿', '🐻', '✨', '🌸', '💫'];
+            const starCount = Math.min(5, Math.max(1, fb.rating || 5)); const stars = `<span style='color:var(--accent-gold);letter-spacing:2px;'>${'★'.repeat(starCount)}</span>`;
+            const avatarIcons = ['user', 'user-check', 'smile', 'award', 'heart'];
             const randomIcon = avatarIcons[Math.floor(Math.random() * avatarIcons.length)];
 
             card.innerHTML = `
