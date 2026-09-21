@@ -2880,7 +2880,7 @@
           <i data-lucide="phone" style="width:16px;height:16px;"></i>
           <span>0783 657 587</span>
         </a>
-        <button type="button" class="btn btn-primary" id="headerInstallBtn" style="display: inline-flex; padding: 8px 16px; min-height: 38px; font-size: 12.5px; border-radius: 20px;" aria-label="Cài đặt App"><i data-lucide="download" style="width:16px;height:16px;margin-right:6px;"></i><span data-i18n="nav_install">Tải App</span></button>
+        
         <button type="button" class="btn btn-ghost header-feedback-btn" onclick="openFeedbackModal()" style="padding: 8px 16px; min-height: 38px; font-size: 12.5px;" aria-label="Mở bảng góp ý quán">
           <span data-i18n="nav_feedback">Góp ý quán</span>
         </button>
@@ -6035,6 +6035,13 @@
 
     });
   </script>
+
+  <!-- Floating Install Button -->
+  <button id="floatingInstallBtn" class="btn btn-primary" style="position: fixed; bottom: 24px; left: 24px; z-index: 1000; padding: 10px 20px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+    <i data-lucide="download" style="width: 18px; height: 18px;"></i>
+    <span style="font-weight: 600; font-size: 14px;">Tải App Olion</span>
+  </button>
+
 </body>
 
 </html>
