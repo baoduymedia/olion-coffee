@@ -2897,10 +2897,7 @@
 
 </head>
 <body>
-<div id="pwa-install-banner">
-  <div class="pwa-icon-box">
-    <i data-lucide="download" style="width: 16px; height: 16px;"></i>
-  </div>
+
   <div class="pwa-text-col">
     <span class="pwa-title">Tải App Olion Coffee</span>
     <span class="pwa-desc">Trải nghiệm mượt mà & Offline</span>
@@ -2963,6 +2960,7 @@
           <i data-lucide="phone" style="width:16px;height:16px;"></i>
           <span>0783 657 587</span>
         </a>
+        <button type="button" class="btn btn-primary" id="headerInstallBtn" style="display: none; padding: 8px 16px; min-height: 38px; font-size: 12.5px; border-radius: 20px;" aria-label="Cài đặt App"><i data-lucide="download" style="width:16px;height:16px;margin-right:6px;"></i><span data-i18n="nav_install">Tải App</span></button>
         <button type="button" class="btn btn-ghost header-feedback-btn" onclick="openFeedbackModal()" style="padding: 8px 16px; min-height: 38px; font-size: 12.5px;" aria-label="Mở bảng góp ý quán">
           <span data-i18n="nav_feedback">Góp ý quán</span>
         </button>
@@ -2999,6 +2997,7 @@
       <a href="#news" class="drawer-link"><span data-i18n="drawer_news">Tin tức & Sự kiện</span> <span>→</span></a>
       <a href="#faq" class="drawer-link"><span data-i18n="drawer_faq">Hỏi đáp</span> <span>→</span></a>
       <a href="#contact" class="drawer-link"><span data-i18n="drawer_contact">Thông tin liên hệ</span> <span>→</span></a>
+      <a href="javascript:void(0)" id="drawerInstallBtn" class="drawer-link" style="display: none !important; color: var(--accent-gold); font-weight: 700;"><i data-lucide="download" style="width:16px;height:16px;margin-right:6px;"></i><span data-i18n="nav_install">Cài Đặt App Olion</span> <span>→</span></a>
     </div>
     <div class="drawer-footer">
       <a href="tel:0783657587" class="btn btn-primary" style="width: 100%;">
