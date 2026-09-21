@@ -1852,6 +1852,177 @@
       font-size: 18px;
     }
 
+    /* ======== SMART WELCOME POPUP (GLASSMORPHISM) ======== */
+    .welcome-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: rgba(8, 6, 4, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .welcome-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .welcome-box {
+      background: rgba(24, 16, 9, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(196, 178, 154, 0.38);
+      border-radius: 20px;
+      padding: 36px 30px 30px;
+      max-width: 480px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), 0 0 35px rgba(196, 178, 154, 0.12);
+      transform: translateY(24px) scale(0.96);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .welcome-overlay.active .welcome-box {
+      transform: translateY(0) scale(1);
+    }
+
+    .welcome-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(196, 178, 154, 0.12);
+      border: 1px solid rgba(196, 178, 154, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #C4B29A;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .welcome-close:hover {
+      background: rgba(196, 178, 154, 0.25);
+      color: #FFFFFF;
+      transform: rotate(90deg);
+    }
+
+    .welcome-badge-wrap {
+      margin-bottom: 12px;
+    }
+
+    .welcome-weather-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(196, 178, 154, 0.15);
+      border: 1px solid rgba(196, 178, 154, 0.3);
+      padding: 5px 14px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #C4B29A;
+      letter-spacing: 0.3px;
+    }
+
+    .welcome-title {
+      font-size: 23px;
+      line-height: 1.35;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+    }
+
+    .welcome-message {
+      font-size: 14px;
+      line-height: 1.65;
+      color: rgba(245, 240, 235, 0.88);
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .welcome-field {
+      margin-bottom: 18px;
+    }
+
+    .welcome-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid rgba(196, 178, 154, 0.35);
+      padding: 10px 4px;
+      font-size: 15px;
+      color: #FFFFFF;
+      outline: none;
+      transition: border-color 0.3s ease;
+      font-family: inherit;
+    }
+
+    .welcome-input:focus {
+      border-bottom-color: #C4B29A;
+    }
+
+    .welcome-input::placeholder {
+      color: rgba(196, 178, 154, 0.45);
+      font-size: 14px;
+    }
+
+    .welcome-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #C4B29A 0%, #A8957C 100%);
+      color: #181009;
+      border: none;
+      padding: 13px 20px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(196, 178, 154, 0.25);
+    }
+
+    .welcome-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(196, 178, 154, 0.35);
+      filter: brightness(1.08);
+    }
+
+    .welcome-progress-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      background: #C4B29A;
+      transform-origin: left;
+      animation: welcomeCountdown 8s linear forwards;
+    }
+
+    .welcome-progress-bar.paused {
+      animation-play-state: paused !important;
+      opacity: 0.25 !important;
+    }
+
+    @keyframes welcomeCountdown {
+      from { transform: scaleX(1); }
+      to { transform: scaleX(0); }
+    }
+
     .star-picker {
       display: flex;
       gap: 8px;
@@ -3878,6 +4049,53 @@
     </a>
   </aside>
 
+  <!-- ======== SMART WELCOME POPUP (POPUP CHÀO MỪNG THÔNG MINH) ======== -->
+  <div class="welcome-overlay" id="welcomeModal" aria-hidden="true" role="dialog" aria-labelledby="welcomeTitle">
+    <div class="welcome-box" id="welcomeBox">
+      <button type="button" class="welcome-close" onclick="closeWelcomeModal()" aria-label="Đóng popup">✕</button>
+      
+      <div class="welcome-badge-wrap">
+        <span class="welcome-weather-pill" id="welcomeWeatherPill">
+          <span id="welcomeWeatherIcon">🌤️</span>
+          <span id="welcomeWeatherText">TP.HCM 32°C • Đang tải...</span>
+        </span>
+      </div>
+
+      <h3 class="welcome-title font-serif" id="welcomeTitle">
+        Chào mừng bạn đến với <span style="color: #C4B29A;">OLION</span>
+      </h3>
+
+      <p class="welcome-message" id="welcomeMessage">
+        Một ngày mới lại bắt đầu, cùng nạp năng lượng với một tách cà phê thơm nồng tại Olion nhé!
+      </p>
+
+      <!-- Khách mới: Form nhập Tên & SĐT -->
+      <div id="welcomeNewUserArea">
+        <form id="welcomeForm" onsubmit="handleWelcomeSubmit(event)">
+          <div class="welcome-field">
+            <input type="text" id="welcomeName" class="welcome-input" placeholder="Tên của bạn (ví dụ: Duy)" required autocomplete="name" />
+          </div>
+          <div class="welcome-field">
+            <input type="tel" id="welcomePhone" class="welcome-input" placeholder="Số điện thoại (10 số để nhận quà tri ân)" required pattern="^(03|05|07|08|09)[0-9]{8}$" autocomplete="tel" />
+          </div>
+          <button type="submit" class="welcome-btn" id="welcomeSubmitBtn">
+            Bắt đầu trải nghiệm ✨
+          </button>
+        </form>
+      </div>
+
+      <!-- Khách quen: Lời chào thân thiết & Nút xem Menu -->
+      <div id="welcomeReturningUserArea" style="display: none;">
+        <button type="button" class="welcome-btn" onclick="welcomeExploreMenu()">
+          Khám phá Thực Đơn ngay ☕
+        </button>
+      </div>
+
+      <!-- Thanh đếm ngược tự đóng 8s -->
+      <div class="welcome-progress-bar" id="welcomeProgressBar"></div>
+    </div>
+  </div>
+
   <!-- ======== MODAL: TRA CỨU ĐIỂM TÍCH LŨY (LOYALTY PROGRAM - HIDDEN) ======== -->
   <div class="modal-overlay" id="loyaltyLookupModal" aria-hidden="true" role="dialog" aria-labelledby="loyaltyTitle" style="display: none !important;">
     <div class="modal-box" style="max-width: 480px;">
@@ -4586,6 +4804,269 @@
           window.updateDynamicGreeting(currentLang);
         }
       }, 5 * 60 * 1000);
+
+      // =========================================================================
+      // SMART WELCOME POPUP: CONTEXT-AWARE AI GREETING (TIME, WEATHER, USER)
+      // =========================================================================
+      let welcomeAutoCloseTimer = null;
+      let weatherDataCache = null;
+
+      // 1. Fetch thời tiết TP.HCM từ Open-Meteo (Miễn phí, không cần API Key)
+      async function fetchHcmWeather() {
+        try {
+          const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=10.8231&longitude=106.6297&current=temperature_2m,weather_code,is_day&timezone=Asia%2FHo_Chi_Minh');
+          if (!res.ok) throw new Error('Weather fetch failed');
+          const data = await res.json();
+          const temp = Math.round(data.current.temperature_2m);
+          const code = data.current.weather_code;
+          const isDay = data.current.is_day;
+
+          let statusText = 'trời đẹp';
+          let icon = isDay ? '☀️' : '🌙';
+          let isRain = false;
+          let isHot = temp >= 32;
+
+          if (code === 0) {
+            statusText = isDay ? 'trời nắng trong' : 'trời quang đãng';
+            icon = isDay ? '☀️' : '✨';
+          } else if ([1, 2, 3].includes(code)) {
+            statusText = 'trời mát mẻ có mây';
+            icon = '🌤️';
+          } else if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) {
+            statusText = 'trời đang mưa lất phất';
+            icon = '🌧️';
+            isRain = true;
+          } else if ([95, 96, 99].includes(code)) {
+            statusText = 'trời đang mưa dông';
+            icon = '⛈️';
+            isRain = true;
+          }
+
+          weatherDataCache = { temp, statusText, icon, isRain, isHot };
+          return weatherDataCache;
+        } catch (e) {
+          console.warn('Weather API fallback:', e);
+          weatherDataCache = { temp: 31, statusText: 'nắng nhẹ', icon: '🌤️', isRain: false, isHot: false };
+          return weatherDataCache;
+        }
+      }
+
+      // 2. Logic phân mảnh 7 khung giờ và sinh lời chào tinh tế theo ngữ cảnh
+      function generateSmartWelcomeMessage(name, weather) {
+        const now = new Date();
+        const hour = now.getHours();
+        const { temp, statusText, isRain, isHot } = weather;
+
+        let timeSlot = '';
+        let greetingPrefix = name ? `Chào ${name}` : `Chào bạn`;
+        let recommendation = '';
+
+        // Phân mảnh 7 khung giờ cụ thể:
+        if (hour >= 5 && hour < 8) {
+          timeSlot = 'Sáng Sớm (05h - 08h)';
+          if (isRain) {
+            recommendation = `Sáng sớm trời mưa nhẹ ${temp}°C, ghé Olion nhâm nhi một tách Cà phê nóng đánh thức mọi giác quan nhé!`;
+          } else {
+            recommendation = `Sáng sớm trong lành ${temp}°C, một ly Espresso hay Cà phê pha thủ công tại Olion sẽ thức tỉnh ngày mới tràn đầy năng lượng.`;
+          }
+        } else if (hour >= 8 && hour < 11) {
+          timeSlot = 'Buổi Sáng (08h - 11h)';
+          recommendation = `Buổi sáng ngập tràn hứng khởi (${temp}°C, ${statusText}). Hãy nạp 100% năng lượng ngày mới với một ly Cà Phê Muối béo mặn độc quyền của Olion!`;
+        } else if (hour >= 11 && hour < 14) {
+          timeSlot = 'Buổi Trưa (11h - 14h)';
+          if (isHot) {
+            recommendation = `Ngoài trời đang ${temp}°C khá oi ả, ghé Olion trốn nắng trong không gian mát lành và làm ngay một ly Trà Trái Cây giải nhiệt mát lạnh nhé.`;
+          } else {
+            recommendation = `Trời trưa êm dịu ${temp}°C, thả lưng xuống chiếc ghế quen tại Olion, thưởng thức đồ uống mát lạnh và nạp lại năng lượng tiếp tục ngày dài.`;
+          }
+        } else if (hour >= 14 && hour < 17) {
+          timeSlot = 'Xế Chiều (14h - 17h)';
+          recommendation = `Giờ xế chiều dễ uể oải (${temp}°C), tự thưởng cho mình một ly Matcha Latte thanh mát hay Trà Đào thanh dịu để xua tan mệt mỏi nhé!`;
+        } else if (hour >= 17 && hour < 19) {
+          timeSlot = 'Chiều Tối (17h - 19h)';
+          recommendation = `Tan tầm rồi, gác lại mọi deadline bộn bề! Ghé Olion ngắm phố xá lên đèn (${temp}°C) và nhâm nhi ly Bạc Xỉu ngọt ngào xả stress thôi nào.`;
+        } else if (hour >= 19 && hour < 22) {
+          timeSlot = 'Buổi Tối (19h - 22h)';
+          recommendation = `Phố đêm lung linh trong tiết trời ${temp}°C dễ chịu. Không gian đèn vàng ấm áp và những giai điệu êm dịu tại Olion đang chờ bạn ghé chơi.`;
+        } else {
+          timeSlot = 'Đêm Muộn (22h - 05h)';
+          recommendation = `Đêm muộn yên tĩnh (${temp}°C). Chúc bạn một buổi tối an lành, thư thái và ngủ thật ngon nhé!`;
+        }
+
+        return {
+          timeSlot,
+          title: name ? `Chào mừng ${name} trở lại! 👋` : `Chào mừng bạn ghé chơi! ✨`,
+          message: `${greetingPrefix}! ${recommendation}`
+        };
+      }
+
+      // 3. Khởi tạo & Hiển thị Popup
+      async function initSmartWelcomePopup() {
+        // Chỉ hiển thị 1 lần trên mỗi phiên duyệt web
+        if (sessionStorage.getItem('olion_welcome_shown')) return;
+
+        // Trì hoãn 1.5 giây sau khi tải trang để khách không bị choáng
+        await new Promise(r => setTimeout(r, 1500));
+
+        const modal = document.getElementById('welcomeModal');
+        if (!modal) return;
+
+        // Lấy dữ liệu thời tiết
+        const weather = await fetchHcmWeather();
+
+        // Kiểm tra khách cũ (đã có tên) hay khách mới
+        const customerName = (localStorage.getItem('olion_customer_name') || '').trim();
+        const isReturning = Boolean(customerName);
+
+        const smartData = generateSmartWelcomeMessage(customerName, weather);
+
+        // Đổ dữ liệu vào UI
+        const iconEl = document.getElementById('welcomeWeatherIcon');
+        const textEl = document.getElementById('welcomeWeatherText');
+        const titleEl = document.getElementById('welcomeTitle');
+        const msgEl = document.getElementById('welcomeMessage');
+
+        if (iconEl) iconEl.textContent = weather.icon;
+        if (textEl) textEl.textContent = `TP.HCM ${weather.temp}°C • ${smartData.timeSlot}`;
+        if (titleEl) titleEl.textContent = smartData.title;
+        if (msgEl) msgEl.textContent = smartData.message;
+
+        const newUserArea = document.getElementById('welcomeNewUserArea');
+        const returningArea = document.getElementById('welcomeReturningUserArea');
+
+        if (isReturning) {
+          if (newUserArea) newUserArea.style.display = 'none';
+          if (returningArea) returningArea.style.display = 'block';
+        } else {
+          if (newUserArea) newUserArea.style.display = 'block';
+          if (returningArea) returningArea.style.display = 'none';
+        }
+
+        // Kích hoạt Popup
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        sessionStorage.setItem('olion_welcome_shown', 'true');
+
+        // Bắt đầu đếm ngược 8s tự động đóng
+        startWelcomeCountdown();
+
+        // Lắng nghe tương tác trên toàn bộ khu vực Form để HỦY ĐẾM NGƯỢC
+        if (newUserArea) {
+          const pauseEvents = ['focusin', 'click', 'keydown', 'input'];
+          pauseEvents.forEach(evt => {
+            newUserArea.addEventListener(evt, pauseWelcomeCountdown, { once: false });
+          });
+        }
+      }
+
+      function startWelcomeCountdown() {
+        const progressBar = document.getElementById('welcomeProgressBar');
+        if (progressBar) {
+          progressBar.classList.remove('paused');
+        }
+        clearTimeout(welcomeAutoCloseTimer);
+        welcomeAutoCloseTimer = setTimeout(() => {
+          closeWelcomeModal();
+        }, 8000);
+      }
+
+      function pauseWelcomeCountdown() {
+        clearTimeout(welcomeAutoCloseTimer);
+        const progressBar = document.getElementById('welcomeProgressBar');
+        if (progressBar) {
+          progressBar.classList.add('paused');
+        }
+      }
+
+      window.closeWelcomeModal = function() {
+        const modal = document.getElementById('welcomeModal');
+        if (!modal) return;
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        clearTimeout(welcomeAutoCloseTimer);
+      };
+
+      window.welcomeExploreMenu = function() {
+        closeWelcomeModal();
+        const menuSec = document.getElementById('menu');
+        if (menuSec) {
+          menuSec.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+
+      window.handleWelcomeSubmit = async function(e) {
+        e.preventDefault();
+        const nameInput = document.getElementById('welcomeName');
+        const phoneInput = document.getElementById('welcomePhone');
+        const submitBtn = document.getElementById('welcomeSubmitBtn');
+
+        const name = (nameInput?.value || '').trim();
+        const phone = (phoneInput?.value || '').trim();
+
+        // Validate 10 số chuẩn Việt Nam
+        const phoneRegex = /^(03|05|07|08|09)[0-9]{8}$/;
+        if (!phoneRegex.test(phone)) {
+          if (window.showOlionToast) window.showOlionToast('Vui lòng nhập đúng số điện thoại (10 số)!', '⚠️');
+          phoneInput?.focus();
+          return;
+        }
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Đang lưu...';
+        }
+
+        // 1. Lưu vào localStorage để nhận diện khách quen cho những lần sau
+        try {
+          localStorage.setItem('olion_customer_name', name);
+          localStorage.setItem('olion_customer_phone', phone);
+        } catch(err) {}
+
+        // 2. Gửi API INSERT lên Supabase bảng customers
+        try {
+          const client = window.supabaseClient || (typeof initSupabase === 'function' ? initSupabase() : null);
+          if (client) {
+            await client.from('customers').upsert([{
+              name: name,
+              contact: phone,
+              source: 'Smart Welcome Popup',
+              notes: `Đăng ký qua Smart Welcome Popup lúc ${new Date().toLocaleString('vi-VN')}`
+            }], { onConflict: 'contact' });
+          }
+        } catch (err) {
+          console.warn('Supabase customer insert error:', err);
+        }
+
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Bắt đầu trải nghiệm ✨';
+        }
+
+        closeWelcomeModal();
+
+        if (window.showOlionToast) {
+          window.showOlionToast(`Chào mừng ${name} đến với OLION COFFEE! 🎉`, '☕');
+        }
+
+        // Cập nhật lời chào ở khung Giờ mở cửa ngay lập tức
+        if (typeof window.updateDynamicGreeting === 'function') {
+          window.updateDynamicGreeting();
+        }
+      };
+
+      // Đóng modal khi click ra ngoài vùng nền (overlay)
+      document.getElementById('welcomeModal')?.addEventListener('click', (e) => {
+        if (e.target === document.getElementById('welcomeModal')) {
+          closeWelcomeModal();
+        }
+      });
+
+      // Tự động kích hoạt sau khi load trang
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initSmartWelcomePopup);
+      } else {
+        initSmartWelcomePopup();
+      }
 
       // =========================================================================
       // 0.2 LOYALTY POINTS LOOKUP SYSTEM (MODAL & API)
