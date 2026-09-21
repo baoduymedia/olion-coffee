@@ -6027,6 +6027,25 @@
       if (floatingInstallBtn) floatingInstallBtn.addEventListener('click', handleInstall);
       if (drawerInstallBtn) drawerInstallBtn.addEventListener('click', handleInstall);
 
+      // H. Web Share API
+      window.shareApp = async () => {
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: 'Olion Coffee',
+              text: 'Góc nhỏ bình yên giữa lòng Sài Gòn. Khám phá menu cà phê thủ công tinh tế ngay!',
+              url: window.location.href,
+            });
+          } catch (err) {
+            console.log('User cancelled share or error:', err);
+          }
+        } else {
+          navigator.clipboard.writeText(window.location.href);
+          showOlionToast('Đã sao chép link website!', '🔗');
+        }
+      };
+
+
 
     });
   </script>
