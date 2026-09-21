@@ -6001,43 +6001,29 @@
         });
       }
 
-      // G. PWA Install Prompt
-      let deferredPrompt;
-      const installBanner = document.getElementById('pwa-install-banner');
-      const installBtn = document.getElementById('pwa-install-btn');
-      const closeInstallBtn = document.getElementById('pwa-close-btn');
+            // G. PWA Install Prompt
+      let deferredPrompt = null;
+      const floatingInstallBtn = document.getElementById('floatingInstallBtn');
+      const drawerInstallBtn = document.getElementById('drawerInstallBtn');
 
       window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        if (installBanner) {
-          installBanner.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
-          installBanner.classList.add('opacity-100', 'translate-y-0');
-        }
       });
 
-      if (installBtn) {
-        installBtn.addEventListener('click', async () => {
-          if (deferredPrompt !== null) {
-            deferredPrompt.prompt();
-            await deferredPrompt.userChoice;
-            deferredPrompt = null;
-            if (installBanner) {
-              installBanner.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
-              installBanner.classList.remove('opacity-100', 'translate-y-0');
-            }
-          }
-        });
-      }
+      const handleInstall = async () => {
+        if (deferredPrompt !== null) {
+          deferredPrompt.prompt();
+          await deferredPrompt.userChoice;
+          deferredPrompt = null;
+        } else {
+          showOlionToast('Để cài đặt App, hãy nhấn vào biểu tượng Tải Xuống/Chia sẻ trên trình duyệt nhé!', 'info');
+        }
+      };
 
-      if (closeInstallBtn) {
-        closeInstallBtn.addEventListener('click', () => {
-          if (installBanner) {
-            installBanner.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
-            installBanner.classList.remove('opacity-100', 'translate-y-0');
-          }
-        });
-      }
+      if (floatingInstallBtn) floatingInstallBtn.addEventListener('click', handleInstall);
+      if (drawerInstallBtn) drawerInstallBtn.addEventListener('click', handleInstall);
+
 
     });
   </script>
