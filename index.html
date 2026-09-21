@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="manifest" href="manifest.json" />
+
   
   <!-- ======== 1. PRIMARY TECHNICAL SEO & LOCAL SEO METADATA ======== -->
   <title>OLION COFFEE — Elegance in Every Sip | Quán Cà Phê Đẹp Ở Dương Quảng Hàm, Cafe Không Gian Sang Trọng TP.HCM</title>
@@ -2811,6 +2813,19 @@
   </style>
 </head>
 <body>
+<div id="pwa-install-banner" class="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-surface border border-primary/20 rounded-full px-6 py-3 flex items-center gap-3 shadow-2xl z-[9999] opacity-0 pointer-events-none transition-all duration-500 translate-y-10">
+  <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+    <i data-lucide="download" class="w-4 h-4 text-primary"></i>
+  </div>
+  <div class="flex flex-col">
+    <span class="text-sm font-heading font-medium text-text">Tải App Olion Coffee</span>
+    <span class="text-xs text-text/60">Trải nghiệm nhanh & mượt mà hơn</span>
+  </div>
+  <button id="pwa-install-btn" class="ml-2 bg-primary text-surface px-4 py-1.5 rounded-full text-xs font-medium hover:bg-primary/90 transition-colors">Cài đặt</button>
+  <button id="pwa-close-btn" class="text-text/40 hover:text-text p-1">
+    <i data-lucide="x" class="w-4 h-4"></i>
+  </button>
+</div>
 
   <!-- Toast Notification -->
   <div class="olion-toast" id="olionToast" role="alert" aria-live="polite">
@@ -3158,408 +3173,36 @@
         <!-- 1. CÀ PHÊ -->
         <div class="menu-category-panel active" id="cat-coffee">
           <div class="menu-grid">
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-best">BEST</span>
-                <img src="assets/menu/espresso.webp" alt="Cà phê Espresso pha máy nguyên chất — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">ESPRESSO</h3>
-                <div class="menu-card-price">28.000đ</div>
-                <p class="menu-card-desc">Nóng / Đá. Espresso nguyên chất đậm đà, hương thơm nồng nàn.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-hot">POPULAR</span>
-                <img src="assets/menu/espresso_sua.webp" alt="Cà phê Espresso sữa tươi thơm béo — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">ESPRESSO SỮA</h3>
-                <div class="menu-card-price">35.000đ</div>
-                <p class="menu-card-desc">Nóng / Đá. Espresso kết hợp sữa tươi béo ngậy thơm lừng.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-hot">HOT</span>
-                <img src="assets/menu/bac_xiu.webp" alt="Bạc Xỉu truyền thống ba tầng — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">BẠC XỈU</h3>
-                <div class="menu-card-price">35.000đ</div>
-                <p class="menu-card-desc">Nóng / Đá. Cà phê sữa đặc truyền thống đậm đà, ngọt thanh.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/latte_hanh_nhan.webp" alt="Latte hạnh nhân thơm béo dinh dưỡng — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">LATTE HẠNH NHÂN</h3>
-                <div class="menu-card-price">39.000đ</div>
-                <p class="menu-card-desc">Nóng / Đá. Sữa hạnh nhân thơm béo quyện cùng espresso.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/caramel_latte.webp" alt="Caramel Latte ngọt ngào thơm mịn — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">CARAMEL LATTE</h3>
-                <div class="menu-card-price">39.000đ</div>
-                <p class="menu-card-desc">Nóng / Đá. Caramel ngọt thơm hòa quyện cùng latte mịn màng.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/americano.webp" alt="Americano đá thanh mát đậm vị — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">AMERICANO</h3>
-                <div class="menu-card-price">30.000đ</div>
-                <p class="menu-card-desc">Nóng / Đá. Espresso pha loãng thanh nhẹ, vị đắng dịu dàng.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-signature">SIGNATURE</span>
-                <img src="assets/menu/ca_phe_muoi.webp" alt="Cà phê muối béo mặn đặc biệt — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">CÀ PHÊ MUỐI</h3>
-                <div class="menu-card-price">39.000đ</div>
-                <p class="menu-card-desc">Nóng / Đá. Cà phê đậm đà phủ lớp kem muối béo mặn đặc trưng.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/ca_phe_bac_ha.webp" alt="Cà phê bạc hà the mát sáng tạo — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">CÀ PHÊ BẠC HÀ</h3>
-                <div class="menu-card-price">39.000đ</div>
-                <p class="menu-card-desc">Đá. Cà phê mát lạnh với hương bạc hà the mát sảng khoái.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-new">NEW</span>
-                <img src="assets/menu/ca_phe_sua_oatside.webp" alt="Cà phê sữa yến mạch Oatside thuần chay — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">CÀ PHÊ SỮA OATSIDE</h3>
-                <div class="menu-card-price">40.000đ</div>
-                <p class="menu-card-desc">Nóng / Đá. Sữa yến mạch Oatside thanh nhẹ kết hợp espresso.</p>
-              </div>
-            </article>
           </div>
         </div>
 
         <!-- 2. TRÀ TRÁI CÂY -->
         <div class="menu-category-panel" id="cat-tea">
           <div class="menu-grid">
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-best">BEST</span>
-                <img src="assets/menu/tra_vai_hoa_hong.webp" alt="Trà Vải Hoa Hồng thơm ngát thanh mát — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">TRÀ VẢI HOA HỒNG</h3>
-                <div class="menu-card-price">40.000đ</div>
-                <p class="menu-card-desc">Vải ngọt mọng nước kết hợp hương hoa hồng thanh tao dịu nhẹ.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-hot">HOT</span>
-                <img src="assets/menu/tra_chanh_day_nhiet_doi.webp" alt="Trà Chanh Dây Nhiệt Đới tươi ngon giải nhiệt — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">TRÀ CHANH DÂY NHIỆT ĐỚI</h3>
-                <div class="menu-card-price">40.000đ</div>
-                <p class="menu-card-desc">Chua ngọt bùng nổ, tươi mát sảng khoái ngày hè.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/tra_buoi_hong_chanh_vang.webp" alt="Trà Bưởi Hồng Chanh Vàng dồi dào Vitamin C — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">TRÀ BƯỞI HỒNG CHANH VÀNG</h3>
-                <div class="menu-card-price">40.000đ</div>
-                <p class="menu-card-desc">Bưởi hồng mọng nước hòa cùng chanh vàng thơm mát.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/tra_xoai_chanh_day.webp" alt="Trà Xoài Chanh Dây đậm vị hoa quả nhiệt đới — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">TRÀ XOÀI CHANH DÂY</h3>
-                <div class="menu-card-price">40.000đ</div>
-                <p class="menu-card-desc">Xoài chín ngọt thanh quyện cùng chanh dây đậm đà.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/luc_tra_nhan.webp" alt="Lục Trà Nhãn thanh tao giòn ngọt — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">LỤC TRÀ NHÃN</h3>
-                <div class="menu-card-price">40.000đ</div>
-                <p class="menu-card-desc">Nhãn giòn ngọt ngào kết hợp nền lục trà lài thanh tao.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/luc_tra_tran_chau_trang.webp" alt="Lục Trà Trân Châu Trắng giòn sần sật — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">LỤC TRÀ TRÂN CHÂU TRẮNG</h3>
-                <div class="menu-card-price">35.000đ</div>
-                <p class="menu-card-desc">Lục trà lài thanh mát cùng trân châu trắng giòn sần sật.</p>
-              </div>
-            </article>
           </div>
         </div>
 
         <!-- 3. MATCHA -->
         <div class="menu-category-panel" id="cat-matcha">
           <div class="menu-grid">
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-signature">SIGNATURE</span>
-                <img src="assets/menu/matcha_latte.webp" alt="Matcha Latte Nhật Bản nguyên chất — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">MATCHA LATTE</h3>
-                <div class="menu-card-price">39.000đ</div>
-                <p class="menu-card-desc">Matcha Nhật Bản nguyên chất thơm lừng quyện sữa tươi béo dịu.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/matcha_caramel.webp" alt="Matcha Caramel ngọt ngào thơm mịn — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">MATCHA CARAMEL</h3>
-                <div class="menu-card-price">45.000đ</div>
-                <p class="menu-card-desc">Matcha thơm đậm hòa quyện cùng sốt caramel béo ngậy ngọt ngào.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/matcha_bac_ha.webp" alt="Matcha Bạc Hà the mát sảng khoái — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">MATCHA BẠC HÀ</h3>
-                <div class="menu-card-price">45.000đ</div>
-                <p class="menu-card-desc">Sự kết hợp độc đáo giữa vị thanh của matcha và the mát của bạc hà.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/matcha_kem_muoi.webp" alt="Matcha Kem Muối béo mặn sánh mịn — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">MATCHA KEM MUỐI</h3>
-                <div class="menu-card-price">45.000đ</div>
-                <p class="menu-card-desc">Lớp kem muối béo ngậy mằn mặn phủ trên nền matcha đậm đà.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/matcha_que_hoa.webp" alt="Matcha Quế Hoa thanh nhẹ thơm ngát — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">MATCHA QUẾ HOA</h3>
-                <div class="menu-card-price">45.000đ</div>
-                <p class="menu-card-desc">Matcha cao cấp ướp hương hoa quế tự nhiên thanh tao quý phái.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/matcha_cold_whisk.webp" alt="Matcha Cold Whisk đánh bọt thủ công chuẩn vị — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">MATCHA COLD WHISK</h3>
-                <div class="menu-card-price">45.000đ</div>
-                <p class="menu-card-desc">Đánh bọt matcha lạnh thủ công truyền thống, chuẩn vị Nhật.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/matcha_dua.webp" alt="Matcha Nước Cốt Dừa thơm bùi độc đáo — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">MATCHA DỪA</h3>
-                <div class="menu-card-price">45.000đ</div>
-                <p class="menu-card-desc">Vị thơm bùi của nước cốt dừa tươi quyện cùng bột matcha thượng hạng.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-hot">HOT</span>
-                <img src="assets/menu/matcha_dau.webp" alt="Matcha Dâu Tây hai tầng đẹp mắt — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">MATCHA DÂU</h3>
-                <div class="menu-card-price">45.000đ</div>
-                <p class="menu-card-desc">Sự hòa quyện tuyệt hảo giữa matcha thơm đắng và mứt dâu tây ngọt ngào.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/matcha_oatside.webp" alt="Matcha Sữa Yến Mạch Oatside dinh dưỡng — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">MATCHA OATSIDE</h3>
-                <div class="menu-card-price">45.000đ</div>
-                <p class="menu-card-desc">Kết hợp sữa yến mạch Oatside thơm bùi thuần thực vật.</p>
-              </div>
-            </article>
           </div>
         </div>
 
         <!-- 4. CACAO -->
         <div class="menu-category-panel" id="cat-cacao">
           <div class="menu-grid">
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-best">BEST</span>
-                <img src="assets/menu/cacao_latte.webp" alt="Cacao Latte đậm đà ấm áp — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">CACAO LATTE</h3>
-                <div class="menu-card-price">35.000đ</div>
-                <p class="menu-card-desc">Cacao nguyên chất béo thơm, ấm áp và giàu năng lượng.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-hot">HOT</span>
-                <img src="assets/menu/cacao_kem_muoi.webp" alt="Cacao Kem Muối thơm béo hấp dẫn — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">CACAO KEM MUỐI</h3>
-                <div class="menu-card-price">39.000đ</div>
-                <p class="menu-card-desc">Cacao đậm đà hòa quyện cùng lớp kem muối béo ngậy.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/cacao_bac_ha.webp" alt="Cacao Bạc Hà sảng khoái tươi mát — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">CACAO BẠC HÀ</h3>
-                <div class="menu-card-price">39.000đ</div>
-                <p class="menu-card-desc">Hương bạc hà the mát sảng khoái quyện cùng vị ngọt đắng cacao.</p>
-              </div>
-            </article>
           </div>
         </div>
 
         <!-- 5. NƯỚC ÉP -->
         <div class="menu-category-panel" id="cat-juice">
           <div class="menu-grid">
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-best">BEST</span>
-                <img src="assets/menu/nuoc_ep_cam.webp" alt="Nước Ép Cam Sành tươi nguyên chất — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">NƯỚC ÉP CAM</h3>
-                <div class="menu-card-price">30.000đ</div>
-                <p class="menu-card-desc">Cam sành tươi vắt nguyên chất, dồi dào Vitamin C.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-hot">HOT</span>
-                <img src="assets/menu/nuoc_ep_chanh_day.webp" alt="Nước Ép Chanh Dây tươi thơm mát — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">NƯỚC ÉP CHANH DÂY</h3>
-                <div class="menu-card-price">30.000đ</div>
-                <p class="menu-card-desc">Chanh dây tươi thơm nồng, chua ngọt giải nhiệt cực đã.</p>
-              </div>
-            </article>
           </div>
         </div>
 
         <!-- 6. SỮA CHUA (YAGOUT) -->
         <div class="menu-category-panel" id="cat-yagout">
           <div class="menu-grid">
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-best">BEST</span>
-                <img src="assets/menu/yagout_dau.webp" alt="Sữa chua dâu tây tươi ngon mát lành — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">YAGOUT DÂU</h3>
-                <div class="menu-card-price">45.000đ</div>
-                <p class="menu-card-desc">Sữa chua sánh mịn kết hợp mứt dâu tây chua ngọt thanh mát.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <span class="menu-badge badge-hot">HOT</span>
-                <img src="assets/menu/yagout_viet_quat.webp" alt="Sữa chua việt quất thơm ngon dinh dưỡng — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">YAGOUT VIỆT QUẤT</h3>
-                <div class="menu-card-price">45.000đ</div>
-                <p class="menu-card-desc">Việt quất bổ dưỡng thơm lừng quyện cùng sữa chua tươi mát.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/yagout_xoai_chanh_day.webp" alt="Sữa chua xoài chanh dây nhiệt đới — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">YAGOUT XOÀI CHANH DÂY</h3>
-                <div class="menu-card-price">45.000đ</div>
-                <p class="menu-card-desc">Xoài chín thơm ngọt hòa quyện cùng chanh dây nhiệt đới.</p>
-              </div>
-            </article>
-
-            <article class="menu-card">
-              <div class="menu-card-img-wrap">
-                <img src="assets/menu/yagout_dao_chanh_day.webp" alt="Sữa chua đào chanh dây tươi mát — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
-              </div>
-              <div class="menu-card-body">
-                <h3 class="menu-card-name">YAGOUT ĐÀO CHANH DÂY</h3>
-                <div class="menu-card-price">45.000đ</div>
-                <p class="menu-card-desc">Đào mọng nước thơm ngọt hòa cùng vị chua dịu nhẹ của chanh dây.</p>
-              </div>
-            </article>
           </div>
         </div>
 
@@ -5814,7 +5457,7 @@
                 });
               }
 
-              showOlionToast(`Chúc mừng bạn nhận được ưu đãi ${prize.code}!`, '🎉');
+              showOlionToast(`Chúc mừng bạn nhận được ưu đãi ${prize.code}!`, 'gift');
             }
           }
           requestAnimationFrame(animate);
@@ -6211,14 +5854,6 @@
           const items = res.data;
           if (!items || !Array.isArray(items) || items.length === 0) return;
 
-          // Reject outdated dummy test items (e.g. 8 items from initial test)
-          const isDummyData = items.length < 30 || items.some(i => i.name === 'Trà Đào Cam Sả Tươi' || i.name === 'Bánh Croissant Bơ Pháp');
-          if (isDummyData) {
-            console.warn('⚠️ [Olion] Phát hiện dữ liệu mẫu cũ. Giữ nguyên 39 món chính thức của quán.');
-            localStorage.removeItem('olion_menu_items');
-            return;
-          }
-
           const grouped = {};
           items.forEach(item => {
             const cat = item.category || 'Cà phê';
@@ -6328,7 +5963,75 @@
       syncMenuFromCloud();
       syncApprovedReviews();
 
+      // H. Supabase Realtime Subscription
+      if (typeof supabaseClient !== 'undefined' && supabaseClient) {
+        supabaseClient
+          .channel('public:menu_items')
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'menu_items' }, payload => {
+            console.log('🔄 Menu changed via Realtime!', payload);
+            syncMenuFromCloud();
+          })
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'feedbacks' }, payload => {
+            syncApprovedReviews();
+          })
+          .subscribe((status) => {
+             console.log('Realtime status:', status);
+          });
+      }
+
+
+      // F. PWA / Service Worker Registration
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('service-worker.js')
+            .then((registration) => {
+              console.log('ServiceWorker registration successful');
+            }, (err) => {
+              console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+      }
+
+      // G. PWA Install Prompt
+      let deferredPrompt;
+      const installBanner = document.getElementById('pwa-install-banner');
+      const installBtn = document.getElementById('pwa-install-btn');
+      const closeInstallBtn = document.getElementById('pwa-close-btn');
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (installBanner) {
+          installBanner.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
+          installBanner.classList.add('opacity-100', 'translate-y-0');
+        }
+      });
+
+      if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+          if (deferredPrompt !== null) {
+            deferredPrompt.prompt();
+            await deferredPrompt.userChoice;
+            deferredPrompt = null;
+            if (installBanner) {
+              installBanner.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
+              installBanner.classList.remove('opacity-100', 'translate-y-0');
+            }
+          }
+        });
+      }
+
+      if (closeInstallBtn) {
+        closeInstallBtn.addEventListener('click', () => {
+          if (installBanner) {
+            installBanner.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
+            installBanner.classList.remove('opacity-100', 'translate-y-0');
+          }
+        });
+      }
+
     });
   </script>
 </body>
+
 </html>
