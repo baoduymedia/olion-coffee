@@ -3014,6 +3014,7 @@
 
     // Initial Data Load
     function loadAllData() {
+      if (typeof setupAdminRealtime === 'function') setupAdminRealtime();
       checkSupabaseStatus();
       loadMenu();
       loadCustomers();

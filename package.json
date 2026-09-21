@@ -2,6 +2,7 @@
   "dependencies": {
     "@supabase/server": "^1.7.0",
     "@supabase/supabase-js": "^2.116.0",
+    "jsdom": "^29.1.1",
     "puppeteer-core": "^25.11.0"
   }
 }
