@@ -4827,9 +4827,6 @@
 
       // 3. Khởi tạo & Hiển thị Popup
       async function initSmartWelcomePopup() {
-        // Chỉ hiển thị 1 lần trên mỗi phiên duyệt web
-        if (sessionStorage.getItem('olion_welcome_shown')) return;
-
         // Trì hoãn 1.5 giây sau khi tải trang để khách không bị choáng
         await new Promise(r => setTimeout(r, 1500));
 
@@ -4873,16 +4870,16 @@
         // Kích hoạt Popup
         modal.classList.add('active');
         modal.setAttribute('aria-hidden', 'false');
-        sessionStorage.setItem('olion_welcome_shown', 'true');
 
         // Bắt đầu đếm ngược 8s tự động đóng
         startWelcomeCountdown();
 
-        // Lắng nghe tương tác trên toàn bộ khu vực Form để HỦY ĐẾM NGƯỢC
-        if (newUserArea) {
-          const pauseEvents = ['focusin', 'click', 'keydown', 'input'];
+        // Lắng nghe tương tác trên toàn bộ Popup để HỦY ĐẾM NGƯỢC
+        const modalContent = modal.querySelector('.modal-content');
+        if (modalContent) {
+          const pauseEvents = ['focusin', 'click', 'keydown', 'touchstart'];
           pauseEvents.forEach(evt => {
-            newUserArea.addEventListener(evt, pauseWelcomeCountdown, { once: false });
+            modalContent.addEventListener(evt, pauseWelcomeCountdown, { once: false });
           });
         }
       }
