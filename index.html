@@ -6035,7 +6035,7 @@
 
       
       async function syncSiteSettingsFromCloud() {
-        if (typeof fetchSiteSettingsFromCloud !== 'function') return;
+        console.log("FETCH FUNC TYPE:", typeof fetchSiteSettingsFromCloud); if (typeof fetchSiteSettingsFromCloud !== "function") return;
         const res = await fetchSiteSettingsFromCloud();
         if (res.error) console.log("FETCH ERROR", res.error); if (res.data) { console.log("SYNC SETTINGS_JSON", JSON.stringify(res.data));
            const s = res.data;
