@@ -6027,13 +6027,57 @@
       // E. Cross-tab Realtime Sync
       window.addEventListener('storage', (e) => {
         if (e.key === 'olion_minigame') applyMinigameConfig();
+      syncSiteSettingsFromCloud();
         if (e.key === 'olion_announcement') applyAnnouncementConfig();
         if (e.key === 'olion_store_settings') applyStoreSettings();
         if (e.key === 'olion_menu_items') syncMenuFromCloud();
       });
 
+      
+      async function syncSiteSettingsFromCloud() {
+        if (typeof fetchSiteSettingsFromCloud !== 'function') return;
+        const res = await fetchSiteSettingsFromCloud();
+        if (res.data) {
+           const s = res.data;
+           
+           // 1. Minigame Wheel
+           const floatBtn = document.getElementById('wheelFloatBtn');
+           if (floatBtn) {
+             if (s.is_wheel_active === false) {
+               floatBtn.style.setProperty('display', 'none', 'important');
+               if (typeof closeWheelModal === 'function') closeWheelModal();
+             } else {
+               floatBtn.style.removeProperty('display');
+               floatBtn.style.display = 'flex';
+             }
+           }
+           if (s.wheel_prizes && Array.isArray(s.wheel_prizes) && s.wheel_prizes.length >= 2) {
+             prizes = s.wheel_prizes.map(p => ({
+               text: p.text || 'Quà tặng',
+               code: p.code || 'OLIONGIFT',
+               color: p.color || '#E59A55',
+               desc: p.desc || (p.text + ' từ Olion Coffee!')
+             }));
+             if (typeof drawWheel === 'function') drawWheel(0);
+           }
+           
+           // 2. Announcement Banner
+           const banner = document.getElementById('announcementBanner');
+           if (banner && sessionStorage.getItem('olion_announcement_dismissed') !== 'true') {
+             if (s.is_notification_active === false) {
+               banner.style.display = 'none';
+             } else {
+               const textEl = document.getElementById('announcementText');
+               if (textEl && s.notification_text) textEl.textContent = s.notification_text;
+               banner.style.display = 'block';
+             }
+           }
+        }
+      }
+
       // Initial Sync Calls
       applyMinigameConfig();
+      syncSiteSettingsFromCloud();
       applyAnnouncementConfig();
       applyStoreSettings();
       syncMenuFromCloud();
@@ -6049,6 +6093,10 @@
           })
           .on('postgres_changes', { event: '*', schema: 'public', table: 'feedbacks' }, payload => {
             syncApprovedReviews();
+          })
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'site_settings' }, payload => {
+            console.log('🔄 Site settings changed via Realtime!', payload);
+            syncSiteSettingsFromCloud();
           })
           .subscribe((status) => {
              console.log('Realtime status:', status);
