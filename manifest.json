@@ -1,6 +1,6 @@
 {
   "name": "Olion Coffee",
-  "short_name": "Olion",
+  "short_name": "Olion Coffee",
   "description": "Olion Coffee — Không gian thưởng thức cà phê và thức uống tinh tế tại Gò Vấp, TP.HCM.",
   "start_url": "./index.html",
   "scope": "./",
@@ -14,13 +14,13 @@
   ],
   "icons": [
     {
-      "src": "assets/logo.png",
-      "sizes": "192x192",
+      "src": "assets/logo-maskable.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "assets/logo-transparent.png",
+      "src": "assets/logo-trans-maskable.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -53,8 +53,8 @@
       "url": "https://maps.app.goo.gl/vfqfzV82xyswVRTm6",
       "icons": [
         {
-          "src": "assets/logo-transparent.png",
-          "sizes": "192x192",
+          "src": "assets/logo-trans-maskable.png",
+          "sizes": "512x512",
           "type": "image/png"
         }
       ]
@@ -66,8 +66,8 @@
       "url": "tel:0783657587",
       "icons": [
         {
-          "src": "assets/logo.png",
-          "sizes": "192x192",
+          "src": "assets/logo-maskable.png",
+          "sizes": "512x512",
           "type": "image/png"
         }
       ]
