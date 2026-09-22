@@ -6037,7 +6037,7 @@
       async function syncSiteSettingsFromCloud() {
         if (typeof fetchSiteSettingsFromCloud !== 'function') return;
         const res = await fetchSiteSettingsFromCloud();
-        if (res.error) console.log("FETCH ERROR", res.error); if (res.data) { console.log("SYNC SETTINGS", res.data); console.log("SYNC SETTINGS", res.data);
+        if (res.error) console.log("FETCH ERROR", res.error); if (res.data) { console.log("SYNC SETTINGS_JSON", JSON.stringify(res.data));
            const s = res.data;
            
            // 1. Minigame Wheel
