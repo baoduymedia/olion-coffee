@@ -2825,7 +2825,7 @@
 
     window.togglePromo = function(id) {
       const promos = getPromotions();
-      const target = promos.find(p => p.id === id);
+      const target = promos.find(p => String(p.id) === String(id));
       if (target) {
         target.active = !target.active;
         savePromotions(promos);

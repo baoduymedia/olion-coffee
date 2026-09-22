@@ -429,7 +429,7 @@ async function toggleMenuItemAvailabilityInCloud(id, isAvailable) {
 
   try {
     let local = JSON.parse(localStorage.getItem('olion_menu_items') || '[]');
-    local = local.map(m => m.id === id ? { ...m, is_available: isAvailable } : m);
+    local = local.map(m => String(m.id) === String(id) ? { ...m, is_available: isAvailable } : m);
     localStorage.setItem('olion_menu_items', JSON.stringify(local));
   } catch (e) {}
 
@@ -526,7 +526,7 @@ async function saveCustomerToCloud(cust) {
   // LocalStorage sync
   try {
     let local = JSON.parse(localStorage.getItem('olion_customers') || '[]');
-    const idx = local.findIndex(c => c.contact === cust.contact || c.id === cust.id);
+    const idx = local.findIndex(c => c.contact === cust.contact || String(c.id) === String(cust.id));
     if (idx !== -1) {
       local[idx] = { ...local[idx], ...cust, tier, date: local[idx].date || new Date().toLocaleDateString('vi-VN') };
     } else {
@@ -812,7 +812,7 @@ async function toggleFeedbackApprovalInCloud(id, newApprovedStatus) {
 
   try {
     let local = JSON.parse(localStorage.getItem('olion_feedbacks') || '[]');
-    local = local.map(f => f.id === id ? { ...f, approved: newApprovedStatus } : f);
+    local = local.map(f => String(f.id) === String(id) ? { ...f, approved: newApprovedStatus } : f);
     localStorage.setItem('olion_feedbacks', JSON.stringify(local));
   } catch (e) {}
 
