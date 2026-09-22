@@ -5486,7 +5486,7 @@
           const duration = 4000;
           const start = performance.now();
 
-          function animate(now) {
+          async function animate(now) {
             const elapsed = now - start;
             const progress = Math.min(elapsed / duration, 1);
             const easeOut = 1 - Math.pow(1 - progress, 3);
@@ -6076,6 +6076,7 @@
       }
 
       // Initial Sync Calls
+      console.log("INITIAL SYNC CALLS STARTED");
       applyMinigameConfig();
       syncSiteSettingsFromCloud();
       applyAnnouncementConfig();
