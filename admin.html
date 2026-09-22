@@ -2148,7 +2148,7 @@
     }
 
     function openEditMenuModal(id) {
-      const item = cachedMenuItems.find(m => m.id === id);
+      const item = cachedMenuItems.find(m => String(m.id) === String(id));
       if (!item) return;
       document.getElementById('menuModalTitle').textContent = '✏️ Chỉnh Sửa Món Nước';
       document.getElementById('menuItemId').value = item.id;
