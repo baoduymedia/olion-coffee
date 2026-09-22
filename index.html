@@ -5356,7 +5356,7 @@
           if (raw) {
             const config = JSON.parse(raw);
             if (config.enabled === false) {
-              floatBtn.style.setProperty('display', 'none', 'important');
+              console.log("SETTING NONE"); floatBtn.style.setProperty("display", "none", "important");
               if (typeof closeWheelModal === 'function') closeWheelModal();
               return;
             } else {
@@ -6044,7 +6044,7 @@
            const floatBtn = document.getElementById('wheelFloatBtn');
            if (floatBtn) {
              if (s.is_wheel_active === false) {
-               floatBtn.style.setProperty('display', 'none', 'important');
+               console.log("SETTING NONE"); floatBtn.style.setProperty("display", "none", "important");
                if (typeof closeWheelModal === 'function') closeWheelModal();
              } else {
                floatBtn.style.removeProperty('display');
