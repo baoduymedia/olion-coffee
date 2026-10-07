@@ -3203,7 +3203,8 @@
           body: JSON.stringify(payload)
         });
         
-        if (!response.ok) throw new Error('API Error');
+        const resultText = await response.text();
+        if (!response.ok) throw new Error('API Error: ' + response.status + ' - ' + resultText);
         
         document.getElementById('pushFormTitle').value = '';
         document.getElementById('pushFormMessage').value = '';
@@ -3252,7 +3253,8 @@
             url: "https://www.olioncoffee.app/news?article=" + articleId
           })
         });
-        if (!response.ok) throw new Error('API Error');
+        const resultText = await response.text();
+        if (!response.ok) throw new Error('API Error: ' + response.status + ' - ' + resultText);
         console.log('Push notification sent successfully.');
         showToast('Đã gửi thông báo cho khách hàng!');
       } catch (e) {
