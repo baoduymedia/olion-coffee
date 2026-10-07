@@ -3285,13 +3285,7 @@
   }
 
   // Auto open article if URL has ?article=...
-  window.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const articleId = urlParams.get('article');
-    if(articleId && newsDatabase[articleId]) {
-      openNewsModal(articleId);
-    }
-  });
+
 </script>
 
 <!-- Add Lucide icons -->
