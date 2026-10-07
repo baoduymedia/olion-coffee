@@ -3103,6 +3103,58 @@
         showToast('Lỗi khôi phục: ' + e.message, 'error');
       }
     }
+
+    // --- ONESIGNAL PUSH NOTIFICATION ---
+    const ONESIGNAL_APP_ID = "09a8fa7b-6ea9-40b7-b5d5-25dd2ffed24b";
+    
+    function loadOneSignalKey() {
+      const key = localStorage.getItem('onesignal_api_key');
+      if (key && document.getElementById('onesignalApiKey')) {
+        document.getElementById('onesignalApiKey').value = key;
+      }
+    }
+
+    function saveOneSignalKey() {
+      const key = document.getElementById('onesignalApiKey').value.trim();
+      if (!key) return showToast('Vui lòng nhập REST API Key!');
+      localStorage.setItem('onesignal_api_key', key);
+      showToast('Đã lưu cấu hình OneSignal!');
+    }
+
+    async function sendPushNotification(title, articleId) {
+      const apiKey = localStorage.getItem('onesignal_api_key');
+      if (!apiKey) {
+        console.warn('Chưa cấu hình REST API Key, bỏ qua Push Notification.');
+        return;
+      }
+      try {
+        const response = await fetch('https://onesignal.com/api/v1/notifications', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Authorization': 'Basic ' + apiKey
+          },
+          body: JSON.stringify({
+            app_id: ONESIGNAL_APP_ID,
+            included_segments: ['Subscribed Users'],
+            headings: { "en": "Tin tức mới từ Olion!", "vi": "Tin tức mới từ Olion!" },
+            contents: { "en": title, "vi": title },
+            url: "https://www.olioncoffee.app/news?article=" + articleId
+          })
+        });
+        if (!response.ok) throw new Error('API Error');
+        console.log('Push notification sent successfully.');
+        showToast('Đã gửi thông báo cho khách hàng!');
+      } catch (e) {
+        console.error('Lỗi khi gửi push notification:', e);
+      }
+    }
+
+    // Initialize On Load
+    document.addEventListener('DOMContentLoaded', () => {
+       setTimeout(loadOneSignalKey, 500);
+    });
+
 </script>
 
 </body>
