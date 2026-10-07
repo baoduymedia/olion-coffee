@@ -6,7 +6,7 @@ const CACHE_NAME = "olion-coffee-v2.8";
 
 const PRECACHE_ASSETS = [
   './',
-  './index.html',
+  '/',
   './manifest.json',
   './supabaseClient.js',
   './assets/logo.png',
@@ -101,7 +101,7 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         // Rớt mạng: Nếu là request trang chính, trả về index.html từ cache
         if (event.request.headers.get('accept')?.includes('text/html')) {
-          return caches.match('./index.html');
+          return caches.match('/');
         }
       });
     })

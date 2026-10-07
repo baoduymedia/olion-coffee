@@ -3825,7 +3825,7 @@
           <a href="https://www.facebook.com/profile.php?id=61594159312837&locale=vi_VN" target="_blank" rel="noopener noreferrer">Facebook ↗</a>
           <a href="https://www.tiktok.com/@olion.coffee" target="_blank" rel="noopener noreferrer">TikTok ↗</a>
           <a href="https://www.instagram.com/olion.coffee/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
-          <a href="admin.html">Quản trị viên (Admin) <i data-lucide="lock" style="width:12px;height:12px;margin-left:4px;"></i></a>
+          <a href="admin">Quản trị viên (Admin) <i data-lucide="lock" style="width:12px;height:12px;margin-left:4px;"></i></a>
         </div>
       </div>
 
@@ -5660,7 +5660,7 @@
         pressTimer = setTimeout(() => {
           clearInterval(pressProgressInterval);
           if (navigator.vibrate) navigator.vibrate(100);
-          window.location.href = 'admin.html';
+          window.location.href = 'admin';
         }, 2000); // 2 seconds hold
       }
 
@@ -5682,7 +5682,7 @@
           clearTimeout(clickTimer);
           if (clickCount >= 3) {
             clickCount = 0;
-            window.location.href = 'admin.html';
+            window.location.href = 'admin';
           } else {
             clickTimer = setTimeout(() => { clickCount = 0; }, 1200);
           }
@@ -5693,7 +5693,7 @@
       document.addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'a' || e.key === 'A')) {
           e.preventDefault();
-          window.location.href = 'admin.html';
+          window.location.href = 'admin';
         }
       });
 
