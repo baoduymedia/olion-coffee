@@ -856,6 +856,11 @@
           <span class="nav-icon">📢</span>
           <span class="nav-text">Thông báo lên Web</span>
         </div>
+        
+        <div class="nav-item" data-tab="news">
+          <span class="nav-icon">📰</span>
+          <span class="nav-text">Tin tức & Sự kiện</span>
+        </div>
         <div class="nav-item" data-tab="promotions">
           <span class="nav-icon">🎁</span>
           <span class="nav-text">Chương trình ưu đãi</span>
@@ -1216,6 +1221,34 @@
         </section>
 
         <!-- ======== TAB 6: PROMOTIONS ======== -->
+        
+        <!-- TAB: NEWS -->
+        <section class="tab-content" id="tab-news">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <p style="color: var(--text-muted);">Quản lý các bài viết trên trang chủ và trang Tin Tức. Dữ liệu được đồng bộ trực tiếp lên Cloud.</p>
+            <button class="btn btn-primary" onclick="openNewsFormModal()">+ Viết bài mới</button>
+          </div>
+          <div class="card">
+            <div style="overflow-x: auto;">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Ảnh Bìa</th>
+                    <th>Tiêu Đề</th>
+                    <th>Ngày Đăng</th>
+                    <th>Danh Mục</th>
+                    <th>Nổi Bật</th>
+                    <th>Thao Tác</th>
+                  </tr>
+                </thead>
+                <tbody id="newsTableBody">
+                  <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 25px;">Chưa kết nối CSDL Supabase</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
         <section class="tab-content" id="tab-promotions">
           <div class="card">
             <div class="card-header">
@@ -1790,6 +1823,7 @@
       }
       if (tabKey === 'overview') updateCharts();
       if (tabKey === 'menu') loadMenu();
+          loadNewsFromCloud();
       if (tabKey === 'customers') loadCustomers();
       if (tabKey === 'feedbacks') loadFeedbacks();
       if (tabKey === 'minigame') loadMinigame();
@@ -2196,12 +2230,14 @@
       closeMenuModal();
       showToast(idVal ? `Đã cập nhật món "${name}" thành công!` : `Đã thêm món mới "${name}" thành công!`);
       loadMenu();
+          loadNewsFromCloud();
     });
 
     window.handleToggleMenuAvailable = async function(id, isAvailable) {
       await toggleMenuItemAvailabilityInCloud(id, isAvailable);
       showToast(isAvailable ? 'Món đã được bật phục vụ!' : 'Món đã được chuyển sang tạm hết hàng.');
       loadMenu();
+          loadNewsFromCloud();
     };
 
     window.handleDeleteMenuItem = async function(id) {
@@ -2210,6 +2246,7 @@
         await deleteMenuItemFromCloud(id);
         showToast('Đã xóa món khỏi thực đơn thành công.');
         loadMenu();
+          loadNewsFromCloud();
       }
     };
 
@@ -3020,6 +3057,7 @@
       if (typeof setupAdminRealtime === 'function') setupAdminRealtime();
       checkSupabaseStatus();
       loadMenu();
+          loadNewsFromCloud();
       loadCustomers();
       loadFeedbacks();
       loadAnnouncement();
