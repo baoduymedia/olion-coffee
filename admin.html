@@ -1834,9 +1834,15 @@
         pageTitle.innerHTML = `<span>${icon}</span> <span>${text}</span>`;
       }
       if (tabKey === 'overview') updateCharts();
-      if (tabKey === 'menu') loadMenu();
-          loadNewsFromCloud();
-          loadOneSignalKey();
+      if (tabKey === 'menu') {
+        loadMenu();
+      }
+      if (tabKey === 'news') {
+        loadNewsFromCloud();
+      }
+      if (tabKey === 'customizer') {
+        loadOneSignalKey();
+      }
       if (tabKey === 'customers') loadCustomers();
       if (tabKey === 'feedbacks') loadFeedbacks();
       if (tabKey === 'minigame') loadMinigame();
