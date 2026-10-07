@@ -3194,7 +3194,7 @@
       }
       
       try {
-        const response = await fetch('https://onesignal.com/api/v1/notifications', {
+        const response = await fetch('/api/push', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
@@ -3238,7 +3238,7 @@
         return;
       }
       try {
-        const response = await fetch('https://onesignal.com/api/v1/notifications', {
+        const response = await fetch('/api/push', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
