@@ -3149,94 +3149,69 @@
     }
   }
 
-  // Copy of newsDatabase for the news page
-  const newsDatabase = {
-    'news-first-week': {
-      title: 'OLION’S FIRST WEEK — NHẬT KÝ TUẦN ĐẦU TIÊN',
-      date: '19/09/2026',
-      category: 'Sự kiện đặc biệt',
-      images: [
-        'assets/news/news-1-flowers.webp',
-        'assets/news/news-1-drinks.webp',
-        'assets/news/news-1-serving.webp',
-        'assets/news/news-1-recap.webp',
-        'assets/news/news-1-barista.webp'
-      ],
-      desc: 'Tuần đầu tiên mở cửa đã khép lại với biết bao cung bậc cảm xúc! Olion Coffee vô cùng trân trọng và biết ơn...',
-      contentHtml: `
-        <p>Tuần đầu tiên mở cửa đã khép lại với biết bao cung bậc cảm xúc! Olion Coffee vô cùng trân trọng và biết ơn những lẵng hoa tươi thắm, những lời chúc mừng chân thành từ quý đối tác, bạn bè và đặc biệt là sự ủng hộ nhiệt tình của hàng trăm lượt khách hàng đã ghé thăm quán mỗi ngày.</p>
-        <p>Mỗi ly cà phê trao đi là một lời cảm ơn sâu sắc. Chúng tôi cam kết sẽ tiếp tục hoàn thiện không gian và chất lượng đồ uống để mang đến những trải nghiệm tuyệt vời nhất cho bạn.</p>
-      `
-    },
-    'news-signature-drinks': {
-      title: 'Khám Phá Bộ Đôi Matcha Latte & Cà Phê Muối Chuẩn Vị',
-      date: '18/09/2026',
-      category: 'Thực Đơn Signature',
-      images: [
-        'assets/news/news-1-drinks.webp',
-        'assets/space-1.webp'
-      ],
-      desc: 'Tại Olion Coffee, mỗi ly thức uống đều được pha chế bằng cả sự nâng niu và tỉ mỉ. Lớp bọt kem muối béo mặn...',
-      contentHtml: `
-        <p>Tại Olion Coffee, mỗi ly thức uống đều được pha chế bằng cả sự nâng niu và tỉ mỉ.</p>
-        <div class="news-quote-box">
-          "Lớp bọt kem muối béo mặn sánh mịn hòa cùng cốt cà phê đậm đà tạo nên hương vị bùng nổ ngay từ ngụm đầu tiên."
-        </div>
-        <p>Bên cạnh đó, dòng Matcha Latte sử dụng 100% bột trà xanh nhập khẩu từ Shizuoka Nhật Bản, mang hương thơm thanh nhã và vị đắng dịu êm ái.</p>
-      `
-    },
-    'news-space-story': {
-      title: 'Góc Yên Bình Giữa Lòng Gò Vấp Cho Những Buổi Chiều Làm Việc',
-      date: '15/09/2026',
-      category: 'Không Gian Quán',
-      images: [
-        'assets/news/news-1-space.webp',
-        'assets/space-4.webp'
-      ],
-      desc: 'Bước qua cánh cửa Olion, bạn sẽ cảm nhận ngay một không gian tách biệt khỏi nhịp sống vội vã ngoài phố thị...',
-      contentHtml: `
-        <p>Bước qua cánh cửa Olion, bạn sẽ cảm nhận ngay một không gian tách biệt khỏi nhịp sống vội vã ngoài phố thị.</p>
-        <p>Tông màu gỗ ấm cúng, hệ thống đèn lồng giấy dịu mắt cùng những chậu cây xanh mướt tạo nên một chốn dừng chân hoàn hảo để đọc sách, làm việc hay trò chuyện cùng bạn bè.</p>
-      `
-    },
-    'news-opening-promo': {
-      title: 'Grand Opening Recap — Tuần Lễ Khai Trương Rực Rỡ Ưu Đãi',
-      date: '12/09/2026',
-      category: 'Chương Trình Khuyến Mãi',
-      images: [
-        'assets/news/news-1-recap.webp'
-      ],
-      desc: 'Nhìn lại những khoảnh khắc tuyệt vời trong tuần lễ Grand Opening! Khách hàng không chỉ được thưởng thức menu giảm giá 20%...',
-      contentHtml: `
-        <p>Nhìn lại những khoảnh khắc tuyệt vời trong tuần lễ Grand Opening! Khách hàng không chỉ được thưởng thức menu giảm giá 20% mà còn nhận được hàng trăm phần quà thú vị từ Vòng Quay May Mắn.</p>
-        <p>Đừng quên Olion Coffee vẫn đang áp dụng chương trình Tích điểm Loyalty: 10 ly tặng 1 ly hoàn toàn miễn phí nhé!</p>
-      `
-    }
-  };
 
-  // Render Articles
-  const grid = document.getElementById('articleGrid');
-  for (const [id, data] of Object.entries(newsDatabase)) {
-    const img = data.images && data.images.length > 0 ? data.images[0] : 'assets/logo-white.webp';
-    grid.innerHTML += `
-      <article class="article-card" onclick="openNewsModal('${id}')">
-        <div class="article-img-wrap">
-          <img src="${img}" class="article-img" loading="lazy" />
-        </div>
-        <div class="article-content">
-          <div class="article-meta">
-            <span><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;vertical-align:-2px;"></i>${data.date}</span>
-            <span style="color:var(--accent-gold);">${data.category}</span>
-          </div>
-          <h3 class="article-title">${data.title}</h3>
-          <p class="article-desc">${data.desc}</p>
-          <div class="article-readmore">Đọc tiếp <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></div>
-        </div>
-      </article>
-    `;
+  let newsDatabase = {};
+  let currentModalId = '';
+
+  async function loadNewsFromSupabase() {
+    try {
+      const { data, error } = await _supabase.from('news_items').select('*').order('created_at', { ascending: false });
+      if (error) throw error;
+      
+      const grid = document.getElementById('articleGrid');
+      grid.innerHTML = '';
+      
+      if (!data || data.length === 0) {
+        grid.innerHTML = '<p style="color:var(--text-muted);">Chưa có bài viết nào.</p>';
+        return;
+      }
+      
+      data.forEach(item => {
+        newsDatabase[item.id] = {
+          title: item.title,
+          date: item.date,
+          category: item.category,
+          images: [item.cover_image],
+          desc: item.description,
+          contentHtml: item.content_html
+        };
+        
+        grid.innerHTML += `
+          <article class="article-card" onclick="openNewsModal('${item.id}')">
+            <div class="article-img-wrap">
+              <img src="${item.cover_image}" class="article-img" loading="lazy" />
+            </div>
+            <div class="article-content">
+              <div class="article-meta">
+                <span><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;vertical-align:-2px;"></i>${item.date}</span>
+                <span style="color:var(--accent-gold);">${item.category}</span>
+              </div>
+              <h3 class="article-title">${item.title}</h3>
+              <p class="article-desc">${item.description || ''}</p>
+              <div class="article-readmore">Đọc tiếp <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></div>
+            </div>
+          </article>
+        `;
+      });
+      lucide.createIcons();
+      
+      // Auto open if URL has param
+      const urlParams = new URLSearchParams(window.location.search);
+      const articleId = urlParams.get('article');
+      if(articleId && newsDatabase[articleId]) {
+        openNewsModal(articleId);
+      }
+    } catch (e) {
+      console.error("Lỗi tải tin tức:", e);
+    }
   }
 
-  let currentModalId = '';
+  // Load when ready
+  window.addEventListener('DOMContentLoaded', () => {
+    // wait a tiny bit for supabase to initialize
+    setTimeout(loadNewsFromSupabase, 500);
+  });
+
 
   function openNewsModal(id) {
     currentModalId = id;
