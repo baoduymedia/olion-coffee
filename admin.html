@@ -861,6 +861,10 @@
           <span class="nav-icon">📰</span>
           <span class="nav-text">Tin tức & Sự kiện</span>
         </div>
+        <div class="nav-item" data-tab="push">
+          <span class="nav-icon">🚀</span>
+          <span class="nav-text">Chiến Dịch Thông Báo</span>
+        </div>
         <div class="nav-item" data-tab="promotions">
           <span class="nav-icon">🎁</span>
           <span class="nav-text">Chương trình ưu đãi</span>
@@ -1248,6 +1252,56 @@
             </div>
           </div>
         </section>
+
+        <!-- TAB: PUSH CAMPAIGNS -->
+        <section class="tab-content" id="tab-push">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <p style="color: var(--text-muted);">Soạn và gửi thông báo đẩy (Web Push) trực tiếp đến màn hình điện thoại/máy tính của tất cả khách hàng đã đăng ký.</p>
+          </div>
+          
+          <div class="card" style="max-width: 800px; margin: 0 auto;">
+            <h3 style="margin-bottom: 20px; color: var(--accent-gold); display: flex; align-items: center; gap: 8px;">
+              <i data-lucide="send" style="width:20px;height:20px;"></i> Soạn Thông Báo Mới
+            </h3>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+              <div>
+                <label style="display: block; margin-bottom: 5px; color: var(--text-muted);">Tiêu đề (Bắt buộc)</label>
+                <input type="text" id="pushFormTitle" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-dark); background: var(--bg-dark); color: white;" placeholder="VD: 🔥 Flash Sale Giờ Vàng!">
+              </div>
+              <div>
+                <label style="display: block; margin-bottom: 5px; color: var(--text-muted);">Đường dẫn khi khách bấm vào</label>
+                <input type="text" id="pushFormUrl" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-dark); background: var(--bg-dark); color: white;" placeholder="VD: https://www.olioncoffee.app/#menu" value="https://www.olioncoffee.app/">
+              </div>
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+              <label style="display: block; margin-bottom: 5px; color: var(--text-muted);">Nội dung tin nhắn (Bắt buộc)</label>
+              <textarea id="pushFormMessage" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-dark); background: var(--bg-dark); color: white; min-height: 80px;" placeholder="VD: Giảm ngay 20% cho ly Cà Phê Muối khi đặt hàng hôm nay. Bấm xem ngay!"></textarea>
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+              <label style="display: block; margin-bottom: 5px; color: var(--text-muted);">Link Ảnh đính kèm (Tùy chọn - Giúp thông báo nổi bật hơn)</label>
+              <input type="text" id="pushFormImage" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-dark); background: var(--bg-dark); color: white;" placeholder="VD: https://www.olioncoffee.app/assets/news/news-1-recap.webp">
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+              <button class="btn btn-primary" onclick="sendCustomPushNotification()" style="background: #1877F2; border-color: #1877F2; font-weight: bold;">
+                <i data-lucide="zap" style="width:16px;height:16px;margin-right:6px;"></i> Bắn Thông Báo Ngay
+              </button>
+            </div>
+          </div>
+          
+          <div style="max-width: 800px; margin: 30px auto 0; padding: 20px; border-radius: 12px; background: rgba(229,154,85,0.05); border: 1px dashed var(--accent-gold);">
+            <h4 style="color: var(--accent-gold); margin-bottom: 10px; display: flex; align-items: center; gap: 8px;"><i data-lucide="lightbulb" style="width:18px;height:18px;"></i> Mẹo gửi thông báo hiệu quả</h4>
+            <ul style="color: var(--text-muted); font-size: 13.5px; line-height: 1.6; padding-left: 20px;">
+              <li>Sử dụng các <strong>Emoji</strong> (🔥, 🎁, ⚡) ở Tiêu đề để tăng tỷ lệ khách hàng bấm vào đọc.</li>
+              <li>Nên copy link của trang Món Bán Chạy hoặc Bài Tin Tức cụ thể dán vào ô <strong>Đường dẫn</strong>. Khi khách bấm thông báo, web sẽ mở thẳng đến chỗ đó.</li>
+              <li>Chỉ nên gửi thông báo 1-2 lần/tuần để tránh làm phiền khách hàng khiến họ hủy đăng ký.</li>
+            </ul>
+          </div>
+        </section>
+
 
         <section class="tab-content" id="tab-promotions">
           <div class="card">
@@ -3111,6 +3165,56 @@
     }
 
     // --- ONESIGNAL PUSH NOTIFICATION ---
+
+    async function sendCustomPushNotification() {
+      const apiKey = localStorage.getItem('onesignal_api_key');
+      if (!apiKey) return alert('Chưa cấu hình REST API Key ở tab Thiết kế & Cài đặt!');
+      
+      const title = document.getElementById('pushFormTitle').value.trim();
+      const message = document.getElementById('pushFormMessage').value.trim();
+      const url = document.getElementById('pushFormUrl').value.trim() || 'https://www.olioncoffee.app';
+      const image = document.getElementById('pushFormImage').value.trim();
+      
+      if (!title || !message) return alert('Vui lòng điền đủ Tiêu đề và Nội dung!');
+      
+      if (!confirm(`Bạn sắp gửi tin nhắn này đến TẤT CẢ khách hàng:\n\n[${title}]\n${message}\n\nTiếp tục?`)) return;
+      
+      const payload = {
+        app_id: ONESIGNAL_APP_ID,
+        included_segments: ['Subscribed Users'],
+        headings: { "en": title, "vi": title },
+        contents: { "en": message, "vi": message },
+        url: url
+      };
+      
+      if (image) {
+        payload.big_picture = image; // Android/Windows
+        payload.chrome_web_image = image; // Chrome Web
+        payload.ios_attachments = { "id1": image }; // iOS
+      }
+      
+      try {
+        const response = await fetch('https://onesignal.com/api/v1/notifications', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Authorization': 'Basic ' + apiKey
+          },
+          body: JSON.stringify(payload)
+        });
+        
+        if (!response.ok) throw new Error('API Error');
+        
+        document.getElementById('pushFormTitle').value = '';
+        document.getElementById('pushFormMessage').value = '';
+        document.getElementById('pushFormImage').value = '';
+        
+        alert('🎉 Bắn thông báo THÀNH CÔNG! Hàng ngàn khách hàng đã nhận được tin nhắn của bạn.');
+      } catch (e) {
+        alert('❌ Lỗi khi gửi thông báo: ' + e.message);
+      }
+    }
+
     const ONESIGNAL_APP_ID = "09a8fa7b-6ea9-40b7-b5d5-25dd2ffed24b";
     
     function loadOneSignalKey() {
