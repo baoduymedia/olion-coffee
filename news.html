@@ -3087,7 +3087,7 @@
       </div>
 
             <div class="footer-bottom">
-        <p data-i18n="footer_rights">© 2024 Olion Coffee. All rights reserved. | <a href="/" onclick="event.preventDefault(); document.getElementById('privacyModal').classList.add('open')" style="color: var(--text-muted); text-decoration: underline;">Chính sách bảo mật dữ liệu</a></p>
+        <p data-i18n="footer_rights">© 2024 Olion Coffee. All rights reserved. | <a href="/" onclick="event.preventDefault(); document.getElementById('privacyModal').classList.add('active')" style="color: var(--text-muted); text-decoration: underline;">Chính sách bảo mật dữ liệu</a></p>
         <p data-i18n="footer_credit">Thiết kế & Vận hành bởi Olion Creative Studio</p>
       </div>
     </div>
@@ -3263,12 +3263,12 @@
       sliderWrap.style.display = 'none';
     }
     
-    document.getElementById('newsModal').classList.add('open');
+    document.getElementById('newsModal').classList.add('active');
     document.body.style.overflow = 'hidden';
   }
   
   function closeNewsModal() {
-    document.getElementById('newsModal').classList.remove('open');
+    document.getElementById('newsModal').classList.remove('active');
     document.body.style.overflow = 'auto';
   }
 

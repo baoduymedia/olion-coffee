@@ -3726,7 +3726,7 @@
       </div>
 
             <div class="footer-bottom">
-        <p data-i18n="footer_rights">© 2024 Olion Coffee. All rights reserved. | <a href="#" onclick="event.preventDefault(); document.getElementById('privacyModal').classList.add('open')" style="color: var(--text-muted); text-decoration: underline;">Chính sách bảo mật dữ liệu</a></p>
+        <p data-i18n="footer_rights">© 2024 Olion Coffee. All rights reserved. | <a href="#" onclick="event.preventDefault(); document.getElementById('privacyModal').classList.add('active')" style="color: var(--text-muted); text-decoration: underline;">Chính sách bảo mật dữ liệu</a></p>
         <p data-i18n="footer_credit">Thiết kế & Vận hành bởi Olion Creative Studio</p>
       </div>
     </div>
@@ -6067,7 +6067,7 @@
       });
 
             const handleInstall = () => {
-        document.getElementById('downloadAppModal').classList.add('open');
+        document.getElementById('downloadAppModal').classList.add('active');
       };
 
       window.showInstallGuide = function(platform) {
@@ -6094,7 +6094,7 @@
           deferredPrompt.prompt();
           await deferredPrompt.userChoice;
           deferredPrompt = null;
-          document.getElementById('downloadAppModal').classList.remove('open');
+          document.getElementById('downloadAppModal').classList.remove('active');
         } else {
           const guideArea = document.getElementById('installGuideArea');
           const guideTitle = document.getElementById('guideTitle');
@@ -6141,9 +6141,9 @@
 
 
   <!-- ======== 18. APP DOWNLOAD MODAL ======== -->
-  <div class="modal-overlay" id="downloadAppModal" onclick="if(event.target === this) this.classList.remove('open')">
+  <div class="modal-overlay" id="downloadAppModal" onclick="if(event.target === this) this.classList.remove('active')">
     <div class="modal-content" style="max-width: 480px; padding: 32px 24px; text-align: center; border-radius: 20px;">
-      <button type="button" class="modal-close-btn" onclick="document.getElementById('downloadAppModal').classList.remove('open')">✕</button>
+      <button type="button" class="modal-close-btn" onclick="document.getElementById('downloadAppModal').classList.remove('active')">✕</button>
       <img src="assets/logo-white.webp" alt="Olion Logo" style="width: 140px; margin-bottom: 24px;" loading="lazy" />
       <h3 style="font-family: var(--font-heading); color: var(--accent-gold); font-size: 1.6rem; margin-bottom: 12px;">Cài Đặt Ứng Dụng</h3>
       <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 28px;">
