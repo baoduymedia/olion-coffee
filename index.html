@@ -53,14 +53,10 @@
   <link rel="preload" as="image" href="assets/logo-white.webp" type="image/webp" fetchpriority="high" />
   <!-- Google Fonts: Cormorant Garamond (Heading - luxury fine dining serif akin to The Seasons) & Poppins (Body text, UI, Buttons) -->
   <!-- Lucide Icons CDN for elegant minimalist vector icons -->
-  <script src="https://unpkg.com/lucide@latest">
+  <script src="https://unpkg.com/lucide@latest"></script>
+<script>
   let currentNewsId = '';
-  const originalOpenNewsModal = openNewsModal;
-  window.openNewsModal = function(id) {
-    currentNewsId = id;
-    originalOpenNewsModal(id);
-  };
-
+  // window.openNewsModal will be defined below
   function shareToFB() {
     const url = encodeURIComponent(window.location.origin + "/news?article=" + currentNewsId);
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
@@ -72,7 +68,6 @@
       alert("Đã sao chép đường link bài viết!");
     });
   }
-</script>
 </script>
 
   <!-- Supabase Cloud SDK (JS Client v2) -->
@@ -3465,106 +3460,7 @@
           <p class="section-desc" data-i18n="news_desc">Khám phá những khoảnh khắc đáng nhớ, câu chuyện thức uống và các hoạt động mới nhất tại Olion Coffee.</p>
         </div>
 
-        <div class="news-main-grid">
-          <!-- Featured Big News Card (Tin tức 1: OLION'S FIRST WEEK) -->
-          <article class="news-featured-card" onclick="openNewsModal('news-first-week')">
-            <div class="news-featured-img-wrap">
-              <img src="assets/news/news-1-flowers.webp" alt="OLION’S FIRST WEEK - Nhật ký tuần đầu tiên tại Olion Coffee" class="news-featured-img" width="800" height="600" loading="lazy" decoding="async" />
-              <div class="news-featured-badge"><i data-lucide="award" style="width:13px;height:13px;"></i> Sự kiện đặc biệt</div>
-              <div class="news-img-count-badge"><i data-lucide="camera" style="width:13px;height:13px;"></i> Trọn bộ 5 ảnh</div>
-            </div>
-            <div class="news-featured-content">
-              <div class="news-meta">
-                <span class="news-date"><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;"></i>19/09/2026</span>
-                <span class="news-category">Nhật Ký Quán</span>
-              </div>
-              <h3 class="news-featured-title">OLION’S FIRST WEEK</h3>
-              <p class="news-featured-excerpt">
-                Một tuần đầu tiên thật nhiều yêu thương. Cảm ơn bạn đã ghé Olion, dành cho chúng mình những lời nhắn và sự ủng hộ thật dễ thương. Nếu có điều gì chưa trọn vẹn, mong bạn nhẹ nhàng nhắn nhủ và thương Olion bỏ qua nhé....
-              </p>
-              <div class="news-featured-footer">
-                <div class="news-thumbnails-preview" title="Xem trọn bộ 5 ảnh câu chuyện">
-                  <img src="assets/news/news-1-flowers.webp" alt="Hoa khai trương & Bánh kem" />
-                  <img src="assets/news/news-1-drinks.webp" alt="Matcha Latte & Cà Phê" />
-                  <img src="assets/news/news-1-serving.webp" alt="Phục vụ tại bàn" />
-                  <img src="assets/news/news-1-recap.webp" alt="Grand Opening Recap" />
-                  <img src="assets/news/news-1-barista.webp" alt="Barista quầy pha chế" />
-                </div>
-                <button type="button" class="btn-read-more" aria-label="Xem chi tiết bài viết">
-                  <span data-i18n="news_read_more">Đọc toàn bộ bài viết →</span>
-                </button>
-              </div>
-            </div>
-          </article>
-
-          <!-- Right Side Sub Grid (2x2 Grid) -->
-          <div class="news-sub-grid">
-            <!-- Sub News 1 -->
-            <article class="news-sub-card" onclick="openNewsModal('news-signature-drinks')">
-              <div class="news-sub-img-wrap">
-                <img src="assets/news/news-1-drinks.webp" alt="Khám phá bộ đôi thức uống Signature tại Olion" class="news-sub-img" width="400" height="250" loading="lazy" decoding="async" />
-                <span class="news-sub-badge">Signature</span>
-              </div>
-              <div class="news-sub-content">
-                <div class="news-meta">
-                  <span class="news-date"><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;"></i>18/09/2026</span>
-                </div>
-                <h4 class="news-sub-title">Khám Phá Bộ Đôi Matcha Latte & Cà Phê Muối Chuẩn Vị</h4>
-                <p class="news-sub-desc">Hương vị hòa quyện giữa lớp bọt béo ngậy mịn màng và matcha Nhật Bản thơm dịu tại 80/64A Dương Quảng Hàm.</p>
-                <span class="news-sub-link" data-i18n="news_read_more">Xem chi tiết →</span>
-              </div>
-            </article>
-
-            <!-- Sub News 2 -->
-            <article class="news-sub-card" onclick="openNewsModal('news-space-story')">
-              <div class="news-sub-img-wrap">
-                <img src="assets/news/news-1-space.webp" alt="Không gian làm việc và chill tại Olion Coffee" class="news-sub-img" width="400" height="250" loading="lazy" decoding="async" />
-                <span class="news-sub-badge">Không gian</span>
-              </div>
-              <div class="news-sub-content">
-                <div class="news-meta">
-                  <span class="news-date"><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;"></i>15/09/2026</span>
-                </div>
-                <h4 class="news-sub-title">Góc Yên Bình Giữa Lòng Gò Vấp Cho Những Buổi Chiều Làm Việc</h4>
-                <p class="news-sub-desc">Không gian ấm cúng với ánh đèn lồng dịu mắt, bàn ghế tiêu chuẩn và âm nhạc nhẹ nhàng thư giãn.</p>
-                <span class="news-sub-link" data-i18n="news_read_more">Xem chi tiết →</span>
-              </div>
-            </article>
-
-            <!-- Sub News 3 -->
-            <article class="news-sub-card" onclick="openNewsModal('news-opening-promo')">
-              <div class="news-sub-img-wrap">
-                <img src="assets/space-4.webp" alt="Chương trình ưu đãi Grand Opening Mua 2 Tặng 1" class="news-sub-img" width="400" height="250" loading="lazy" decoding="async" />
-                <span class="news-sub-badge">Ưu đãi</span>
-              </div>
-              <div class="news-sub-content">
-                <div class="news-meta">
-                  <span class="news-date"><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;"></i>12/09/2026</span>
-                </div>
-                <h4 class="news-sub-title">Grand Opening Recap — Tuần Lễ Khai Trương Rực Rỡ Ưu Đãi</h4>
-                <p class="news-sub-desc">Chương trình Mua 2 Tặng 1 cùng hàng trăm voucher tri ân những vị khách đầu tiên đến với Olion.</p>
-                <span class="news-sub-link" data-i18n="news_read_more">Xem chi tiết →</span>
-              </div>
-            </article>
-
-            <!-- Sub News 4 -->
-            <article class="news-sub-card" onclick="openNewsModal('news-craft-beans')">
-              <div class="news-sub-img-wrap">
-                <img src="assets/space-1.webp" alt="Cẩm nang hạt cà phê rang mộc nguyên chất" class="news-sub-img" width="400" height="250" loading="lazy" decoding="async" />
-                <span class="news-sub-badge">Pha chế</span>
-              </div>
-              <div class="news-sub-content">
-                <div class="news-meta">
-                  <span class="news-date"><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;"></i>10/09/2026</span>
-                </div>
-                <h4 class="news-sub-title">Nghệ Thuật Chọn Lọc Hạt Cà Phê Mộc Nguyên Chất Tại Olion</h4>
-                <p class="news-sub-desc">Từng mẻ hạt Arabica Cầu Đất và Robusta được rang mộc tỉ mỉ để giữ trọn vẹn hậu vị ngọt ngào sâu lắng.</p>
-                <span class="news-sub-link" data-i18n="news_read_more">Xem chi tiết →</span>
-              </div>
-            </article>
-          </div>
-        </div>
-      </div>
+        <div class="news-main-grid" id="homepageNewsGrid"></div>
 
       <div style="text-align: center; margin-top: 40px;">
         <a href="news" class="btn btn-outline" style="border: 1px solid var(--accent-gold); color: var(--accent-gold); padding: 12px 24px; border-radius: 50px; font-family: var(--font-heading); letter-spacing: 0.05em; display: inline-flex; align-items: center; gap: 8px; transition: all 0.3s ease;">
