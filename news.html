@@ -2880,10 +2880,12 @@
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
   <script>
     window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(function(OneSignal) {
-      OneSignal.init({
+    OneSignalDeferred.push(async function(OneSignal) {
+      await OneSignal.init({
         appId: "09a8fa7b-6ea9-40b7-b5d5-25dd2ffed24b",
       });
+      // Tự động bật bảng xin phép cấp quyền ngay khi vào trang nếu chưa cấp
+      OneSignal.Slidedown.promptPush();
     });
   </script>
 
