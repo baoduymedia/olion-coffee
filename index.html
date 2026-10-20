@@ -2767,7 +2767,216 @@
       margin-top: 14px;
     }
 
+    /* ===== 20/10 WOMEN'S DAY PROMO SECTION ===== */
+    .promo-2010-section {
+      position: relative;
+      overflow: hidden;
+      padding: 72px 0 80px;
+      background: linear-gradient(135deg, #1a0a10 0%, #2d1020 35%, #1e1520 70%, #0f0a18 100%);
+      border-top: 1px solid rgba(220, 120, 140, 0.2);
+      border-bottom: 1px solid rgba(220, 120, 140, 0.2);
+    }
+    .promo-petals-bg {
+      position: absolute; inset: 0;
+      pointer-events: none; overflow: hidden;
+      z-index: 0;
+    }
+    .promo-petal {
+      position: absolute;
+      font-size: 18px;
+      opacity: 0;
+      animation: petalFall linear infinite;
+      user-select: none;
+    }
+    @keyframes petalFall {
+      0%   { opacity: 0; transform: translateY(-40px) rotate(0deg); }
+      10%  { opacity: 0.7; }
+      90%  { opacity: 0.5; }
+      100% { opacity: 0; transform: translateY(110vh) rotate(360deg); }
+    }
+    .promo-2010-inner {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+    @media (max-width: 768px) {
+      .promo-2010-inner { grid-template-columns: 1fr; gap: 32px; text-align: center; }
+      .promo-offers-grid { grid-template-columns: 1fr; }
+      .promo-cta-row { flex-direction: column; align-items: center; }
+    }
+    /* Visual side */
+    .promo-2010-visual {
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+    }
+    .promo-rose-frame {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #5a1a2a, #2d0a18);
+      border: 2px solid rgba(220,120,140,0.4);
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      box-shadow: 0 0 40px rgba(200, 80, 100, 0.3), 0 0 80px rgba(200,80,100,0.1);
+      animation: rosePulse 3s ease-in-out infinite;
+    }
+    @keyframes rosePulse {
+      0%, 100% { box-shadow: 0 0 40px rgba(200,80,100,0.3), 0 0 80px rgba(200,80,100,0.1); }
+      50%       { box-shadow: 0 0 60px rgba(220,100,120,0.5), 0 0 120px rgba(220,100,120,0.2); }
+    }
+    .promo-rose-glow {
+      position: absolute; inset: -20px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,80,100,0.15) 0%, transparent 70%);
+      animation: glowPulse 2s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%, 100% { opacity: 0.5; } 50% { opacity: 1; }
+    }
+    .promo-rose-emoji { font-size: 72px; line-height: 1; z-index: 1; position: relative; }
+    .promo-date-badge {
+      background: linear-gradient(135deg, #c8647a, #a04060);
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 28px; font-weight: 700;
+      padding: 10px 28px;
+      border-radius: 50px;
+      letter-spacing: 0.04em;
+      box-shadow: 0 8px 24px rgba(180,60,90,0.4);
+    }
+    /* Content side */
+    .promo-eyebrow {
+      display: flex; align-items: center; gap: 8px;
+      color: #e0909a; font-size: 13px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .promo-heart { font-size: 16px; animation: heartBeat 1.2s ease-in-out infinite; display: inline-block; }
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); }
+    }
+    .promo-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.2;
+      color: #f5e6ea;
+      margin-bottom: 16px;
+    }
+    .promo-title em {
+      font-style: italic;
+      color: #e8909a;
+      background: linear-gradient(135deg, #e8909a, #c06070);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .promo-desc {
+      color: rgba(230,210,215,0.75);
+      font-size: 15px; line-height: 1.7;
+      margin-bottom: 28px;
+      max-width: 540px;
+    }
+    /* Offer cards */
+    .promo-offers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .promo-offer-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(200,100,120,0.25);
+      border-radius: 14px;
+      padding: 16px 12px;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 8px; text-align: center;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+    .promo-offer-card:hover {
+      background: rgba(200,100,120,0.12);
+      border-color: rgba(200,100,120,0.5);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(180,60,90,0.2);
+    }
+    .promo-offer-icon { font-size: 28px; }
+    .promo-offer-text { display: flex; flex-direction: column; gap: 2px; }
+    .promo-offer-text strong { color: #f0c0c8; font-size: 13px; font-weight: 700; }
+    .promo-offer-text span { color: rgba(220,190,200,0.7); font-size: 11px; line-height: 1.4; }
+    /* Countdown */
+    .promo-countdown-wrap {
+      margin-bottom: 28px;
+    }
+    .promo-countdown-label {
+      display: block;
+      color: rgba(220,170,180,0.8);
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .promo-countdown {
+      display: flex; align-items: center; gap: 8px;
+    }
+    .countdown-box {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(200,100,120,0.3);
+      border-radius: 10px;
+      padding: 10px 14px;
+      min-width: 60px;
+      text-align: center;
+    }
+    .countdown-box span {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 26px; font-weight: 700;
+      color: #f0c0c8;
+      line-height: 1;
+    }
+    .countdown-box small {
+      display: block;
+      color: rgba(200,160,170,0.6);
+      font-size: 10px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+    .countdown-sep {
+      color: rgba(200,100,120,0.6);
+      font-size: 22px; font-weight: 700;
+      margin-bottom: 16px;
+    }
+    /* CTA buttons */
+    .promo-cta-row {
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .promo-cta-btn {
+      background: linear-gradient(135deg, #c8647a, #a04060) !important;
+      border-color: transparent !important;
+      box-shadow: 0 8px 24px rgba(180,60,90,0.4) !important;
+      padding: 14px 28px !important;
+      font-size: 15px !important;
+    }
+    .promo-cta-btn:hover {
+      background: linear-gradient(135deg, #d8748a, #b05070) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(180,60,90,0.5) !important;
+    }
+    .promo-cta-call {
+      color: rgba(220,170,180,0.9);
+      text-decoration: none;
+      font-size: 14px; font-weight: 600;
+      border: 1px solid rgba(200,100,120,0.3);
+      padding: 13px 22px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    .promo-cta-call:hover {
+      color: #f0c0c8;
+      border-color: rgba(200,100,120,0.7);
+      background: rgba(200,100,120,0.1);
+    }
+    /* ===== END 20/10 SECTION ===== */
+
     /* Announcement Banner */
+
     .announcement-banner {
       background: linear-gradient(90deg, #1A130E 0%, #3D2210 50%, #1A130E 100%);
       border-bottom: 1px solid rgba(229, 154, 85, 0.35);
@@ -3142,8 +3351,88 @@
       </div>
     </section>
 
+    <!-- ======== 20/10 WOMEN'S DAY PROMO SECTION ======== -->
+    <section class="promo-2010-section" id="promo2010" aria-label="Ưu đãi ngày Phụ nữ Việt Nam 20/10">
+      <div class="promo-petals-bg" id="promoPetals"></div>
+      <div class="shell promo-2010-inner">
+        <!-- Left: Image / Badge -->
+        <div class="promo-2010-visual">
+          <div class="promo-rose-frame">
+            <div class="promo-rose-glow"></div>
+            <span class="promo-rose-emoji">🌹</span>
+          </div>
+          <div class="promo-date-badge">20/10</div>
+        </div>
+
+        <!-- Right: Content -->
+        <div class="promo-2010-content">
+          <div class="promo-eyebrow">
+            <span class="promo-heart">♥</span>
+            <span>Ngày Phụ Nữ Việt Nam</span>
+          </div>
+          <h2 class="promo-title">
+            Dành Tặng Những<br>
+            <em>Điều Dịu Dàng Nhất</em> 🌷
+          </h2>
+          <p class="promo-desc">
+            Gửi những người phụ nữ tuyệt vời nhất — luôn xứng đáng với những điều tốt đẹp nhất!
+            Olion Coffee trân trọng gửi tặng quý khách những ưu đãi đặc biệt trong ngày ý nghĩa này.
+          </p>
+
+          <!-- Offers Grid -->
+          <div class="promo-offers-grid">
+            <div class="promo-offer-card">
+              <div class="promo-offer-icon">☕</div>
+              <div class="promo-offer-text">
+                <strong>Mua 1 Tặng 1</strong>
+                <span>Tất cả đồ uống<br>dành cho 2 cô nàng</span>
+              </div>
+            </div>
+            <div class="promo-offer-card">
+              <div class="promo-offer-icon">🌸</div>
+              <div class="promo-offer-text">
+                <strong>Giảm 20%</strong>
+                <span>Khi gọi combo<br>Signature cho cặp đôi</span>
+              </div>
+            </div>
+            <div class="promo-offer-card">
+              <div class="promo-offer-icon">🎁</div>
+              <div class="promo-offer-text">
+                <strong>Quà tặng bí mật</strong>
+                <span>Check-in quán gắn<br>tag Olion Coffee</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Countdown -->
+          <div class="promo-countdown-wrap">
+            <span class="promo-countdown-label">⏰ Ưu đãi kết thúc sau</span>
+            <div class="promo-countdown" id="promoCountdown">
+              <div class="countdown-box"><span id="cdDays">00</span><small>Ngày</small></div>
+              <div class="countdown-sep">:</div>
+              <div class="countdown-box"><span id="cdHours">00</span><small>Giờ</small></div>
+              <div class="countdown-sep">:</div>
+              <div class="countdown-box"><span id="cdMins">00</span><small>Phút</small></div>
+              <div class="countdown-sep">:</div>
+              <div class="countdown-box"><span id="cdSecs">00</span><small>Giây</small></div>
+            </div>
+          </div>
+
+          <div class="promo-cta-row">
+            <a href="#menu" class="btn btn-primary promo-cta-btn">
+              🌷 Xem Thực Đơn Ưu Đãi
+            </a>
+            <a href="tel:0783657587" class="promo-cta-call">
+              📞 Đặt Bàn Ngay
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ======== 4. ABOUT SECTION ======== -->
     <section class="about-section" id="about" aria-label="Về chúng tôi">
+
       <div class="shell">
         <div class="about-grid">
           <div class="about-text-col">
@@ -5783,8 +6072,57 @@
         return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
       }
 
+      // ===== 20/10 WOMEN'S DAY PROMO =====
+      (function() {
+        // Petal animation
+        const petalContainer = document.getElementById('promoPetals');
+        const petals = ['🌸','🌹','🌷','✿','❀','♥','🌺'];
+        if (petalContainer) {
+          for (let i = 0; i < 22; i++) {
+            const p = document.createElement('span');
+            p.className = 'promo-petal';
+            p.textContent = petals[i % petals.length];
+            p.style.left = Math.random() * 100 + '%';
+            p.style.top = (Math.random() * -40) + 'px';
+            const dur = 6 + Math.random() * 10;
+            p.style.animationDuration = dur + 's';
+            p.style.animationDelay = (Math.random() * 8) + 's';
+            p.style.fontSize = (12 + Math.random() * 16) + 'px';
+            p.style.opacity = 0;
+            petalContainer.appendChild(p);
+          }
+        }
+
+        // Countdown to end of 20/10/2026 23:59:59 (Vietnam time)
+        const endDate = new Date('2026-10-20T23:59:59+07:00');
+        function updateCountdown() {
+          const now = new Date();
+          const diff = endDate - now;
+          const cd = document.getElementById('promoCountdown');
+          if (!cd) return;
+          if (diff <= 0) {
+            // Hide promo section after event ends
+            const section = document.getElementById('promo2010');
+            if (section) section.style.display = 'none';
+            return;
+          }
+          const days  = Math.floor(diff / (1000*60*60*24));
+          const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+          const mins  = Math.floor((diff % (1000*60*60)) / (1000*60));
+          const secs  = Math.floor((diff % (1000*60)) / 1000);
+          document.getElementById('cdDays').textContent  = String(days).padStart(2,'0');
+          document.getElementById('cdHours').textContent = String(hours).padStart(2,'0');
+          document.getElementById('cdMins').textContent  = String(mins).padStart(2,'0');
+          document.getElementById('cdSecs').textContent  = String(secs).padStart(2,'0');
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+      })();
+      // ===== END 20/10 PROMO =====
+
       // A. Announcement Banner
       window.dismissAnnouncement = function() {
+
         const banner = document.getElementById('announcementBanner');
         if (banner) banner.style.display = 'none';
         sessionStorage.setItem('olion_announcement_dismissed', 'true');
