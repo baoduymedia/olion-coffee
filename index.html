@@ -2810,30 +2810,18 @@
     .promo-2010-visual {
       display: flex; flex-direction: column; align-items: center; gap: 16px;
     }
-    .promo-rose-frame {
-      width: 160px; height: 160px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 40% 40%, #5a1a2a, #2d0a18);
-      border: 2px solid rgba(220,120,140,0.4);
-      display: flex; align-items: center; justify-content: center;
-      position: relative;
-      box-shadow: 0 0 40px rgba(200, 80, 100, 0.3), 0 0 80px rgba(200,80,100,0.1);
-      animation: rosePulse 3s ease-in-out infinite;
+    .promo-banner-poster {
+      width: min(240px, 70vw);
+      aspect-ratio: 1/1;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 2px solid rgba(230,170,185,.35);
+      box-shadow: 0 12px 35px rgba(180, 50, 80, 0.4), 0 0 70px rgba(220,100,130,0.2);
     }
-    @keyframes rosePulse {
-      0%, 100% { box-shadow: 0 0 40px rgba(200,80,100,0.3), 0 0 80px rgba(200,80,100,0.1); }
-      50%       { box-shadow: 0 0 60px rgba(220,100,120,0.5), 0 0 120px rgba(220,100,120,0.2); }
+    .promo-banner-img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
     }
-    .promo-rose-glow {
-      position: absolute; inset: -20px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(200,80,100,0.15) 0%, transparent 70%);
-      animation: glowPulse 2s ease-in-out infinite;
-    }
-    @keyframes glowPulse {
-      0%, 100% { opacity: 0.5; } 50% { opacity: 1; }
-    }
-    .promo-rose-emoji { font-size: 72px; line-height: 1; z-index: 1; position: relative; }
     .promo-date-badge {
       background: linear-gradient(135deg, #c8647a, #a04060);
       color: #fff;
@@ -3383,9 +3371,8 @@
       <div class="shell promo-2010-inner">
         <!-- Left: Image / Badge -->
         <div class="promo-2010-visual">
-          <div class="promo-rose-frame">
-            <div class="promo-rose-glow"></div>
-            <span class="promo-rose-emoji">🌹</span>
+          <div class="promo-banner-poster">
+            <img src="assets/banner-2010.jpg" alt="20/10 - Dành tặng những điều dịu dàng nhất" class="promo-banner-img" loading="lazy" />
           </div>
           <div class="promo-date-badge">20/10</div>
         </div>

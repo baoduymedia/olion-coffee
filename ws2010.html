@@ -1,440 +1,534 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
   <title>🌷 20/10 – Dành Tặng Những Điều Dịu Dàng Nhất | Olion Coffee</title>
-  <meta name="description" content="Các bạn nữ ghé Olion mua nước sẽ được tặng một cành hoa nhỏ như lời chúc ngọt ngào. Happy Vietnamese Women's Day 20/10 💗" />
-  <meta property="og:title" content="🌷 20/10 – Dành Tặng Những Điều Dịu Dàng Nhất | Olion Coffee" />
-  <meta property="og:description" content="Các bạn nữ ghé Olion mua nước sẽ được tặng một cành hoa nhỏ như lời chúc ngọt ngào. Happy Vietnamese Women's Day! 💗" />
-  <meta property="og:image" content="https://www.olioncoffee.app/assets/logo.png?v=2" />
-  <meta property="og:url" content="https://www.olioncoffee.app/ws2010" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="canonical" href="https://www.olioncoffee.app/ws2010" />
-  <link rel="icon" href="assets/favicon.ico" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <meta name="description" content="Các bạn nữ ghé Olion mua nước sẽ được tặng một cành hoa nhỏ như lời chúc ngọt ngào. Happy Vietnamese Women's Day 20/10 💗"/>
+  <meta property="og:title" content="🌷 20/10 – Dành Tặng Những Điều Dịu Dàng Nhất | Olion Coffee"/>
+  <meta property="og:description" content="Các bạn nữ ghé Olion mua nước sẽ được tặng một cành hoa nhỏ như lời chúc ngọt ngào. Happy Vietnamese Women's Day! 💗"/>
+  <meta property="og:image" content="https://www.olioncoffee.app/assets/banner-2010.jpg?v=2010"/>
+  <meta property="og:image:secure_url" content="https://www.olioncoffee.app/assets/banner-2010.jpg?v=2010"/>
+  <meta property="og:image:width" content="1024"/>
+  <meta property="og:image:height" content="1024"/>
+  <meta property="og:image:alt" content="Olion Coffee 20/10 - Dành tặng những điều dịu dàng nhất"/>
+  <meta property="og:url" content="https://www.olioncoffee.app/ws2010"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://www.olioncoffee.app/assets/banner-2010.jpg?v=2010"/>
+  <link rel="canonical" href="https://www.olioncoffee.app/ws2010"/>
+  <link rel="icon" href="assets/favicon.ico"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
 
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --rose: #c8647a;
-      --rose-dark: #8a3050;
-      --rose-light: #f0b0c8;
-      --gold: #E59A55;
-      --bg: #100810;
-      --bg2: #1e0d18;
-      --text: #f5e8ec;
-      --text-muted: rgba(230,200,210,0.7);
-      --font-display: 'Cormorant Garamond', serif;
-      --font-body: 'Poppins', sans-serif;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --rose:#c8607a;--rose2:#a04060;--rose-light:#f5c0d0;
+      --gold:#d4a85a;--cream:#f5ede6;
+      --dark:#0e0810;--dark2:#1a0d18;
+      --text:#f0e8ec;--muted:rgba(235,205,215,.72);
+      --serif:'Cormorant Garamond',serif;
+      --sans:'Lato',sans-serif;
     }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--sans);background:var(--dark);color:var(--text);min-height:100vh;overflow-x:hidden}
 
-    html { scroll-behavior: smooth; }
+    /* ─── Canvas petals ─── */
+    canvas#petals{position:fixed;inset:0;pointer-events:none;z-index:0}
 
-    body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
+    /* ─── HERO ─── */
+    .hero{
+      position:relative;min-height:100svh;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;padding:60px 24px 40px;overflow:hidden;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%,rgba(180,60,90,.28) 0%,transparent 65%),
+        radial-gradient(ellipse 60% 40% at 50% 100%,rgba(100,20,50,.35) 0%,transparent 70%),
+        var(--dark2);
     }
-
-    /* ── Petal canvas ── */
-    #petalCanvas {
-      position: fixed; inset: 0;
-      pointer-events: none; z-index: 0;
-      overflow: hidden;
-    }
-    .petal {
-      position: absolute;
-      font-size: 18px;
-      opacity: 0;
-      animation: fall linear infinite;
-      user-select: none;
-    }
-    @keyframes fall {
-      0%   { opacity: 0;   transform: translateY(-30px) rotate(0deg) scale(0.8); }
-      8%   { opacity: 0.8; }
-      92%  { opacity: 0.4; }
-      100% { opacity: 0;   transform: translateY(105vh) rotate(420deg) scale(1.1); }
+    .hero::before{/* top vignette */
+      content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse 120% 50% at 50% -10%,rgba(200,96,122,.12),transparent 70%);
+      pointer-events:none;
     }
 
-    /* ── Page wrapper ── */
-    .page {
-      position: relative; z-index: 1;
-      max-width: 520px;
-      margin: 0 auto;
-      padding: 0 0 48px;
+    /* floating logo */
+    .hero-logo{position:absolute;top:24px;left:50%;transform:translateX(-50%);z-index:2}
+    .hero-logo img{height:32px;opacity:.9;filter:drop-shadow(0 2px 8px rgba(0,0,0,.5))}
+
+    /* banner poster */
+    .banner-poster-wrap{
+      position:relative;
+      width:min(320px, 85vw);
+      aspect-ratio:1/1;
+      margin:0 auto 24px;
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:0 12px 40px rgba(180,50,80,.45), 0 0 80px rgba(220,100,130,.2);
+      border:2px solid rgba(230,170,185,.35);
+      animation:floatPoster 4s ease-in-out infinite;
+    }
+    @keyframes floatPoster{
+      0%, 100%{ transform:translateY(0); box-shadow:0 12px 40px rgba(180,50,80,.45), 0 0 80px rgba(220,100,130,.2); }
+      50%{ transform:translateY(-8px); box-shadow:0 20px 50px rgba(200,60,95,.55), 0 0 100px rgba(230,110,140,.3); }
+    }
+    .banner-poster-glow{
+      position:absolute; inset:0;
+      background:radial-gradient(circle at 50% 30%, rgba(255,255,255,.15), transparent 70%);
+      pointer-events:none; z-index:2;
+    }
+    .banner-poster-img{
+      width:100%; height:100%;
+      object-fit:cover; display:block;
+    }
+    .date-pill{
+      background:linear-gradient(135deg,var(--rose),var(--rose2));
+      color:#fff;font-family:var(--serif);font-size:24px;font-weight:700;
+      padding:8px 28px;border-radius:50px;letter-spacing:.06em;
+      box-shadow:0 8px 28px rgba(160,50,80,.45);
+      margin-bottom:20px;
     }
 
-    /* ── Header bar ── */
-    .top-bar {
-      display: flex; align-items: center; justify-content: center;
-      padding: 20px 24px 0;
+    /* eyebrow */
+    .eyebrow{
+      font-family:var(--sans);font-size:11px;font-weight:700;
+      letter-spacing:.18em;text-transform:uppercase;
+      color:var(--rose-light);margin-bottom:14px;
+      display:flex;align-items:center;justify-content:center;gap:8px;
     }
-    .top-bar img { height: 38px; }
+    .eyebrow::before,.eyebrow::after{content:'';flex:1;max-width:48px;height:1px;background:linear-gradient(90deg,transparent,rgba(200,100,125,.5),transparent)}
 
-    /* ── Hero ── */
-    .hero {
-      text-align: center;
-      padding: 40px 24px 32px;
-      background: radial-gradient(ellipse at 50% 0%, rgba(200,100,120,0.18) 0%, transparent 65%);
+    /* title */
+    .hero-title{
+      font-family:var(--serif);font-size:clamp(36px,10vw,62px);
+      font-weight:700;line-height:1.1;margin-bottom:18px;
+      color:#faeaee;
+      text-shadow:0 2px 24px rgba(200,80,100,.2);
     }
-    .rose-circle {
-      width: 140px; height: 140px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 38% 38%, #5a1830, #2a0818);
-      border: 2px solid rgba(200,100,120,0.45);
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 20px;
-      position: relative;
-      box-shadow: 0 0 50px rgba(200,80,100,0.35), 0 0 100px rgba(200,80,100,0.1);
-      animation: pulse 3s ease-in-out infinite;
+    .hero-title em{
+      font-style:italic;display:block;font-size:.95em;
+      background:linear-gradient(135deg,#f5b8cc 0%,#d06880 50%,#f5b8cc 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+      background-size:200% auto;animation:shimmer 4s linear infinite;
     }
-    @keyframes pulse {
-      0%,100% { box-shadow: 0 0 50px rgba(200,80,100,0.35), 0 0 100px rgba(200,80,100,0.1); }
-      50%      { box-shadow: 0 0 70px rgba(220,100,130,0.55), 0 0 140px rgba(220,100,130,0.18); }
-    }
-    .rose-circle span { font-size: 64px; line-height: 1; }
+    @keyframes shimmer{0%{background-position:0% center}100%{background-position:200% center}}
 
-    .date-pill {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--rose), var(--rose-dark));
-      color: #fff;
-      font-family: var(--font-display);
-      font-size: 22px; font-weight: 700;
-      padding: 7px 24px;
-      border-radius: 50px;
-      letter-spacing: 0.05em;
-      margin-bottom: 20px;
-      box-shadow: 0 6px 20px rgba(180,60,90,0.45);
+    /* sub */
+    .hero-sub{
+      font-size:15px;line-height:1.75;color:var(--muted);
+      max-width:420px;margin:0 auto 32px;
     }
 
-    .eyebrow {
-      color: var(--rose-light);
-      font-size: 11px; font-weight: 600;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      margin-bottom: 10px;
+    /* scroll cue */
+    .scroll-cue{
+      position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+      display:flex;flex-direction:column;align-items:center;gap:6px;
+      color:rgba(200,150,165,.5);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
     }
-    .eyebrow .heart { display: inline-block; animation: hb 1.2s ease-in-out infinite; }
-    @keyframes hb { 0%,100%{transform:scale(1)} 50%{transform:scale(1.35)} }
+    .scroll-cue svg{animation:bounce 2s ease-in-out infinite}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(30px, 9vw, 46px);
-      font-weight: 700;
-      line-height: 1.2;
-      color: #f8eaee;
-      margin-bottom: 8px;
-    }
-    .hero-title em {
-      font-style: italic;
-      background: linear-gradient(135deg, #f0b0c0, #c06078);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-sub {
-      font-size: 13.5px; color: var(--text-muted); line-height: 1.65;
-    }
+    /* ─── SECTIONS ─── */
+    .section{padding:64px 0}
+    .section:nth-child(even){background:rgba(255,255,255,.018)}
+    .container{max-width:580px;margin:0 auto;padding:0 24px}
 
-    /* ── Card ── */
-    .card {
-      margin: 0 16px 16px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(200,100,120,0.22);
-      border-radius: 20px;
-      padding: 24px 22px;
-      backdrop-filter: blur(6px);
+    /* section heading */
+    .sec-label{
+      font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(200,120,145,.65);margin-bottom:10px;text-align:center;
+    }
+    .sec-title{
+      font-family:var(--serif);font-size:clamp(26px,6vw,38px);font-weight:700;
+      text-align:center;color:#f5e8ec;margin-bottom:6px;line-height:1.25;
+    }
+    .sec-title em{font-style:italic;color:var(--rose-light)}
+    .sec-divider{
+      width:48px;height:2px;margin:16px auto 36px;
+      background:linear-gradient(90deg,transparent,var(--rose),transparent);
+      border:none;
     }
 
-    /* offer card */
-    .offer-row {
-      display: flex; align-items: flex-start; gap: 16px;
+    /* ─── OFFER CARD ─── */
+    .offer-card{
+      background:linear-gradient(135deg,rgba(200,96,122,.1) 0%,rgba(100,20,50,.08) 100%);
+      border:1px solid rgba(200,96,122,.28);
+      border-radius:24px;padding:32px 28px;
+      position:relative;overflow:hidden;
     }
-    .offer-icon { font-size: 44px; flex-shrink: 0; }
-    .offer-body strong {
-      display: block; color: var(--rose-light);
-      font-size: 17px; font-weight: 700; margin-bottom: 6px;
+    .offer-card::before{
+      content:'💐';
+      position:absolute;right:-12px;bottom:-12px;
+      font-size:90px;opacity:.08;line-height:1;
+      pointer-events:none;
     }
-    .offer-body p {
-      color: var(--text-muted); font-size: 14px; line-height: 1.65;
+    .offer-tag{
+      display:inline-flex;align-items:center;gap:6px;
+      background:rgba(200,96,122,.18);border:1px solid rgba(200,96,122,.35);
+      color:var(--rose-light);font-size:11px;font-weight:700;
+      letter-spacing:.1em;text-transform:uppercase;
+      padding:5px 14px;border-radius:50px;margin-bottom:20px;
     }
-    .offer-body em {
-      color: #f8c0d0; font-style: normal; font-weight: 700;
-    }
+    .offer-text{font-size:16px;line-height:1.75;color:rgba(240,215,225,.88)}
+    .offer-text strong{color:#f5c8d8;font-weight:700}
+    .offer-text em{font-style:normal;font-weight:700;color:var(--rose-light);text-decoration:underline;text-decoration-style:dotted;text-decoration-color:rgba(200,120,140,.5)}
 
-    /* quote */
-    .quote-card {
-      border-left: 3px solid rgba(200,100,120,0.55);
-      padding: 14px 20px;
-      margin: 0 16px 16px;
+    /* ─── QUOTE ─── */
+    .quote-wrap{
+      padding:28px 0;position:relative;
+      display:flex;flex-direction:column;align-items:center;
     }
-    .quote-card p {
-      font-style: italic;
-      font-size: 14.5px; line-height: 1.7;
-      color: rgba(230,195,205,0.85);
+    .quote-mark{
+      font-family:var(--serif);font-size:72px;line-height:.5;
+      color:rgba(200,96,122,.25);margin-bottom:16px;
+      font-style:italic;
     }
+    .quote-text{
+      font-family:var(--serif);font-size:clamp(18px,4.5vw,26px);
+      font-style:italic;font-weight:600;line-height:1.6;
+      text-align:center;color:rgba(240,210,220,.85);
+      max-width:460px;
+    }
+    .quote-sig{margin-top:16px;font-size:13px;color:rgba(200,150,165,.6);letter-spacing:.05em}
 
-    /* countdown */
-    .cd-label {
-      text-align: center;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(220,160,175,0.75);
-      margin-bottom: 12px;
+    /* ─── COUNTDOWN ─── */
+    .cd-grid{display:flex;align-items:center;justify-content:center;gap:10px}
+    .cd-item{display:flex;flex-direction:column;align-items:center;gap:6px}
+    .cd-box{
+      width:72px;height:72px;border-radius:16px;
+      background:rgba(0,0,0,.38);
+      border:1px solid rgba(200,96,122,.28);
+      display:flex;align-items:center;justify-content:center;
+      position:relative;overflow:hidden;
     }
-    .countdown {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
+    .cd-box::before{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(200,96,122,.06) 0%,transparent 100%);
     }
-    .cd-box {
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(200,100,120,0.3);
-      border-radius: 12px;
-      padding: 10px 0;
-      width: 68px; text-align: center;
+    .cd-num{
+      font-family:var(--serif);font-size:32px;font-weight:700;
+      color:var(--rose-light);line-height:1;position:relative;z-index:1;
     }
-    .cd-box span {
-      display: block;
-      font-family: var(--font-display);
-      font-size: 28px; font-weight: 700;
-      color: var(--rose-light); line-height: 1;
-    }
-    .cd-box small {
-      font-size: 9.5px; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.07em;
-      color: rgba(200,155,170,0.6);
-      margin-top: 3px; display: block;
-    }
-    .cd-sep { color: rgba(200,100,120,0.55); font-size: 22px; font-weight: 700; margin-bottom: 14px; }
+    .cd-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(200,145,165,.55)}
+    .cd-colon{font-size:26px;font-weight:700;color:rgba(200,96,122,.45);margin-bottom:22px}
 
-    /* info */
-    .info-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .info-list li {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 13.5px; color: var(--text-muted); line-height: 1.5;
+    /* ─── INFO ─── */
+    .info-grid{display:flex;flex-direction:column;gap:0}
+    .info-row{
+      display:flex;align-items:center;gap:16px;
+      padding:18px 0;border-bottom:1px solid rgba(255,255,255,.05);
     }
-    .info-list li span.ic { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .info-row:last-child{border-bottom:none}
+    .info-icon{
+      width:44px;height:44px;border-radius:12px;flex-shrink:0;
+      background:rgba(200,96,122,.1);border:1px solid rgba(200,96,122,.2);
+      display:flex;align-items:center;justify-content:center;font-size:20px;
+    }
+    .info-body strong{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(200,140,160,.65);margin-bottom:3px}
+    .info-body span{font-size:14.5px;color:rgba(240,215,225,.88)}
+    .info-body a{color:var(--rose-light);text-decoration:none;font-weight:700}
 
-    /* CTA buttons */
-    .cta-block {
-      padding: 8px 16px 0;
-      display: flex; flex-direction: column; gap: 12px;
+    /* ─── BUTTONS ─── */
+    .btn-block{display:flex;flex-direction:column;gap:12px}
+    .btn-main{
+      display:flex;align-items:center;justify-content:center;gap:10px;
+      background:linear-gradient(135deg,#c8607a 0%,#8a3050 100%);
+      color:#fff;font-family:var(--sans);font-size:15px;font-weight:700;
+      padding:18px 32px;border-radius:14px;text-decoration:none;
+      box-shadow:0 10px 32px rgba(160,50,80,.4);
+      transition:all .25s ease;letter-spacing:.02em;
     }
-    .btn-primary {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      background: linear-gradient(135deg, var(--rose), var(--rose-dark));
-      color: #fff; font-family: var(--font-body);
-      font-size: 15px; font-weight: 700;
-      padding: 16px 24px; border-radius: 12px;
-      text-decoration: none;
-      box-shadow: 0 8px 24px rgba(180,60,90,0.4);
-      transition: all 0.25s ease;
+    .btn-main:hover{background:linear-gradient(135deg,#d8708a,#9a4060);transform:translateY(-2px);box-shadow:0 14px 40px rgba(160,50,80,.5)}
+    .btn-ghost{
+      display:flex;align-items:center;justify-content:center;gap:10px;
+      border:1.5px solid rgba(200,96,122,.35);
+      color:rgba(220,175,190,.85);font-size:14px;font-weight:700;
+      padding:16px 32px;border-radius:14px;text-decoration:none;
+      transition:all .25s ease;
     }
-    .btn-primary:hover { background: linear-gradient(135deg, #d8748a, #b05070); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(180,60,90,0.5); }
-    .btn-secondary {
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      border: 1px solid rgba(200,100,120,0.4);
-      color: rgba(220,170,180,0.9);
-      font-size: 14px; font-weight: 600;
-      padding: 14px 24px; border-radius: 12px;
-      text-decoration: none;
-      transition: all 0.25s ease;
-    }
-    .btn-secondary:hover { background: rgba(200,100,120,0.1); border-color: rgba(200,100,120,0.7); color: var(--rose-light); }
+    .btn-ghost:hover{background:rgba(200,96,122,.1);border-color:rgba(200,96,122,.6);color:var(--rose-light)}
 
-    /* share row */
-    .share-row {
-      display: flex; align-items: center; justify-content: center; gap: 12px;
-      padding: 20px 16px 0;
+    /* ─── SHARE ─── */
+    .share-title{text-align:center;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(200,140,160,.55);margin-bottom:16px}
+    .share-row{display:flex;gap:10px;justify-content:center}
+    .share-btn{
+      display:flex;flex-direction:column;align-items:center;gap:5px;
+      padding:14px 20px;border-radius:14px;
+      background:rgba(255,255,255,.04);border:1px solid rgba(200,96,122,.18);
+      color:var(--muted);font-size:11px;font-weight:700;letter-spacing:.05em;
+      text-decoration:none;cursor:pointer;transition:all .2s ease;
+      flex:1;max-width:110px;
     }
-    .share-btn {
-      display: flex; flex-direction: column; align-items: center; gap: 4px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(200,100,120,0.2);
-      border-radius: 12px; padding: 10px 18px;
-      color: var(--text-muted); font-size: 11px;
-      text-decoration: none; cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .share-btn:hover { background: rgba(200,100,120,0.1); border-color: rgba(200,100,120,0.5); color: var(--rose-light); }
-    .share-btn .si { font-size: 22px; }
+    .share-btn:hover{background:rgba(200,96,122,.1);border-color:rgba(200,96,122,.45);color:var(--rose-light)}
+    .share-btn .si{font-size:24px;line-height:1}
 
-    /* footer */
-    .page-footer {
-      text-align: center;
-      padding: 28px 24px 0;
-      color: rgba(200,160,175,0.5);
-      font-size: 11px; line-height: 1.7;
+    /* ─── FOOTER ─── */
+    .page-footer{
+      text-align:center;padding:40px 24px 56px;
+      color:rgba(200,155,170,.45);font-size:12px;line-height:1.8;
     }
-    .page-footer a { color: var(--gold); text-decoration: none; }
-
-    /* divider */
-    .divider {
-      margin: 0 24px 16px;
-      border: none; border-top: 1px solid rgba(200,100,120,0.12);
+    .page-footer .brand{
+      font-family:var(--serif);font-size:22px;font-weight:700;
+      color:rgba(240,210,220,.6);letter-spacing:.05em;margin-bottom:6px;display:block;
     }
-
-    /* section label */
-    .section-label {
-      font-size: 11px; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: rgba(200,130,145,0.6);
-      padding: 0 16px;
-      margin-bottom: 10px;
-    }
+    .page-footer a{color:rgba(200,130,150,.5);text-decoration:none}
+    .page-footer a:hover{color:var(--rose-light)}
   </style>
 </head>
 <body>
 
-<!-- Falling petals -->
-<div id="petalCanvas"></div>
+<canvas id="petals"></canvas>
 
-<div class="page">
-
-  <!-- Top logo -->
-  <div class="top-bar">
-    <a href="https://www.olioncoffee.app/"><img src="assets/logo-white.webp" alt="Olion Coffee" /></a>
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero">
+  <div class="hero-logo">
+    <a href="https://www.olioncoffee.app/">
+      <img src="assets/logo-white.webp" alt="Olion Coffee"/>
+    </a>
   </div>
 
-  <!-- Hero -->
-  <div class="hero">
-    <div class="rose-circle"><span>🌹</span></div>
-    <div class="date-pill">20 / 10</div>
-    <div class="eyebrow"><span class="heart">♥</span> Ngày Phụ Nữ Việt Nam</div>
-    <h1 class="hero-title">Dành Tặng Những<br><em>Điều Dịu Dàng Nhất</em> 🌷</h1>
-    <p class="hero-sub" style="margin-top:12px;">
-      🫶🏻 Olion gửi lời chúc đến tất cả những cô gái<br>
-      luôn xinh đẹp, vui vẻ và gặp thật nhiều điều may mắn.
-    </p>
+  <div class="banner-poster-wrap">
+    <div class="banner-poster-glow"></div>
+    <img src="assets/banner-2010.jpg" alt="20/10 - Dành tặng những điều dịu dàng nhất" class="banner-poster-img" loading="eager" />
   </div>
 
-  <!-- Offer -->
-  <div class="section-label">💐 Ưu đãi đặc biệt</div>
-  <div class="card">
-    <div class="offer-row">
-      <div class="offer-icon">💐</div>
-      <div class="offer-body">
-        <strong>Quà Bất Ngờ Từ Olion</strong>
-        <p>Các bạn nữ khi ghé Olion mua nước sẽ được <em>tặng một cành hoa nhỏ</em> như lời chúc ngọt ngào.<br><br>Hy vọng món quà nhỏ này sẽ khiến ngày của bạn vui hơn một chút nhé! 🌸</p>
+  <div class="date-pill">20 · 10</div>
+
+  <div class="eyebrow">Happy Vietnamese Women's Day</div>
+  <h1 class="hero-title">
+    Dành Tặng Những<br>
+    <em>Điều Dịu Dàng Nhất 🌷</em>
+  </h1>
+  <p class="hero-sub">
+    🫶🏻 Gửi những người phụ nữ tuyệt vời nhất —<br>
+    luôn xứng đáng với những điều tốt đẹp nhất!
+  </p>
+
+  <div class="scroll-cue">
+    <span>Xem ưu đãi</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- ═══════════════════ OFFER ═══════════════════ -->
+<section class="section">
+  <div class="container">
+    <p class="sec-label">✦ Ưu đãi đặc biệt hôm nay</p>
+    <h2 class="sec-title">Một Chút Bất Ngờ<br>Từ <em>Olion</em></h2>
+    <hr class="sec-divider"/>
+
+    <div class="offer-card">
+      <div class="offer-tag">
+        <span>💐</span> Dành riêng cho phái đẹp
+      </div>
+      <p class="offer-text">
+        Các bạn nữ khi ghé Olion mua nước sẽ được
+        <em>tặng một cành hoa nhỏ</em> như lời chúc ngọt ngào.<br><br>
+        Hy vọng món quà nhỏ này sẽ khiến ngày của bạn vui hơn
+        một chút nhé! <strong>Happy 20/10 💗</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ QUOTE ═══════════════════ -->
+<section class="section" style="padding:40px 0">
+  <div class="container">
+    <div class="quote-wrap">
+      <div class="quote-mark">"</div>
+      <p class="quote-text">
+        Nếu chưa biết hẹn nhau ở đâu, ghé Olion làm một ly nước, cùng trò chuyện và tận hưởng một ngày thật vui nhé!
+      </p>
+      <span class="quote-sig">☕️🤎 — Olion Coffee</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ COUNTDOWN ═══════════════════ -->
+<section class="section">
+  <div class="container">
+    <p class="sec-label">⏰ Chương trình kết thúc sau</p>
+    <h2 class="sec-title" style="font-size:clamp(20px,5vw,28px)">Chỉ còn trong hôm nay</h2>
+    <hr class="sec-divider"/>
+    <div class="cd-grid" id="cdGrid">
+      <div class="cd-item">
+        <div class="cd-box"><span class="cd-num" id="cdH">00</span></div>
+        <span class="cd-label">Giờ</span>
+      </div>
+      <div class="cd-colon">:</div>
+      <div class="cd-item">
+        <div class="cd-box"><span class="cd-num" id="cdM">00</span></div>
+        <span class="cd-label">Phút</span>
+      </div>
+      <div class="cd-colon">:</div>
+      <div class="cd-item">
+        <div class="cd-box"><span class="cd-num" id="cdS">00</span></div>
+        <span class="cd-label">Giây</span>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- Quote -->
-  <div class="card quote-card" style="margin-left:16px;margin-right:16px;padding:16px 20px;">
-    <p>"Nếu chưa biết hẹn nhau ở đâu, ghé Olion làm một ly nước, cùng trò chuyện và tận hưởng một ngày thật vui nhé!" ☕️🤎</p>
-  </div>
+<!-- ═══════════════════ INFO ═══════════════════ -->
+<section class="section">
+  <div class="container">
+    <p class="sec-label">✦ Thông tin quán</p>
+    <h2 class="sec-title">Ghé Thăm Olion</h2>
+    <hr class="sec-divider"/>
 
-  <hr class="divider" />
-
-  <!-- Countdown -->
-  <div class="section-label">⏰ Chương trình kết thúc sau</div>
-  <div class="card">
-    <div class="countdown">
-      <div class="cd-box"><span id="cdH">00</span><small>Giờ</small></div>
-      <div class="cd-sep">:</div>
-      <div class="cd-box"><span id="cdM">00</span><small>Phút</small></div>
-      <div class="cd-sep">:</div>
-      <div class="cd-box"><span id="cdS">00</span><small>Giây</small></div>
+    <div class="info-grid">
+      <div class="info-row">
+        <div class="info-icon">📍</div>
+        <div class="info-body">
+          <strong>Địa chỉ</strong>
+          <span>80/64a Dương Quảng Hàm, An Nhơn, Gò Vấp, TP.HCM</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">⏰</div>
+        <div class="info-body">
+          <strong>Giờ mở cửa</strong>
+          <span>8:00 – 20:00 · Thứ Hai đến Chủ Nhật</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">📞</div>
+        <div class="info-body">
+          <strong>Hotline</strong>
+          <span><a href="tel:0783657587">0783 657 587</a></span>
+        </div>
+      </div>
     </div>
   </div>
+</section>
 
-  <hr class="divider" />
+<!-- ═══════════════════ CTA ═══════════════════ -->
+<section class="section" style="padding:8px 0 56px">
+  <div class="container">
+    <div class="btn-block">
+      <a href="tel:0783657587" class="btn-main">
+        <span>☕</span> Ghé Olion Ngay Hôm Nay
+      </a>
+      <a href="https://www.olioncoffee.app/" class="btn-ghost">
+        <span>🌐</span> Xem Website Olion Coffee
+      </a>
+    </div>
 
-  <!-- Info -->
-  <div class="section-label">📍 Thông tin quán</div>
-  <div class="card">
-    <ul class="info-list">
-      <li><span class="ic">📍</span><span>80/64a Dương Quảng Hàm, An Nhơn, Gò Vấp, TP. Hồ Chí Minh</span></li>
-      <li><span class="ic">⏰</span><span>8:00 – 20:00 (Thứ Hai – Chủ Nhật)</span></li>
-      <li><span class="ic">📞</span><span>Hotline: <a href="tel:0783657587" style="color:var(--rose-light);font-weight:600;">0783 657 587</a></span></li>
-    </ul>
-  </div>
-
-  <!-- CTA -->
-  <div class="cta-block">
-    <a href="tel:0783657587" class="btn-primary">☕ Ghé Olion Hôm Nay</a>
-    <a href="https://www.olioncoffee.app/" class="btn-secondary">🌐 Xem Website Olion Coffee</a>
-  </div>
-
-  <!-- Share -->
-  <hr class="divider" style="margin-top:24px;" />
-  <div class="section-label" style="text-align:center;padding-bottom:4px;">Chia sẻ ưu đãi này</div>
-  <div class="share-row">
-    <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://www.olioncoffee.app/ws2010" target="_blank" rel="noopener">
-      <span class="si">📘</span><span>Facebook</span>
-    </a>
-    <a class="share-btn" href="https://zalo.me/share?href=https://www.olioncoffee.app/ws2010" target="_blank" rel="noopener">
-      <span class="si">💬</span><span>Zalo</span>
-    </a>
-    <div class="share-btn" id="copyBtn" onclick="copyLink()">
-      <span class="si">🔗</span><span id="copyLabel">Sao chép</span>
+    <div style="margin-top:36px">
+      <p class="share-title">Chia sẻ niềm vui này</p>
+      <div class="share-row">
+        <a class="share-btn"
+           href="https://www.facebook.com/sharer/sharer.php?u=https://www.olioncoffee.app/ws2010"
+           target="_blank" rel="noopener">
+          <span class="si">📘</span>
+          <span>Facebook</span>
+        </a>
+        <a class="share-btn"
+           href="https://zalo.me/share?href=https://www.olioncoffee.app/ws2010&title=20/10 Olion Coffee"
+           target="_blank" rel="noopener">
+          <span class="si">💬</span>
+          <span>Zalo</span>
+        </a>
+        <div class="share-btn" onclick="copyLink()">
+          <span class="si">🔗</span>
+          <span id="copyTxt">Sao chép</span>
+        </div>
+      </div>
     </div>
   </div>
+</section>
 
-  <!-- Footer -->
-  <div class="page-footer">
-    <p><strong style="color:var(--rose-light);">Happy Vietnamese Women's Day! 💗</strong></p>
-    <p style="margin-top:6px;">Olion Coffee — <em>Elegance in Every Sip</em></p>
-    <p style="margin-top:8px;"><a href="https://www.olioncoffee.app/">www.olioncoffee.app</a></p>
-  </div>
-
-</div>
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer class="page-footer">
+  <span class="brand">OLION COFFEE</span>
+  <em>Elegance in Every Sip</em><br>
+  <a href="https://www.olioncoffee.app/">www.olioncoffee.app</a>
+</footer>
 
 <script>
-  // Petals
-  (function() {
-    const c = document.getElementById('petalCanvas');
-    const p = ['🌸','🌹','🌷','✿','❀','♥','🌺','🌸','🌷'];
-    for (let i = 0; i < 28; i++) {
-      const el = document.createElement('span');
-      el.className = 'petal';
-      el.textContent = p[i % p.length];
-      el.style.cssText = `left:${Math.random()*100}%;top:${-20 - Math.random()*40}px;font-size:${12+Math.random()*14}px;animation-duration:${7+Math.random()*10}s;animation-delay:${Math.random()*9}s;`;
-      c.appendChild(el);
-    }
-  })();
+/* ─── Petal canvas ─── */
+(function(){
+  const canvas = document.getElementById('petals');
+  const ctx = canvas.getContext('2d');
+  const emojis = ['🌸','🌹','🌷','🌺','💗','✿'];
+  let W, H, petals = [];
 
-  // Countdown (end of 20/10/2026 23:59:59 VN time)
-  const end = new Date('2026-10-20T23:59:59+07:00');
-  function tick() {
-    const diff = end - new Date();
-    if (diff <= 0) {
-      document.getElementById('cdH').textContent = '00';
-      document.getElementById('cdM').textContent = '00';
-      document.getElementById('cdS').textContent = '00';
-      return;
-    }
-    const h = Math.floor(diff / 3600000);
-    const m = Math.floor((diff % 3600000) / 60000);
-    const s = Math.floor((diff % 60000) / 1000);
-    document.getElementById('cdH').textContent = String(h).padStart(2,'0');
-    document.getElementById('cdM').textContent = String(m).padStart(2,'0');
-    document.getElementById('cdS').textContent = String(s).padStart(2,'0');
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
   }
-  tick(); setInterval(tick, 1000);
+  resize();
+  window.addEventListener('resize', resize);
 
-  // Copy link
-  function copyLink() {
-    const url = 'https://www.olioncoffee.app/ws2010';
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(url).then(() => {
-        document.getElementById('copyLabel').textContent = 'Đã sao chép!';
-        setTimeout(() => document.getElementById('copyLabel').textContent = 'Sao chép', 2500);
-      });
-    } else {
-      const ta = document.createElement('textarea');
-      ta.value = url; document.body.appendChild(ta);
-      ta.select(); document.execCommand('copy');
-      document.body.removeChild(ta);
-      document.getElementById('copyLabel').textContent = 'Đã sao chép!';
-      setTimeout(() => document.getElementById('copyLabel').textContent = 'Sao chép', 2500);
+  class Petal {
+    constructor(){this.reset(true)}
+    reset(init=false){
+      this.x = Math.random()*W;
+      this.y = init ? Math.random()*H : -30;
+      this.size = 14 + Math.random()*14;
+      this.speedY = 0.8 + Math.random()*1.4;
+      this.speedX = (Math.random()-.5)*0.7;
+      this.rot = Math.random()*360;
+      this.rotSpeed = (Math.random()-.5)*1.5;
+      this.alpha = 0;
+      this.targetAlpha = 0.55 + Math.random()*.35;
+      this.char = emojis[Math.floor(Math.random()*emojis.length)];
+      this.fadeIn = true;
+    }
+    update(){
+      this.y += this.speedY;
+      this.x += this.speedX + Math.sin(this.y/80)*.4;
+      this.rot += this.rotSpeed;
+      if(this.fadeIn){ this.alpha = Math.min(this.alpha+.012, this.targetAlpha); if(this.alpha>=this.targetAlpha) this.fadeIn=false; }
+      if(this.y > H+30) this.reset();
+    }
+    draw(){
+      ctx.save();
+      ctx.globalAlpha = this.alpha;
+      ctx.font = this.size+'px serif';
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rot*Math.PI/180);
+      ctx.fillText(this.char, -this.size/2, this.size/2);
+      ctx.restore();
     }
   }
+
+  for(let i=0;i<32;i++) petals.push(new Petal());
+
+  function loop(){
+    ctx.clearRect(0,0,W,H);
+    petals.forEach(p=>{p.update();p.draw()});
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ─── Countdown ─── */
+const end = new Date('2026-10-20T23:59:59+07:00');
+function tick(){
+  const diff = Math.max(0, end - new Date());
+  const h = Math.floor(diff/3600000);
+  const m = Math.floor((diff%3600000)/60000);
+  const s = Math.floor((diff%60000)/1000);
+  document.getElementById('cdH').textContent = String(h).padStart(2,'0');
+  document.getElementById('cdM').textContent = String(m).padStart(2,'0');
+  document.getElementById('cdS').textContent = String(s).padStart(2,'0');
+}
+tick(); setInterval(tick,1000);
+
+/* ─── Copy link ─── */
+function copyLink(){
+  const url='https://www.olioncoffee.app/ws2010';
+  const el = document.getElementById('copyTxt');
+  (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.resolve(
+    (()=>{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t)})()
+  )).then(()=>{
+    el.textContent='Đã sao chép!';
+    setTimeout(()=>el.textContent='Sao chép',2500);
+  });
+}
 </script>
 
 <!-- Cloudflare Web Analytics -->
