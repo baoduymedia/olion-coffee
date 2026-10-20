@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌷 20/10 – Dành Tặng Những Điều Dịu Dàng Nhất | Olion Coffee</title>
+  <meta name="description" content="Các bạn nữ ghé Olion mua nước sẽ được tặng một cành hoa nhỏ như lời chúc ngọt ngào. Happy Vietnamese Women's Day 20/10 💗" />
+  <meta property="og:title" content="🌷 20/10 – Dành Tặng Những Điều Dịu Dàng Nhất | Olion Coffee" />
+  <meta property="og:description" content="Các bạn nữ ghé Olion mua nước sẽ được tặng một cành hoa nhỏ như lời chúc ngọt ngào. Happy Vietnamese Women's Day! 💗" />
+  <meta property="og:image" content="https://www.olioncoffee.app/assets/logo.png?v=2" />
+  <meta property="og:url" content="https://www.olioncoffee.app/ws2010" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://www.olioncoffee.app/ws2010" />
+  <link rel="icon" href="assets/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose: #c8647a;
+      --rose-dark: #8a3050;
+      --rose-light: #f0b0c8;
+      --gold: #E59A55;
+      --bg: #100810;
+      --bg2: #1e0d18;
+      --text: #f5e8ec;
+      --text-muted: rgba(230,200,210,0.7);
+      --font-display: 'Cormorant Garamond', serif;
+      --font-body: 'Poppins', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Petal canvas ── */
+    #petalCanvas {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0;
+      overflow: hidden;
+    }
+    .petal {
+      position: absolute;
+      font-size: 18px;
+      opacity: 0;
+      animation: fall linear infinite;
+      user-select: none;
+    }
+    @keyframes fall {
+      0%   { opacity: 0;   transform: translateY(-30px) rotate(0deg) scale(0.8); }
+      8%   { opacity: 0.8; }
+      92%  { opacity: 0.4; }
+      100% { opacity: 0;   transform: translateY(105vh) rotate(420deg) scale(1.1); }
+    }
+
+    /* ── Page wrapper ── */
+    .page {
+      position: relative; z-index: 1;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 0 48px;
+    }
+
+    /* ── Header bar ── */
+    .top-bar {
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px 24px 0;
+    }
+    .top-bar img { height: 38px; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 40px 24px 32px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(200,100,120,0.18) 0%, transparent 65%);
+    }
+    .rose-circle {
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 38%, #5a1830, #2a0818);
+      border: 2px solid rgba(200,100,120,0.45);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      position: relative;
+      box-shadow: 0 0 50px rgba(200,80,100,0.35), 0 0 100px rgba(200,80,100,0.1);
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 50px rgba(200,80,100,0.35), 0 0 100px rgba(200,80,100,0.1); }
+      50%      { box-shadow: 0 0 70px rgba(220,100,130,0.55), 0 0 140px rgba(220,100,130,0.18); }
+    }
+    .rose-circle span { font-size: 64px; line-height: 1; }
+
+    .date-pill {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+      color: #fff;
+      font-family: var(--font-display);
+      font-size: 22px; font-weight: 700;
+      padding: 7px 24px;
+      border-radius: 50px;
+      letter-spacing: 0.05em;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 20px rgba(180,60,90,0.45);
+    }
+
+    .eyebrow {
+      color: var(--rose-light);
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .eyebrow .heart { display: inline-block; animation: hb 1.2s ease-in-out infinite; }
+    @keyframes hb { 0%,100%{transform:scale(1)} 50%{transform:scale(1.35)} }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(30px, 9vw, 46px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: #f8eaee;
+      margin-bottom: 8px;
+    }
+    .hero-title em {
+      font-style: italic;
+      background: linear-gradient(135deg, #f0b0c0, #c06078);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 13.5px; color: var(--text-muted); line-height: 1.65;
+    }
+
+    /* ── Card ── */
+    .card {
+      margin: 0 16px 16px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(200,100,120,0.22);
+      border-radius: 20px;
+      padding: 24px 22px;
+      backdrop-filter: blur(6px);
+    }
+
+    /* offer card */
+    .offer-row {
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .offer-icon { font-size: 44px; flex-shrink: 0; }
+    .offer-body strong {
+      display: block; color: var(--rose-light);
+      font-size: 17px; font-weight: 700; margin-bottom: 6px;
+    }
+    .offer-body p {
+      color: var(--text-muted); font-size: 14px; line-height: 1.65;
+    }
+    .offer-body em {
+      color: #f8c0d0; font-style: normal; font-weight: 700;
+    }
+
+    /* quote */
+    .quote-card {
+      border-left: 3px solid rgba(200,100,120,0.55);
+      padding: 14px 20px;
+      margin: 0 16px 16px;
+    }
+    .quote-card p {
+      font-style: italic;
+      font-size: 14.5px; line-height: 1.7;
+      color: rgba(230,195,205,0.85);
+    }
+
+    /* countdown */
+    .cd-label {
+      text-align: center;
+      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(220,160,175,0.75);
+      margin-bottom: 12px;
+    }
+    .countdown {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .cd-box {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(200,100,120,0.3);
+      border-radius: 12px;
+      padding: 10px 0;
+      width: 68px; text-align: center;
+    }
+    .cd-box span {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 28px; font-weight: 700;
+      color: var(--rose-light); line-height: 1;
+    }
+    .cd-box small {
+      font-size: 9.5px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.07em;
+      color: rgba(200,155,170,0.6);
+      margin-top: 3px; display: block;
+    }
+    .cd-sep { color: rgba(200,100,120,0.55); font-size: 22px; font-weight: 700; margin-bottom: 14px; }
+
+    /* info */
+    .info-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .info-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13.5px; color: var(--text-muted); line-height: 1.5;
+    }
+    .info-list li span.ic { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+    /* CTA buttons */
+    .cta-block {
+      padding: 8px 16px 0;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .btn-primary {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: linear-gradient(135deg, var(--rose), var(--rose-dark));
+      color: #fff; font-family: var(--font-body);
+      font-size: 15px; font-weight: 700;
+      padding: 16px 24px; border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 8px 24px rgba(180,60,90,0.4);
+      transition: all 0.25s ease;
+    }
+    .btn-primary:hover { background: linear-gradient(135deg, #d8748a, #b05070); transform: translateY(-2px); box-shadow: 0 12px 30px rgba(180,60,90,0.5); }
+    .btn-secondary {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      border: 1px solid rgba(200,100,120,0.4);
+      color: rgba(220,170,180,0.9);
+      font-size: 14px; font-weight: 600;
+      padding: 14px 24px; border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+    .btn-secondary:hover { background: rgba(200,100,120,0.1); border-color: rgba(200,100,120,0.7); color: var(--rose-light); }
+
+    /* share row */
+    .share-row {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      padding: 20px 16px 0;
+    }
+    .share-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(200,100,120,0.2);
+      border-radius: 12px; padding: 10px 18px;
+      color: var(--text-muted); font-size: 11px;
+      text-decoration: none; cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .share-btn:hover { background: rgba(200,100,120,0.1); border-color: rgba(200,100,120,0.5); color: var(--rose-light); }
+    .share-btn .si { font-size: 22px; }
+
+    /* footer */
+    .page-footer {
+      text-align: center;
+      padding: 28px 24px 0;
+      color: rgba(200,160,175,0.5);
+      font-size: 11px; line-height: 1.7;
+    }
+    .page-footer a { color: var(--gold); text-decoration: none; }
+
+    /* divider */
+    .divider {
+      margin: 0 24px 16px;
+      border: none; border-top: 1px solid rgba(200,100,120,0.12);
+    }
+
+    /* section label */
+    .section-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(200,130,145,0.6);
+      padding: 0 16px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Falling petals -->
+<div id="petalCanvas"></div>
+
+<div class="page">
+
+  <!-- Top logo -->
+  <div class="top-bar">
+    <a href="https://www.olioncoffee.app/"><img src="assets/logo-white.webp" alt="Olion Coffee" /></a>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="rose-circle"><span>🌹</span></div>
+    <div class="date-pill">20 / 10</div>
+    <div class="eyebrow"><span class="heart">♥</span> Ngày Phụ Nữ Việt Nam</div>
+    <h1 class="hero-title">Dành Tặng Những<br><em>Điều Dịu Dàng Nhất</em> 🌷</h1>
+    <p class="hero-sub" style="margin-top:12px;">
+      🫶🏻 Olion gửi lời chúc đến tất cả những cô gái<br>
+      luôn xinh đẹp, vui vẻ và gặp thật nhiều điều may mắn.
+    </p>
+  </div>
+
+  <!-- Offer -->
+  <div class="section-label">💐 Ưu đãi đặc biệt</div>
+  <div class="card">
+    <div class="offer-row">
+      <div class="offer-icon">💐</div>
+      <div class="offer-body">
+        <strong>Quà Bất Ngờ Từ Olion</strong>
+        <p>Các bạn nữ khi ghé Olion mua nước sẽ được <em>tặng một cành hoa nhỏ</em> như lời chúc ngọt ngào.<br><br>Hy vọng món quà nhỏ này sẽ khiến ngày của bạn vui hơn một chút nhé! 🌸</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quote -->
+  <div class="card quote-card" style="margin-left:16px;margin-right:16px;padding:16px 20px;">
+    <p>"Nếu chưa biết hẹn nhau ở đâu, ghé Olion làm một ly nước, cùng trò chuyện và tận hưởng một ngày thật vui nhé!" ☕️🤎</p>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- Countdown -->
+  <div class="section-label">⏰ Chương trình kết thúc sau</div>
+  <div class="card">
+    <div class="countdown">
+      <div class="cd-box"><span id="cdH">00</span><small>Giờ</small></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-box"><span id="cdM">00</span><small>Phút</small></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-box"><span id="cdS">00</span><small>Giây</small></div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- Info -->
+  <div class="section-label">📍 Thông tin quán</div>
+  <div class="card">
+    <ul class="info-list">
+      <li><span class="ic">📍</span><span>80/64a Dương Quảng Hàm, An Nhơn, Gò Vấp, TP. Hồ Chí Minh</span></li>
+      <li><span class="ic">⏰</span><span>8:00 – 20:00 (Thứ Hai – Chủ Nhật)</span></li>
+      <li><span class="ic">📞</span><span>Hotline: <a href="tel:0783657587" style="color:var(--rose-light);font-weight:600;">0783 657 587</a></span></li>
+    </ul>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <a href="tel:0783657587" class="btn-primary">☕ Ghé Olion Hôm Nay</a>
+    <a href="https://www.olioncoffee.app/" class="btn-secondary">🌐 Xem Website Olion Coffee</a>
+  </div>
+
+  <!-- Share -->
+  <hr class="divider" style="margin-top:24px;" />
+  <div class="section-label" style="text-align:center;padding-bottom:4px;">Chia sẻ ưu đãi này</div>
+  <div class="share-row">
+    <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://www.olioncoffee.app/ws2010" target="_blank" rel="noopener">
+      <span class="si">📘</span><span>Facebook</span>
+    </a>
+    <a class="share-btn" href="https://zalo.me/share?href=https://www.olioncoffee.app/ws2010" target="_blank" rel="noopener">
+      <span class="si">💬</span><span>Zalo</span>
+    </a>
+    <div class="share-btn" id="copyBtn" onclick="copyLink()">
+      <span class="si">🔗</span><span id="copyLabel">Sao chép</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="page-footer">
+    <p><strong style="color:var(--rose-light);">Happy Vietnamese Women's Day! 💗</strong></p>
+    <p style="margin-top:6px;">Olion Coffee — <em>Elegance in Every Sip</em></p>
+    <p style="margin-top:8px;"><a href="https://www.olioncoffee.app/">www.olioncoffee.app</a></p>
+  </div>
+
+</div>
+
+<script>
+  // Petals
+  (function() {
+    const c = document.getElementById('petalCanvas');
+    const p = ['🌸','🌹','🌷','✿','❀','♥','🌺','🌸','🌷'];
+    for (let i = 0; i < 28; i++) {
+      const el = document.createElement('span');
+      el.className = 'petal';
+      el.textContent = p[i % p.length];
+      el.style.cssText = `left:${Math.random()*100}%;top:${-20 - Math.random()*40}px;font-size:${12+Math.random()*14}px;animation-duration:${7+Math.random()*10}s;animation-delay:${Math.random()*9}s;`;
+      c.appendChild(el);
+    }
+  })();
+
+  // Countdown (end of 20/10/2026 23:59:59 VN time)
+  const end = new Date('2026-10-20T23:59:59+07:00');
+  function tick() {
+    const diff = end - new Date();
+    if (diff <= 0) {
+      document.getElementById('cdH').textContent = '00';
+      document.getElementById('cdM').textContent = '00';
+      document.getElementById('cdS').textContent = '00';
+      return;
+    }
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cdH').textContent = String(h).padStart(2,'0');
+    document.getElementById('cdM').textContent = String(m).padStart(2,'0');
+    document.getElementById('cdS').textContent = String(s).padStart(2,'0');
+  }
+  tick(); setInterval(tick, 1000);
+
+  // Copy link
+  function copyLink() {
+    const url = 'https://www.olioncoffee.app/ws2010';
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(url).then(() => {
+        document.getElementById('copyLabel').textContent = 'Đã sao chép!';
+        setTimeout(() => document.getElementById('copyLabel').textContent = 'Sao chép', 2500);
+      });
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = url; document.body.appendChild(ta);
+      ta.select(); document.execCommand('copy');
+      document.body.removeChild(ta);
+      document.getElementById('copyLabel').textContent = 'Đã sao chép!';
+      setTimeout(() => document.getElementById('copyLabel').textContent = 'Sao chép', 2500);
+    }
+  }
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b6899754248448c5aa66342fbfe6db75"}'></script>
+</body>
+</html>
