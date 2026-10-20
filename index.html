@@ -2772,6 +2772,7 @@
       position: relative;
       overflow: hidden;
       padding: 72px 0 80px;
+      scroll-margin-top: 110px;
       background: linear-gradient(135deg, #1a0a10 0%, #2d1020 35%, #1e1520 70%, #0f0a18 100%);
       border-top: 1px solid rgba(220, 120, 140, 0.2);
       border-bottom: 1px solid rgba(220, 120, 140, 0.2);
@@ -2977,6 +2978,17 @@
       color: rgba(220,170,180,0.9);
       text-decoration: none;
       font-size: 14px; font-weight: 600;
+      border: 1px solid rgba(200,100,120,0.3);
+      padding: 13px 22px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    .promo-cta-call:hover {
+      color: #f0c0c8;
+      border-color: rgba(200,100,120,0.7);
+      background: rgba(200,100,120,0.1);
+    }
+
     /* Top 20/10 Announcement Ribbon */
     .promo-top-bar {
       background: linear-gradient(90deg, #3d1424 0%, #7a2243 50%, #3d1424 100%);
@@ -3258,18 +3270,11 @@
   <!-- Scroll Progress Indicator -->
   <div class="scroll-progress" id="scrollProgress"></div>
 
-  <!-- Persistent 20/10 Top Announcement Ribbon -->
-  <div class="promo-top-bar" id="promoTopBar">
-    <span class="promo-top-badge">🌷 20/10 SPECIAL</span>
-    <span><strong>Tặng cành hoa nhỏ</strong> cho phái đẹp khi ghé mua nước hôm nay!</span>
-    <a href="#promo2010" class="promo-top-link">Xem chi tiết & đếm ngược →</a>
-  </div>
-
   <!-- Floating 20/10 Gift Button -->
-  <a href="#promo2010" class="promo-float-btn" aria-label="Ưu đãi 20/10 Olion Coffee">
+  <button type="button" onclick="scrollToPromo2010()" class="promo-float-btn" aria-label="Ưu đãi 20/10 Olion Coffee">
     <span style="font-size: 16px;">💐</span>
     <span>Ưu Đãi 20/10</span>
-  </a>
+  </button>
 
   <!-- Announcement Banner (Controlled from Admin) -->
   <div id="announcementBanner" class="announcement-banner" style="display: none;" role="region" aria-label="Thông báo ưu đãi">
@@ -3283,13 +3288,20 @@
 
   <!-- ======== 1. SITE HEADER (SEMANTIC NAV) ======== -->
   <header class="site-header" id="siteHeader">
+    <!-- Persistent 20/10 Top Announcement Ribbon Inside Header -->
+    <div class="promo-top-bar" id="promoTopBar">
+      <span class="promo-top-badge">🌷 20/10 SPECIAL</span>
+      <span><strong>Tặng cành hoa nhỏ</strong> cho phái đẹp khi ghé mua nước hôm nay!</span>
+      <a href="javascript:void(0)" onclick="scrollToPromo2010()" class="promo-top-link">Xem chi tiết & đếm ngược →</a>
+    </div>
+
     <div class="shell header-container">
       <a href="#hero" class="header-brand" aria-label="Trang chủ Olion Coffee — Elegance in Every Sip">
         <img src="assets/logo-white.webp" alt="Logo thương hiệu Olion Coffee — Elegance in Every Sip" width="160" height="48" loading="eager" decoding="async" />
       </a>
 
       <nav class="header-nav" id="headerNav" aria-label="Thanh điều hướng chính">
-        <a href="#promo2010" class="nav-link" style="color: #f7a8be !important; font-weight: 700;">🌷 Ưu đãi 20/10</a>
+        <a href="javascript:void(0)" onclick="scrollToPromo2010()" class="nav-link" style="color: #f7a8be !important; font-weight: 700;">🌷 Ưu đãi 20/10</a>
         <a href="#about" class="nav-link" data-i18n="nav_about">Về Olion</a>
         <a href="#signature" class="nav-link" data-i18n="nav_signature">Signature</a>
         <a href="#menu" class="nav-link" data-i18n="nav_menu">Thực đơn</a>
@@ -3347,7 +3359,7 @@
       </div>
 
       <a href="#hero" class="drawer-link"><span data-i18n="drawer_home">Trang chủ</span> <span>→</span></a>
-      <a href="#promo2010" onclick="toggleDrawer(false)" class="drawer-link" style="color: #f7a8be !important; font-weight: 700;"><span>🌷 Ưu Đãi 20/10 (Tặng Hoa)</span> <span>→</span></a>
+      <a href="javascript:void(0)" onclick="toggleDrawer(false); scrollToPromo2010();" class="drawer-link" style="color: #f7a8be !important; font-weight: 700;"><span>🌷 Ưu Đãi 20/10 (Tặng Hoa)</span> <span>→</span></a>
       <a href="#about" class="drawer-link"><span data-i18n="drawer_about">Về Olion Coffee</span> <span>→</span></a>
       <a href="#signature" class="drawer-link"><span data-i18n="drawer_signature">Món Signature</span> <span>→</span></a>
       <a href="#menu" class="drawer-link"><span data-i18n="drawer_menu">Thực đơn đồ uống</span> <span>→</span></a>
@@ -3399,7 +3411,7 @@
           Quán cà phê đẹp ở Dương Quảng Hàm, Gò Vấp với không gian sang trọng và đồ uống thủ công tinh tế. Thưởng thức hương vị nguyên bản, đắm chìm trong góc nhỏ tĩnh lặng giữa lòng Sài Gòn.
         </p>
         <div class="hero-cta-group">
-          <a href="#promo2010" class="btn btn-primary" style="background: linear-gradient(135deg, #d84570 0%, #8a1d42 100%) !important; border: 1px solid rgba(255,200,220,0.5) !important; box-shadow: 0 8px 24px rgba(216, 69, 112, 0.45) !important;">
+          <a href="javascript:void(0)" onclick="scrollToPromo2010()" class="btn btn-primary" style="background: linear-gradient(135deg, #d84570 0%, #8a1d42 100%) !important; border: 1px solid rgba(255,200,220,0.5) !important; box-shadow: 0 8px 24px rgba(216, 69, 112, 0.45) !important;">
             🌷 Ưu Đãi 20/10 (Tặng Hoa)
           </a>
           <a href="#menu" class="btn btn-ghost" data-i18n="hero_cta_menu">Khám phá thực đơn →</a>
@@ -6230,6 +6242,16 @@
             }
           }
         }, 1500);
+
+        // Global function to smoothly scroll to promo2010 section
+        window.scrollToPromo2010 = function() {
+          const sec = document.getElementById('promo2010');
+          if (sec) {
+            sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            window.location.href = '#promo2010';
+          }
+        };
       })();
       // ===== END 20/10 PROMO =====
 
