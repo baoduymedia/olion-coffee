@@ -2902,6 +2902,32 @@
     .promo-offer-text { display: flex; flex-direction: column; gap: 2px; }
     .promo-offer-text strong { color: #f0c0c8; font-size: 13px; font-weight: 700; }
     .promo-offer-text span { color: rgba(220,190,200,0.7); font-size: 11px; line-height: 1.4; }
+    /* Real offer highlight */
+    .promo-real-offer {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: rgba(200,100,120,0.1);
+      border: 1px solid rgba(200,100,120,0.35);
+      border-radius: 16px;
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+    .promo-real-offer-icon { font-size: 40px; flex-shrink: 0; line-height: 1; }
+    .promo-real-offer-body strong {
+      display: block; color: #f0c0c8; font-size: 16px; font-weight: 700; margin-bottom: 6px;
+    }
+    .promo-real-offer-body p {
+      color: rgba(230,205,210,0.85); font-size: 14px; line-height: 1.6; margin: 0;
+    }
+    .promo-real-offer-body em { color: #f0b0c0; font-style: normal; font-weight: 700; }
+    /* Quote */
+    .promo-quote {
+      border-left: 3px solid rgba(200,100,120,0.5);
+      padding: 10px 16px;
+      margin: 0 0 24px;
+      color: rgba(220,185,195,0.8);
+      font-size: 14px; line-height: 1.7;
+      font-style: italic;
+    }
     /* Countdown */
     .promo-countdown-wrap {
       margin-bottom: 28px;
@@ -3375,38 +3401,25 @@
             <em>Điều Dịu Dàng Nhất</em> 🌷
           </h2>
           <p class="promo-desc">
-            Gửi những người phụ nữ tuyệt vời nhất — luôn xứng đáng với những điều tốt đẹp nhất!
-            Olion Coffee trân trọng gửi tặng quý khách những ưu đãi đặc biệt trong ngày ý nghĩa này.
+            🫶🏻 Olion gửi lời chúc đến tất cả những cô gái luôn xinh đẹp, vui vẻ và gặp thật nhiều điều may mắn.
           </p>
 
-          <!-- Offers Grid -->
-          <div class="promo-offers-grid">
-            <div class="promo-offer-card">
-              <div class="promo-offer-icon">☕</div>
-              <div class="promo-offer-text">
-                <strong>Mua 1 Tặng 1</strong>
-                <span>Tất cả đồ uống<br>dành cho 2 cô nàng</span>
-              </div>
-            </div>
-            <div class="promo-offer-card">
-              <div class="promo-offer-icon">🌸</div>
-              <div class="promo-offer-text">
-                <strong>Giảm 20%</strong>
-                <span>Khi gọi combo<br>Signature cho cặp đôi</span>
-              </div>
-            </div>
-            <div class="promo-offer-card">
-              <div class="promo-offer-icon">🎁</div>
-              <div class="promo-offer-text">
-                <strong>Quà tặng bí mật</strong>
-                <span>Check-in quán gắn<br>tag Olion Coffee</span>
-              </div>
+          <!-- Real offer card -->
+          <div class="promo-real-offer">
+            <div class="promo-real-offer-icon">💐</div>
+            <div class="promo-real-offer-body">
+              <strong>Quà Bất Ngờ Từ Olion</strong>
+              <p>Các bạn nữ khi ghé Olion mua nước sẽ được <em>tặng một cành hoa nhỏ</em> như lời chúc ngọt ngào. Hy vọng món quà nhỏ này sẽ khiến ngày của bạn vui hơn một chút nhé!</p>
             </div>
           </div>
 
+          <blockquote class="promo-quote">
+            "Nếu chưa biết hẹn nhau ở đâu, ghé Olion làm một ly nước, cùng trò chuyện và tận hưởng một ngày thật vui nhé!" ☕️🤎
+          </blockquote>
+
           <!-- Countdown -->
           <div class="promo-countdown-wrap">
-            <span class="promo-countdown-label">⏰ Ưu đãi kết thúc sau</span>
+            <span class="promo-countdown-label">⏰ Chương trình kết thúc sau</span>
             <div class="promo-countdown" id="promoCountdown">
               <div class="countdown-box"><span id="cdDays">00</span><small>Ngày</small></div>
               <div class="countdown-sep">:</div>
@@ -3419,11 +3432,11 @@
           </div>
 
           <div class="promo-cta-row">
-            <a href="#menu" class="btn btn-primary promo-cta-btn">
-              🌷 Xem Thực Đơn Ưu Đãi
+            <a href="tel:0783657587" class="btn btn-primary promo-cta-btn">
+              ☕ Ghé Olion Hôm Nay
             </a>
-            <a href="tel:0783657587" class="promo-cta-call">
-              📞 Đặt Bàn Ngay
+            <a href="#contact" class="promo-cta-call">
+              📍 80/64a Dương Quảng Hàm
             </a>
           </div>
         </div>
