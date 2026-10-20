@@ -2977,15 +2977,104 @@
       color: rgba(220,170,180,0.9);
       text-decoration: none;
       font-size: 14px; font-weight: 600;
-      border: 1px solid rgba(200,100,120,0.3);
-      padding: 13px 22px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
+    /* Top 20/10 Announcement Ribbon */
+    .promo-top-bar {
+      background: linear-gradient(90deg, #3d1424 0%, #7a2243 50%, #3d1424 100%);
+      color: #fff;
+      font-size: 13px;
+      padding: 9px 16px;
+      text-align: center;
+      position: relative;
+      z-index: 1002;
+      border-bottom: 1px solid rgba(255, 180, 200, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
     }
-    .promo-cta-call:hover {
-      color: #f0c0c8;
-      border-color: rgba(200,100,120,0.7);
-      background: rgba(200,100,120,0.1);
+    .promo-top-badge {
+      background: #fff;
+      color: #7a2243;
+      font-weight: 800;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+    .promo-top-link {
+      color: #ffebf1;
+      text-decoration: underline;
+      font-weight: 700;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    .promo-top-link:hover {
+      color: #fff;
+    }
+
+    /* Floating 20/10 Gift Button */
+    .promo-float-btn {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      z-index: 990;
+      background: linear-gradient(135deg, #d84570 0%, #8a1d42 100%);
+      color: #fff;
+      border: 1.5px solid rgba(255, 200, 220, 0.4);
+      padding: 10px 18px;
+      border-radius: 50px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 13.5px;
+      text-decoration: none;
+      box-shadow: 0 6px 20px rgba(216, 69, 112, 0.45);
+      cursor: pointer;
+      animation: promoPulse 2.5s infinite;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    @keyframes promoPulse {
+      0%, 100% { box-shadow: 0 6px 20px rgba(216, 69, 112, 0.45); transform: scale(1); }
+      50% { box-shadow: 0 10px 30px rgba(216, 69, 112, 0.7); transform: scale(1.04); }
+    }
+    .promo-float-btn:hover {
+      transform: translateY(-2px) scale(1.06);
+    }
+    @media (max-width: 767px) {
+      .promo-float-btn {
+        bottom: 85px;
+        left: 12px;
+        padding: 8px 14px;
+        font-size: 12px;
+      }
+    }
+
+    /* 20/10 Popup Modal */
+    .promo-modal-card {
+      background: linear-gradient(160deg, #240f1a 0%, #150810 100%);
+      border: 1.5px solid rgba(220, 110, 140, 0.35);
+      border-radius: 24px;
+      padding: 24px 20px 28px;
+      max-width: 440px;
+      width: 90%;
+      text-align: center;
+      color: #f5e6ea;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(200, 70, 105, 0.3);
+      position: relative;
+    }
+    .promo-modal-img {
+      width: min(260px, 80%);
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 18px;
+      margin: 0 auto 16px;
+      display: block;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      border: 1px solid rgba(255, 200, 220, 0.3);
     }
     /* ===== END 20/10 SECTION ===== */
 
@@ -3169,6 +3258,19 @@
   <!-- Scroll Progress Indicator -->
   <div class="scroll-progress" id="scrollProgress"></div>
 
+  <!-- Persistent 20/10 Top Announcement Ribbon -->
+  <div class="promo-top-bar" id="promoTopBar">
+    <span class="promo-top-badge">🌷 20/10 SPECIAL</span>
+    <span><strong>Tặng cành hoa nhỏ</strong> cho phái đẹp khi ghé mua nước hôm nay!</span>
+    <a href="#promo2010" class="promo-top-link">Xem chi tiết & đếm ngược →</a>
+  </div>
+
+  <!-- Floating 20/10 Gift Button -->
+  <a href="#promo2010" class="promo-float-btn" aria-label="Ưu đãi 20/10 Olion Coffee">
+    <span style="font-size: 16px;">💐</span>
+    <span>Ưu Đãi 20/10</span>
+  </a>
+
   <!-- Announcement Banner (Controlled from Admin) -->
   <div id="announcementBanner" class="announcement-banner" style="display: none;" role="region" aria-label="Thông báo ưu đãi">
     <div class="shell announcement-content">
@@ -3187,6 +3289,7 @@
       </a>
 
       <nav class="header-nav" id="headerNav" aria-label="Thanh điều hướng chính">
+        <a href="#promo2010" class="nav-link" style="color: #f7a8be !important; font-weight: 700;">🌷 Ưu đãi 20/10</a>
         <a href="#about" class="nav-link" data-i18n="nav_about">Về Olion</a>
         <a href="#signature" class="nav-link" data-i18n="nav_signature">Signature</a>
         <a href="#menu" class="nav-link" data-i18n="nav_menu">Thực đơn</a>
@@ -3244,6 +3347,7 @@
       </div>
 
       <a href="#hero" class="drawer-link"><span data-i18n="drawer_home">Trang chủ</span> <span>→</span></a>
+      <a href="#promo2010" onclick="toggleDrawer(false)" class="drawer-link" style="color: #f7a8be !important; font-weight: 700;"><span>🌷 Ưu Đãi 20/10 (Tặng Hoa)</span> <span>→</span></a>
       <a href="#about" class="drawer-link"><span data-i18n="drawer_about">Về Olion Coffee</span> <span>→</span></a>
       <a href="#signature" class="drawer-link"><span data-i18n="drawer_signature">Món Signature</span> <span>→</span></a>
       <a href="#menu" class="drawer-link"><span data-i18n="drawer_menu">Thực đơn đồ uống</span> <span>→</span></a>
@@ -3295,8 +3399,10 @@
           Quán cà phê đẹp ở Dương Quảng Hàm, Gò Vấp với không gian sang trọng và đồ uống thủ công tinh tế. Thưởng thức hương vị nguyên bản, đắm chìm trong góc nhỏ tĩnh lặng giữa lòng Sài Gòn.
         </p>
         <div class="hero-cta-group">
-          <a href="#menu" class="btn btn-primary" data-i18n="hero_cta_menu">Khám phá thực đơn →</a>
-          <a href="#about" class="btn btn-ghost" data-i18n="hero_cta_about">Câu chuyện quán</a>
+          <a href="#promo2010" class="btn btn-primary" style="background: linear-gradient(135deg, #d84570 0%, #8a1d42 100%) !important; border: 1px solid rgba(255,200,220,0.5) !important; box-shadow: 0 8px 24px rgba(216, 69, 112, 0.45) !important;">
+            🌷 Ưu Đãi 20/10 (Tặng Hoa)
+          </a>
+          <a href="#menu" class="btn btn-ghost" data-i18n="hero_cta_menu">Khám phá thực đơn →</a>
         </div>
       </div>
 
@@ -6093,30 +6199,37 @@
           }
         }
 
-        // Countdown to end of 20/10/2026 23:59:59 (Vietnam time)
-        const endDate = new Date('2026-10-20T23:59:59+07:00');
+        // Countdown to end of today (23:59:59)
         function updateCountdown() {
           const now = new Date();
-          const diff = endDate - now;
+          const endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+          const diff = Math.max(0, endDate - now);
           const cd = document.getElementById('promoCountdown');
           if (!cd) return;
-          if (diff <= 0) {
-            // Hide promo section after event ends
-            const section = document.getElementById('promo2010');
-            if (section) section.style.display = 'none';
-            return;
-          }
-          const days  = Math.floor(diff / (1000*60*60*24));
-          const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-          const mins  = Math.floor((diff % (1000*60*60)) / (1000*60));
-          const secs  = Math.floor((diff % (1000*60)) / 1000);
-          document.getElementById('cdDays').textContent  = String(days).padStart(2,'0');
+          
+          const hours = Math.floor(diff / (1000 * 60 * 60));
+          const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const secs  = Math.floor((diff % (1000 * 60)) / 1000);
+          
+          const daysEl = document.getElementById('cdDays');
+          if (daysEl) daysEl.textContent = '00';
           document.getElementById('cdHours').textContent = String(hours).padStart(2,'0');
           document.getElementById('cdMins').textContent  = String(mins).padStart(2,'0');
           document.getElementById('cdSecs').textContent  = String(secs).padStart(2,'0');
         }
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        // Auto show 20/10 Popup Modal after 1.5 seconds if not dismissed this session
+        setTimeout(() => {
+          if (sessionStorage.getItem('olion_promo_2010_seen') !== 'true') {
+            const modal = document.getElementById('promo2010Modal');
+            if (modal) {
+              modal.classList.add('active');
+              sessionStorage.setItem('olion_promo_2010_seen', 'true');
+            }
+          }
+        }, 1500);
       })();
       // ===== END 20/10 PROMO =====
 
@@ -6507,6 +6620,29 @@
       <div id="installGuideArea" style="display: none; margin-top: 24px; padding: 16px; background: rgba(255,255,255,0.05); border-radius: 12px; text-align: left;">
         <h4 id="guideTitle" style="color: var(--accent-gold); font-size: 1rem; margin-bottom: 12px; font-weight: 600;">Hướng dẫn</h4>
         <div id="guideContent" style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6;"></div>
+      </div>
+    </div>
+  <!-- ======== 19. 20/10 PROMO POPUP MODAL ======== -->
+  <div class="modal-overlay" id="promo2010Modal" onclick="if(event.target === this) this.classList.remove('active')">
+    <div class="promo-modal-card">
+      <button type="button" class="modal-close-btn" onclick="document.getElementById('promo2010Modal').classList.remove('active')">✕</button>
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #f7a8be; margin-bottom: 8px;">
+        🌷 HAPPY VIETNAMESE WOMEN'S DAY 20/10
+      </div>
+      <img src="assets/banner-2010.jpg" alt="20/10 - Dành tặng những điều dịu dàng nhất" class="promo-modal-img" />
+      <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.35rem; margin-bottom: 8px;">
+        Dành Tặng Những <span style="color: #f7a8be; font-style: italic;">Điều Dịu Dàng Nhất</span>
+      </h3>
+      <p style="color: rgba(240, 215, 225, 0.88); font-size: 0.9rem; line-height: 1.55; margin-bottom: 18px;">
+        Các bạn nữ khi ghé Olion mua nước sẽ được <strong>tặng một cành hoa nhỏ</strong> như lời chúc ngọt ngào!
+      </p>
+      <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+        <a href="#promo2010" onclick="document.getElementById('promo2010Modal').classList.remove('active')" class="btn btn-primary" style="background: linear-gradient(135deg, #d84570 0%, #8a1d42 100%) !important; padding: 12px 20px; font-size: 13.5px;">
+          Xem Chi Tiết & Đếm Ngược
+        </a>
+        <a href="https://www.olioncoffee.app/ws2010" target="_blank" class="btn btn-ghost" style="border-color: rgba(255, 180, 200, 0.4); color: #f7a8be; padding: 12px 18px; font-size: 13.5px;">
+          Chia Sẻ Ưu Đãi 🔗
+        </a>
       </div>
     </div>
   </div>
