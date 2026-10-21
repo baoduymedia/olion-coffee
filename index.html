@@ -8135,48 +8135,73 @@
 
         const newUserArea = document.getElementById('welcomeNewUserArea');
         const returningArea = document.getElementById('welcomeReturningUserArea');
+        const progressBar = document.getElementById('welcomeProgressBar');
 
         if (isReturning) {
           if (newUserArea) newUserArea.style.display = 'none';
           if (returningArea) returningArea.style.display = 'block';
+          if (progressBar) progressBar.style.display = 'block';
+          // Khách quen: Bắt đầu đếm ngược tự đóng sau 10s (hủy ngay khi tương tác)
+          startWelcomeCountdown(10000);
         } else {
           if (newUserArea) newUserArea.style.display = 'block';
           if (returningArea) returningArea.style.display = 'none';
+          if (progressBar) progressBar.style.display = 'none';
+          // Khách mới: KHÔNG tự động đóng popup để khách thong thả nhập Tên và Số điện thoại
+          clearTimeout(welcomeAutoCloseTimer);
+          welcomeAutoCloseTimer = null;
         }
 
         // Kích hoạt Popup
         modal.classList.add('active');
         modal.setAttribute('aria-hidden', 'false');
 
-        // Bắt đầu đếm ngược 8s tự động đóng
-        startWelcomeCountdown();
-
-        // Lắng nghe tương tác trên toàn bộ Popup để HỦY ĐẾM NGƯỢC
-        const modalContent = modal.querySelector('.modal-content');
-        if (modalContent) {
-          const pauseEvents = ['focusin', 'click', 'keydown', 'touchstart'];
+        // Lắng nghe tương tác trên toàn bộ Popup & các ô input để HỦY ĐẾM NGƯỢC
+        const welcomeBox = document.getElementById('welcomeBox') || modal.querySelector('.welcome-box');
+        if (welcomeBox) {
+          const pauseEvents = ['focusin', 'click', 'keydown', 'touchstart', 'input', 'mouseenter'];
           pauseEvents.forEach(evt => {
-            modalContent.addEventListener(evt, pauseWelcomeCountdown, { once: false });
+            welcomeBox.addEventListener(evt, pauseWelcomeCountdown, { passive: true });
           });
+        }
+
+        const nameInput = document.getElementById('welcomeName');
+        const phoneInput = document.getElementById('welcomePhone');
+        if (nameInput) {
+          nameInput.addEventListener('focus', pauseWelcomeCountdown, { passive: true });
+          nameInput.addEventListener('input', pauseWelcomeCountdown, { passive: true });
+        }
+        if (phoneInput) {
+          phoneInput.addEventListener('focus', pauseWelcomeCountdown, { passive: true });
+          phoneInput.addEventListener('input', pauseWelcomeCountdown, { passive: true });
         }
       }
 
-      function startWelcomeCountdown() {
+      function startWelcomeCountdown(duration = 10000) {
         const progressBar = document.getElementById('welcomeProgressBar');
         if (progressBar) {
           progressBar.classList.remove('paused');
+          progressBar.style.animation = 'none';
+          // Reflow restart animation
+          void progressBar.offsetWidth;
+          progressBar.style.animation = `welcomeCountdown ${duration / 1000}s linear forwards`;
+          progressBar.style.display = 'block';
         }
         clearTimeout(welcomeAutoCloseTimer);
         welcomeAutoCloseTimer = setTimeout(() => {
           closeWelcomeModal();
-        }, 8000);
+        }, duration);
       }
 
       function pauseWelcomeCountdown() {
-        clearTimeout(welcomeAutoCloseTimer);
+        if (welcomeAutoCloseTimer) {
+          clearTimeout(welcomeAutoCloseTimer);
+          welcomeAutoCloseTimer = null;
+        }
         const progressBar = document.getElementById('welcomeProgressBar');
         if (progressBar) {
           progressBar.classList.add('paused');
+          progressBar.style.display = 'none';
         }
       }
 
@@ -8186,6 +8211,7 @@
         modal.classList.remove('active');
         modal.setAttribute('aria-hidden', 'true');
         clearTimeout(welcomeAutoCloseTimer);
+        welcomeAutoCloseTimer = null;
       };
 
       window.welcomeExploreMenu = function() {
