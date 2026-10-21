@@ -3823,9 +3823,9 @@
             <div class="services-contact-bar">
               <span class="services-contact-label">Cùng Olion tạo nên những khoảnh khắc đẹp:</span>
               <div class="services-contact-actions">
-                <a href="https://m.me/61594159312837" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 9px 16px; font-size: 13px;">
+                <button type="button" onclick="quickConsultMessenger('all')" class="btn btn-secondary" style="padding: 9px 16px; font-size: 13px; cursor: pointer;">
                   <i data-lucide="message-circle" style="width:15px;height:15px;margin-right:6px;"></i> Inbox Fanpage Tư Vấn ↗
-                </a>
+                </button>
                 <a href="tel:0783657587" class="btn btn-ghost" style="padding: 9px 16px; font-size: 13px;">
                   <i data-lucide="phone" style="width:15px;height:15px;margin-right:6px;"></i> Hotline: 0783 657 587
                 </a>
@@ -4239,89 +4239,126 @@
     <div class="modal-box" style="max-width: 520px;">
       <button type="button" class="modal-close" onclick="closeBookingModal()" aria-label="Đóng popup"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
       
-      <div class="section-eyebrow" style="margin-bottom: 8px;">
-        <i data-lucide="calendar" style="width:14px;height:14px;margin-right:4px;"></i> Dịch Vụ & Không Gian
-      </div>
-      <h3 class="font-serif" id="bookingModalTitle" style="font-size: 24px; margin-bottom: 6px; color: var(--text-white);">
-        Đăng Ký Đặt Chỗ Tại <span style="color: var(--accent-gold);">Olion</span>
-      </h3>
-      <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px;">
-        Vui lòng chọn dịch vụ và điền thông tin bên dưới. Quán sẽ liên hệ xác nhận sớm nhất!
-      </p>
-
-      <!-- Segmented Service Choice -->
-      <div class="bk-type-grid" id="bkTypeGrid">
-        <button type="button" class="bk-type-btn active" id="bkTypeSpace" onclick="selectBookingType('space')">
-          <strong><i data-lucide="users" style="width:15px;height:15px;"></i> Thuê Không Gian</strong>
-          <span>Workshop • Họp nhóm • CLB • Sự kiện (Trước 1 tuần)</span>
-        </button>
-        <button type="button" class="bk-type-btn" id="bkTypeTable" onclick="selectBookingType('table')">
-          <strong><i data-lucide="bookmark-check" style="width:15px;height:15px;"></i> Đặt Bàn Trước</strong>
-          <span>Học tập • Làm việc • Hẹn bạn bè (Trước 1 ngày)</span>
-        </button>
-      </div>
-
-      <!-- Quick Notice -->
-      <div id="bkNotice" class="service-notice-box" style="margin-bottom: 16px;">
-        <i data-lucide="info" style="width:16px;height:16px;flex-shrink:0;"></i>
-        <span id="bkNoticeText">Liên hệ trước ít nhất <strong>1 tuần</strong> để Olion sắp xếp không gian chu đáo và phù hợp nhất.</span>
-      </div>
-
-      <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
-        <div class="form-group">
-          <label class="form-label" for="bkName">Họ và tên của bạn *</label>
-          <input type="text" id="bkName" class="form-input" placeholder="Ví dụ: Hoàng Nam" required autocomplete="name" />
+      <!-- Form Input Area -->
+      <div id="bkFormArea">
+        <div class="section-eyebrow" style="margin-bottom: 8px;">
+          <i data-lucide="calendar" style="width:14px;height:14px;margin-right:4px;"></i> Dịch Vụ & Không Gian
         </div>
+        <h3 class="font-serif" id="bookingModalTitle" style="font-size: 24px; margin-bottom: 6px; color: var(--text-white);">
+          Đăng Ký Đặt Chỗ Tại <span style="color: var(--accent-gold);">Olion</span>
+        </h3>
+        <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px;">
+          Nội dung yêu cầu đã được <strong>tự động điền sẵn</strong>. Bạn có thể chỉnh sửa lại hoặc bấm gửi ngay:
+        </p>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-          <div class="form-group">
-            <label class="form-label" for="bkPhone">Số điện thoại / Zalo *</label>
-            <input type="tel" id="bkPhone" class="form-input" placeholder="0908xxxxxx" required pattern="^(03|05|07|08|09)[0-9]{8}$" autocomplete="tel" />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="bkGuests">Số lượng người *</label>
-            <input type="number" id="bkGuests" class="form-input" placeholder="Ví dụ: 4" min="1" max="60" required />
-          </div>
-        </div>
-
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-          <div class="form-group">
-            <label class="form-label" for="bkDate">Ngày dự kiến *</label>
-            <input type="date" id="bkDate" class="form-input" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="bkTime">Khung giờ dự kiến *</label>
-            <select id="bkTime" class="form-input" required>
-              <option value="">Chọn giờ...</option>
-              <option value="08:00 - 10:00">08:00 - 10:00 (Sáng sớm)</option>
-              <option value="10:00 - 12:00">10:00 - 12:00 (Trưa)</option>
-              <option value="13:00 - 15:00">13:00 - 15:00 (Đầu giờ chiều)</option>
-              <option value="15:00 - 17:00">15:00 - 17:00 (Chiều mát)</option>
-              <option value="17:00 - 19:30">17:00 - 19:30 (Tối ấm cúng)</option>
-              <option value="Cả buổi / Khung giờ khác">Cả buổi / Khác</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label" for="bkNote">Yêu cầu thêm / Ghi chú</label>
-          <textarea id="bkNote" class="form-textarea" style="min-height: 70px;" placeholder="Ví dụ: Cần khu vực gần ổ cắm, bố trí bàn họp nhóm..."></textarea>
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 18px;">
-          <button type="submit" class="btn btn-primary" id="bkSubmitBtn" style="width: 100%; padding: 13px;">
-            <i data-lucide="send" style="width:16px;height:16px;margin-right:6px;"></i> Gửi Yêu Cầu & Kết Nối Fanpage
+        <!-- Segmented Service Choice -->
+        <div class="bk-type-grid" id="bkTypeGrid">
+          <button type="button" class="bk-type-btn active" id="bkTypeSpace" onclick="selectBookingType('space')">
+            <strong><i data-lucide="users" style="width:15px;height:15px;"></i> Thuê Không Gian</strong>
+            <span>Workshop • Họp nhóm • CLB • Sự kiện (Trước 1 tuần)</span>
           </button>
+          <button type="button" class="bk-type-btn" id="bkTypeTable" onclick="selectBookingType('table')">
+            <strong><i data-lucide="bookmark-check" style="width:15px;height:15px;"></i> Đặt Bàn Trước</strong>
+            <span>Học tập • Làm việc • Hẹn bạn bè (Trước 1 ngày)</span>
+          </button>
+        </div>
+
+        <!-- Quick Notice -->
+        <div id="bkNotice" class="service-notice-box" style="margin-bottom: 16px;">
+          <i data-lucide="info" style="width:16px;height:16px;flex-shrink:0;"></i>
+          <span id="bkNoticeText">Liên hệ trước ít nhất <strong>1 tuần</strong> để Olion sắp xếp không gian chu đáo và phù hợp nhất.</span>
+        </div>
+
+        <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+          <div class="form-group">
+            <label class="form-label" for="bkName">Họ và tên của bạn *</label>
+            <input type="text" id="bkName" class="form-input" placeholder="Ví dụ: Hoàng Nam" required autocomplete="name" />
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label class="form-label" for="bkPhone">Số điện thoại / Zalo *</label>
+              <input type="tel" id="bkPhone" class="form-input" placeholder="0908xxxxxx" required pattern="^(03|05|07|08|09)[0-9]{8}$" autocomplete="tel" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="bkGuests">Số lượng người *</label>
+              <input type="number" id="bkGuests" class="form-input" placeholder="Ví dụ: 10" min="1" max="60" required />
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <div class="form-group">
+              <label class="form-label" for="bkDate">Ngày dự kiến *</label>
+              <input type="date" id="bkDate" class="form-input" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="bkTime">Khung giờ dự kiến *</label>
+              <select id="bkTime" class="form-input" required>
+                <option value="08:00 - 10:00">08:00 - 10:00 (Sáng sớm)</option>
+                <option value="10:00 - 12:00" selected>10:00 - 12:00 (Trưa)</option>
+                <option value="13:00 - 15:00">13:00 - 15:00 (Đầu giờ chiều)</option>
+                <option value="15:00 - 17:00">15:00 - 17:00 (Chiều mát)</option>
+                <option value="17:00 - 19:30">17:00 - 19:30 (Tối ấm cúng)</option>
+                <option value="Cả buổi / Khung giờ khác">Cả buổi / Khác</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="bkNote">Nội dung yêu cầu chi tiết (Đã điền sẵn) *</label>
+            <textarea id="bkNote" class="form-textarea" style="min-height: 80px;" required placeholder="Nội dung yêu cầu đặt chỗ..."></textarea>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 18px;">
+            <button type="submit" class="btn btn-primary" id="bkSubmitBtn" style="width: 100%; padding: 13px;">
+              <i data-lucide="send" style="width:16px;height:16px;margin-right:6px;"></i> Gửi Yêu Cầu & Kết Nối Fanpage
+            </button>
+            <div style="display: flex; gap: 10px;">
+              <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="flex: 1; font-size: 12.5px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+                <img src="assets/zalo-logo.webp" alt="Zalo" width="16" height="16" style="margin-right: 6px;" /> Chat Zalo Quán
+              </a>
+              <a href="tel:0783657587" class="btn btn-ghost" style="flex: 1; font-size: 12.5px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="phone" style="width:15px;height:15px;margin-right:6px;"></i> Gọi 0783 657 587
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Success & Auto-Copied Message Preview State -->
+      <div id="bkSuccessArea" style="display: none; text-align: center;">
+        <div style="font-size: 42px; margin-bottom: 8px;">📋✨</div>
+        <h4 style="font-size: 22px; color: var(--accent-gold); font-weight: 700; margin-bottom: 6px;">
+          Đã Tự Động Sao Chép Yêu Cầu!
+        </h4>
+        <p style="font-size: 13.5px; color: var(--text-cream); line-height: 1.6; margin-bottom: 14px;">
+          Nội dung dưới đây đã nằm sẵn trong bộ nhớ tạm của bạn:
+        </p>
+
+        <div id="bkPreviewBox" style="background: rgba(0,0,0,0.55); border: 1px dashed var(--border-gold); border-radius: var(--radius-sm); padding: 14px 16px; text-align: left; font-size: 12.5px; line-height: 1.6; color: var(--accent-gold-light); white-space: pre-line; max-height: 160px; overflow-y: auto; margin-bottom: 14px; user-select: all;">
+        </div>
+
+        <div style="background: rgba(46, 204, 113, 0.12); border: 1px solid rgba(46, 204, 113, 0.35); border-radius: 8px; padding: 10px 14px; font-size: 12.5px; color: #a3e9b8; margin-bottom: 16px; line-height: 1.5;">
+          💡 <strong>Hướng dẫn:</strong> Khi Messenger / Zalo mở ra, bạn chỉ cần bấm <strong>Dán (Paste)</strong> vào khung chat để gửi ngay cho Olion nhé!
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="https://m.me/61594159312837" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 13px; text-decoration: none;">
+            <i data-lucide="message-circle" style="width:16px;height:16px;margin-right:6px;"></i> Mở Messenger Fanpage Để Gửi
+          </a>
           <div style="display: flex; gap: 10px;">
-            <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="flex: 1; font-size: 12.5px; padding: 10px; display: flex; align-items: center; justify-content: center;">
-              <img src="assets/zalo-logo.webp" alt="Zalo" width="16" height="16" style="margin-right: 6px;" /> Chat Zalo Quán
-            </a>
-            <a href="tel:0783657587" class="btn btn-ghost" style="flex: 1; font-size: 12.5px; padding: 10px; display: flex; align-items: center; justify-content: center;">
-              <i data-lucide="phone" style="width:15px;height:15px;margin-right:6px;"></i> Gọi 0783 657 587
+            <button type="button" class="btn btn-ghost" onclick="copyCurrentBookingMsg()" style="flex: 1; font-size: 12.5px; padding: 10px;">
+              <i data-lucide="copy" style="width:15px;height:15px;margin-right:6px;"></i> Sao Chép Lại
+            </button>
+            <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="flex: 1; font-size: 12.5px; padding: 10px; display: flex; align-items: center; justify-content: center; text-decoration: none;">
+              <img src="assets/zalo-logo.webp" alt="Zalo" width="16" height="16" style="margin-right: 6px;" /> Gửi Qua Zalo
             </a>
           </div>
+          <button type="button" class="btn btn-ghost" onclick="backToBookingForm()" style="font-size: 12px; color: var(--text-muted); border: none; padding: 6px; cursor: pointer;">
+            ← Quay lại chỉnh sửa thông tin
+          </button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 
@@ -5707,13 +5744,31 @@
 
       // 5.1 Booking & Space Rental Modal Logic
       let currentBookingType = 'space'; // 'space' or 'table'
+      window.lastFormattedBookingMsg = '';
 
       window.openBookingModal = function(type = 'space') {
         const modal = document.getElementById('bookingModal');
         if (!modal) return;
+        
+        // Show form area, hide success area
+        const formArea = document.getElementById('bkFormArea');
+        const successArea = document.getElementById('bkSuccessArea');
+        if (formArea) formArea.style.display = 'block';
+        if (successArea) successArea.style.display = 'none';
+
+        // Auto prefill customer name & phone if available from previous visits
+        const nameInput = document.getElementById('bkName');
+        const phoneInput = document.getElementById('bkPhone');
+        if (nameInput && !nameInput.value) {
+          nameInput.value = localStorage.getItem('olion_customer_name') || '';
+        }
+        if (phoneInput && !phoneInput.value) {
+          phoneInput.value = localStorage.getItem('olion_customer_phone') || '';
+        }
+
         window.selectBookingType(type);
         
-        // Set minimum date (min 1 day in advance for table, 3-7 days for space)
+        // Set minimum date (min 1 day in advance for table, 3 days for space)
         const dateInput = document.getElementById('bkDate');
         if (dateInput) {
           const today = new Date();
@@ -5743,21 +5798,87 @@
         }
       };
 
+      window.backToBookingForm = function() {
+        const formArea = document.getElementById('bkFormArea');
+        const successArea = document.getElementById('bkSuccessArea');
+        if (formArea) formArea.style.display = 'block';
+        if (successArea) successArea.style.display = 'none';
+        if (window.lucide) window.lucide.createIcons();
+      };
+
       window.selectBookingType = function(type) {
         currentBookingType = type;
         const btnSpace = document.getElementById('bkTypeSpace');
         const btnTable = document.getElementById('bkTypeTable');
         const noticeText = document.getElementById('bkNoticeText');
+        const guestsInput = document.getElementById('bkGuests');
+        const noteInput = document.getElementById('bkNote');
+        const timeSelect = document.getElementById('bkTime');
+
+        if (timeSelect && !timeSelect.value) {
+          timeSelect.value = "10:00 - 12:00";
+        }
         
         if (type === 'space') {
           if (btnSpace) btnSpace.classList.add('active');
           if (btnTable) btnTable.classList.remove('active');
           if (noticeText) noticeText.innerHTML = 'Liên hệ trước ít nhất <strong>1 tuần</strong> để Olion sắp xếp không gian chu đáo và phù hợp nhất.';
+          if (guestsInput) guestsInput.value = '10';
+          if (noteInput) {
+            noteInput.value = 'Mình muốn đăng ký thuê không gian tổ chức Workshop / Họp nhóm. Nhờ Olion tư vấn gói dịch vụ, sắp xếp bàn ghế và hỗ trợ kết nối máy chiếu / âm thanh.';
+          }
         } else {
           if (btnSpace) btnSpace.classList.remove('active');
           if (btnTable) btnTable.classList.add('active');
           if (noticeText) noticeText.innerHTML = 'Vui lòng đặt bàn trước ít nhất <strong>1 ngày</strong>. <em>(Lưu ý: Chỉ xác nhận khi quán phản hồi)</em>.';
+          if (guestsInput) guestsInput.value = '4';
+          if (noteInput) {
+            noteInput.value = 'Mình muốn đặt bàn trước cho nhóm học tập / gặp gỡ bạn bè. Nhờ quán ưu tiên giữ giúp mình góc ngồi yên tĩnh, gần ổ cắm điện nhé.';
+          }
         }
+      };
+
+      window.copyCurrentBookingMsg = function() {
+        const msg = window.lastFormattedBookingMsg;
+        if (!msg) return;
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(msg);
+          } else {
+            const t = document.createElement('textarea');
+            t.value = msg;
+            document.body.appendChild(t);
+            t.select();
+            document.execCommand('copy');
+            document.body.removeChild(t);
+          }
+        } catch(e) {}
+        alert('📋 Đã sao chép lại toàn bộ nội dung yêu cầu! Bạn có thể dán (Paste) vào khung chat bất cứ lúc nào.');
+      };
+
+      window.quickConsultMessenger = function(type = 'all') {
+        let msg = 'Chào Olion Coffee! Mình muốn được tư vấn thông tin về dịch vụ Cho thuê không gian & Đặt bàn trước tại quán.';
+        if (type === 'space') {
+          msg = 'Chào Olion Coffee! Mình muốn tư vấn dịch vụ Cho thuê không gian để tổ chức Workshop / Họp nhóm / CLB tại quán.';
+        } else if (type === 'table') {
+          msg = 'Chào Olion Coffee! Mình muốn tư vấn đặt bàn trước cho nhóm học tập / gặp gỡ bạn bè tại quán.';
+        }
+
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(msg);
+          } else {
+            const t = document.createElement('textarea');
+            t.value = msg;
+            document.body.appendChild(t);
+            t.select();
+            document.execCommand('copy');
+            document.body.removeChild(t);
+          }
+        } catch(e) {}
+
+        alert(`📋 Đã tự động sao chép nội dung:\n"${msg}"\n\nKhi Messenger mở ra, bạn chỉ cần bấm DÁN (Paste) để gửi ngay cho Olion nhé!`);
+        window.open('https://m.me/61594159312837', '_blank');
       };
 
       window.handleBookingSubmit = function(e) {
@@ -5783,8 +5904,24 @@
           `• Khách hàng: ${name} (${phone})\n` +
           `• Số lượng người: ${guests || '1'} người\n` +
           `• Thời gian dự kiến: ${time} ngày ${date}\n` +
-          (note ? `• Ghi chú thêm: ${note}\n` : '') +
+          (note ? `• Yêu cầu chi tiết: ${note}\n` : '') +
           `Olion tư vấn và xác nhận giúp mình nhé! Cảm ơn quán.`;
+
+        window.lastFormattedBookingMsg = formattedMsg;
+
+        // Auto copy formatted message to clipboard
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(formattedMsg);
+          } else {
+            const t = document.createElement('textarea');
+            t.value = formattedMsg;
+            document.body.appendChild(t);
+            t.select();
+            document.execCommand('copy');
+            document.body.removeChild(t);
+          }
+        } catch(err) {}
 
         // Save to Supabase bookings table if online
         try {
@@ -5808,12 +5945,17 @@
           localStorage.setItem('olion_customer_phone', phone);
         } catch(err) {}
 
-        window.closeBookingModal();
-        alert(`Cảm ơn ${name}! Olion đang chuyển hướng bạn sang Messenger Fanpage để gửi thông tin đặt chỗ ngay nhé.`);
+        // Show Success Screen with the copied preview
+        const formArea = document.getElementById('bkFormArea');
+        const successArea = document.getElementById('bkSuccessArea');
+        const previewBox = document.getElementById('bkPreviewBox');
+        if (previewBox) previewBox.textContent = formattedMsg;
+        if (formArea) formArea.style.display = 'none';
+        if (successArea) successArea.style.display = 'block';
+        if (window.lucide) window.lucide.createIcons();
 
-        // Redirect to Messenger with prefilled message
-        const messengerUrl = `https://m.me/61594159312837?text=${encodeURIComponent(formattedMsg)}`;
-        window.open(messengerUrl, '_blank');
+        // Redirect to Messenger after opening success state
+        window.open('https://m.me/61594159312837', '_blank');
       };
 
       // 6. Customer Feedback Modal & Supabase Cloud Sync

@@ -341,75 +341,112 @@
 <section class="section" id="bookingFormSection" style="padding-top:0">
   <div class="container">
     <div class="form-box">
-      <p class="sec-label" style="text-align:left">✦ Đăng Ký Trực Tuyến</p>
-      <h2 class="sec-title" style="text-align:left;font-size:clamp(22px,5vw,28px);margin-bottom:8px">Gửi Yêu Cầu Đặt Chỗ</h2>
-      <p style="font-size:13.5px;color:var(--muted);margin-bottom:20px">Điền thông tin bên dưới, Olion Coffee sẽ liên hệ xác nhận ngay cùng bạn.</p>
+      <!-- Input Area -->
+      <div id="pageFormArea">
+        <p class="sec-label" style="text-align:left">✦ Đăng Ký Trực Tuyến</p>
+        <h2 class="sec-title" style="text-align:left;font-size:clamp(22px,5vw,28px);margin-bottom:8px">Gửi Yêu Cầu Đặt Chỗ</h2>
+        <p style="font-size:13.5px;color:var(--muted);margin-bottom:20px">Nội dung yêu cầu đã được <strong>tự động điền sẵn</strong>. Bạn có thể chỉnh sửa lại hoặc bấm gửi ngay:</p>
 
-      <div class="type-switcher">
-        <button type="button" class="type-btn active" id="btnSpace" onclick="switchType('space')">
-          <strong>👥 Thuê Không Gian</strong>
-          <span>Workshop, Sự kiện (Trước 1 tuần)</span>
-        </button>
-        <button type="button" class="type-btn" id="btnTable" onclick="switchType('table')">
-          <strong>🗓️ Đặt Bàn Trước</strong>
-          <span>Học tập, Hẹn bạn bè (Trước 1 ngày)</span>
-        </button>
+        <div class="type-switcher">
+          <button type="button" class="type-btn active" id="btnSpace" onclick="switchType('space')">
+            <strong>👥 Thuê Không Gian</strong>
+            <span>Workshop, Sự kiện (Trước 1 tuần)</span>
+          </button>
+          <button type="button" class="type-btn" id="btnTable" onclick="switchType('table')">
+            <strong>🗓️ Đặt Bàn Trước</strong>
+            <span>Học tập, Hẹn bạn bè (Trước 1 ngày)</span>
+          </button>
+        </div>
+
+        <form id="bookingPageForm" onsubmit="handlePageSubmit(event)">
+          <div class="form-group">
+            <label class="form-label">Họ và tên của bạn *</label>
+            <input type="text" id="pName" class="form-input" placeholder="Ví dụ: Hoàng Nam" required />
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="form-group">
+              <label class="form-label">Số điện thoại / Zalo *</label>
+              <input type="tel" id="pPhone" class="form-input" placeholder="0908xxxxxx" required pattern="^(03|05|07|08|09)[0-9]{8}$" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Số lượng người *</label>
+              <input type="number" id="pGuests" class="form-input" placeholder="Ví dụ: 10" min="1" max="60" required />
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="form-group">
+              <label class="form-label">Ngày dự kiến *</label>
+              <input type="date" id="pDate" class="form-input" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Khung giờ *</label>
+              <select id="pTime" class="form-input" required>
+                <option value="08:00 - 10:00">08:00 - 10:00 (Sáng sớm)</option>
+                <option value="10:00 - 12:00" selected>10:00 - 12:00 (Trưa)</option>
+                <option value="13:00 - 15:00">13:00 - 15:00 (Đầu giờ chiều)</option>
+                <option value="15:00 - 17:00">15:00 - 17:00 (Chiều mát)</option>
+                <option value="17:00 - 19:30">17:00 - 19:30 (Tối ấm cúng)</option>
+                <option value="Cả buổi / Khác">Cả buổi / Khác</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Nội dung yêu cầu chi tiết (Đã điền sẵn) *</label>
+            <textarea id="pNote" class="form-textarea" style="min-height:80px" required placeholder="Nội dung yêu cầu chi tiết..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-main" style="margin-top:6px">
+            <span>🚀</span> Gửi Yêu Cầu & Mở Fanpage Xác Nhận
+          </button>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+            <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+              <span>💬</span> Chat Zalo Quán
+            </a>
+            <a href="tel:0783657587" class="btn-ghost">
+              <span>📞</span> Gọi 0783 657 587
+            </a>
+          </div>
+        </form>
       </div>
 
-      <form id="bookingPageForm" onsubmit="handlePageSubmit(event)">
-        <div class="form-group">
-          <label class="form-label">Họ và tên của bạn *</label>
-          <input type="text" id="pName" class="form-input" placeholder="Ví dụ: Hoàng Nam" required />
+      <!-- Success & Copied State -->
+      <div id="pageSuccessArea" style="display: none; text-align: center;">
+        <div style="font-size: 42px; margin-bottom: 8px;">📋✨</div>
+        <h4 style="font-size: 22px; color: var(--gold); font-weight: 700; margin-bottom: 6px;">
+          Đã Tự Động Sao Chép Yêu Cầu!
+        </h4>
+        <p style="font-size: 13.5px; color: var(--cream); line-height: 1.6; margin-bottom: 14px;">
+          Nội dung dưới đây đã nằm sẵn trong bộ nhớ tạm của bạn:
+        </p>
+
+        <div id="pagePreviewBox" style="background: rgba(0,0,0,0.55); border: 1px dashed var(--gold); border-radius: 10px; padding: 14px 16px; text-align: left; font-size: 12.5px; line-height: 1.6; color: var(--gold-light); white-space: pre-line; max-height: 160px; overflow-y: auto; margin-bottom: 14px; user-select: all;">
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div class="form-group">
-            <label class="form-label">Số điện thoại / Zalo *</label>
-            <input type="tel" id="pPhone" class="form-input" placeholder="0908xxxxxx" required pattern="^(03|05|07|08|09)[0-9]{8}$" />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Số lượng người *</label>
-            <input type="number" id="pGuests" class="form-input" placeholder="Ví dụ: 6" min="1" max="60" required />
-          </div>
+        <div style="background: rgba(46, 204, 113, 0.12); border: 1px solid rgba(46, 204, 113, 0.35); border-radius: 8px; padding: 10px 14px; font-size: 12.5px; color: #a3e9b8; margin-bottom: 16px; line-height: 1.5;">
+          💡 <strong>Hướng dẫn:</strong> Khi Messenger / Zalo mở ra, bạn chỉ cần bấm <strong>Dán (Paste)</strong> vào khung chat để gửi ngay cho Olion nhé!
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div class="form-group">
-            <label class="form-label">Ngày dự kiến *</label>
-            <input type="date" id="pDate" class="form-input" required />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Khung giờ *</label>
-            <select id="pTime" class="form-input" required>
-              <option value="">Chọn giờ...</option>
-              <option value="08:00 - 10:00">08:00 - 10:00 (Sáng sớm)</option>
-              <option value="10:00 - 12:00">10:00 - 12:00 (Trưa)</option>
-              <option value="13:00 - 15:00">13:00 - 15:00 (Đầu giờ chiều)</option>
-              <option value="15:00 - 17:00">15:00 - 17:00 (Chiều mát)</option>
-              <option value="17:00 - 19:30">17:00 - 19:30 (Tối ấm cúng)</option>
-              <option value="Cả buổi / Khác">Cả buổi / Khác</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">Ghi chú yêu cầu thêm</label>
-          <textarea id="pNote" class="form-textarea" style="min-height:75px" placeholder="Ví dụ: Cần bàn dài, ổ cắm máy tính, màn chiếu, yêu cầu đồ uống..."></textarea>
-        </div>
-
-        <button type="submit" class="btn-main" style="margin-top:6px">
-          <span>🚀</span> Gửi Yêu Cầu & Mở Fanpage Xác Nhận
-        </button>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
-          <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="btn-ghost">
-            <span>💬</span> Chat Zalo Quán
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <a href="https://m.me/61594159312837" target="_blank" rel="noopener noreferrer" class="btn-main" style="text-decoration: none;">
+            <span>💬</span> Mở Messenger Fanpage Để Gửi
           </a>
-          <a href="tel:0783657587" class="btn-ghost">
-            <span>📞</span> Gọi 0783 657 587
-          </a>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <button type="button" class="btn-ghost" onclick="copyPageBookingMsg()">
+              <span>📋</span> Sao Chép Lại
+            </button>
+            <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+              <span>💬</span> Gửi Qua Zalo
+            </a>
+          </div>
+          <button type="button" class="btn-ghost" onclick="backToPageForm()" style="border: none; color: var(--muted); padding: 6px; font-size: 12px; cursor: pointer;">
+            ← Quay lại chỉnh sửa thông tin
+          </button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </section>
@@ -537,11 +574,49 @@
 
 /* ─── Booking Logic ─── */
 let selectedType = 'space';
+window.lastFormattedPageMsg = '';
+
+function initBookingPage() {
+  // Auto prefill customer name & phone if saved
+  try {
+    const savedName = localStorage.getItem('olion_customer_name') || '';
+    const savedPhone = localStorage.getItem('olion_customer_phone') || '';
+    const nameInput = document.getElementById('pName');
+    const phoneInput = document.getElementById('pPhone');
+    if (nameInput && !nameInput.value) nameInput.value = savedName;
+    if (phoneInput && !phoneInput.value) phoneInput.value = savedPhone;
+  } catch(e) {}
+
+  switchType('space');
+}
+
 function switchType(t){
   selectedType = t;
-  document.getElementById('btnSpace').classList.toggle('active', t === 'space');
-  document.getElementById('btnTable').classList.toggle('active', t === 'table');
+  const btnSpace = document.getElementById('btnSpace');
+  const btnTable = document.getElementById('btnTable');
+  if (btnSpace) btnSpace.classList.toggle('active', t === 'space');
+  if (btnTable) btnTable.classList.toggle('active', t === 'table');
   
+  const guestsInput = document.getElementById('pGuests');
+  const noteInput = document.getElementById('pNote');
+  const timeSelect = document.getElementById('pTime');
+
+  if (timeSelect && !timeSelect.value) {
+    timeSelect.value = "10:00 - 12:00";
+  }
+
+  if (t === 'space') {
+    if (guestsInput) guestsInput.value = '10';
+    if (noteInput) {
+      noteInput.value = 'Mình muốn đăng ký thuê không gian tổ chức Workshop / Họp nhóm. Nhờ Olion tư vấn gói dịch vụ, sắp xếp bàn ghế và hỗ trợ kết nối máy chiếu / âm thanh.';
+    }
+  } else {
+    if (guestsInput) guestsInput.value = '4';
+    if (noteInput) {
+      noteInput.value = 'Mình muốn đặt bàn trước cho nhóm học tập / gặp gỡ bạn bè. Nhờ quán ưu tiên giữ giúp mình góc ngồi yên tĩnh, gần ổ cắm điện nhé.';
+    }
+  }
+
   const dateInput = document.getElementById('pDate');
   if (dateInput) {
     const today = new Date();
@@ -554,16 +629,40 @@ function switchType(t){
     if (!dateInput.value || dateInput.value < dateInput.min) dateInput.value = `${y}-${m}-${d}`;
   }
 }
-switchType('space');
+
+function copyPageBookingMsg() {
+  const msg = window.lastFormattedPageMsg;
+  if (!msg) return;
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(msg);
+    } else {
+      const t = document.createElement('textarea');
+      t.value = msg;
+      document.body.appendChild(t);
+      t.select();
+      document.execCommand('copy');
+      document.body.removeChild(t);
+    }
+  } catch(e) {}
+  alert('📋 Đã sao chép lại toàn bộ nội dung yêu cầu! Bạn có thể dán (Paste) vào khung chat bất cứ lúc nào.');
+}
+
+function backToPageForm() {
+  const formArea = document.getElementById('pageFormArea');
+  const successArea = document.getElementById('pageSuccessArea');
+  if (formArea) formArea.style.display = 'block';
+  if (successArea) successArea.style.display = 'none';
+}
 
 function handlePageSubmit(e){
   e.preventDefault();
-  const name = document.getElementById('pName').value.trim();
-  const phone = document.getElementById('pPhone').value.trim();
-  const guests = document.getElementById('pGuests').value.trim();
-  const date = document.getElementById('pDate').value;
-  const time = document.getElementById('pTime').value;
-  const note = document.getElementById('pNote').value.trim();
+  const name = (document.getElementById('pName')?.value || '').trim();
+  const phone = (document.getElementById('pPhone')?.value || '').trim();
+  const guests = (document.getElementById('pGuests')?.value || '').trim();
+  const date = document.getElementById('pDate')?.value || '';
+  const time = document.getElementById('pTime')?.value || '';
+  const note = (document.getElementById('pNote')?.value || '').trim();
 
   if(!name || !phone || !date || !time){
     alert('Vui lòng điền đầy đủ các mục bắt buộc (*)');
@@ -571,21 +670,53 @@ function handlePageSubmit(e){
   }
 
   const typeText = (selectedType === 'space')
-    ? '01 - CHO THUÊ KHÔNG GIAN (Workshop / Sự kiện / Họp nhóm)'
-    : '02 - ĐẶT BÀN TRƯỚC (Học tập / Hẹn bạn bè)';
+    ? '01 - CHO THUÊ KHÔNG GIAN (Workshop / Họp nhóm / CLB / Sự kiện)'
+    : '02 - ĐẶT BÀN TRƯỚC (Học tập / Hẹn bạn bè / Làm việc)';
 
-  const msg = `Chào Olion Coffee! Mình đăng ký qua website:\n` +
+  const formattedMsg = `Chào Olion Coffee! Mình muốn đăng ký:\n` +
     `• Dịch vụ: ${typeText}\n` +
-    `• Họ tên: ${name} (${phone})\n` +
+    `• Khách hàng: ${name} (${phone})\n` +
     `• Số lượng người: ${guests || '1'} người\n` +
-    `• Thời gian: ${time} ngày ${date}\n` +
-    (note ? `• Ghi chú: ${note}\n` : '') +
+    `• Thời gian dự kiến: ${time} ngày ${date}\n` +
+    (note ? `• Yêu cầu chi tiết: ${note}\n` : '') +
     `Olion tư vấn và xác nhận giúp mình nhé! Cảm ơn quán.`;
 
-  alert(`Cảm ơn ${name}! Olion đang chuyển hướng bạn sang Messenger Fanpage để gửi thông tin đặt chỗ ngay nhé.`);
-  const url = `https://m.me/61594159312837?text=${encodeURIComponent(msg)}`;
-  window.open(url, '_blank');
+  window.lastFormattedPageMsg = formattedMsg;
+
+  // Auto copy formatted message to clipboard
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(formattedMsg);
+    } else {
+      const t = document.createElement('textarea');
+      t.value = formattedMsg;
+      document.body.appendChild(t);
+      t.select();
+      document.execCommand('copy');
+      document.body.removeChild(t);
+    }
+  } catch(err) {}
+
+  // Save customer info locally
+  try {
+    localStorage.setItem('olion_customer_name', name);
+    localStorage.setItem('olion_customer_phone', phone);
+  } catch(err) {}
+
+  // Show Success Screen with the copied preview
+  const formArea = document.getElementById('pageFormArea');
+  const successArea = document.getElementById('pageSuccessArea');
+  const previewBox = document.getElementById('pagePreviewBox');
+  if (previewBox) previewBox.textContent = formattedMsg;
+  if (formArea) formArea.style.display = 'none';
+  if (successArea) successArea.style.display = 'block';
+
+  // Redirect to Messenger
+  window.open('https://m.me/61594159312837', '_blank');
 }
+
+// Run init
+initBookingPage();
 
 /* ─── Copy Link ─── */
 function copyLink(){
