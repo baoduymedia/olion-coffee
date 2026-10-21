@@ -1047,6 +1047,331 @@
     .marquee-item .highlight { color: var(--accent-gold); font-weight: 700; }
     .marquee-item .star { color: var(--accent-gold); font-size: 11px; }
 
+    /* ======== AMENITIES & CONVENIENCE (TIỆN ÍCH & TRẢI NGHIỆM) ======== */
+    .amenities-section {
+      padding: clamp(60px, 7vw, 90px) 0 clamp(40px, 5vw, 60px);
+      background: radial-gradient(circle at 85% 15%, rgba(229, 154, 85, 0.05) 0%, transparent 45%),
+                  radial-gradient(circle at 15% 85%, rgba(27, 104, 63, 0.05) 0%, transparent 45%),
+                  #0E1611;
+      position: relative;
+    }
+
+    .amenities-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto clamp(32px, 5vw, 44px);
+    }
+
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 991px) and (min-width: 641px) {
+      .amenities-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .amenities-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+    }
+
+    .amenity-card {
+      background: rgba(19, 27, 21, 0.88);
+      border: 1px solid rgba(229, 154, 85, 0.18);
+      border-radius: var(--radius-lg);
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .amenity-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .amenity-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-gold);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(229, 154, 85, 0.12);
+    }
+
+    .amenity-card:hover::before {
+      opacity: 1;
+    }
+
+    .amenity-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .amenity-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(229, 154, 85, 0.12);
+      border: 1px solid rgba(229, 154, 85, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-gold);
+      flex-shrink: 0;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .amenity-card:hover .amenity-icon-box {
+      background: var(--accent-gold);
+      color: #0A0F0D;
+      transform: scale(1.05);
+    }
+
+    .amenity-badge {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--accent-gold);
+      border: 1px solid rgba(229, 154, 85, 0.2);
+    }
+
+    .amenity-title {
+      font-family: var(--font-heading);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-white);
+      margin: 4px 0 8px;
+      line-height: 1.3;
+    }
+
+    .amenity-desc {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    /* Interactive Wifi Box */
+    .wifi-quick-box {
+      margin-top: 14px;
+      background: rgba(10, 15, 13, 0.7);
+      border: 1px dashed rgba(229, 154, 85, 0.35);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .wifi-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 12px;
+    }
+
+    .wifi-info strong {
+      color: var(--text-white);
+      font-weight: 600;
+    }
+
+    .wifi-pass-code {
+      font-family: monospace;
+      color: var(--accent-gold);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-copy-wifi {
+      background: rgba(229, 154, 85, 0.15);
+      border: 1px solid var(--accent-gold);
+      color: var(--accent-gold);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-copy-wifi:hover {
+      background: var(--accent-gold);
+      color: #0A0F0D;
+      transform: translateY(-1px);
+    }
+
+    .btn-copy-wifi:active {
+      transform: scale(0.95);
+    }
+
+    /* Online Delivery Hub */
+    .delivery-hub-banner {
+      margin-top: 32px;
+      background: linear-gradient(135deg, rgba(20, 29, 22, 0.95) 0%, rgba(30, 24, 18, 0.95) 100%);
+      border: 1px solid rgba(229, 154, 85, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 22px 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .delivery-hub-text {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .delivery-hub-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(216, 99, 38, 0.2);
+      border: 1px solid var(--accent-rust);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-rust);
+      flex-shrink: 0;
+    }
+
+    .delivery-hub-title {
+      font-family: var(--font-heading);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 3px;
+    }
+
+    .delivery-hub-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .delivery-hub-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .delivery-chip-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    }
+
+    .delivery-chip-btn.shopee {
+      background: rgba(238, 77, 45, 0.15);
+      border: 1px solid #EE4D2D;
+      color: #FF6433;
+    }
+    .delivery-chip-btn.shopee:hover {
+      background: #EE4D2D;
+      color: #FFFFFF;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(238, 77, 45, 0.4);
+    }
+
+    .delivery-chip-btn.grab {
+      background: rgba(0, 177, 79, 0.15);
+      border: 1px solid #00B14F;
+      color: #00E668;
+    }
+    .delivery-chip-btn.grab:hover {
+      background: #00B14F;
+      color: #FFFFFF;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 177, 79, 0.4);
+    }
+
+    .delivery-chip-btn.zalo {
+      background: rgba(0, 104, 255, 0.15);
+      border: 1px solid #0068FF;
+      color: #388CFF;
+    }
+    .delivery-chip-btn.zalo:hover {
+      background: #0068FF;
+      color: #FFFFFF;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 104, 255, 0.4);
+    }
+
+    .delivery-chip-btn.hotline {
+      background: rgba(229, 154, 85, 0.15);
+      border: 1px solid var(--accent-gold);
+      color: var(--accent-gold);
+    }
+    .delivery-chip-btn.hotline:hover {
+      background: var(--accent-gold);
+      color: #0A0F0D;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(229, 154, 85, 0.4);
+    }
+
+    @media (max-width: 767px) {
+      .delivery-hub-banner {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 18px 16px;
+        gap: 16px;
+      }
+      .delivery-hub-links {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .delivery-chip-btn {
+        justify-content: center;
+        padding: 8px 10px;
+        font-size: 11.5px;
+      }
+    }
+
     /* ======== ABOUT ======== */
     .about-section {
       padding: var(--section-py) 0;
@@ -3200,7 +3525,7 @@
 
     /* ======== GLOBAL SCROLL-MARGIN FIXES ======== */
     /* Đảm bảo tất cả sections không bị header cố định 72px che khuất khi click nav */
-    #hero, #about, #signature, #menu, #spaces, #news, #faq, #reviews, #contact {
+    #hero, #amenities, #about, #signature, #menu, #spaces, #news, #faq, #reviews, #contact {
       scroll-margin-top: 72px;
     }
 
@@ -4844,6 +5169,7 @@
       </a>
 
       <nav class="header-nav" id="headerNav" aria-label="Thanh điều hướng chính">
+        <a href="#amenities" class="nav-link" data-i18n="nav_amenities">Tiện ích</a>
         <a href="#about" class="nav-link" data-i18n="nav_about">Về Olion</a>
         <a href="#signature" class="nav-link" data-i18n="nav_signature">Signature</a>
         <a href="#menu" class="nav-link" data-i18n="nav_menu">Thực đơn</a>
@@ -4964,6 +5290,14 @@
           <div class="drawer-link-left">
             <div class="drawer-link-icon"><i data-lucide="home" style="width:16px;height:16px;"></i></div>
             <span data-i18n="drawer_home">Trang chủ</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </a>
+
+        <a href="#amenities" class="drawer-link" onclick="toggleDrawer(false)">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon"><i data-lucide="zap" style="width:16px;height:16px;"></i></div>
+            <span data-i18n="drawer_amenities">Tiện ích & Giao hàng</span>
           </div>
           <span class="drawer-link-arrow">›</span>
         </a>
@@ -5188,8 +5522,162 @@
       </div>
     </section>
 
+    <!-- ======== AMENITIES & CONVENIENCE (TIỆN ÍCH & TRẢI NGHIỆM KHÔNG GIAN) ======== -->
+    <section class="amenities-section" id="amenities" aria-label="Tiện ích tại Olion Coffee">
+      <div class="shell">
+        <div class="amenities-header">
+          <div class="section-eyebrow" data-i18n="amenities_eyebrow">
+            <span class="eyebrow-num">✦</span> Tiện Ích & Không Gian Làm Việc
+          </div>
+          <h2 class="section-title" data-i18n="amenities_title">
+            Tiện Nghi Hoàn Hảo Cho <span class="accent">Làm Việc & Thư Giãn</span>
+          </h2>
+          <p class="section-desc" data-i18n="amenities_desc">
+            Không gian tĩnh lặng, trang bị đầy đủ ổ điện từng bàn, wifi 5G cực nhanh và bãi đỗ xe an ninh — sẵn sàng đồng hành cùng bạn học tập, chạy deadline và thưởng thức cà phê.
+          </p>
+        </div>
 
+        <div class="amenities-grid">
+          <!-- Card 1: Ổ Cắm Điện Mọi Bàn -->
+          <div class="amenity-card">
+            <div>
+              <div class="amenity-card-top">
+                <div class="amenity-icon-box">
+                  <i data-lucide="zap" style="width:24px;height:24px;"></i>
+                </div>
+                <span class="amenity-badge">100% Các Bàn ⚡</span>
+              </div>
+              <h3 class="amenity-title">Ổ Cắm Điện Từng Bàn</h3>
+              <p class="amenity-desc">
+                Mọi góc ngồi đều được bố trí ổ cắm điện đôi và cổng sạc tiện lợi. Thoải mái cắm sạc laptop, điện thoại suốt cả ngày dài không lo gián đoạn nguồn pin.
+              </p>
+            </div>
+          </div>
 
+          <!-- Card 2: Wifi 5G Siêu Tốc & Nút Sao Chép Pass -->
+          <div class="amenity-card" style="border-color: rgba(229, 154, 85, 0.4);">
+            <div>
+              <div class="amenity-card-top">
+                <div class="amenity-icon-box" style="background: rgba(229, 154, 85, 0.2);">
+                  <i data-lucide="wifi" style="width:24px;height:24px;"></i>
+                </div>
+                <span class="amenity-badge" style="background: rgba(229, 154, 85, 0.15); border-color: var(--accent-gold);">Tốc Độ Cao 🚀</span>
+              </div>
+              <h3 class="amenity-title">Wifi 5G Siêu Tốc Miễn Phí</h3>
+              <p class="amenity-desc">
+                Đường truyền cáp quang riêng biệt, băng thông rộng ổn định cho cuộc gọi Zoom, meeting trực tuyến và tải tài liệu nặng.
+              </p>
+            </div>
+            <!-- Quick Wifi Copy Box -->
+            <div class="wifi-quick-box">
+              <div class="wifi-info">
+                <span>Mạng: <strong>OLION COFFEE 5G</strong></span>
+                <span>Mật khẩu: <span class="wifi-pass-code" id="wifiPassCodeVal">olioncoffee</span></span>
+              </div>
+              <button type="button" class="btn-copy-wifi" onclick="copyWifiPassword()" title="Sao chép mật khẩu Wifi" aria-label="Sao chép mật khẩu Wifi">
+                <i data-lucide="copy" style="width:13px;height:13px;"></i>
+                <span>Sao chép</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 3: Bãi Giữ Xe Rộng & An Ninh -->
+          <div class="amenity-card">
+            <div>
+              <div class="amenity-card-top">
+                <div class="amenity-icon-box">
+                  <i data-lucide="shield-check" style="width:24px;height:24px;"></i>
+                </div>
+                <span class="amenity-badge">Miễn Phí 100% 🛵</span>
+              </div>
+              <h3 class="amenity-title">Bãi Giữ Xe Rộng & An Ninh</h3>
+              <p class="amenity-desc">
+                Bãi xe máy rộng rãi ngay trước quán, hẻm xe hơi thông thoáng đỗ thoải mái. Có nhân viên hỗ trợ dắt xe tận tình và hệ thống camera an ninh 24/7.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 4: Máy Lạnh & Không Khói Thuốc -->
+          <div class="amenity-card">
+            <div>
+              <div class="amenity-card-top">
+                <div class="amenity-icon-box">
+                  <i data-lucide="wind" style="width:24px;height:24px;"></i>
+                </div>
+                <span class="amenity-badge">Mát Lạnh 24/7 ❄️</span>
+              </div>
+              <h3 class="amenity-title">Máy Lạnh & Không Khói Thuốc</h3>
+              <p class="amenity-desc">
+                Không gian trong nhà luôn duy trì nhiệt độ 23°C – 25°C mát lạnh sảng khoái. 100% không mùi khói thuốc giúp bạn tỉnh táo và giữ tinh thần tập trung.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 5: Cà Phê Hạt Mộc -->
+          <div class="amenity-card">
+            <div>
+              <div class="amenity-card-top">
+                <div class="amenity-icon-box">
+                  <i data-lucide="coffee" style="width:24px;height:24px;"></i>
+                </div>
+                <span class="amenity-badge">Rang Mộc Chuẩn Gu ☕</span>
+              </div>
+              <h3 class="amenity-title">100% Cà Phê Hạt Mộc</h3>
+              <p class="amenity-desc">
+                Sử dụng hạt Fine Robusta Lâm Đồng và Arabica Cầu Đất nguyên chất tuyển chọn, rang mộc tự nhiên không hương liệu, giữ trọn hậu vị ngọt thanh.
+              </p>
+            </div>
+          </div>
+
+          <!-- Card 6: Góc Ngoài Trời Xanh -->
+          <div class="amenity-card">
+            <div>
+              <div class="amenity-card-top">
+                <div class="amenity-icon-box">
+                  <i data-lucide="trees" style="width:24px;height:24px;"></i>
+                </div>
+                <span class="amenity-badge">Chill & Yên Bình 🍃</span>
+              </div>
+              <h3 class="amenity-title">Sân Vườn & Nhạc Lofi Dịu Nhẹ</h3>
+              <p class="amenity-desc">
+                Góc ban công thoáng mát rợp bóng cây xanh đón gió trời tự nhiên, kết hợp cùng danh sách nhạc Lofi & Acoustic êm dịu giúp xua tan áp lực.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Online Delivery Hub Banner -->
+        <div class="delivery-hub-banner">
+          <div class="delivery-hub-text">
+            <div class="delivery-hub-icon">
+              <i data-lucide="truck" style="width:24px;height:24px;"></i>
+            </div>
+            <div>
+              <div class="delivery-hub-title">Bận rộn không tiện ghé quán? Đặt Olion giao tận nơi!</div>
+              <div class="delivery-hub-sub">Giao nhanh thức uống mát lạnh, đóng gói chuyên nghiệp giữ trọn hương vị.</div>
+            </div>
+          </div>
+          <div class="delivery-hub-links">
+            <a href="https://shopeefood.vn" target="_blank" rel="noopener noreferrer" class="delivery-chip-btn shopee" title="Đặt món Olion Coffee qua ShopeeFood">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.5 7.5h-3.2A4.5 4.5 0 0 0 12 3a4.5 4.5 0 0 0-4.3 4.5H4.5A1.5 1.5 0 0 0 3 9l1.5 12A1.5 1.5 0 0 0 6 22.5h12a1.5 1.5 0 0 0 1.5-1.5L21 9a1.5 1.5 0 0 0-1.5-1.5zM12 5a2.5 2.5 0 0 1 2.4 2.5H9.6A2.5 2.5 0 0 1 12 5zm0 13a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7z"/></svg>
+              <span>ShopeeFood</span>
+            </a>
+            <a href="https://food.grab.com" target="_blank" rel="noopener noreferrer" class="delivery-chip-btn grab" title="Đặt món Olion Coffee qua GrabFood">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2V7h2v10z"/></svg>
+              <span>GrabFood</span>
+            </a>
+            <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="delivery-chip-btn zalo" title="Chat Zalo đặt món giao tận nơi">
+              <img src="assets/zalo-logo.webp" alt="Zalo" width="15" height="15" loading="lazy" />
+              <span>Đặt Qua Zalo</span>
+            </a>
+            <a href="tel:0783657587" class="delivery-chip-btn hotline" title="Gọi Hotline đặt món">
+              <i data-lucide="phone-call" style="width:14px;height:14px;"></i>
+              <span>Hotline 0783 657 587</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- SECTION DIVIDER -->
     <div class="section-divider" aria-hidden="true">
@@ -6809,6 +7297,7 @@
       // =========================================================================
       const I18N_DICT = {
         vi: {
+          nav_amenities: "Tiện ích",
           nav_about: "Về Olion",
           nav_signature: "Signature",
           nav_menu: "Thực đơn",
@@ -6820,6 +7309,7 @@
           nav_feedback: "Góp ý quán",
           nav_loyalty: "Tích điểm",
           drawer_home: "Trang chủ",
+          drawer_amenities: "Tiện ích & Giao hàng",
           drawer_about: "Về Olion Coffee",
           drawer_signature: "Món Signature",
           drawer_menu: "Thực đơn đồ uống",
@@ -6928,11 +7418,14 @@
           loyalty_phone_placeholder: "Ví dụ: 0908123456",
           loyalty_btn_lookup: "Tra Cứu",
           loyalty_current_points: "Điểm tích lũy",
-          loyalty_pts_unit: "điểm",
           wheel_float: "Quay Nhận Quà",
-          back_to_top: "Lên đầu trang"
+          back_to_top: "Lên đầu trang",
+          amenities_eyebrow: '<span class="eyebrow-num">✦</span> Tiện Ích & Không Gian Làm Việc',
+          amenities_title: 'Tiện Nghi Hoàn Hảo Cho <span class="accent">Làm Việc & Thư Giãn</span>',
+          amenities_desc: 'Không gian tĩnh lặng, trang bị đầy đủ ổ điện từng bàn, wifi 5G cực nhanh và bãi đỗ xe an ninh — sẵn sàng đồng hành cùng bạn học tập, chạy deadline và thưởng thức cà phê.'
         },
         en: {
+          nav_amenities: "Amenities",
           nav_about: "About Us",
           nav_signature: "Signatures",
           nav_menu: "Menu",
@@ -6944,6 +7437,7 @@
           nav_feedback: "Feedback",
           nav_loyalty: "Loyalty",
           drawer_home: "Home",
+          drawer_amenities: "Amenities & Delivery",
           drawer_about: "About Olion Coffee",
           drawer_signature: "Signature Drinks",
           drawer_menu: "Beverage Menu",
@@ -7054,7 +7548,10 @@
           loyalty_current_points: "Current Points",
           loyalty_pts_unit: "pts",
           wheel_float: "Spin & Win",
-          back_to_top: "Back to top"
+          back_to_top: "Back to top",
+          amenities_eyebrow: '<span class="eyebrow-num">✦</span> Amenities & Workspaces',
+          amenities_title: 'Perfect Amenities For <span class="accent">Work & Relaxation</span>',
+          amenities_desc: 'A serene atmosphere equipped with individual table power outlets, ultra-fast 5G Wifi, and secure parking — ready to support your study sessions, deadlines, and coffee moments.'
         }
       };
 
@@ -7109,6 +7606,43 @@
           window.updateDynamicGreeting(lang);
         }
       };
+
+      // Copy Wifi Password Function
+      window.copyWifiPassword = function() {
+        const pass = 'olioncoffee';
+        const msg = currentLang === 'vi' ? 'Đã sao chép mật khẩu Wifi: ' + pass : 'Wifi password copied: ' + pass;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(pass).then(() => {
+            if (window.showOlionToast) {
+              window.showOlionToast(msg, 'wifi');
+            }
+          }).catch(() => {
+            fallbackWifiCopy(pass, msg);
+          });
+        } else {
+          fallbackWifiCopy(pass, msg);
+        }
+      };
+
+      function fallbackWifiCopy(text, toastMsg) {
+        const temp = document.createElement('textarea');
+        temp.value = text;
+        temp.style.position = 'fixed';
+        temp.style.left = '-9999px';
+        document.body.appendChild(temp);
+        temp.select();
+        try {
+          document.execCommand('copy');
+          if (window.showOlionToast) {
+            window.showOlionToast(toastMsg, 'wifi');
+          }
+        } catch(e) {
+          if (window.showOlionToast) {
+            window.showOlionToast('Mật khẩu Wifi: ' + text, 'wifi');
+          }
+        }
+        document.body.removeChild(temp);
+      }
 
       // =========================================================================
       // DYNAMIC TIME-OF-DAY & PERSONALIZED GREETING (SÁNG, TRƯA, XẾ CHIỀU, TỐI)
