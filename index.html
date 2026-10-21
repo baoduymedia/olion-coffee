@@ -5873,8 +5873,8 @@
             <!-- Quick Wifi Copy Box -->
             <div class="wifi-quick-box">
               <div class="wifi-info">
-                <span>Mạng: <strong>OLION COFFEE 5G</strong></span>
-                <span>Mật khẩu: <span class="wifi-pass-code" id="wifiPassCodeVal">olioncoffee</span></span>
+                <span>Mạng: <strong>OLION</strong></span>
+                <span>Mật khẩu: <span class="wifi-pass-code" id="wifiPassCodeVal">12345678@</span></span>
               </div>
               <button type="button" class="btn-copy-wifi" onclick="copyWifiPassword()" title="Sao chép mật khẩu Wifi" aria-label="Sao chép mật khẩu Wifi">
                 <i data-lucide="copy" style="width:13px;height:13px;"></i>
@@ -7860,7 +7860,7 @@
 
       // Copy Wifi Password Function
       window.copyWifiPassword = function() {
-        const pass = 'olioncoffee';
+        const pass = document.getElementById('wifiPassCodeVal')?.textContent.trim() || '12345678@';
         const msg = currentLang === 'vi' ? 'Đã sao chép mật khẩu Wifi: ' + pass : 'Wifi password copied: ' + pass;
         if (navigator.clipboard && navigator.clipboard.writeText) {
           navigator.clipboard.writeText(pass).then(() => {
