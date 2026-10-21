@@ -5373,8 +5373,8 @@
       </a>
 
       <nav class="header-nav" id="headerNav" aria-label="Thanh điều hướng chính">
-        <a href="#amenities" class="nav-link" data-i18n="nav_amenities">Tiện ích</a>
         <a href="#about" class="nav-link" data-i18n="nav_about">Về Olion</a>
+        <a href="#amenities" class="nav-link" data-i18n="nav_amenities">Tiện ích</a>
         <a href="#signature" class="nav-link" data-i18n="nav_signature">Signature</a>
         <a href="#menu" class="nav-link" data-i18n="nav_menu">Thực đơn</a>
         <a href="#spaces" class="nav-link" data-i18n="nav_spaces">Không gian</a>
@@ -5498,18 +5498,18 @@
           <span class="drawer-link-arrow">›</span>
         </a>
 
-        <a href="#amenities" class="drawer-link" onclick="toggleDrawer(false)">
-          <div class="drawer-link-left">
-            <div class="drawer-link-icon"><i data-lucide="zap" style="width:16px;height:16px;"></i></div>
-            <span data-i18n="drawer_amenities">Tiện ích & Không gian</span>
-          </div>
-          <span class="drawer-link-arrow">›</span>
-        </a>
-
         <a href="#about" class="drawer-link">
           <div class="drawer-link-left">
             <div class="drawer-link-icon"><i data-lucide="coffee" style="width:16px;height:16px;"></i></div>
             <span data-i18n="drawer_about">Về Olion Coffee</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </a>
+
+        <a href="#amenities" class="drawer-link" onclick="toggleDrawer(false)">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon"><i data-lucide="zap" style="width:16px;height:16px;"></i></div>
+            <span data-i18n="drawer_amenities">Tiện ích & Không gian</span>
           </div>
           <span class="drawer-link-arrow">›</span>
         </a>
@@ -5726,6 +5726,104 @@
       </div>
     </section>
 
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider" aria-hidden="true">
+      <span class="divider-line"></span>
+      <span class="divider-pip">✦</span>
+      <span class="divider-line"></span>
+    </div>
+
+    <!-- ======== 4. ABOUT SECTION ======== -->
+    <section class="about-section" id="about" aria-label="Về chúng tôi">
+
+      <div class="shell">
+        <div class="about-grid">
+          <div class="about-text-col">
+            <div class="about-watermark" aria-hidden="true">01</div>
+            <div class="section-eyebrow" data-i18n="about_eyebrow">
+              <span class="eyebrow-num">01</span> Về Olion Coffee
+            </div>
+            <h2 class="section-title" data-i18n="about_title">
+              Chắt chiu từng giọt,<br>
+              <span class="accent">trao hương vị tinh tế</span>.
+            </h2>
+            <p class="about-desc" data-i18n="about_desc">
+              Trời trưa hơi gắt, ghé OLION thả lưng xuống chiếc ghế quen, ngắm ánh đèn vàng dịu mắt và làm ngụm nước mát lạnh rồi tỉnh tiếp nha. Không chỉ là cà phê, OLION muốn đem tới trải nghiệm trọn vẹn: đồ uống pha tay tỉ mỉ, không gian ấm cúng và những khoảnh khắc thật chậm.
+            </p>
+            <div class="about-features-grid">
+              <div class="feature-pill">
+                <div class="feature-pill-icon"><i data-lucide="coffee" style="width:20px;height:20px;"></i></div>
+                <div>
+                  <h3 class="feature-pill-title" data-i18n="about_feat_1_title">Pha thủ công</h3>
+                  <p class="feature-pill-desc" data-i18n="about_feat_1_desc">Từng ly được pha chế tỉ mỉ tại quầy</p>
+                </div>
+              </div>
+              <div class="feature-pill">
+                <div class="feature-pill-icon"><i data-lucide="leaf" style="width:20px;height:20px;"></i></div>
+                <div>
+                  <h3 class="feature-pill-title" data-i18n="about_feat_2_title">Nguyên liệu chọn lọc</h3>
+                  <p class="feature-pill-desc" data-i18n="about_feat_2_desc">Hạt mộc rang xay & trà cao cấp</p>
+                </div>
+              </div>
+              <div class="feature-pill">
+                <div class="feature-pill-icon"><i data-lucide="armchair" style="width:20px;height:20px;"></i></div>
+                <div>
+                  <h3 class="feature-pill-title" data-i18n="about_feat_3_title">Không gian yên tĩnh</h3>
+                  <p class="feature-pill-desc" data-i18n="about_feat_3_desc">Góc làm việc & thư giãn ấm cúng</p>
+                </div>
+              </div>
+              <div class="feature-pill">
+                <div class="feature-pill-icon"><i data-lucide="sparkles" style="width:20px;height:20px;"></i></div>
+                <div>
+                  <h3 class="feature-pill-title" data-i18n="about_feat_4_title">Phục vụ tận tâm</h3>
+                  <p class="feature-pill-desc" data-i18n="about_feat_4_desc">Nụ cười và sự chu đáo mỗi ngày</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="expertise-block" style="margin-top: 32px; padding: 24px; background: rgba(211, 108, 45, 0.05); border-left: 4px solid var(--accent-gold); border-radius: 0 8px 8px 0;">
+              <h3 style="font-family: var(--font-heading); color: var(--accent-gold); font-size: 1.5rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                <i data-lucide="award" style="width:24px;height:24px;"></i> Triết Lý Pha Chế
+              </h3>
+              <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+                Chúng tôi đề cao tính <strong>chuyên môn (Expertise)</strong> trong từng giọt cà phê. 100% hạt cà phê tại Olion được tuyển chọn từ các nông trại canh tác theo tiêu chuẩn <em>nông sản sạch (Clean Agriculture)</em> tại Cầu Đất và Đắk Nông, rang mộc (không tẩm ướp) để giữ trọn vẹn hương vị nguyên bản (Specialty Coffee). Đội ngũ Barista được đào tạo chuyên sâu về kỹ thuật chiết xuất chuẩn SCA.
+              </p>
+              <div style="display: flex; gap: 16px; align-items: flex-start;">
+                <div style="width: 54px; height: 54px; border-radius: 50%; overflow: hidden; border: 2px solid var(--border-light); flex-shrink: 0;">
+                  <img src="assets/news/news-1-barista.webp" alt="Founder Olion" style="width:100%; height:100%; object-fit:cover;" loading="lazy" />
+                </div>
+                <div>
+                  <p style="font-style: italic; color: #fff; font-size: 0.95rem; line-height: 1.5; margin-bottom: 8px;">
+                    "Một ly cà phê ngon không chỉ nằm ở hạt chất lượng, mà còn ở trải nghiệm và sự tâm huyết của người pha. Ở Olion, chúng tôi làm điều đó mỗi ngày."
+                  </p>
+                  <p style="color: var(--accent-gold); font-weight: 600; font-size: 0.85rem; letter-spacing: 1px;">— FOUNDER & HEAD BARISTA</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="about-mosaic">
+            <div class="mosaic-item">
+              <img src="assets/space-1.webp" alt="Quầy pha chế thủ công và không gian ấm cúng tại Olion Coffee Gò Vấp" width="600" height="400" loading="lazy" decoding="async" />
+            </div>
+            <div class="mosaic-item">
+              <img src="assets/space-2.webp" alt="Góc thương hiệu và không gian thư giãn tại Olion Coffee" width="600" height="300" loading="lazy" decoding="async" />
+            </div>
+            <div class="mosaic-item">
+              <img src="assets/space-3.webp" alt="Bàn ghế gỗ cao cấp và tranh nghệ thuật tại Olion Coffee" width="600" height="300" loading="lazy" decoding="async" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider" aria-hidden="true">
+      <span class="divider-line"></span>
+      <span class="divider-pip">✦</span>
+      <span class="divider-line"></span>
+    </div>
+
     <!-- ======== AMENITIES & CONVENIENCE (TIỆN ÍCH & TRẢI NGHIỆM KHÔNG GIAN) ======== -->
     <section class="amenities-section" id="amenities" aria-label="Tiện ích tại Olion Coffee">
       <div class="shell">
@@ -5928,97 +6026,7 @@
       <span class="divider-pip">✦</span>
       <span class="divider-line"></span>
     </div>
-    <!-- ======== 4. ABOUT SECTION ======== -->
-    <section class="about-section" id="about" aria-label="Về chúng tôi">
 
-      <div class="shell">
-        <div class="about-grid">
-          <div class="about-text-col">
-            <div class="about-watermark" aria-hidden="true">01</div>
-            <div class="section-eyebrow" data-i18n="about_eyebrow">
-              <span class="eyebrow-num">01</span> Về Olion Coffee
-            </div>
-            <h2 class="section-title" data-i18n="about_title">
-              Chắt chiu từng giọt,<br>
-              <span class="accent">trao hương vị tinh tế</span>.
-            </h2>
-            <p class="about-desc" data-i18n="about_desc">
-              Trời trưa hơi gắt, ghé OLION thả lưng xuống chiếc ghế quen, ngắm ánh đèn vàng dịu mắt và làm ngụm nước mát lạnh rồi tỉnh tiếp nha. Không chỉ là cà phê, OLION muốn đem tới trải nghiệm trọn vẹn: đồ uống pha tay tỉ mỉ, không gian ấm cúng và những khoảnh khắc thật chậm.
-            </p>
-            <div class="about-features-grid">
-              <div class="feature-pill">
-                <div class="feature-pill-icon"><i data-lucide="coffee" style="width:20px;height:20px;"></i></div>
-                <div>
-                  <h3 class="feature-pill-title" data-i18n="about_feat_1_title">Pha thủ công</h3>
-                  <p class="feature-pill-desc" data-i18n="about_feat_1_desc">Từng ly được pha chế tỉ mỉ tại quầy</p>
-                </div>
-              </div>
-              <div class="feature-pill">
-                <div class="feature-pill-icon"><i data-lucide="leaf" style="width:20px;height:20px;"></i></div>
-                <div>
-                  <h3 class="feature-pill-title" data-i18n="about_feat_2_title">Nguyên liệu chọn lọc</h3>
-                  <p class="feature-pill-desc" data-i18n="about_feat_2_desc">Hạt mộc rang xay & trà cao cấp</p>
-                </div>
-              </div>
-              <div class="feature-pill">
-                <div class="feature-pill-icon"><i data-lucide="armchair" style="width:20px;height:20px;"></i></div>
-                <div>
-                  <h3 class="feature-pill-title" data-i18n="about_feat_3_title">Không gian yên tĩnh</h3>
-                  <p class="feature-pill-desc" data-i18n="about_feat_3_desc">Góc làm việc & thư giãn ấm cúng</p>
-                </div>
-              </div>
-              <div class="feature-pill">
-                <div class="feature-pill-icon"><i data-lucide="sparkles" style="width:20px;height:20px;"></i></div>
-                <div>
-                  <h3 class="feature-pill-title" data-i18n="about_feat_4_title">Phục vụ tận tâm</h3>
-                  <p class="feature-pill-desc" data-i18n="about_feat_4_desc">Nụ cười và sự chu đáo mỗi ngày</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="expertise-block" style="margin-top: 32px; padding: 24px; background: rgba(211, 108, 45, 0.05); border-left: 4px solid var(--accent-gold); border-radius: 0 8px 8px 0;">
-              <h3 style="font-family: var(--font-heading); color: var(--accent-gold); font-size: 1.5rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
-                <i data-lucide="award" style="width:24px;height:24px;"></i> Triết Lý Pha Chế
-              </h3>
-              <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
-                Chúng tôi đề cao tính <strong>chuyên môn (Expertise)</strong> trong từng giọt cà phê. 100% hạt cà phê tại Olion được tuyển chọn từ các nông trại canh tác theo tiêu chuẩn <em>nông sản sạch (Clean Agriculture)</em> tại Cầu Đất và Đắk Nông, rang mộc (không tẩm ướp) để giữ trọn vẹn hương vị nguyên bản (Specialty Coffee). Đội ngũ Barista được đào tạo chuyên sâu về kỹ thuật chiết xuất chuẩn SCA.
-              </p>
-              <div style="display: flex; gap: 16px; align-items: flex-start;">
-                <div style="width: 54px; height: 54px; border-radius: 50%; overflow: hidden; border: 2px solid var(--border-light); flex-shrink: 0;">
-                  <img src="assets/news/news-1-barista.webp" alt="Founder Olion" style="width:100%; height:100%; object-fit:cover;" loading="lazy" />
-                </div>
-                <div>
-                  <p style="font-style: italic; color: #fff; font-size: 0.95rem; line-height: 1.5; margin-bottom: 8px;">
-                    "Một ly cà phê ngon không chỉ nằm ở hạt chất lượng, mà còn ở trải nghiệm và sự tâm huyết của người pha. Ở Olion, chúng tôi làm điều đó mỗi ngày."
-                  </p>
-                  <p style="color: var(--accent-gold); font-weight: 600; font-size: 0.85rem; letter-spacing: 1px;">— FOUNDER & HEAD BARISTA</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="about-mosaic">
-            <div class="mosaic-item">
-              <img src="assets/space-1.webp" alt="Quầy pha chế thủ công và không gian ấm cúng tại Olion Coffee Gò Vấp" width="600" height="400" loading="lazy" decoding="async" />
-            </div>
-            <div class="mosaic-item">
-              <img src="assets/space-2.webp" alt="Góc thương hiệu và không gian thư giãn tại Olion Coffee" width="600" height="300" loading="lazy" decoding="async" />
-            </div>
-            <div class="mosaic-item">
-              <img src="assets/space-3.webp" alt="Bàn ghế gỗ cao cấp và tranh nghệ thuật tại Olion Coffee" width="600" height="300" loading="lazy" decoding="async" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- SECTION DIVIDER -->
-    <div class="section-divider" aria-hidden="true">
-      <span class="divider-line"></span>
-      <span class="divider-pip">✦</span>
-      <span class="divider-line"></span>
-    </div>
     <!-- ======== 5. SIGNATURE SHOWCASE ======== -->
     <section class="signature-section" id="signature" aria-label="Món Signature đặc sắc">
       <div class="shell">
