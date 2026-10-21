@@ -6470,7 +6470,16 @@
         }
       };
 
-      setTimeout(window.loadFeaturedNews, 500);
+      setTimeout(() => {
+        if (window.loadFeaturedNews) window.loadFeaturedNews();
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetArticleId = urlParams.get('article');
+        if (targetArticleId) {
+          setTimeout(() => {
+            if (window.openNewsModal) window.openNewsModal(targetArticleId);
+          }, 600);
+        }
+      }, 500);
 
       window.openNewsModal = function(newsId) {
         currentNewsId = newsId;
