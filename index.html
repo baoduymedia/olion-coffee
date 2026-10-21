@@ -10410,16 +10410,6 @@
         });
       }
 
-            // G. PWA Install Prompt
-      let deferredPrompt = null;
-      const floatingInstallBtn = document.getElementById('floatingInstallBtn');
-      const drawerInstallBtn = document.getElementById('drawerInstallBtn');
-
-      window.addEventListener('beforeinstallprompt', (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-      });
-
             // G. PWA Install Prompt (3 Platforms: iOS, Android, PC)
       let deferredPrompt = null;
       let detectedPlatform = 'pc';
