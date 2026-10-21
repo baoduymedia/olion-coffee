@@ -1405,6 +1405,277 @@
 
     .space-card:hover img { transform: scale(1.04); }
 
+    /* ======== SERVICES & BOOKING SECTION ======== */
+    .services-section {
+      padding: var(--section-py) 0;
+      background: linear-gradient(180deg, var(--bg-dark) 0%, #120e0c 50%, var(--bg-darkest) 100%);
+      border-top: 1px solid var(--border-gold);
+      border-bottom: 1px solid var(--border-subtle);
+      position: relative;
+    }
+    .services-banner-grid {
+      display: grid;
+      grid-template-columns: minmax(320px, 420px) 1fr;
+      gap: 36px;
+      align-items: stretch;
+      margin-top: 24px;
+    }
+    @media (max-width: 960px) {
+      .services-banner-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+    .services-visual-card {
+      display: flex;
+      flex-direction: column;
+    }
+    .services-poster-wrap {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1.5px solid var(--border-gold);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.6), 0 0 30px rgba(229, 154, 85, 0.12);
+      background: #1a120e;
+      height: 100%;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+    }
+    @media (max-width: 960px) {
+      .services-poster-wrap {
+        min-height: 380px;
+        max-height: 500px;
+      }
+    }
+    .services-poster-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .services-poster-wrap:hover .services-poster-img {
+      transform: scale(1.03);
+    }
+    .services-poster-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 24px 20px 20px;
+      background: linear-gradient(to top, rgba(14, 9, 7, 0.95) 0%, rgba(14, 9, 7, 0.6) 70%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .services-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(229, 154, 85, 0.2);
+      border: 1px solid var(--accent-gold);
+      color: var(--accent-gold-light);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 99px;
+      width: fit-content;
+    }
+    .services-quote {
+      color: var(--text-cream);
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: 17px;
+      margin: 0;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+    .services-content-col {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .service-feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .service-feature-card:hover {
+      border-color: var(--border-gold);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .service-feature-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .service-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(229, 154, 85, 0.12);
+      border: 1px solid var(--border-gold);
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .service-title-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .service-num {
+      font-family: var(--font-heading);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      line-height: 1;
+    }
+    .service-title {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-white);
+      letter-spacing: 0.04em;
+      margin: 0;
+    }
+    .service-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .service-tag {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--accent-gold-light);
+      background: rgba(229, 154, 85, 0.08);
+      border: 1px solid rgba(229, 154, 85, 0.2);
+      padding: 3px 10px;
+      border-radius: 99px;
+    }
+    .service-desc {
+      font-size: 13.5px;
+      line-height: 1.65;
+      color: var(--text-body);
+      margin-bottom: 14px;
+    }
+    .service-notice-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(229, 154, 85, 0.07);
+      border-left: 3px solid var(--accent-gold);
+      padding: 10px 14px;
+      border-radius: 4px;
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--text-cream);
+      margin-bottom: 16px;
+    }
+    .service-notice-box strong {
+      color: var(--accent-gold);
+    }
+    .service-action-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .services-contact-bar {
+      background: rgba(229, 154, 85, 0.05);
+      border: 1px dashed var(--border-gold);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .services-contact-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .services-contact-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .services-learn-more-link {
+      color: var(--accent-gold);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: underline;
+      cursor: pointer;
+      margin-left: 6px;
+    }
+    .services-learn-more-link:hover {
+      color: var(--accent-gold-light);
+    }
+
+    /* Booking type toggle buttons in modal */
+    .bk-type-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    .bk-type-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-muted);
+      text-align: left;
+    }
+    .bk-type-btn:hover {
+      border-color: var(--border-gold);
+      background: rgba(229,154,85,0.06);
+    }
+    .bk-type-btn.active {
+      border-color: var(--accent-gold);
+      background: rgba(229,154,85,0.12);
+      color: var(--text-white);
+      box-shadow: 0 0 16px rgba(229,154,85,0.15);
+    }
+    .bk-type-btn strong {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-white);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2px;
+    }
+    .bk-type-btn span {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+    .bk-type-btn.active strong {
+      color: var(--accent-gold);
+    }
+    .bk-type-btn.active span {
+      color: var(--accent-gold-light);
+    }
+
     /* ======== FAQ ======== */
     .faq-section {
       padding: var(--section-py) 0;
@@ -2971,6 +3242,7 @@
         <a href="#signature" class="nav-link" data-i18n="nav_signature">Signature</a>
         <a href="#menu" class="nav-link" data-i18n="nav_menu">Thực đơn</a>
         <a href="#spaces" class="nav-link" data-i18n="nav_spaces">Không gian</a>
+        <a href="#services" class="nav-link" data-i18n="nav_services">Đặt bàn & Dịch vụ</a>
         <a href="#news" class="nav-link" data-i18n="nav_news">Tin tức</a>
         <a href="#faq" class="nav-link" data-i18n="nav_faq">Hỏi đáp</a>
         <a href="#contact" class="nav-link" data-i18n="nav_contact">Liên hệ</a>
@@ -3030,6 +3302,7 @@
       <a href="javascript:void(0)" onclick="toggleDrawer(false); openMenuBoard();" class="drawer-link" style="color: var(--accent-gold); font-weight: 700;"><i data-lucide="file-text" style="width:16px;height:16px;margin-right:6px;"></i><span data-i18n="drawer_menu_board">Bảng Menu Tổng (Toàn Trang)</span> <span>→</span></a>
       <a href="javascript:void(0)" onclick="toggleDrawer(false); openLoyaltyModal();" class="drawer-link" style="display: none !important; color: #F3B378; font-weight: 700;"><i data-lucide="crown" style="width:16px;height:16px;margin-right:6px;"></i><span data-i18n="drawer_loyalty">Tra Cứu Điểm Tích Lũy</span> <span>→</span></a>
       <a href="#spaces" class="drawer-link"><span data-i18n="drawer_spaces">Không gian quán</span> <span>→</span></a>
+      <a href="#services" class="drawer-link" style="color: var(--accent-gold); font-weight: 700;"><i data-lucide="calendar" style="width:16px;height:16px;margin-right:6px;"></i><span data-i18n="drawer_services">Đặt bàn & Thuê không gian</span> <span>→</span></a>
       <a href="#news" class="drawer-link"><span data-i18n="drawer_news">Tin tức & Sự kiện</span> <span>→</span></a>
       <a href="#faq" class="drawer-link"><span data-i18n="drawer_faq">Hỏi đáp</span> <span>→</span></a>
       <a href="#contact" class="drawer-link"><span data-i18n="drawer_contact">Thông tin liên hệ</span> <span>→</span></a>
@@ -3456,6 +3729,116 @@
       </div>
     </section>
 
+    <!-- ======== 7.1 SERVICES SECTION: CÓ THÊM ĐIỀU MỚI (CHO THUÊ KHÔNG GIAN & ĐẶT BÀN) ======== -->
+    <section class="services-section" id="services" aria-label="Dịch vụ cho thuê không gian và đặt bàn trước tại Olion Coffee">
+      <div class="shell">
+        <div class="section-header">
+          <div class="section-eyebrow">
+            <span>●</span> Có Thêm Điều Mới!
+          </div>
+          <h2 class="section-title">
+            Không Gian Cho Những <span class="accent">Buổi Gặp Gỡ Ý Nghĩa</span>
+          </h2>
+          <p class="section-desc">
+            Dù là workshop sáng tạo, họp nhóm, sinh hoạt CLB hay một góc bàn yên tĩnh để học tập và hẹn bạn bè — Olion luôn sẵn sàng chào đón bạn.
+          </p>
+        </div>
+
+        <div class="services-banner-grid">
+          <!-- Left: Official Poster Visual -->
+          <div class="services-visual-card">
+            <div class="services-poster-wrap">
+              <img src="assets/banner-booking.jpg" alt="Có Thêm Điều Mới - Cho thuê không gian và đặt bàn trước Olion Coffee" class="services-poster-img" loading="lazy" />
+              <div class="services-poster-overlay">
+                <span class="services-badge">✨ Dịch Vụ Mới Tại Olion</span>
+                <p class="services-quote">"Cùng Olion tạo nên những khoảnh khắc đẹp"</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: 2 Key Services Details -->
+          <div class="services-content-col">
+            <!-- Service 01 -->
+            <div class="service-feature-card">
+              <div class="service-feature-head">
+                <div class="service-icon-box">
+                  <i data-lucide="users" style="width:24px;height:24px;"></i>
+                </div>
+                <div class="service-title-wrap">
+                  <span class="service-num">01</span>
+                  <h3 class="service-title">CHO THUÊ KHÔNG GIAN</h3>
+                </div>
+              </div>
+              <div class="service-tags-row">
+                <span class="service-tag">Workshop nhỏ</span>
+                <span class="service-tag">Họp nhóm</span>
+                <span class="service-tag">CLB</span>
+                <span class="service-tag">Sự kiện</span>
+              </div>
+              <p class="service-desc">
+                Không gian thiết kế ấm cúng, ánh sáng tự nhiên dịu nhẹ, quầy bar hiện đại, đầy đủ tiện ích bàn ghế, máy lạnh và wifi mạnh mẽ — nơi lý tưởng cho các buổi workshop, sinh hoạt nhóm hoặc sự kiện thân mật.
+              </p>
+              <div class="service-notice-box">
+                <i data-lucide="info" style="width:16px;height:16px;flex-shrink:0;"></i>
+                <span>Liên hệ trước ít nhất <strong>1 tuần</strong> để Olion sắp xếp không gian chu đáo và phù hợp nhất.</span>
+              </div>
+              <div class="service-action-row">
+                <button type="button" class="btn btn-primary" onclick="openBookingModal('space')" style="padding: 11px 20px; font-size: 13.5px;">
+                  <i data-lucide="calendar" style="width:15px;height:15px;margin-right:6px;"></i> Đăng Ký Thuê Không Gian
+                </button>
+              </div>
+            </div>
+
+            <!-- Service 02 -->
+            <div class="service-feature-card">
+              <div class="service-feature-head">
+                <div class="service-icon-box">
+                  <i data-lucide="calendar-check" style="width:24px;height:24px;"></i>
+                </div>
+                <div class="service-title-wrap">
+                  <span class="service-num">02</span>
+                  <h3 class="service-title">ĐẶT BÀN TRƯỚC</h3>
+                </div>
+              </div>
+              <div class="service-tags-row">
+                <span class="service-tag">Chủ động chỗ ngồi</span>
+                <span class="service-tag">Hẹn bạn bè</span>
+                <span class="service-tag">Học tập & Làm việc</span>
+              </div>
+              <p class="service-desc">
+                Chủ động giữ trước vị trí bàn yêu thích cho các buổi gặp mặt bạn bè, học nhóm hoặc làm việc tập trung mà không lo hết chỗ vào các khung giờ cao điểm.
+              </p>
+              <div class="service-notice-box">
+                <i data-lucide="clock" style="width:16px;height:16px;flex-shrink:0;"></i>
+                <span>Vui lòng đặt bàn trước ít nhất <strong>1 ngày</strong>. (Lưu ý: Chỉ xác nhận khi quán phản hồi).</span>
+              </div>
+              <div class="service-action-row">
+                <button type="button" class="btn btn-primary" onclick="openBookingModal('table')" style="padding: 11px 20px; font-size: 13.5px;">
+                  <i data-lucide="bookmark-check" style="width:15px;height:15px;margin-right:6px;"></i> Đặt Bàn Giữ Chỗ
+                </button>
+              </div>
+            </div>
+
+            <!-- Direct Contact Bar -->
+            <div class="services-contact-bar">
+              <span class="services-contact-label">Cùng Olion tạo nên những khoảnh khắc đẹp:</span>
+              <div class="services-contact-actions">
+                <a href="https://m.me/61594159312837" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 9px 16px; font-size: 13px;">
+                  <i data-lucide="message-circle" style="width:15px;height:15px;margin-right:6px;"></i> Inbox Fanpage Tư Vấn ↗
+                </a>
+                <a href="tel:0783657587" class="btn btn-ghost" style="padding: 9px 16px; font-size: 13px;">
+                  <i data-lucide="phone" style="width:15px;height:15px;margin-right:6px;"></i> Hotline: 0783 657 587
+                </a>
+                <a href="/booking" class="services-learn-more-link">
+                  Xem chi tiết trang dịch vụ →
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ======== 8. NEWS & EVENTS (TIN TỨC & SỰ KIỆN) ======== -->
     <section class="news-section" id="news" aria-label="Tin tức và sự kiện Olion Coffee">
       <div class="shell">
@@ -3521,6 +3904,28 @@
             </button>
             <div class="faq-body" data-i18n="faq_a3">
               Hoàn toàn được! Bạn có thể yêu cầu barista gia giảm mức ngọt (0%, 30%, 50%, 70%, 100%) và lượng đá tùy thích, hoặc yêu cầu đổi sang sữa yến mạch Oatside để phù hợp với chế độ ăn uống của mình.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-trigger" aria-expanded="false">
+              <span class="faq-number">04</span>
+              <h3 class="faq-question">OLION COFFEE có cho thuê không gian tổ chức Workshop, CLB hay sự kiện không?</h3>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-body">
+              Có! Quán có không gian ấm cúng, trang bị đầy đủ máy lạnh, wifi, quầy bar hiện đại và cách bài trí linh hoạt, rất thích hợp cho các buổi workshop nhỏ, họp nhóm, sinh hoạt câu lạc bộ hay sự kiện thân mật. Quý khách vui lòng liên hệ trước ít nhất <strong>1 tuần</strong> qua Fanpage hoặc Hotline 0783 657 587 để quán sắp xếp chu đáo nhất nhé!
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-trigger" aria-expanded="false">
+              <span class="faq-number">05</span>
+              <h3 class="faq-question">Quy định và cách thức đặt bàn trước tại OLION COFFEE như thế nào?</h3>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-body">
+              Để chủ động chỗ ngồi khi hẹn bạn bè, học nhóm hoặc làm việc, bạn có thể inbox Fanpage, đặt qua form trên web hoặc gọi trực tiếp hotline. Vui lòng đặt bàn trước ít nhất <strong>1 ngày</strong>. Xin lưu ý: Lịch đặt bàn chỉ được tính là thành công khi quán đã phản hồi xác nhận.
             </div>
           </div>
         </div>
@@ -3826,6 +4231,97 @@
 
       <!-- Thanh đếm ngược tự đóng 8s -->
       <div class="welcome-progress-bar" id="welcomeProgressBar"></div>
+    </div>
+  </div>
+
+  <!-- ======== MODAL: ĐẶT BÀN & CHO THUÊ KHÔNG GIAN ======== -->
+  <div class="modal-overlay" id="bookingModal" aria-hidden="true" role="dialog" aria-labelledby="bookingModalTitle" onclick="if(event.target === this) closeBookingModal()">
+    <div class="modal-box" style="max-width: 520px;">
+      <button type="button" class="modal-close" onclick="closeBookingModal()" aria-label="Đóng popup"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
+      
+      <div class="section-eyebrow" style="margin-bottom: 8px;">
+        <i data-lucide="calendar" style="width:14px;height:14px;margin-right:4px;"></i> Dịch Vụ & Không Gian
+      </div>
+      <h3 class="font-serif" id="bookingModalTitle" style="font-size: 24px; margin-bottom: 6px; color: var(--text-white);">
+        Đăng Ký Đặt Chỗ Tại <span style="color: var(--accent-gold);">Olion</span>
+      </h3>
+      <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px;">
+        Vui lòng chọn dịch vụ và điền thông tin bên dưới. Quán sẽ liên hệ xác nhận sớm nhất!
+      </p>
+
+      <!-- Segmented Service Choice -->
+      <div class="bk-type-grid" id="bkTypeGrid">
+        <button type="button" class="bk-type-btn active" id="bkTypeSpace" onclick="selectBookingType('space')">
+          <strong><i data-lucide="users" style="width:15px;height:15px;"></i> Thuê Không Gian</strong>
+          <span>Workshop • Họp nhóm • CLB • Sự kiện (Trước 1 tuần)</span>
+        </button>
+        <button type="button" class="bk-type-btn" id="bkTypeTable" onclick="selectBookingType('table')">
+          <strong><i data-lucide="bookmark-check" style="width:15px;height:15px;"></i> Đặt Bàn Trước</strong>
+          <span>Học tập • Làm việc • Hẹn bạn bè (Trước 1 ngày)</span>
+        </button>
+      </div>
+
+      <!-- Quick Notice -->
+      <div id="bkNotice" class="service-notice-box" style="margin-bottom: 16px;">
+        <i data-lucide="info" style="width:16px;height:16px;flex-shrink:0;"></i>
+        <span id="bkNoticeText">Liên hệ trước ít nhất <strong>1 tuần</strong> để Olion sắp xếp không gian chu đáo và phù hợp nhất.</span>
+      </div>
+
+      <form id="bookingForm" onsubmit="handleBookingSubmit(event)">
+        <div class="form-group">
+          <label class="form-label" for="bkName">Họ và tên của bạn *</label>
+          <input type="text" id="bkName" class="form-input" placeholder="Ví dụ: Hoàng Nam" required autocomplete="name" />
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label" for="bkPhone">Số điện thoại / Zalo *</label>
+            <input type="tel" id="bkPhone" class="form-input" placeholder="0908xxxxxx" required pattern="^(03|05|07|08|09)[0-9]{8}$" autocomplete="tel" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bkGuests">Số lượng người *</label>
+            <input type="number" id="bkGuests" class="form-input" placeholder="Ví dụ: 4" min="1" max="60" required />
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label" for="bkDate">Ngày dự kiến *</label>
+            <input type="date" id="bkDate" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="bkTime">Khung giờ dự kiến *</label>
+            <select id="bkTime" class="form-input" required>
+              <option value="">Chọn giờ...</option>
+              <option value="08:00 - 10:00">08:00 - 10:00 (Sáng sớm)</option>
+              <option value="10:00 - 12:00">10:00 - 12:00 (Trưa)</option>
+              <option value="13:00 - 15:00">13:00 - 15:00 (Đầu giờ chiều)</option>
+              <option value="15:00 - 17:00">15:00 - 17:00 (Chiều mát)</option>
+              <option value="17:00 - 19:30">17:00 - 19:30 (Tối ấm cúng)</option>
+              <option value="Cả buổi / Khung giờ khác">Cả buổi / Khác</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="bkNote">Yêu cầu thêm / Ghi chú</label>
+          <textarea id="bkNote" class="form-textarea" style="min-height: 70px;" placeholder="Ví dụ: Cần khu vực gần ổ cắm, bố trí bàn họp nhóm..."></textarea>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 18px;">
+          <button type="submit" class="btn btn-primary" id="bkSubmitBtn" style="width: 100%; padding: 13px;">
+            <i data-lucide="send" style="width:16px;height:16px;margin-right:6px;"></i> Gửi Yêu Cầu & Kết Nối Fanpage
+          </button>
+          <div style="display: flex; gap: 10px;">
+            <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="flex: 1; font-size: 12.5px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+              <img src="assets/zalo-logo.webp" alt="Zalo" width="16" height="16" style="margin-right: 6px;" /> Chat Zalo Quán
+            </a>
+            <a href="tel:0783657587" class="btn btn-ghost" style="flex: 1; font-size: 12.5px; padding: 10px; display: flex; align-items: center; justify-content: center;">
+              <i data-lucide="phone" style="width:15px;height:15px;margin-right:6px;"></i> Gọi 0783 657 587
+            </a>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -4136,6 +4632,7 @@
           nav_signature: "Signature",
           nav_menu: "Thực đơn",
           nav_spaces: "Không gian",
+          nav_services: "Đặt bàn & Dịch vụ",
           nav_news: "Tin tức",
           nav_faq: "Hỏi đáp",
           nav_contact: "Liên hệ",
@@ -4147,6 +4644,7 @@
           drawer_menu: "Thực đơn đồ uống",
           drawer_menu_board: "Bảng Menu Tổng (Toàn Trang)",
           drawer_spaces: "Không gian quán",
+          drawer_services: "Đặt bàn & Thuê không gian",
           drawer_news: "Tin tức & Sự kiện",
           drawer_faq: "Hỏi đáp",
           drawer_contact: "Thông tin liên hệ",
@@ -4257,6 +4755,7 @@
           nav_signature: "Signatures",
           nav_menu: "Menu",
           nav_spaces: "Ambiance",
+          nav_services: "Booking & Space",
           nav_news: "News",
           nav_faq: "FAQ",
           nav_contact: "Contact",
@@ -4268,6 +4767,7 @@
           drawer_menu: "Beverage Menu",
           drawer_menu_board: "Full Menu Board (Fullscreen)",
           drawer_spaces: "Our Spaces",
+          drawer_services: "Table Booking & Space Rental",
           drawer_news: "News & Events",
           drawer_faq: "FAQ",
           drawer_contact: "Contact Info",
@@ -5203,6 +5703,117 @@
         olionToastTimer = setTimeout(() => {
           toast.classList.remove('show');
         }, 4000);
+      };
+
+      // 5.1 Booking & Space Rental Modal Logic
+      let currentBookingType = 'space'; // 'space' or 'table'
+
+      window.openBookingModal = function(type = 'space') {
+        const modal = document.getElementById('bookingModal');
+        if (!modal) return;
+        window.selectBookingType(type);
+        
+        // Set minimum date (min 1 day in advance for table, 3-7 days for space)
+        const dateInput = document.getElementById('bkDate');
+        if (dateInput) {
+          const today = new Date();
+          const advanceDays = (type === 'space') ? 3 : 1;
+          const minDate = new Date(today.getFullYear(), today.getMonth(), today.getDate() + advanceDays);
+          const yyyy = minDate.getFullYear();
+          const mm = String(minDate.getMonth() + 1).padStart(2, '0');
+          const dd = String(minDate.getDate()).padStart(2, '0');
+          dateInput.min = `${yyyy}-${mm}-${dd}`;
+          if (!dateInput.value || dateInput.value < dateInput.min) {
+            dateInput.value = `${yyyy}-${mm}-${dd}`;
+          }
+        }
+
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        if (window.lucide) window.lucide.createIcons();
+      };
+
+      window.closeBookingModal = function() {
+        const modal = document.getElementById('bookingModal');
+        if (modal) {
+          modal.classList.remove('active');
+          modal.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+        }
+      };
+
+      window.selectBookingType = function(type) {
+        currentBookingType = type;
+        const btnSpace = document.getElementById('bkTypeSpace');
+        const btnTable = document.getElementById('bkTypeTable');
+        const noticeText = document.getElementById('bkNoticeText');
+        
+        if (type === 'space') {
+          if (btnSpace) btnSpace.classList.add('active');
+          if (btnTable) btnTable.classList.remove('active');
+          if (noticeText) noticeText.innerHTML = 'Liên hệ trước ít nhất <strong>1 tuần</strong> để Olion sắp xếp không gian chu đáo và phù hợp nhất.';
+        } else {
+          if (btnSpace) btnSpace.classList.remove('active');
+          if (btnTable) btnTable.classList.add('active');
+          if (noticeText) noticeText.innerHTML = 'Vui lòng đặt bàn trước ít nhất <strong>1 ngày</strong>. <em>(Lưu ý: Chỉ xác nhận khi quán phản hồi)</em>.';
+        }
+      };
+
+      window.handleBookingSubmit = function(e) {
+        if (e) e.preventDefault();
+        const name = (document.getElementById('bkName')?.value || '').trim();
+        const phone = (document.getElementById('bkPhone')?.value || '').trim();
+        const guests = (document.getElementById('bkGuests')?.value || '').trim();
+        const date = document.getElementById('bkDate')?.value || '';
+        const time = document.getElementById('bkTime')?.value || '';
+        const note = (document.getElementById('bkNote')?.value || '').trim();
+
+        if (!name || !phone || !date || !time) {
+          alert('Vui lòng điền đầy đủ các thông tin bắt buộc (*)');
+          return;
+        }
+
+        const typeLabel = (currentBookingType === 'space') 
+          ? '01 - CHO THUÊ KHÔNG GIAN (Workshop / Họp nhóm / CLB / Sự kiện)' 
+          : '02 - ĐẶT BÀN TRƯỚC (Học tập / Hẹn bạn bè / Làm việc)';
+
+        const formattedMsg = `Chào Olion Coffee! Mình muốn đăng ký:\n` +
+          `• Dịch vụ: ${typeLabel}\n` +
+          `• Khách hàng: ${name} (${phone})\n` +
+          `• Số lượng người: ${guests || '1'} người\n` +
+          `• Thời gian dự kiến: ${time} ngày ${date}\n` +
+          (note ? `• Ghi chú thêm: ${note}\n` : '') +
+          `Olion tư vấn và xác nhận giúp mình nhé! Cảm ơn quán.`;
+
+        // Save to Supabase bookings table if online
+        try {
+          if (window.supabaseClient) {
+            window.supabaseClient.from('bookings').insert([{
+              customer_name: name,
+              phone: phone,
+              booking_type: currentBookingType,
+              guests_count: parseInt(guests, 10) || 1,
+              booking_date: date,
+              booking_time: time,
+              notes: note,
+              created_at: new Date().toISOString()
+            }]).then(() => {}).catch(() => {});
+          }
+        } catch(err) {}
+
+        // Save customer info locally
+        try {
+          localStorage.setItem('olion_customer_name', name);
+          localStorage.setItem('olion_customer_phone', phone);
+        } catch(err) {}
+
+        window.closeBookingModal();
+        alert(`Cảm ơn ${name}! Olion đang chuyển hướng bạn sang Messenger Fanpage để gửi thông tin đặt chỗ ngay nhé.`);
+
+        // Redirect to Messenger with prefilled message
+        const messengerUrl = `https://m.me/61594159312837?text=${encodeURIComponent(formattedMsg)}`;
+        window.open(messengerUrl, '_blank');
       };
 
       // 6. Customer Feedback Modal & Supabase Cloud Sync

@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>✨ Có Thêm Điều Mới! Cho Thuê Không Gian & Đặt Bàn Trước | Olion Coffee</title>
+  <meta name="description" content="Olion Coffee chính thức nhận cho thuê không gian tổ chức Workshop, CLB, sự kiện và đặt bàn trước cho học tập, họp nhóm tại 80/64a Dương Quảng Hàm, Gò Vấp, TP.HCM."/>
+  <meta property="og:title" content="✨ Có Thêm Điều Mới! Cho Thuê Không Gian & Đặt Bàn Trước | Olion Coffee"/>
+  <meta property="og:description" content="Không gian ấm cúng cho những buổi gặp gỡ ý nghĩa: Cho thuê không gian Workshop, CLB, họp nhóm và Đặt bàn trước tại Olion Coffee."/>
+  <meta property="og:image" content="https://www.olioncoffee.app/assets/banner-booking.jpg?v=booking"/>
+  <meta property="og:image:secure_url" content="https://www.olioncoffee.app/assets/banner-booking.jpg?v=booking"/>
+  <meta property="og:image:width" content="1024"/>
+  <meta property="og:image:height" content="1792"/>
+  <meta property="og:image:alt" content="Olion Coffee - Có thêm điều mới! Cho thuê không gian và đặt bàn trước"/>
+  <meta property="og:url" content="https://www.olioncoffee.app/booking"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:image" content="https://www.olioncoffee.app/assets/banner-booking.jpg?v=booking"/>
+  <link rel="canonical" href="https://www.olioncoffee.app/booking"/>
+  <link rel="icon" href="assets/favicon.ico"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --gold:#e59a55;--gold-light:#f3b378;
+      --dark:#0c0a08;--dark2:#17120e;--card:#1e1712;--card-border:rgba(229,154,85,.25);
+      --cream:#f5efe6;--muted:rgba(235,215,200,.72);
+      --serif:'Cormorant Garamond',serif;
+      --sans:'Lato',sans-serif;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--sans);background:var(--dark);color:var(--cream);min-height:100vh;overflow-x:hidden}
+
+    /* ─── Canvas Particle Background ─── */
+    canvas#particles{position:fixed;inset:0;pointer-events:none;z-index:0}
+
+    /* ─── HERO ─── */
+    .hero{
+      position:relative;min-height:100svh;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      text-align:center;padding:70px 24px 50px;overflow:hidden;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%,rgba(229,154,85,.18) 0%,transparent 65%),
+        radial-gradient(ellipse 60% 40% at 50% 100%,rgba(100,60,20,.25) 0%,transparent 70%),
+        var(--dark2);
+    }
+    .hero-logo{position:absolute;top:24px;left:50%;transform:translateX(-50%);z-index:2}
+    .hero-logo img{height:32px;opacity:.95;filter:drop-shadow(0 2px 8px rgba(0,0,0,.6))}
+
+    .banner-poster-wrap{
+      position:relative;
+      width:min(320px, 85vw);
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:0 16px 50px rgba(0,0,0,.7), 0 0 60px rgba(229,154,85,.2);
+      border:2px solid var(--card-border);
+      margin:0 auto 24px;
+      transition:transform .4s ease;
+    }
+    .banner-poster-wrap:hover{transform:translateY(-6px);box-shadow:0 22px 60px rgba(0,0,0,.85), 0 0 80px rgba(229,154,85,.3)}
+    .banner-poster-img{width:100%;height:auto;display:block}
+
+    .badge-pill{
+      background:linear-gradient(135deg,var(--gold),#a65e20);
+      color:#fff;font-family:var(--serif);font-size:22px;font-weight:700;
+      padding:8px 28px;border-radius:50px;letter-spacing:.05em;
+      box-shadow:0 8px 28px rgba(180,90,30,.4);
+      margin-bottom:16px;
+    }
+    .eyebrow{
+      font-family:var(--sans);font-size:11px;font-weight:700;
+      letter-spacing:.18em;text-transform:uppercase;
+      color:var(--gold-light);margin-bottom:14px;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+    }
+    .eyebrow::before,.eyebrow::after{content:'';flex:1;max-width:48px;height:1px;background:linear-gradient(90deg,transparent,rgba(229,154,85,.5),transparent)}
+
+    .hero-title{
+      font-family:var(--serif);font-size:clamp(34px,9vw,56px);
+      font-weight:700;line-height:1.15;margin-bottom:16px;
+      color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.5);
+    }
+    .hero-title em{
+      font-style:italic;display:block;
+      background:linear-gradient(135deg,#fbe0c3 0%,var(--gold) 50%,#fbe0c3 100%);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    }
+    .hero-sub{
+      font-size:15.5px;line-height:1.75;color:var(--muted);
+      max-width:440px;margin:0 auto 32px;
+    }
+
+    .scroll-cue{
+      position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+      display:flex;flex-direction:column;align-items:center;gap:6px;
+      color:rgba(229,154,85,.6);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+      cursor:pointer;
+    }
+    .scroll-cue svg{animation:bounce 2s ease-in-out infinite}
+    @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+    /* ─── SECTIONS ─── */
+    .section{padding:60px 0;position:relative;z-index:1}
+    .section:nth-child(even){background:rgba(255,255,255,.015)}
+    .container{max-width:620px;margin:0 auto;padding:0 24px}
+
+    .sec-label{
+      font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+      color:var(--gold-light);margin-bottom:8px;text-align:center;
+    }
+    .sec-title{
+      font-family:var(--serif);font-size:clamp(26px,6vw,38px);font-weight:700;
+      text-align:center;color:#fff;margin-bottom:6px;line-height:1.25;
+    }
+    .sec-title em{font-style:italic;color:var(--gold-light)}
+    .sec-divider{
+      width:48px;height:2px;margin:16px auto 32px;
+      background:linear-gradient(90deg,transparent,var(--gold),transparent);
+      border:none;
+    }
+
+    /* ─── CARDS ─── */
+    .service-card{
+      background:var(--card);
+      border:1px solid var(--card-border);
+      border-radius:20px;padding:28px 24px;margin-bottom:20px;
+      position:relative;overflow:hidden;
+      box-shadow:0 12px 36px rgba(0,0,0,.4);
+      transition:transform .3s ease, border-color .3s ease;
+    }
+    .service-card:hover{
+      transform:translateY(-3px);
+      border-color:var(--gold);
+    }
+    .service-head{
+      display:flex;align-items:center;gap:14px;margin-bottom:14px;
+    }
+    .service-icon{
+      width:44px;height:44px;border-radius:12px;
+      background:rgba(229,154,85,.15);border:1px solid var(--card-border);
+      display:flex;align-items:center;justify-content:center;
+      font-size:22px;flex-shrink:0;
+    }
+    .service-num{
+      font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold);
+    }
+    .service-name{
+      font-family:var(--serif);font-size:20px;font-weight:700;color:#fff;
+    }
+    .service-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+    .service-tag{
+      background:rgba(229,154,85,.1);border:1px solid rgba(229,154,85,.25);
+      color:var(--gold-light);font-size:11px;font-weight:700;
+      padding:4px 12px;border-radius:99px;
+    }
+    .service-p{font-size:14.5px;line-height:1.7;color:var(--muted);margin-bottom:14px}
+    .service-note{
+      background:rgba(229,154,85,.08);border-left:3px solid var(--gold);
+      padding:10px 14px;border-radius:4px;font-size:13px;line-height:1.55;
+      color:var(--cream);
+    }
+    .service-note strong{color:var(--gold-light)}
+
+    /* ─── FORM ─── */
+    .form-box{
+      background:var(--card);border:1px solid var(--card-border);
+      border-radius:24px;padding:32px 26px;box-shadow:0 16px 40px rgba(0,0,0,.5);
+    }
+    .form-group{margin-bottom:18px}
+    .form-label{display:block;font-size:13px;font-weight:700;margin-bottom:6px;color:var(--cream)}
+    .form-input,.form-textarea{
+      width:100%;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.14);
+      border-radius:10px;padding:12px 16px;color:#fff;font-size:14.5px;font-family:var(--sans);
+      transition:border-color .2s ease;
+    }
+    .form-input:focus,.form-textarea:focus{
+      outline:none;border-color:var(--gold);background:rgba(0,0,0,.6);
+    }
+    .type-switcher{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+    .type-btn{
+      padding:12px 14px;border-radius:12px;cursor:pointer;
+      background:rgba(0,0,0,.35);border:1.5px solid rgba(255,255,255,.1);
+      color:var(--muted);font-family:var(--sans);font-size:12px;font-weight:700;
+      display:flex;flex-direction:column;gap:3px;text-align:left;
+      transition:all .2s ease;
+    }
+    .type-btn strong{color:#fff;font-size:13px}
+    .type-btn.active{
+      border-color:var(--gold);background:rgba(229,154,85,.15);color:var(--gold-light);
+    }
+    .type-btn.active strong{color:var(--gold)}
+
+    /* ─── BUTTONS ─── */
+    .btn-main{
+      display:flex;align-items:center;justify-content:center;gap:10px;
+      background:linear-gradient(135deg,var(--gold) 0%,#9e5516 100%);
+      color:#fff;font-family:var(--sans);font-size:15px;font-weight:700;
+      padding:16px 28px;border-radius:12px;text-decoration:none;
+      box-shadow:0 8px 28px rgba(180,90,30,.4);width:100%;border:none;cursor:pointer;
+      transition:all .25s ease;
+    }
+    .btn-main:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(180,90,30,.55)}
+    .btn-ghost{
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      border:1.5px solid var(--card-border);color:var(--cream);
+      font-size:13.5px;font-weight:700;padding:12px 20px;border-radius:12px;
+      text-decoration:none;transition:all .2s ease;
+    }
+    .btn-ghost:hover{background:rgba(229,154,85,.12);border-color:var(--gold);color:var(--gold-light)}
+
+    /* ─── SPACES GALLERY ─── */
+    .gallery-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+    .gallery-img{
+      width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:14px;
+      border:1px solid rgba(255,255,255,.08);transition:transform .3s ease;
+    }
+    .gallery-img:hover{transform:scale(1.03)}
+
+    /* ─── INFO ROWS ─── */
+    .info-row{
+      display:flex;align-items:center;gap:16px;padding:16px 0;
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .info-row:last-child{border-bottom:none}
+    .info-icon{
+      width:42px;height:42px;border-radius:12px;
+      background:rgba(229,154,85,.12);border:1px solid var(--card-border);
+      display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;
+    }
+    .info-text strong{display:block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-light);margin-bottom:2px}
+    .info-text span{font-size:14.5px;color:var(--cream)}
+    .info-text a{color:var(--gold-light);text-decoration:none;font-weight:700}
+
+    /* ─── SHARE ─── */
+    .share-row{display:flex;gap:10px;justify-content:center;margin-top:16px}
+    .share-btn{
+      display:flex;flex-direction:column;align-items:center;gap:4px;
+      padding:12px 18px;border-radius:12px;background:rgba(255,255,255,.04);
+      border:1px solid var(--card-border);color:var(--muted);font-size:11px;font-weight:700;
+      text-decoration:none;cursor:pointer;flex:1;max-width:110px;transition:all .2s ease;
+    }
+    .share-btn:hover{background:rgba(229,154,85,.15);border-color:var(--gold);color:var(--cream)}
+    .share-btn span.icon{font-size:22px;line-height:1}
+
+    .footer{text-align:center;padding:40px 24px 50px;font-size:12.5px;color:rgba(200,180,165,.5);line-height:1.8}
+    .footer strong{font-family:var(--serif);font-size:20px;color:var(--gold-light);display:block}
+    .footer a{color:var(--gold);text-decoration:none}
+  </style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero">
+  <div class="hero-logo">
+    <a href="https://www.olioncoffee.app/">
+      <img src="assets/logo-white.webp" alt="Olion Coffee" />
+    </a>
+  </div>
+
+  <div class="badge-pill">CÓ THÊM ĐIỀU MỚI!</div>
+
+  <div class="banner-poster-wrap">
+    <img src="assets/banner-booking.jpg" alt="Có thêm điều mới - Cho thuê không gian và đặt bàn trước Olion Coffee" class="banner-poster-img" loading="eager" />
+  </div>
+
+  <div class="eyebrow">Dịch Vụ & Không Gian Quán</div>
+  <h1 class="hero-title">
+    Không Gian Cho Những<br>
+    <em>Buổi Gặp Gỡ Ý Nghĩa</em>
+  </h1>
+  <p class="hero-sub">
+    Dù là buổi workshop sáng tạo, họp nhóm sôi nổi hay góc bàn yên tĩnh để học tập — Olion luôn sẵn sàng đồng hành cùng bạn!
+  </p>
+
+  <div class="scroll-cue" onclick="document.getElementById('servicesDetail').scrollIntoView({behavior:'smooth'})">
+    <span>Khám phá dịch vụ</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- ═══════════════════ SERVICES DETAIL ═══════════════════ -->
+<section class="section" id="servicesDetail">
+  <div class="container">
+    <p class="sec-label">✦ 2 Dịch Vụ Mới Tại Olion</p>
+    <h2 class="sec-title">Gặp Gỡ & Kết Nối Tại <em>Olion</em></h2>
+    <hr class="sec-divider"/>
+
+    <!-- Service 01 -->
+    <div class="service-card">
+      <div class="service-head">
+        <div class="service-icon">👥</div>
+        <div>
+          <span class="service-num">01 —</span>
+          <span class="service-name">CHO THUÊ KHÔNG GIAN</span>
+        </div>
+      </div>
+      <div class="service-tags">
+        <span class="service-tag">Workshop nhỏ</span>
+        <span class="service-tag">Họp nhóm</span>
+        <span class="service-tag">Câu lạc bộ</span>
+        <span class="service-tag">Sự kiện thân mật</span>
+      </div>
+      <p class="service-p">
+        Không gian ấm cúng, thiết kế tinh tế với quầy bar máy pha Ambach hiện đại, điều hòa mát mẻ, wifi tốc độ cao và vị trí ngồi linh hoạt. Rất thích hợp cho các buổi chia sẻ kỹ năng, workshop thủ công hay sinh hoạt định kỳ.
+      </p>
+      <div class="service-note">
+        📅 <strong>Lưu ý:</strong> Vui lòng liên hệ trước ít nhất <strong>1 tuần</strong> để Olion sắp xếp và bố trí không gian phù hợp nhất.
+      </div>
+    </div>
+
+    <!-- Service 02 -->
+    <div class="service-card">
+      <div class="service-head">
+        <div class="service-icon">🗓️</div>
+        <div>
+          <span class="service-num">02 —</span>
+          <span class="service-name">ĐẶT BÀN TRƯỚC</span>
+        </div>
+      </div>
+      <div class="service-tags">
+        <span class="service-tag">Chủ động chỗ ngồi</span>
+        <span class="service-tag">Hẹn bạn bè</span>
+        <span class="service-tag">Học tập & Làm việc</span>
+      </div>
+      <p class="service-p">
+        Giữ trước vị trí bàn ngồi yêu thích gần ổ cắm điện hoặc góc kính ngắm phố, không lo hết bàn vào khung giờ cao điểm để bạn yên tâm làm việc và trò chuyện.
+      </p>
+      <div class="service-note">
+        ⏰ <strong>Lưu ý:</strong> Vui lòng đặt bàn trước ít nhất <strong>1 ngày</strong>. Lịch đặt bàn chỉ được tính là thành công khi quán đã phản hồi xác nhận.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ BOOKING FORM ═══════════════════ -->
+<section class="section" id="bookingFormSection" style="padding-top:0">
+  <div class="container">
+    <div class="form-box">
+      <p class="sec-label" style="text-align:left">✦ Đăng Ký Trực Tuyến</p>
+      <h2 class="sec-title" style="text-align:left;font-size:clamp(22px,5vw,28px);margin-bottom:8px">Gửi Yêu Cầu Đặt Chỗ</h2>
+      <p style="font-size:13.5px;color:var(--muted);margin-bottom:20px">Điền thông tin bên dưới, Olion Coffee sẽ liên hệ xác nhận ngay cùng bạn.</p>
+
+      <div class="type-switcher">
+        <button type="button" class="type-btn active" id="btnSpace" onclick="switchType('space')">
+          <strong>👥 Thuê Không Gian</strong>
+          <span>Workshop, Sự kiện (Trước 1 tuần)</span>
+        </button>
+        <button type="button" class="type-btn" id="btnTable" onclick="switchType('table')">
+          <strong>🗓️ Đặt Bàn Trước</strong>
+          <span>Học tập, Hẹn bạn bè (Trước 1 ngày)</span>
+        </button>
+      </div>
+
+      <form id="bookingPageForm" onsubmit="handlePageSubmit(event)">
+        <div class="form-group">
+          <label class="form-label">Họ và tên của bạn *</label>
+          <input type="text" id="pName" class="form-input" placeholder="Ví dụ: Hoàng Nam" required />
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="form-group">
+            <label class="form-label">Số điện thoại / Zalo *</label>
+            <input type="tel" id="pPhone" class="form-input" placeholder="0908xxxxxx" required pattern="^(03|05|07|08|09)[0-9]{8}$" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Số lượng người *</label>
+            <input type="number" id="pGuests" class="form-input" placeholder="Ví dụ: 6" min="1" max="60" required />
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+          <div class="form-group">
+            <label class="form-label">Ngày dự kiến *</label>
+            <input type="date" id="pDate" class="form-input" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Khung giờ *</label>
+            <select id="pTime" class="form-input" required>
+              <option value="">Chọn giờ...</option>
+              <option value="08:00 - 10:00">08:00 - 10:00 (Sáng sớm)</option>
+              <option value="10:00 - 12:00">10:00 - 12:00 (Trưa)</option>
+              <option value="13:00 - 15:00">13:00 - 15:00 (Đầu giờ chiều)</option>
+              <option value="15:00 - 17:00">15:00 - 17:00 (Chiều mát)</option>
+              <option value="17:00 - 19:30">17:00 - 19:30 (Tối ấm cúng)</option>
+              <option value="Cả buổi / Khác">Cả buổi / Khác</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Ghi chú yêu cầu thêm</label>
+          <textarea id="pNote" class="form-textarea" style="min-height:75px" placeholder="Ví dụ: Cần bàn dài, ổ cắm máy tính, màn chiếu, yêu cầu đồ uống..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-main" style="margin-top:6px">
+          <span>🚀</span> Gửi Yêu Cầu & Mở Fanpage Xác Nhận
+        </button>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+          <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="btn-ghost">
+            <span>💬</span> Chat Zalo Quán
+          </a>
+          <a href="tel:0783657587" class="btn-ghost">
+            <span>📞</span> Gọi 0783 657 587
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ GALLERY ═══════════════════ -->
+<section class="section" style="padding-top:10px">
+  <div class="container">
+    <p class="sec-label">✦ Không Gian Thực Tế</p>
+    <h2 class="sec-title">Góc Nhìn Tại <em>Olion</em></h2>
+    <hr class="sec-divider"/>
+
+    <div class="gallery-grid">
+      <img src="assets/space-4.webp" alt="Không gian Olion Coffee" class="gallery-img" loading="lazy" />
+      <img src="assets/space-1.webp" alt="Quầy bar Olion Coffee" class="gallery-img" loading="lazy" />
+      <img src="assets/space-3.webp" alt="Bàn học tập Olion Coffee" class="gallery-img" loading="lazy" />
+      <img src="assets/space-2.webp" alt="Góc ấm cúng Olion Coffee" class="gallery-img" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ STORE INFO ═══════════════════ -->
+<section class="section" style="padding-top:10px">
+  <div class="container">
+    <p class="sec-label">✦ Thông Tin Liên Hệ</p>
+    <h2 class="sec-title">Ghé Thăm <em>Olion Coffee</em></h2>
+    <hr class="sec-divider"/>
+
+    <div class="service-card" style="padding:16px 20px">
+      <div class="info-row">
+        <div class="info-icon">📍</div>
+        <div class="info-text">
+          <strong>Địa chỉ quán</strong>
+          <span>80/64a Dương Quảng Hàm, An Nhơn, Gò Vấp, TP.HCM</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">⏰</div>
+        <div class="info-text">
+          <strong>Giờ mở cửa</strong>
+          <span>8:00 – 20:00 (Thứ 2 – Chủ Nhật)</span>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">📞</div>
+        <div class="info-text">
+          <strong>Hotline hỗ trợ</strong>
+          <span><a href="tel:0783657587">0783 657 587</a></span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;text-align:center">
+      <p style="font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-light);margin-bottom:12px">
+        Chia sẻ dịch vụ này
+      </p>
+      <div class="share-row">
+        <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=https://www.olioncoffee.app/booking" target="_blank" rel="noopener">
+          <span class="icon">📘</span>
+          <span>Facebook</span>
+        </a>
+        <a class="share-btn" href="https://zalo.me/share?href=https://www.olioncoffee.app/booking&title=Olion Coffee - Cho thue khong gian va dat ban" target="_blank" rel="noopener">
+          <span class="icon">💬</span>
+          <span>Zalo</span>
+        </a>
+        <div class="share-btn" onclick="copyLink()">
+          <span class="icon">🔗</span>
+          <span id="copyTxt">Sao chép</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer class="footer">
+  <strong>OLION COFFEE</strong>
+  <em>Elegance in Every Sip</em><br>
+  <a href="https://www.olioncoffee.app/">Về Trang Chủ www.olioncoffee.app</a>
+</footer>
+
+<script>
+/* ─── Particles Canvas ─── */
+(function(){
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  const chars = ['✦','✨','☕','🤎','●'];
+  let W, H, particles = [];
+
+  function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor(){ this.reset(true); }
+    reset(init=false){
+      this.x = Math.random()*W;
+      this.y = init ? Math.random()*H : H + 20;
+      this.size = 11 + Math.random()*12;
+      this.speedY = 0.5 + Math.random()*0.9;
+      this.speedX = (Math.random()-.5)*0.5;
+      this.alpha = 0;
+      this.targetAlpha = 0.35 + Math.random()*0.35;
+      this.char = chars[Math.floor(Math.random()*chars.length)];
+      this.fadeIn = true;
+    }
+    update(){
+      this.y -= this.speedY;
+      this.x += this.speedX;
+      if(this.fadeIn){ this.alpha = Math.min(this.alpha+.01, this.targetAlpha); if(this.alpha>=this.targetAlpha) this.fadeIn=false; }
+      if(this.y < -30) this.reset();
+    }
+    draw(){
+      ctx.save();
+      ctx.globalAlpha = this.alpha;
+      ctx.fillStyle = '#e59a55';
+      ctx.font = this.size+'px sans-serif';
+      ctx.fillText(this.char, this.x, this.y);
+      ctx.restore();
+    }
+  }
+
+  for(let i=0; i<24; i++) particles.push(new Particle());
+  function loop(){ ctx.clearRect(0,0,W,H); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); }
+  loop();
+})();
+
+/* ─── Booking Logic ─── */
+let selectedType = 'space';
+function switchType(t){
+  selectedType = t;
+  document.getElementById('btnSpace').classList.toggle('active', t === 'space');
+  document.getElementById('btnTable').classList.toggle('active', t === 'table');
+  
+  const dateInput = document.getElementById('pDate');
+  if (dateInput) {
+    const today = new Date();
+    const days = (t === 'space') ? 3 : 1;
+    const minD = new Date(today.getFullYear(), today.getMonth(), today.getDate() + days);
+    const y = minD.getFullYear();
+    const m = String(minD.getMonth() + 1).padStart(2, '0');
+    const d = String(minD.getDate()).padStart(2, '0');
+    dateInput.min = `${y}-${m}-${d}`;
+    if (!dateInput.value || dateInput.value < dateInput.min) dateInput.value = `${y}-${m}-${d}`;
+  }
+}
+switchType('space');
+
+function handlePageSubmit(e){
+  e.preventDefault();
+  const name = document.getElementById('pName').value.trim();
+  const phone = document.getElementById('pPhone').value.trim();
+  const guests = document.getElementById('pGuests').value.trim();
+  const date = document.getElementById('pDate').value;
+  const time = document.getElementById('pTime').value;
+  const note = document.getElementById('pNote').value.trim();
+
+  if(!name || !phone || !date || !time){
+    alert('Vui lòng điền đầy đủ các mục bắt buộc (*)');
+    return;
+  }
+
+  const typeText = (selectedType === 'space')
+    ? '01 - CHO THUÊ KHÔNG GIAN (Workshop / Sự kiện / Họp nhóm)'
+    : '02 - ĐẶT BÀN TRƯỚC (Học tập / Hẹn bạn bè)';
+
+  const msg = `Chào Olion Coffee! Mình đăng ký qua website:\n` +
+    `• Dịch vụ: ${typeText}\n` +
+    `• Họ tên: ${name} (${phone})\n` +
+    `• Số lượng người: ${guests || '1'} người\n` +
+    `• Thời gian: ${time} ngày ${date}\n` +
+    (note ? `• Ghi chú: ${note}\n` : '') +
+    `Olion tư vấn và xác nhận giúp mình nhé! Cảm ơn quán.`;
+
+  alert(`Cảm ơn ${name}! Olion đang chuyển hướng bạn sang Messenger Fanpage để gửi thông tin đặt chỗ ngay nhé.`);
+  const url = `https://m.me/61594159312837?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+/* ─── Copy Link ─── */
+function copyLink(){
+  const url = 'https://www.olioncoffee.app/booking';
+  const el = document.getElementById('copyTxt');
+  (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.resolve(
+    (()=>{const t=document.createElement('textarea');t.value=url;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);})()
+  )).then(()=>{
+    el.textContent = 'Đã chép!';
+    setTimeout(()=>el.textContent = 'Sao chép', 2500);
+  });
+}
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b6899754248448c5aa66342fbfe6db75"}'></script>
+</body>
+</html>
