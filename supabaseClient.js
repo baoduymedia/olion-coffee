@@ -1452,17 +1452,25 @@ function setupAdminRealtime() {
     .channel('admin-channel')
     .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'feedbacks' }, payload => {
       console.log('New feedback:', payload.new);
+      if (typeof playNotificationSound === 'function') playNotificationSound();
       if (typeof showToast === 'function') showToast('🔔 Có góp ý mới từ khách hàng!');
       if (typeof loadFeedbacks === 'function') loadFeedbacks();
     })
     .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'lucky_spins' }, payload => {
       console.log('New lucky spin:', payload.new);
+      if (typeof playNotificationSound === 'function') playNotificationSound();
       if (typeof showToast === 'function') showToast('🎁 Khách hàng vừa quay trúng thưởng!');
       if (typeof loadMinigame === 'function') loadMinigame();
     })
     .on('postgres_changes', { event: '*', schema: 'public', table: 'bookings' }, payload => {
       console.log('Bookings update:', payload);
-      if (typeof showToast === 'function') showToast('📅 Có thay đổi về đơn đặt bàn/không gian!');
+      if (payload.eventType === 'INSERT') {
+        if (typeof playNotificationSound === 'function') playNotificationSound();
+        const guestName = payload.new?.customer_name || 'Khách hàng';
+        if (typeof showToast === 'function') showToast(`🔔 Đơn đặt bàn mới từ ${guestName}!`);
+      } else {
+        if (typeof showToast === 'function') showToast('📅 Cập nhật thông tin đơn đặt chỗ');
+      }
       if (typeof loadBookings === 'function') loadBookings();
     })
     .subscribe();

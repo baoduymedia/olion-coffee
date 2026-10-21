@@ -1495,6 +1495,9 @@
                   <span class="badge badge-success" id="bkCloudSyncStatus" style="font-size: 11px; margin-left: 8px; vertical-align: middle;">☁️ Supabase Cloud Realtime</span>
                 </h3>
               <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button type="button" class="btn-secondary" id="testChimeBtn" onclick="playNotificationSound()" title="Thử âm thanh thông báo đơn mới">
+                  🔔 Thử chuông
+                </button>
                 <button type="button" class="btn-primary" id="seedBookingBtn" onclick="seedBookingSample()">
                   ➕ Thêm đơn mẫu
                 </button>
@@ -3641,7 +3644,12 @@
             </select>
           </td>
           <td>
-            <div style="display: flex; gap: 6px;">
+            <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+              ${cleanPhone ? `
+                <button type="button" class="btn-primary" onclick="confirmAndSendZalo('${b.id}')" style="padding: 4px 8px; font-size: 11px; border-radius: 5px; white-space: nowrap; display: inline-flex; align-items: center; gap: 4px; background: linear-gradient(135deg, #0088FF, #0055CC);" title="Xác nhận đơn và mở Zalo gửi tin nhắn mẫu cho khách">
+                  💬 Xác nhận & Zalo
+                </button>
+              ` : ''}
               <button type="button" class="btn-sm-danger" onclick="handleDeleteBooking('${b.id}')" title="Xóa đơn này">
                 ✕ Xóa
               </button>
@@ -3652,6 +3660,97 @@
         tbody.appendChild(tr);
       });
     }
+
+    window.playNotificationSound = function() {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        if (ctx.state === 'suspended') {
+          ctx.resume();
+        }
+        const now = ctx.currentTime;
+        // Tone 1: D5 (587.33 Hz)
+        const osc1 = ctx.createOscillator();
+        const gain1 = ctx.createGain();
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(587.33, now);
+        gain1.gain.setValueAtTime(0.25, now);
+        gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        osc1.connect(gain1);
+        gain1.connect(ctx.destination);
+        osc1.start(now);
+        osc1.stop(now + 0.35);
+
+        // Tone 2: A5 (880 Hz)
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = 'sine';
+        osc2.frequency.setValueAtTime(880, now + 0.15);
+        gain2.gain.setValueAtTime(0.3, now + 0.15);
+        gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+        osc2.connect(gain2);
+        gain2.connect(ctx.destination);
+        osc2.start(now + 0.15);
+        osc2.stop(now + 0.6);
+      } catch (e) {
+        console.warn('Audio chime warning:', e);
+      }
+    };
+
+    window.confirmAndSendZalo = async function(id) {
+      const b = cachedBookings.find(x => String(x.id) === String(id));
+      if (!b) return;
+      const cleanPhone = (b.phone || '').replace(/[^0-9]/g, '');
+      if (!cleanPhone) {
+        alert('Đơn này không có số điện thoại để liên hệ Zalo.');
+        return;
+      }
+
+      // Tự động chuyển trạng thái sang đã xác nhận nếu đang pending
+      if (b.status === 'pending') {
+        await changeBookingStatus(id, 'confirmed');
+      }
+
+      const typeTitle = b.booking_type === 'space' ? 'Thuê Không Gian' : 'Đặt Bàn Trước';
+      let code = '';
+      const codeMatch = (b.notes || '').match(/\[Mã:\s*(#[A-Za-z0-9_-]+)\]/i);
+      if (codeMatch) {
+        code = codeMatch[1];
+      } else {
+        code = '#OL-' + (String(b.id).length > 5 ? String(b.id).slice(-5) : '89241');
+      }
+
+      const cleanNotes = (b.notes || '').replace(/\[Mã:[^\]]+\]/g, '').trim();
+
+      const message = `Dạ Olion Coffee xin chào anh/chị ${b.customer_name || 'quý khách'}!\n` +
+        `Olion xin trân trọng XÁC NHẬN đơn giữ chỗ của anh/chị:\n` +
+        `• Mã đặt chỗ: ${code}\n` +
+        `• Dịch vụ: ${typeTitle}\n` +
+        `• Số lượng: ${b.guests_count || 1} người\n` +
+        `• Thời gian: ${b.booking_time || ''} • Ngày ${b.booking_date || ''}\n` +
+        (cleanNotes ? `• Ghi chú: ${cleanNotes}\n` : '') +
+        `• Địa chỉ quán: Olion Coffee - 134/1/17 Đ. Cách Mạng Tháng 8, P. Chánh Nghĩa, TP. Thủ Dầu Một, Bình Dương\n` +
+        `• Wifi quán: OLION (Mật khẩu: 12345678@)\n` +
+        `Olion đã sẵn sàng bàn chu đáo và rất hân hạnh được đón tiếp anh/chị nhé ạ! Hotline/Zalo hỗ trợ: 0783 657 587.`;
+
+      // Sao chép tin nhắn vào clipboard
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(message);
+        } else {
+          const t = document.createElement('textarea');
+          t.value = message;
+          document.body.appendChild(t);
+          t.select();
+          document.execCommand('copy');
+          document.body.removeChild(t);
+        }
+      } catch (e) {}
+
+      showToast(`Đã sao chép tin nhắn xác nhận & Đang mở Zalo của ${cleanPhone}!`);
+      window.open(`https://zalo.me/${cleanPhone}`, '_blank');
+    };
 
     window.changeBookingStatus = async function(id, newStatus) {
       showToast('Đang cập nhật trạng thái đơn...');

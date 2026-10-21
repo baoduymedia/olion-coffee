@@ -613,37 +613,110 @@
         </form>
       </div>
 
-      <!-- Success & Copied State -->
-      <div id="pageSuccessArea" style="display: none; text-align: center;">
-        <div style="font-size: 42px; margin-bottom: 8px;">📋✨</div>
-        <h4 style="font-size: 22px; color: var(--gold); font-weight: 700; margin-bottom: 6px;">
-          Đã Tự Động Sao Chép Yêu Cầu!
-        </h4>
-        <p style="font-size: 13.5px; color: var(--cream); line-height: 1.6; margin-bottom: 14px;">
-          Nội dung dưới đây đã nằm sẵn trong bộ nhớ tạm của bạn:
-        </p>
-
-        <div id="pagePreviewBox" style="background: rgba(0,0,0,0.55); border: 1px dashed var(--gold); border-radius: 10px; padding: 14px 16px; text-align: left; font-size: 12.5px; line-height: 1.6; color: var(--gold-light); white-space: pre-line; max-height: 160px; overflow-y: auto; margin-bottom: 14px; user-select: all;">
+      <!-- Luxury Digital Booking Pass (Phiếu Xác Nhận Giữ Chỗ Điện Tử) -->
+      <div id="pageSuccessArea" style="display: none; text-align: left;">
+        <div style="text-align: center; margin-bottom: 16px;">
+          <div style="font-size: 38px; line-height: 1; margin-bottom: 8px;">✨📋✨</div>
+          <h4 style="font-size: 22px; color: var(--gold); font-weight: 700; margin-bottom: 4px;">
+            Yêu Cầu Đã Gửi Thành Công!
+          </h4>
+          <p style="font-size: 13px; color: var(--cream); line-height: 1.5; margin: 0;">
+            Hệ thống đã tự động tạo Phiếu giữ chỗ điện tử và lưu vào hệ thống Olion Coffee.
+          </p>
         </div>
 
-        <div style="background: rgba(46, 204, 113, 0.12); border: 1px solid rgba(46, 204, 113, 0.35); border-radius: 8px; padding: 10px 14px; font-size: 12.5px; color: #a3e9b8; margin-bottom: 16px; line-height: 1.5;">
-          💡 <strong>Hướng dẫn:</strong> Khi Messenger / Zalo mở ra, bạn chỉ cần bấm <strong>Dán (Paste)</strong> vào khung chat để gửi ngay cho Olion nhé!
-        </div>
-
-        <div style="display: flex; flex-direction: column; gap: 10px;">
-          <a href="https://m.me/61594159312837" target="_blank" rel="noopener noreferrer" class="btn-main" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="#0084FF"><path d="M12 2C6.477 2 2 6.145 2 11.258c0 2.91 1.455 5.518 3.735 7.206V22l3.415-1.874c.905.251 1.865.387 2.85.387 5.523 0 10-4.145 10-9.258C22 6.145 17.523 2 12 2zm1.066 12.443l-2.607-2.782-5.086 2.782 5.597-5.94 2.671 2.782 5.022-2.782-5.597 5.94z"/></svg> Mở Messenger Fanpage Để Gửi
-          </a>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-            <button type="button" class="btn-ghost" onclick="copyPageBookingMsg()" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Sao Chép Lại
-            </button>
-            <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="btn-ghost" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
-              <img src="assets/zalo-logo.webp" alt="Zalo" width="18" height="18" style="border-radius:4px;display:block;object-fit:contain;" /> Gửi Qua Zalo
-            </a>
+        <!-- The Digital Pass Card -->
+        <div style="background: linear-gradient(145deg, rgba(32, 18, 12, 0.95), rgba(15, 8, 4, 0.98)); border: 1.5px solid var(--gold); border-radius: 14px; padding: 18px 20px; box-shadow: 0 12px 36px rgba(0,0,0,0.65), 0 0 20px rgba(229,154,85,0.2); margin-bottom: 16px; position: relative; overflow: hidden;">
+          <!-- Top Badge -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed rgba(229,154,85,0.35); padding-bottom: 12px; margin-bottom: 14px;">
+            <div>
+              <span style="display: inline-block; background: rgba(229,154,85,0.2); border: 1px solid var(--gold); color: var(--gold-light); font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; padding: 3px 8px; border-radius: 20px; text-transform: uppercase;">
+                ✦ PHIẾU GIỮ CHỖ ĐIỆN TỬ
+              </span>
+            </div>
+            <div style="text-align: right;">
+              <span style="font-size: 11px; color: var(--muted);">Mã đặt chỗ:</span>
+              <div style="display: flex; align-items: center; gap: 6px; justify-content: flex-end;">
+                <span id="passBookingCode" style="font-family: monospace; font-size: 16px; font-weight: 800; color: #FFA45B; letter-spacing: 1px;">#OL-00000</span>
+                <button type="button" onclick="copyPassCode()" title="Sao chép mã" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 10px; cursor: pointer;">Chép</button>
+              </div>
+            </div>
           </div>
-          <button type="button" class="btn-ghost" onclick="backToPageForm()" style="border: none; color: var(--muted); padding: 6px; font-size: 12px; cursor: pointer;">
-            ← Quay lại chỉnh sửa thông tin
+
+          <!-- Pass Details Grid -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 13px; line-height: 1.5; margin-bottom: 14px;">
+            <div>
+              <div style="color: var(--muted); font-size: 11px; text-transform: uppercase;">Khách hàng</div>
+              <strong id="passCustomer" style="color: #fff; font-size: 13.5px;">—</strong>
+            </div>
+            <div>
+              <div style="color: var(--muted); font-size: 11px; text-transform: uppercase;">Số điện thoại</div>
+              <strong id="passPhone" style="color: var(--gold-light); font-size: 13.5px;">—</strong>
+            </div>
+            <div>
+              <div style="color: var(--muted); font-size: 11px; text-transform: uppercase;">Dịch vụ</div>
+              <span id="passType" style="color: #fff; font-weight: 600;">—</span>
+            </div>
+            <div>
+              <div style="color: var(--muted); font-size: 11px; text-transform: uppercase;">Số lượng</div>
+              <span id="passGuests" style="color: #fff; font-weight: 600;">—</span>
+            </div>
+            <div style="grid-column: 1 / -1;">
+              <div style="color: var(--muted); font-size: 11px; text-transform: uppercase;">Thời gian đặt</div>
+              <span id="passDateTime" style="color: #FFA45B; font-weight: 700; font-size: 14px;">—</span>
+            </div>
+            <div style="grid-column: 1 / -1;">
+              <div style="color: var(--muted); font-size: 11px; text-transform: uppercase;">Địa chỉ Olion Coffee</div>
+              <span style="color: var(--cream); font-size: 12.5px;">134/1/17 Đ. Cách Mạng Tháng 8, P. Chánh Nghĩa, TP. Thủ Dầu Một, Bình Dương</span>
+            </div>
+          </div>
+
+          <!-- Status notification box -->
+          <div style="background: rgba(46, 204, 113, 0.12); border: 1px solid rgba(46, 204, 113, 0.35); border-radius: 8px; padding: 10px 12px; font-size: 12px; color: #a3e9b8; line-height: 1.5;">
+            ⏳ <strong>Trạng thái: Đã ghi nhận</strong> — Olion đang chuẩn bị bàn chu đáo cho bạn. Bấm nút dưới đây để nhắn Zalo gửi thông tin xác nhận ngay!
+          </div>
+        </div>
+
+        <!-- Primary Action: Zalo Instant Confirm -->
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px;">
+          <a id="pageZaloConfirmBtn" href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="btn-main btn-booking-highlight" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 10px; font-size: 15px;">
+            <img src="assets/zalo-logo.webp" alt="Zalo" width="22" height="22" style="border-radius: 4px; display: block; object-fit: contain;" />
+            Nhắn Zalo Quán Xác Nhận Tức Thì
+          </a>
+
+          <a href="https://m.me/61594159312837" target="_blank" rel="noopener noreferrer" class="btn-ghost" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#0084FF"><path d="M12 2C6.477 2 2 6.145 2 11.258c0 2.91 1.455 5.518 3.735 7.206V22l3.415-1.874c.905.251 1.865.387 2.85.387 5.523 0 10-4.145 10-9.258C22 6.145 17.523 2 12 2zm1.066 12.443l-2.607-2.782-5.086 2.782 5.597-5.94 2.671 2.782 5.022-2.782-5.597 5.94z"/></svg>
+            Mở Messenger Fanpage
+          </a>
+        </div>
+
+        <!-- In-Store Perks & Utilities Row (Calendar, Maps, Wifi) -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+          <a id="pageGoogleCalendarBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn-ghost" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; padding: 10px 12px;">
+            📅 Thêm Google Calendar
+          </a>
+          <a href="https://maps.app.goo.gl/RfJ6nV72VN6CkVbv9?g_st=ac" target="_blank" rel="noopener noreferrer" class="btn-ghost" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; font-size: 12px; padding: 10px 12px;">
+            🗺️ Chỉ đường Google Maps
+          </a>
+        </div>
+
+        <!-- 1-Tap Wifi Copy Pill -->
+        <div style="background: rgba(229,154,85,0.08); border: 1px dashed rgba(229,154,85,0.3); border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+          <div style="font-size: 12px; color: var(--cream);">
+            📶 <strong>Wifi quán:</strong> <span style="color:#FFA45B;font-weight:700;">OLION</span> &bull; Pass: <span style="font-family:monospace;color:#fff;">12345678@</span>
+          </div>
+          <button type="button" class="btn-ghost" onclick="copyWifiCredentials()" style="padding: 4px 10px; font-size: 11px; border-radius: 6px;">Chép pass</button>
+        </div>
+
+        <!-- Parking Policy Reminder -->
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 10px 12px; font-size: 11.5px; color: var(--muted); line-height: 1.5; margin-bottom: 14px;">
+          🛵 <strong>Tiện ích đậu xe:</strong> Miễn phí đậu xe máy trước quán, có nhân viên hỗ trợ dắt xe và camera 24/7. <em>(Quán không có chỗ đậu ô tô riêng, quý khách có thể gửi bãi xe gần quán hoặc đặt taxi/Grab đến tận cửa quán).</em>
+        </div>
+
+        <!-- Back / Edit -->
+        <div style="text-align: center;">
+          <button type="button" class="btn-ghost" onclick="backToPageForm()" style="border: none; color: var(--muted); padding: 8px; font-size: 12px; cursor: pointer;">
+            ← Quay lại chỉnh sửa thông tin hoặc đặt thêm chỗ khác
           </button>
         </div>
       </div>
@@ -681,7 +754,7 @@
         </div>
         <div class="info-text">
           <strong>Địa chỉ quán</strong>
-          <span>80/64a Dương Quảng Hàm, An Nhơn, Gò Vấp, TP.HCM</span>
+          <span>134/1/17 Đ. Cách Mạng Tháng 8, P. Chánh Nghĩa, TP. Thủ Dầu Một, Bình Dương</span>
           <div style="margin-top: 6px;">
             <a href="https://maps.app.goo.gl/RfJ6nV72VN6CkVbv9?g_st=ac" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; color:var(--gold-light); text-decoration:none; padding:4px 10px; border-radius:20px; background:rgba(218,165,32,0.12); border:1px solid rgba(218,165,32,0.3);">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
@@ -741,7 +814,13 @@
 <!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer class="footer">
   <strong>OLION COFFEE</strong>
-  <a href="https://www.olioncoffee.app/">Về Trang Chủ www.olioncoffee.app</a>
+  <div style="display:flex;gap:12px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:6px;">
+    <a href="https://www.olioncoffee.app/">Trang Chủ</a>
+    <span>&bull;</span>
+    <a href="/news.html">Bản Tin & Sự Kiện</a>
+    <span>&bull;</span>
+    <a href="https://zalo.me/0783657587" target="_blank" rel="noopener">Zalo Quán: 0783 657 587</a>
+  </div>
 </footer>
 
 <!-- Supabase & Data Sync SDK -->
@@ -913,19 +992,22 @@ async function handlePageSubmit(e){
     return;
   }
 
+  const bookingCode = 'OL-' + (Date.now() % 100000).toString().padStart(5, '0');
   const typeText = (selectedType === 'space')
     ? '01 - CHO THUÊ KHÔNG GIAN (Workshop / Họp nhóm / CLB / Sự kiện)'
     : '02 - ĐẶT BÀN TRƯỚC (Học tập / Hẹn bạn bè / Làm việc)';
 
-  const formattedMsg = `Chào Olion Coffee! Mình muốn đăng ký:\n` +
+  const formattedMsg = `Chào Olion Coffee! Mình gửi thông tin xác nhận giữ chỗ:\n` +
+    `• Mã đặt chỗ: #${bookingCode}\n` +
     `• Dịch vụ: ${typeText}\n` +
     `• Khách hàng: ${name} (${phone})\n` +
-    `• Số lượng người: ${guests || '1'} người\n` +
-    `• Thời gian dự kiến: ${time} ngày ${date}\n` +
-    (note ? `• Yêu cầu chi tiết: ${note}\n` : '') +
-    `Olion tư vấn và xác nhận giúp mình nhé! Cảm ơn quán.`;
+    `• Số lượng: ${guests || '1'} người\n` +
+    `• Thời gian: ${time} • Ngày ${date}\n` +
+    (note ? `• Ghi chú: ${note}\n` : '') +
+    `Olion xác nhận và giữ bàn giúp mình nhé! Cảm ơn quán.`;
 
   window.lastFormattedPageMsg = formattedMsg;
+  window.lastBookingCode = '#' + bookingCode;
 
   // Auto copy formatted message to clipboard
   try {
@@ -950,7 +1032,7 @@ async function handlePageSubmit(e){
       guests_count: parseInt(guests, 10) || 1,
       booking_date: date,
       booking_time: time,
-      notes: note,
+      notes: `[Mã: #${bookingCode}] ${note}`.trim(),
       status: 'pending',
       created_at: new Date().toISOString()
     };
@@ -974,16 +1056,97 @@ async function handlePageSubmit(e){
     localStorage.setItem('olion_customer_phone', phone);
   } catch(err) {}
 
-  // Show Success Screen with the copied preview
+  // Populate Digital Pass
+  const codeEl = document.getElementById('passBookingCode');
+  if (codeEl) codeEl.textContent = '#' + bookingCode;
+
+  const custEl = document.getElementById('passCustomer');
+  if (custEl) custEl.textContent = name;
+
+  const phoneEl = document.getElementById('passPhone');
+  if (phoneEl) phoneEl.textContent = phone;
+
+  const typeEl = document.getElementById('passType');
+  if (typeEl) typeEl.textContent = (selectedType === 'space') ? 'Thuê Không Gian' : 'Đặt Bàn Trước';
+
+  const guestsEl = document.getElementById('passGuests');
+  if (guestsEl) guestsEl.textContent = `${guests || '1'} người`;
+
+  const dtEl = document.getElementById('passDateTime');
+  if (dtEl) dtEl.textContent = `${time} • Ngày ${date}`;
+
+  // Configure Google Calendar Link
+  const calBtn = document.getElementById('pageGoogleCalendarBtn');
+  if (calBtn) {
+    calBtn.href = buildGoogleCalendarUrl(
+      `Hẹn tại Olion Coffee (${typeText.split('(')[0].trim()})`,
+      date,
+      time,
+      `Mã đặt chỗ: #${bookingCode}\\nKhách hàng: ${name} (${phone})\\nSố lượng: ${guests || 1} người\\nĐịa chỉ: Olion Coffee - 134/1/17 Đ. Cách Mạng Tháng 8, P. Chánh Nghĩa, TP. Thủ Dầu Một\\nHotline/Zalo: 0783 657 587`,
+      'Olion Coffee, 134/1/17 Đ. Cách Mạng Tháng 8, P. Chánh Nghĩa, TP. Thủ Dầu Một, Bình Dương'
+    );
+  }
+
+  // Show Success Screen with the pass
   const formArea = document.getElementById('pageFormArea');
   const successArea = document.getElementById('pageSuccessArea');
-  const previewBox = document.getElementById('pagePreviewBox');
-  if (previewBox) previewBox.textContent = formattedMsg;
   if (formArea) formArea.style.display = 'none';
-  if (successArea) successArea.style.display = 'block';
+  if (successArea) {
+    successArea.style.display = 'block';
+    successArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
 
-  // Redirect to Messenger
-  window.open('https://m.me/61594159312837', '_blank');
+function buildGoogleCalendarUrl(title, dateStr, timeStr, desc, location) {
+  try {
+    const cleanDate = (dateStr || '').replace(/-/g, '');
+    let startHour = 10, startMin = 0, endHour = 12, endMin = 0;
+    const match = (timeStr || '').match(/(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})/);
+    if (match) {
+      startHour = parseInt(match[1], 10);
+      startMin = parseInt(match[2], 10);
+      endHour = parseInt(match[3], 10);
+      endMin = parseInt(match[4], 10);
+    } else {
+      const singleMatch = (timeStr || '').match(/(\d{1,2}):(\d{2})/);
+      if (singleMatch) {
+        startHour = parseInt(singleMatch[1], 10);
+        startMin = parseInt(singleMatch[2], 10);
+        endHour = Math.min(23, startHour + 2);
+        endMin = startMin;
+      }
+    }
+    const pad = (n) => String(n).padStart(2, '0');
+    const startIso = `${cleanDate}T${pad(startHour)}${pad(startMin)}00`;
+    const endIso = `${cleanDate}T${pad(endHour)}${pad(endMin)}00`;
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${startIso}/${endIso}&details=${encodeURIComponent(desc)}&location=${encodeURIComponent(location)}`;
+  } catch(e) {
+    return 'https://calendar.google.com/calendar/render';
+  }
+}
+
+function copyPassCode() {
+  const code = window.lastBookingCode || '#OL-00000';
+  (navigator.clipboard ? navigator.clipboard.writeText(code) : Promise.resolve()).then(() => {
+    alert(`Đã sao chép mã đặt chỗ: ${code}`);
+  });
+}
+
+function copyWifiCredentials() {
+  const pass = '12345678@';
+  (navigator.clipboard ? navigator.clipboard.writeText(pass) : Promise.resolve()).then(() => {
+    alert('Đã sao chép mật khẩu Wifi: 12345678@\nTên mạng Wifi: OLION');
+  });
+}
+
+function backToPageForm() {
+  const formArea = document.getElementById('pageFormArea');
+  const successArea = document.getElementById('pageSuccessArea');
+  if (successArea) successArea.style.display = 'none';
+  if (formArea) {
+    formArea.style.display = 'block';
+    formArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 // Run init
