@@ -3906,6 +3906,113 @@
     .install-float-btn:active {
       transform: scale(0.95);
     }
+
+    /* ======== 3-PLATFORM APP DOWNLOAD MODAL STYLES ======== */
+    .app-platform-nav {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .app-platform-tab {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .app-platform-tab:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(196, 178, 154, 0.35);
+      color: #fff;
+    }
+    .app-platform-tab.active {
+      background: rgba(196, 178, 154, 0.15);
+      border-color: var(--accent-gold);
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(196, 178, 154, 0.2);
+    }
+    .app-platform-tab .plat-badge {
+      position: absolute;
+      top: -9px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--accent-gold), var(--accent-rust));
+      color: #12100E;
+      font-size: 8.5px;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 10px;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      letter-spacing: 0.3px;
+    }
+    .app-platform-tab .plat-icon {
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .app-platform-tab .plat-name {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .app-platform-tab .plat-sub {
+      font-size: 9.5px;
+      opacity: 0.75;
+      margin-top: 2px;
+    }
+    .platform-content-panel {
+      display: none;
+      animation: fadeIn 0.25s ease;
+    }
+    .platform-content-panel.active {
+      display: block;
+    }
+    .install-guide-box {
+      margin-top: 16px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      text-align: left;
+    }
+    .install-step-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 11px;
+    }
+    .install-step-item:last-child {
+      margin-bottom: 0;
+    }
+    .install-step-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      color: #12100E;
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .install-step-text {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--text-body);
+    }
     
     input, textarea {
       font-size: 16px !important;
@@ -10305,49 +10412,102 @@
         deferredPrompt = e;
       });
 
-            const handleInstall = () => {
-        document.getElementById('downloadAppModal').classList.add('active');
+            // G. PWA Install Prompt (3 Platforms: iOS, Android, PC)
+      let deferredPrompt = null;
+      let detectedPlatform = 'pc';
+      const floatingInstallBtn = document.getElementById('floatingInstallBtn');
+      const drawerInstallBtn = document.getElementById('drawerInstallBtn');
+
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+      });
+
+      function detectCurrentPlatform() {
+        const ua = navigator.userAgent || navigator.vendor || window.opera || '';
+        if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+          return 'ios';
+        }
+        if (/android/i.test(ua)) {
+          return 'android';
+        }
+        return 'pc';
+      }
+
+      window.switchInstallPlatform = function(platform) {
+        // Toggle tabs
+        document.querySelectorAll('.app-platform-tab').forEach(tab => tab.classList.remove('active'));
+        const activeTab = document.getElementById(
+          platform === 'ios' ? 'tabBtnIos' : (platform === 'android' ? 'tabBtnAndroid' : 'tabBtnPc')
+        );
+        if (activeTab) activeTab.classList.add('active');
+
+        // Toggle panels
+        document.querySelectorAll('.platform-content-panel').forEach(panel => panel.classList.remove('active'));
+        const activePanel = document.getElementById(
+          platform === 'ios' ? 'panelIos' : (platform === 'android' ? 'panelAndroid' : 'panelPc')
+        );
+        if (activePanel) activePanel.classList.add('active');
+
+        if (window.lucide) window.lucide.createIcons();
       };
 
-      window.showInstallGuide = function(platform) {
-        const guideArea = document.getElementById('installGuideArea');
-        const guideTitle = document.getElementById('guideTitle');
-        const guideContent = document.getElementById('guideContent');
-        guideArea.style.display = 'block';
+      const handleInstall = () => {
+        const modal = document.getElementById('downloadAppModal');
+        if (!modal) return;
+        modal.classList.add('active');
 
-        if (platform === 'ios') {
-          guideTitle.innerHTML = '<i data-lucide="apple" style="width:16px;height:16px;margin-bottom:-2px;"></i> Hướng dẫn iOS (Safari)';
-          guideContent.innerHTML = `
-            <ol style="margin-left: 20px; margin-top: 0; padding-top: 0;">
-              <li style="margin-bottom: 8px;">Mở trang web này bằng trình duyệt <strong>Safari</strong>.</li>
-              <li style="margin-bottom: 8px;">Nhấn vào biểu tượng <strong>Chia sẻ (Share) <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:-2px;"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg></strong> ở thanh menu dưới cùng.</li>
-              <li>Kéo xuống và chọn <strong>"Thêm vào MH chính" (Add to Home Screen) <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom:-2px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg></strong>.</li>
-            </ol>
-          `;
+        // Tự động nhận diện thiết bị người dùng đang truy cập
+        detectedPlatform = detectCurrentPlatform();
+
+        const badgeIos = document.getElementById('badgeIos');
+        const badgeAndroid = document.getElementById('badgeAndroid');
+        const badgePc = document.getElementById('badgePc');
+        if (badgeIos) badgeIos.style.display = (detectedPlatform === 'ios') ? 'inline-block' : 'none';
+        if (badgeAndroid) badgeAndroid.style.display = (detectedPlatform === 'android') ? 'inline-block' : 'none';
+        if (badgePc) badgePc.style.display = (detectedPlatform === 'pc') ? 'inline-block' : 'none';
+
+        switchInstallPlatform(detectedPlatform);
+      };
+
+      window.showInstallGuideDetail = function(platform) {
+        switchInstallPlatform(platform);
+        if (window.showOlionToast) {
+          window.showOlionToast('Đã mở hướng dẫn cài đặt iOS!', 'apple');
         }
-        if (window.lucide) window.lucide.createIcons();
       };
 
       window.handleAndroidInstall = async function() {
         if (typeof deferredPrompt !== 'undefined' && deferredPrompt !== null) {
           deferredPrompt.prompt();
-          await deferredPrompt.userChoice;
+          const { outcome } = await deferredPrompt.userChoice;
+          if (outcome === 'accepted') {
+            if (window.showOlionToast) window.showOlionToast('Cảm ơn bạn đã cài đặt Olion Coffee!', 'check-circle');
+            document.getElementById('downloadAppModal')?.classList.remove('active');
+          }
           deferredPrompt = null;
-          document.getElementById('downloadAppModal').classList.remove('active');
         } else {
-          const guideArea = document.getElementById('installGuideArea');
-          const guideTitle = document.getElementById('guideTitle');
-          const guideContent = document.getElementById('guideContent');
-          guideArea.style.display = 'block';
-          
-          guideTitle.innerHTML = '<i data-lucide="smartphone" style="width:16px;height:16px;margin-bottom:-2px;"></i> Hướng dẫn Android (Chrome)';
-          guideContent.innerHTML = `
-            <ol style="margin-left: 20px; margin-top: 0; padding-top: 0;">
-              <li style="margin-bottom: 8px;">Nhấn vào biểu tượng <strong>Menu 3 chấm [ ⋮ ]</strong> ở góc phải trên cùng trình duyệt.</li>
-              <li>Chọn <strong>"Thêm vào màn hình chính" (Add to Home screen)</strong> hoặc <strong>"Cài đặt ứng dụng"</strong>.</li>
-            </ol>
-          `;
-          if (window.lucide) window.lucide.createIcons();
+          switchInstallPlatform('android');
+          if (window.showOlionToast) {
+            window.showOlionToast('Vui lòng làm theo hướng dẫn ở bên dưới để cài đặt!', 'smartphone');
+          }
+        }
+      };
+
+      window.handlePcInstall = async function() {
+        if (typeof deferredPrompt !== 'undefined' && deferredPrompt !== null) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          if (outcome === 'accepted') {
+            if (window.showOlionToast) window.showOlionToast('Cảm ơn bạn đã cài đặt App trên máy tính!', 'check-circle');
+            document.getElementById('downloadAppModal')?.classList.remove('active');
+          }
+          deferredPrompt = null;
+        } else {
+          switchInstallPlatform('pc');
+          if (window.showOlionToast) {
+            window.showOlionToast('Xem hướng dẫn biểu tượng cài đặt [⊕] trên thanh địa chỉ URL!', 'monitor');
+          }
         }
       };
 
@@ -10372,40 +10532,117 @@
         }
       };
 
-
-
     });
   </script>
 
-
-
-  <!-- ======== 18. APP DOWNLOAD MODAL ======== -->
+  <!-- ======== 18. APP DOWNLOAD MODAL (3 NỀN TẢNG: IOS, ANDROID, PC) ======== -->
   <div class="modal-overlay" id="downloadAppModal" onclick="if(event.target === this) this.classList.remove('active')">
-    <div class="modal-content" style="max-width: 480px; padding: 32px 24px; text-align: center; border-radius: 20px;">
-      <button type="button" class="modal-close-btn" onclick="document.getElementById('downloadAppModal').classList.remove('active')">✕</button>
-      <img src="assets/logo-white.webp" alt="Olion Logo" style="width: 140px; margin-bottom: 24px;" loading="lazy" />
-      <h3 style="font-family: var(--font-heading); color: var(--accent-gold); font-size: 1.6rem; margin-bottom: 12px;">Cài Đặt Ứng Dụng</h3>
-      <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 28px;">
-        Trải nghiệm mượt mà hơn, tích điểm nhanh chóng và nhận thông báo ưu đãi độc quyền.
+    <div class="modal-content" style="max-width: 520px; padding: 32px 24px; text-align: center; border-radius: 20px;">
+      <button type="button" class="modal-close-btn" onclick="document.getElementById('downloadAppModal').classList.remove('active')" aria-label="Đóng popup">✕</button>
+      <img src="assets/logo-white.webp" alt="Olion Logo" style="width: 130px; margin-bottom: 16px;" loading="lazy" />
+      <h3 style="font-family: var(--font-heading); color: var(--accent-gold); font-size: 1.55rem; margin-bottom: 8px;">Cài Đặt Ứng Dụng Olion Coffee</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; margin-bottom: 22px;">
+        Truy cập mượt mà 1 chạm, nhận thông báo khuyến mãi & tích điểm thành viên không giới hạn trên cả 3 nền tảng:
       </p>
 
-      <div style="display: flex; flex-direction: column; gap: 16px;">
-        <!-- iOS Button -->
-        <button class="btn btn-primary" onclick="showInstallGuide('ios')" style="background: #2D2D2D; color: #FFF; border: 1px solid #444; justify-content: center;">
-          <i data-lucide="apple" style="width:20px;height:20px;margin-right:8px;"></i> Tải App cho iOS (iPhone/iPad)
+      <!-- 3-Platform Selector Tabs -->
+      <div class="app-platform-nav" id="appPlatformNav">
+        <button type="button" class="app-platform-tab active" id="tabBtnIos" onclick="switchInstallPlatform('ios')">
+          <span class="plat-badge" id="badgeIos" style="display:none;">Bạn đang dùng</span>
+          <span class="plat-icon"><i data-lucide="apple" style="width:20px;height:20px;"></i></span>
+          <span class="plat-name">iOS</span>
+          <span class="plat-sub">iPhone / iPad</span>
         </button>
-
-        <!-- Android Button -->
-        <button class="btn btn-primary" onclick="handleAndroidInstall()" style="background: #1A73E8; color: #FFF; border: none; justify-content: center;">
-          <i data-lucide="smartphone" style="width:20px;height:20px;margin-right:8px;"></i> Tải App cho Android
+        <button type="button" class="app-platform-tab" id="tabBtnAndroid" onclick="switchInstallPlatform('android')">
+          <span class="plat-badge" id="badgeAndroid" style="display:none;">Bạn đang dùng</span>
+          <span class="plat-icon"><i data-lucide="smartphone" style="width:20px;height:20px;"></i></span>
+          <span class="plat-name">Android</span>
+          <span class="plat-sub">Samsung, Xiaomi...</span>
+        </button>
+        <button type="button" class="app-platform-tab" id="tabBtnPc" onclick="switchInstallPlatform('pc')">
+          <span class="plat-badge" id="badgePc" style="display:none;">Bạn đang dùng</span>
+          <span class="plat-icon"><i data-lucide="monitor" style="width:20px;height:20px;"></i></span>
+          <span class="plat-name">PC / Laptop</span>
+          <span class="plat-sub">Windows & Mac</span>
         </button>
       </div>
 
-      <!-- Guides Area -->
-      <div id="installGuideArea" style="display: none; margin-top: 24px; padding: 16px; background: rgba(255,255,255,0.05); border-radius: 12px; text-align: left;">
-        <h4 id="guideTitle" style="color: var(--accent-gold); font-size: 1rem; margin-bottom: 12px; font-weight: 600;">Hướng dẫn</h4>
-        <div id="guideContent" style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6;"></div>
+      <!-- Panel 1: iOS -->
+      <div class="platform-content-panel active" id="panelIos">
+        <button type="button" class="btn btn-primary" onclick="showInstallGuideDetail('ios')" style="background: #1C1C1E; color: #FFF; border: 1px solid rgba(255,255,255,0.2); width: 100%; justify-content: center; padding: 13px; font-weight: 600; border-radius: 12px;">
+          <i data-lucide="apple" style="width:18px;height:18px;margin-right:8px;"></i> Hướng Dẫn Cài Đặt iPhone / iPad (Safari)
+        </button>
+        <div class="install-guide-box">
+          <div style="font-size: 13px; font-weight: 700; color: var(--accent-gold); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+            <i data-lucide="info" style="width:15px;height:15px;"></i> Các bước cài đặt nhanh qua Safari:
+          </div>
+          <div class="install-step-item">
+            <span class="install-step-num">1</span>
+            <span class="install-step-text">Mở website bằng trình duyệt <strong>Safari</strong> trên iPhone hoặc iPad.</span>
+          </div>
+          <div class="install-step-item">
+            <span class="install-step-num">2</span>
+            <span class="install-step-text">Bấm vào biểu tượng <strong>Chia sẻ (Share)</strong> hình ô vuông có mũi tên lên <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px;"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg> ở thanh dưới cùng.</span>
+          </div>
+          <div class="install-step-item">
+            <span class="install-step-num">3</span>
+            <span class="install-step-text">Cuộn xuống và chọn <strong>"Thêm vào MH chính" (Add to Home Screen)</strong> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -2px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>.</span>
+          </div>
+          <div class="install-step-item">
+            <span class="install-step-num">4</span>
+            <span class="install-step-text">Bấm <strong>"Thêm" (Add)</strong> ở góc trên bên phải. App Olion sẽ xuất hiện trên màn hình như app tải từ App Store!</span>
+          </div>
+        </div>
       </div>
+
+      <!-- Panel 2: Android -->
+      <div class="platform-content-panel" id="panelAndroid">
+        <button type="button" class="btn btn-primary" onclick="handleAndroidInstall()" style="background: linear-gradient(135deg, #1A73E8, #0D47A1); color: #FFF; border: none; width: 100%; justify-content: center; padding: 13px; font-weight: 600; border-radius: 12px; box-shadow: 0 4px 15px rgba(26,115,232,0.35);">
+          <i data-lucide="download" style="width:18px;height:18px;margin-right:8px;"></i> Cài Đặt App Android Ngay
+        </button>
+        <div class="install-guide-box">
+          <div style="font-size: 13px; font-weight: 700; color: #64B5F6; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+            <i data-lucide="info" style="width:15px;height:15px;"></i> Dành cho Google Chrome, Cốc Cốc trên Android:
+          </div>
+          <div class="install-step-item">
+            <span class="install-step-num" style="background: #1A73E8; color: #fff;">1</span>
+            <span class="install-step-text">Bấm nút xanh <strong>"Cài Đặt App Android Ngay"</strong> ở trên và bấm xác nhận khi có hộp thoại.</span>
+          </div>
+          <div class="install-step-item">
+            <span class="install-step-num" style="background: #1A73E8; color: #fff;">2</span>
+            <span class="install-step-text">Nếu không thấy hộp thoại: Nhấn vào biểu tượng <strong>Menu 3 chấm [ ⋮ ]</strong> ở góc phải trên cùng trình duyệt.</span>
+          </div>
+          <div class="install-step-item">
+            <span class="install-step-num" style="background: #1A73E8; color: #fff;">3</span>
+            <span class="install-step-text">Chọn <strong>"Cài đặt ứng dụng"</strong> hoặc <strong>"Thêm vào màn hình chính" (Add to Home screen)</strong> để hoàn tất.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 3: PC / Laptop -->
+      <div class="platform-content-panel" id="panelPc">
+        <button type="button" class="btn btn-primary" onclick="handlePcInstall()" style="background: linear-gradient(135deg, #2D3748, #1A202C); color: #FFF; border: 1px solid rgba(196,178,154,0.4); width: 100%; justify-content: center; padding: 13px; font-weight: 600; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+          <i data-lucide="monitor" style="width:18px;height:18px;margin-right:8px;"></i> Cài Đặt App Cho Máy Tính (PC / Laptop)
+        </button>
+        <div class="install-guide-box">
+          <div style="font-size: 13px; font-weight: 700; color: var(--accent-gold); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+            <i data-lucide="info" style="width:15px;height:15px;"></i> Cài đặt trên Windows PC, Mac & Laptop:
+          </div>
+          <div class="install-step-item">
+            <span class="install-step-num">1</span>
+            <span class="install-step-text"><strong>Google Chrome & Microsoft Edge:</strong> Nhìn vào góc phải thanh địa chỉ URL trên cùng, bấm vào biểu tượng <strong>Cài đặt [ ⊕ / 💻↓ ]</strong>.</span>
+          </div>
+          <div class="install-step-item">
+            <span class="install-step-num">2</span>
+            <span class="install-step-text">Hoặc bấm menu <strong>3 chấm [ ⋮ ]</strong> ở góc phải trên cùng trình duyệt -> chọn <strong>"Cài đặt Olion Coffee"</strong> (Install App).</span>
+          </div>
+          <div class="install-step-item">
+            <span class="install-step-num">3</span>
+            <span class="install-step-text"><strong>Safari trên macOS (Sonoma trở lên):</strong> Vào thanh menu Mac chọn <strong>Tệp (File)</strong> -> Chọn <strong>"Thêm vào Dock..." (Add to Dock)</strong> để mở Olion trong cửa sổ ứng dụng riêng biệt.</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
