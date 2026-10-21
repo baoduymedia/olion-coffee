@@ -1282,6 +1282,154 @@ async function getSpinDetails(spinId) {
 
 
 // =======================================================
+// 7. ĐẶT BÀN & THUÊ KHÔNG GIAN (BOOKINGS & SPACE RENTALS)
+// =======================================================
+async function saveBookingToStorage(bookingData) {
+  const localId = 'bk_' + Date.now() + '_' + Math.random().toString(36).substring(2, 7);
+  const booking = {
+    id: bookingData.id || localId,
+    customer_name: (bookingData.customer_name || bookingData.name || 'Khách hàng').trim(),
+    phone: (bookingData.phone || '').trim(),
+    booking_type: bookingData.booking_type || 'table',
+    guests_count: parseInt(bookingData.guests_count || bookingData.guests, 10) || 1,
+    booking_date: bookingData.booking_date || bookingData.date || '',
+    booking_time: bookingData.booking_time || bookingData.time || '',
+    notes: (bookingData.notes || bookingData.note || '').trim(),
+    status: bookingData.status || 'pending',
+    created_at: bookingData.created_at || new Date().toISOString()
+  };
+
+  // 1. Luôn lưu vào LocalStorage trước tiên để đảm bảo 100% không mất dữ liệu
+  try {
+    const local = JSON.parse(localStorage.getItem('olion_bookings') || '[]');
+    const exists = local.some(b => b.id === booking.id);
+    if (!exists) {
+      local.unshift(booking);
+      localStorage.setItem('olion_bookings', JSON.stringify(local));
+    }
+  } catch (err) {
+    console.warn('⚠️ Lỗi lưu booking vào LocalStorage:', err);
+  }
+
+  // 2. Thử lưu vào Supabase Cloud nếu có kết nối
+  const client = supabaseClient || initSupabase();
+  if (client) {
+    try {
+      const payload = {
+        customer_name: booking.customer_name,
+        phone: booking.phone,
+        booking_type: booking.booking_type,
+        guests_count: booking.guests_count,
+        booking_date: booking.booking_date,
+        booking_time: booking.booking_time,
+        notes: booking.notes,
+        status: booking.status,
+        created_at: booking.created_at
+      };
+      
+      const { data, error } = await client.from('bookings').insert([payload]).select();
+      if (!error && data && data.length > 0) {
+        try {
+          const local = JSON.parse(localStorage.getItem('olion_bookings') || '[]');
+          const idx = local.findIndex(b => b.id === booking.id);
+          if (idx !== -1) {
+            local[idx] = { ...local[idx], ...data[0] };
+            localStorage.setItem('olion_bookings', JSON.stringify(local));
+            return { success: true, source: 'supabase', data: local[idx] };
+          }
+        } catch (e) {}
+        return { success: true, source: 'supabase', data: data[0] };
+      } else if (error) {
+        console.warn('⚠️ [Supabase Bookings] Chưa có bảng hoặc lỗi insert:', error.message);
+      }
+    } catch (err) {
+      console.warn('⚠️ [Supabase Bookings] Exception insert:', err.message);
+    }
+  }
+
+  return { success: true, source: 'local', data: booking };
+}
+
+async function fetchBookingsFromStorage() {
+  const client = supabaseClient || initSupabase();
+
+  if (client) {
+    try {
+      const { data, error } = await client
+        .from('bookings')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (!error && data) {
+        try {
+          const local = JSON.parse(localStorage.getItem('olion_bookings') || '[]');
+          const cloudIds = new Set(data.map(d => String(d.id)));
+          const unSyncedLocal = local.filter(l => !cloudIds.has(String(l.id)));
+          const merged = [...unSyncedLocal, ...data];
+          localStorage.setItem('olion_bookings', JSON.stringify(merged));
+          return { source: 'supabase', data: merged };
+        } catch (e) {
+          localStorage.setItem('olion_bookings', JSON.stringify(data));
+          return { source: 'supabase', data };
+        }
+      }
+    } catch (err) {
+      console.warn('⚠️ [Supabase Bookings] Lỗi tải từ cloud:', err.message);
+    }
+  }
+
+  try {
+    const local = JSON.parse(localStorage.getItem('olion_bookings') || '[]');
+    return { source: 'local', data: local };
+  } catch (e) {
+    return { source: 'local', data: [] };
+  }
+}
+
+async function updateBookingStatusInStorage(id, newStatus) {
+  try {
+    let local = JSON.parse(localStorage.getItem('olion_bookings') || '[]');
+    local = local.map(b => String(b.id) === String(id) ? { ...b, status: newStatus } : b);
+    localStorage.setItem('olion_bookings', JSON.stringify(local));
+  } catch (e) {}
+
+  const client = supabaseClient || initSupabase();
+  if (client) {
+    try {
+      const { error } = await client.from('bookings').update({ status: newStatus }).eq('id', id);
+      if (!error) return { success: true, source: 'supabase' };
+    } catch (err) {
+      console.warn('⚠️ [Supabase Bookings] Lỗi update trạng thái:', err.message);
+    }
+  }
+  return { success: true, source: 'local' };
+}
+
+async function deleteBookingFromStorage(id) {
+  try {
+    let local = JSON.parse(localStorage.getItem('olion_bookings') || '[]');
+    local = local.filter(b => String(b.id) !== String(id));
+    localStorage.setItem('olion_bookings', JSON.stringify(local));
+  } catch (e) {}
+
+  const client = supabaseClient || initSupabase();
+  if (client) {
+    try {
+      const { error } = await client.from('bookings').delete().eq('id', id);
+      if (!error) return { success: true, source: 'supabase' };
+    } catch (err) {
+      console.warn('⚠️ [Supabase Bookings] Lỗi xóa booking:', err.message);
+    }
+  }
+  return { success: true, source: 'local' };
+}
+
+window.saveBookingToStorage = saveBookingToStorage;
+window.fetchBookingsFromStorage = fetchBookingsFromStorage;
+window.updateBookingStatusInStorage = updateBookingStatusInStorage;
+window.deleteBookingFromStorage = deleteBookingFromStorage;
+
+// =======================================================
 // REALTIME SUBSCRIPTIONS (ADMIN ONLY)
 // =======================================================
 function setupAdminRealtime() {
@@ -1289,7 +1437,7 @@ function setupAdminRealtime() {
   if (!client) return;
   
   client
-    .channel('admin-feedbacks')
+    .channel('admin-channel')
     .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'feedbacks' }, payload => {
       console.log('New feedback:', payload.new);
       if (typeof showToast === 'function') showToast('🔔 Có góp ý mới từ khách hàng!');
@@ -1299,6 +1447,11 @@ function setupAdminRealtime() {
       console.log('New lucky spin:', payload.new);
       if (typeof showToast === 'function') showToast('🎁 Khách hàng vừa quay trúng thưởng!');
       if (typeof loadMinigame === 'function') loadMinigame();
+    })
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'bookings' }, payload => {
+      console.log('Bookings update:', payload);
+      if (typeof showToast === 'function') showToast('📅 Có thay đổi về đơn đặt bàn/không gian!');
+      if (typeof loadBookings === 'function') loadBookings();
     })
     .subscribe();
 }

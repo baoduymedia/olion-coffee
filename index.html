@@ -8673,21 +8673,32 @@
           }
         } catch(err) {}
 
-        // Save to Supabase bookings table if online
+        // Save booking to LocalStorage & Supabase Cloud
         try {
-          if (window.supabaseClient) {
-            window.supabaseClient.from('bookings').insert([{
-              customer_name: name,
-              phone: phone,
-              booking_type: currentBookingType,
-              guests_count: parseInt(guests, 10) || 1,
-              booking_date: date,
-              booking_time: time,
-              notes: note,
-              created_at: new Date().toISOString()
-            }]).then(() => {}).catch(() => {});
+          const bookingPayload = {
+            customer_name: name,
+            phone: phone,
+            booking_type: currentBookingType,
+            guests_count: parseInt(guests, 10) || 1,
+            booking_date: date,
+            booking_time: time,
+            notes: note,
+            status: 'pending',
+            created_at: new Date().toISOString()
+          };
+          if (typeof saveBookingToStorage === 'function') {
+            saveBookingToStorage(bookingPayload);
+          } else if (window.saveBookingToStorage) {
+            window.saveBookingToStorage(bookingPayload);
+          } else {
+            const local = JSON.parse(localStorage.getItem('olion_bookings') || '[]');
+            bookingPayload.id = 'bk_' + Date.now();
+            local.unshift(bookingPayload);
+            localStorage.setItem('olion_bookings', JSON.stringify(local));
           }
-        } catch(err) {}
+        } catch(err) {
+          console.warn('Booking save error:', err);
+        }
 
         // Save customer info locally
         try {

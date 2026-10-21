@@ -73,14 +73,31 @@ CREATE TABLE IF NOT EXISTS public.menu_items (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
 );
 
+-- 6. BẢNG ĐẶT BÀN & THUÊ KHÔNG GIAN (bookings)
+CREATE TABLE IF NOT EXISTS public.bookings (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    customer_name TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    booking_type TEXT DEFAULT 'table', -- 'table' (Đặt bàn) hoặc 'space' (Thuê không gian)
+    guests_count INTEGER DEFAULT 1,
+    booking_date TEXT,
+    booking_time TEXT,
+    notes TEXT,
+    status TEXT DEFAULT 'pending', -- 'pending', 'confirmed', 'completed', 'cancelled'
+    device_id TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
+);
+
 -- ==============================================================================
--- 6. TẠO INDEXES TỐI ƯU HIỆU NĂNG CHO CÁC TRUY VẤN CHECK RATE LIMIT
+-- 7. TẠO INDEXES TỐI ƯU HIỆU NĂNG CHO CÁC TRUY VẤN CHECK RATE LIMIT
 -- ==============================================================================
 CREATE INDEX IF NOT EXISTS idx_lucky_spins_device_time ON public.lucky_spins (device_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_lucky_spins_phone_time ON public.lucky_spins (customer_phone, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_feedbacks_device_time ON public.feedbacks (device_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_feedbacks_approved ON public.feedbacks (approved, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_customers_contact ON public.customers (contact);
+CREATE INDEX IF NOT EXISTS idx_bookings_created_at ON public.bookings (created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_bookings_status ON public.bookings (status);
 
 -- ==============================================================================
 -- 7. BẬT ROW LEVEL SECURITY (RLS) TRÊN TẤT CẢ CÁC BẢNG
@@ -90,6 +107,7 @@ ALTER TABLE public.lucky_spins ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.customers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.point_transactions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.menu_items ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.bookings ENABLE ROW LEVEL SECURITY;
 
 -- ==============================================================================
 -- 8. XÓA CÁC POLICIES CŨ ĐỂ KHÔNG BỊ XUNG ĐỘT
@@ -203,6 +221,26 @@ CREATE POLICY "Public can read menu items" ON public.menu_items
 
 -- 2. Cho phép Quản trị viên (hoặc anon từ portal admin) quản lý món
 CREATE POLICY "Allow manage menu items" ON public.menu_items
+    FOR ALL TO anon, authenticated, service_role
+    USING (true)
+    WITH CHECK (true);
+
+
+-- F. BẢNG BOOKINGS (Đặt bàn & Thuê không gian):
+DROP POLICY IF EXISTS "Public can insert bookings" ON public.bookings;
+DROP POLICY IF EXISTS "Allow manage bookings" ON public.bookings;
+DROP POLICY IF EXISTS "Cho phép tạo đơn đặt bàn" ON public.bookings;
+DROP POLICY IF EXISTS "Cho phép quản lý đơn đặt bàn" ON public.bookings;
+
+-- 1. Cho phép khách hàng gửi đơn đặt bàn từ web
+CREATE POLICY "Public can insert bookings" ON public.bookings
+    FOR INSERT TO anon, authenticated, service_role
+    WITH CHECK (
+        LENGTH(customer_name) >= 1 AND LENGTH(phone) >= 8
+    );
+
+-- 2. Cho phép Quản trị viên xem, cập nhật trạng thái và quản lý đơn đặt bàn
+CREATE POLICY "Allow manage bookings" ON public.bookings
     FOR ALL TO anon, authenticated, service_role
     USING (true)
     WITH CHECK (true);

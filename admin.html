@@ -645,6 +645,16 @@
       color: #E0E0E0;
       border: 1px solid rgba(189, 195, 199, 0.4);
     }
+    .badge-danger {
+      background: rgba(231, 76, 60, 0.15);
+      color: #E74C3C;
+      border: 1px solid rgba(231, 76, 60, 0.3);
+    }
+    .badge-info {
+      background: rgba(52, 152, 219, 0.15);
+      color: #3498DB;
+      border: 1px solid rgba(52, 152, 219, 0.3);
+    }
 
     /* SWITCH TOGGLE */
     .switch-wrap {
@@ -848,6 +858,11 @@
           <span class="nav-text">Quản lý Tích điểm</span>
           <span class="nav-pill-badge" id="sidebarCustomerBadge">4</span>
         </div>
+        <div class="nav-item" data-tab="bookings">
+          <span class="nav-icon">📅</span>
+          <span class="nav-text">Đặt Bàn & Không Gian</span>
+          <span class="nav-pill-badge" id="sidebarBookingsBadge" style="display:none; background: var(--accent); color: #000; font-weight: bold;">0</span>
+        </div>
         <div class="nav-item" data-tab="feedbacks">
           <span class="nav-icon">💬</span>
           <span class="nav-text">Thu thập góp ý</span>
@@ -949,6 +964,13 @@
                 <div class="stat-label">Điểm đánh giá trung bình</div>
               </div>
             </div>
+            <div class="stat-card" onclick="switchTab('bookings')" style="cursor: pointer;">
+              <div class="stat-icon-wrap">📅</div>
+              <div>
+                <div class="stat-val" id="statBookingCount">0</div>
+                <div class="stat-label">Lịch đặt bàn & không gian</div>
+              </div>
+            </div>
           </div>
 
           <!-- Quick Shortcuts -->
@@ -957,6 +979,9 @@
               <h3 class="card-title">⚡ Tác vụ nhanh</h3>
             </div>
             <div style="display: flex; flex-wrap: wrap; gap: 14px;">
+              <button type="button" class="btn-primary" onclick="switchTab('bookings')" style="background: linear-gradient(135deg, #E59A55, #C57D3A);">
+                📅 Xem Lịch Đặt Bàn & Không Gian
+              </button>
               <button type="button" class="btn-primary" onclick="openAddMenuModal()">
                 ➕ Thêm món mới vào thực đơn
               </button>
@@ -1125,6 +1150,87 @@
                 </thead>
                 <tbody id="customerTableBody">
                   <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======== TAB: BOOKINGS & SPACE RENTALS ======== -->
+        <section class="tab-content" id="tab-bookings">
+          <div class="card">
+            <div class="card-header" style="flex-wrap: wrap; gap: 14px;">
+              <div>
+                <h3 class="card-title">📅 Quản Lý Lịch Đặt Bàn & Cho Thuê Không Gian</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Theo dõi và xử lý đơn đặt bàn trước hoặc yêu cầu thuê không gian workshop từ trang chủ & trang /booking</p>
+              </div>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button type="button" class="btn-primary" id="seedBookingBtn" onclick="seedBookingSample()">
+                  ➕ Thêm đơn mẫu
+                </button>
+                <button type="button" class="btn-secondary" id="exportBookingCsvBtn" onclick="exportBookingsCsv()">
+                  📥 Xuất CSV
+                </button>
+                <button type="button" class="btn-secondary" id="refreshBookingBtn" onclick="loadBookings()">
+                  🔄 Làm mới
+                </button>
+              </div>
+            </div>
+
+            <!-- Mini Stat Counters -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px; margin-bottom: 22px;">
+              <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;">
+                <div style="font-size: 12px; color: var(--text-muted);">Tổng số đơn</div>
+                <div style="font-size: 22px; font-weight: 700; color: #fff; margin-top: 4px;" id="bkStatTotal">0</div>
+              </div>
+              <div style="background: rgba(229,154,85,0.08); border: 1px solid rgba(229,154,85,0.3); border-radius: 10px; padding: 14px 16px;">
+                <div style="font-size: 12px; color: var(--accent);">⏳ Chờ duyệt (Pending)</div>
+                <div style="font-size: 22px; font-weight: 700; color: var(--accent); margin-top: 4px;" id="bkStatPending">0</div>
+              </div>
+              <div style="background: rgba(46,204,113,0.08); border: 1px solid rgba(46,204,113,0.3); border-radius: 10px; padding: 14px 16px;">
+                <div style="font-size: 12px; color: #2ecc71;">✅ Đã xác nhận</div>
+                <div style="font-size: 22px; font-weight: 700; color: #2ecc71; margin-top: 4px;" id="bkStatConfirmed">0</div>
+              </div>
+              <div style="background: rgba(52,152,219,0.08); border: 1px solid rgba(52,152,219,0.3); border-radius: 10px; padding: 14px 16px;">
+                <div style="font-size: 12px; color: #3498db;">🏁 Hoàn tất / Đã xử lý</div>
+                <div style="font-size: 22px; font-weight: 700; color: #3498db; margin-top: 4px;" id="bkStatCompleted">0</div>
+              </div>
+            </div>
+
+            <!-- Filter & Search Bar -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 14px; margin-bottom: 22px;">
+              <input type="text" id="bookingSearchInput" placeholder="🔍 Tìm kiếm theo tên khách, số điện thoại, ghi chú..." oninput="renderBookingsTable()" />
+              <select id="bookingTypeFilter" onchange="renderBookingsTable()">
+                <option value="all">Tất cả loại dịch vụ</option>
+                <option value="table">🏷️ Đặt bàn trước (Học tập/Hẹn gặp)</option>
+                <option value="space">🏢 Cho thuê không gian (Workshop/CLB)</option>
+              </select>
+              <select id="bookingStatusFilter" onchange="renderBookingsTable()">
+                <option value="all">Tất cả trạng thái</option>
+                <option value="pending">⏳ Chờ duyệt (Pending)</option>
+                <option value="confirmed">✅ Đã xác nhận (Confirmed)</option>
+                <option value="completed">🏁 Hoàn tất (Completed)</option>
+                <option value="cancelled">❌ Đã hủy (Cancelled)</option>
+              </select>
+            </div>
+
+            <!-- Bookings Table -->
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Mã & Ngày gửi</th>
+                    <th>Khách hàng</th>
+                    <th>Dịch vụ</th>
+                    <th>Số khách</th>
+                    <th>Thời gian hẹn</th>
+                    <th>Ghi chú yêu cầu</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody id="bookingsTableBody">
+                  <tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 30px;">⏳ Đang tải danh sách đặt bàn...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1866,6 +1972,7 @@
       overview: '📊 Bảng Điều Khiển Tổng Quan',
       menu: '☕ Quản Lý Thực Đơn & Giá Món',
       customers: '👑 Khách Hàng & Tích Điểm (Loyalty)',
+      bookings: '📅 Lịch Sử Đặt Bàn & Cho Thuê Không Gian',
       feedbacks: '💬 Quản Lý Góp Ý & Đánh Giá',
       announcements: '📢 Quản Lý Dải Thông Báo Web',
       promotions: '🎁 Chương Trình Ưu Đãi & Vouchers',
@@ -1898,6 +2005,7 @@
         loadOneSignalKey();
       }
       if (tabKey === 'customers') loadCustomers();
+      if (tabKey === 'bookings') loadBookings();
       if (tabKey === 'feedbacks') loadFeedbacks();
       if (tabKey === 'minigame') loadMinigame();
     }
@@ -2755,6 +2863,267 @@
       loadFeedbacks();
     });
 
+    // ==========================================
+    // BOOKING & SPACE RENTALS MANAGEMENT LOGIC
+    // ==========================================
+    let cachedBookings = [];
+
+    async function loadBookings() {
+      const tbody = document.getElementById('bookingsTableBody');
+      if (tbody) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 25px;">⏳ Đang tải dữ liệu đặt bàn...</td></tr>';
+      }
+
+      let res = { data: [] };
+      if (typeof fetchBookingsFromStorage === 'function') {
+        res = await fetchBookingsFromStorage();
+      } else if (window.fetchBookingsFromStorage) {
+        res = await window.fetchBookingsFromStorage();
+      } else {
+        try {
+          res.data = JSON.parse(localStorage.getItem('olion_bookings') || '[]');
+        } catch(e) { res.data = []; }
+      }
+
+      cachedBookings = res.data || [];
+      renderBookingsTable();
+      updateBookingStats();
+    }
+
+    function updateBookingStats() {
+      const totalEl = document.getElementById('bkStatTotal');
+      const pendingEl = document.getElementById('bkStatPending');
+      const confirmedEl = document.getElementById('bkStatConfirmed');
+      const completedEl = document.getElementById('bkStatCompleted');
+      const overviewEl = document.getElementById('statBookingCount');
+      const sidebarBadge = document.getElementById('sidebarBookingsBadge');
+
+      const total = cachedBookings.length;
+      const pending = cachedBookings.filter(b => (b.status || 'pending') === 'pending').length;
+      const confirmed = cachedBookings.filter(b => b.status === 'confirmed').length;
+      const completed = cachedBookings.filter(b => b.status === 'completed' || b.status === 'cancelled').length;
+
+      if (totalEl) totalEl.textContent = total;
+      if (pendingEl) pendingEl.textContent = pending;
+      if (confirmedEl) confirmedEl.textContent = confirmed;
+      if (completedEl) completedEl.textContent = completed;
+      if (overviewEl) overviewEl.textContent = total;
+
+      if (sidebarBadge) {
+        if (pending > 0) {
+          sidebarBadge.style.display = 'inline-block';
+          sidebarBadge.textContent = pending;
+          sidebarBadge.title = `${pending} đơn chờ duyệt`;
+        } else if (total > 0) {
+          sidebarBadge.style.display = 'inline-block';
+          sidebarBadge.textContent = total;
+          sidebarBadge.title = `${total} đơn đặt bàn`;
+        } else {
+          sidebarBadge.style.display = 'none';
+        }
+      }
+    }
+
+    function renderBookingsTable() {
+      const tbody = document.getElementById('bookingsTableBody');
+      if (!tbody) return;
+
+      const searchVal = (document.getElementById('bookingSearchInput')?.value || '').toLowerCase().trim();
+      const typeFilter = document.getElementById('bookingTypeFilter')?.value || 'all';
+      const statusFilter = document.getElementById('bookingStatusFilter')?.value || 'all';
+
+      let filtered = cachedBookings.slice();
+
+      if (typeFilter !== 'all') {
+        filtered = filtered.filter(b => (b.booking_type || 'table') === typeFilter);
+      }
+
+      if (statusFilter !== 'all') {
+        filtered = filtered.filter(b => (b.status || 'pending') === statusFilter);
+      }
+
+      if (searchVal) {
+        filtered = filtered.filter(b =>
+          (b.customer_name || '').toLowerCase().includes(searchVal) ||
+          (b.phone || '').toLowerCase().includes(searchVal) ||
+          (b.notes || '').toLowerCase().includes(searchVal) ||
+          (b.booking_date || '').toLowerCase().includes(searchVal)
+        );
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 40px 20px;">
+              <div style="font-size: 32px; margin-bottom: 8px;">📅</div>
+              <div style="font-size: 15px; font-weight: 600; color: #fff;">Chưa có đơn đặt bàn nào phù hợp</div>
+              <p style="font-size: 13px; margin-top: 4px; color: var(--text-muted);">
+                ${cachedBookings.length === 0 ? 'Chưa nhận được đơn từ web. Bạn có thể bấm "Thêm đơn mẫu" để xem thử!' : 'Thử thay đổi từ khóa hoặc bộ lọc.'}
+              </p>
+              ${cachedBookings.length === 0 ? '<button type="button" class="btn-primary" onclick="seedBookingSample()" style="margin-top: 14px; display: inline-flex;">➕ Thêm 2 đơn mẫu</button>' : ''}
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = '';
+      filtered.forEach(b => {
+        const tr = document.createElement('tr');
+        
+        // ID & Sent time
+        const shortId = b.id ? (String(b.id).length > 10 ? String(b.id).substring(0, 8) + '...' : b.id) : '—';
+        const sentTime = b.created_at ? new Date(b.created_at).toLocaleString('vi-VN') : 'Gần đây';
+
+        // Type badge
+        const isSpace = b.booking_type === 'space';
+        const typeBadge = isSpace
+          ? `<span class="badge badge-purple" style="font-size: 11px;">🏢 Thuê Không Gian</span>`
+          : `<span class="badge badge-gold" style="font-size: 11px;">🏷️ Đặt Bàn Trước</span>`;
+
+        // Clean phone for links
+        const cleanPhone = (b.phone || '').replace(/[^0-9]/g, '');
+        const telLink = cleanPhone ? `tel:${cleanPhone}` : '#';
+        const zaloLink = cleanPhone ? `https://zalo.me/${cleanPhone}` : '#';
+
+        // Status select
+        const curStatus = b.status || 'pending';
+
+        tr.innerHTML = `
+          <td>
+            <div style="font-family: monospace; font-size: 12px; font-weight: bold; color: var(--accent);">${escapeHtml(shortId)}</div>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 3px;">${escapeHtml(sentTime)}</div>
+          </td>
+          <td>
+            <strong style="color: #fff; font-size: 14px;">${escapeHtml(b.customer_name || 'Khách hàng')}</strong>
+            <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px; flex-wrap: wrap;">
+              <span style="font-size: 12.5px; color: var(--text-muted);">${escapeHtml(b.phone || 'Chưa có')}</span>
+              ${cleanPhone ? `
+                <a href="${telLink}" class="btn-secondary" style="padding: 2px 7px; font-size: 11px; border-radius: 4px; text-decoration: none;" title="Gọi điện">📞 Gọi</a>
+                <a href="${zaloLink}" target="_blank" class="btn-secondary" style="padding: 2px 7px; font-size: 11px; border-radius: 4px; text-decoration: none; color: #0088FF;" title="Nhắn Zalo">💬 Zalo</a>
+              ` : ''}
+            </div>
+          </td>
+          <td>${typeBadge}</td>
+          <td>
+            <span style="font-weight: 600; color: #fff;">${b.guests_count || 1}</span> người
+          </td>
+          <td>
+            <div style="font-weight: 600; color: #fff; font-size: 13px;">${escapeHtml(b.booking_time || 'Chưa định')}</div>
+            <div style="font-size: 12px; color: var(--text-muted); margin-top: 2px;">📅 ${escapeHtml(b.booking_date || 'Chưa định')}</div>
+          </td>
+          <td style="max-width: 240px; font-size: 12.5px; line-height: 1.4; color: ${b.notes ? '#EDE5D8' : 'var(--text-muted)'};">
+            ${escapeHtml(b.notes || '—')}
+          </td>
+          <td>
+            <select onchange="changeBookingStatus('${b.id}', this.value)" style="padding: 5px 8px; font-size: 12px; font-weight: 600; border-radius: 6px; background: rgba(0,0,0,0.4); border: 1px solid var(--border); color: #fff; cursor: pointer;">
+              <option value="pending" ${curStatus === 'pending' ? 'selected' : ''}>⏳ Chờ duyệt</option>
+              <option value="confirmed" ${curStatus === 'confirmed' ? 'selected' : ''}>✅ Đã xác nhận</option>
+              <option value="completed" ${curStatus === 'completed' ? 'selected' : ''}>🏁 Hoàn tất</option>
+              <option value="cancelled" ${curStatus === 'cancelled' ? 'selected' : ''}>❌ Đã hủy</option>
+            </select>
+          </td>
+          <td>
+            <div style="display: flex; gap: 6px;">
+              <button type="button" class="btn-sm-danger" onclick="handleDeleteBooking('${b.id}')" title="Xóa đơn này">
+                ✕ Xóa
+              </button>
+            </div>
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+    }
+
+    window.changeBookingStatus = async function(id, newStatus) {
+      showToast('Đang cập nhật trạng thái đơn...');
+      if (typeof updateBookingStatusInStorage === 'function') {
+        await updateBookingStatusInStorage(id, newStatus);
+      } else if (window.updateBookingStatusInStorage) {
+        await window.updateBookingStatusInStorage(id, newStatus);
+      } else {
+        const local = JSON.parse(localStorage.getItem('olion_bookings') || '[]');
+        const updated = local.map(b => String(b.id) === String(id) ? { ...b, status: newStatus } : b);
+        localStorage.setItem('olion_bookings', JSON.stringify(updated));
+      }
+
+      cachedBookings = cachedBookings.map(b => String(b.id) === String(id) ? { ...b, status: newStatus } : b);
+      renderBookingsTable();
+      updateBookingStats();
+      showToast('Đã cập nhật trạng thái đơn thành công!');
+    };
+
+    window.handleDeleteBooking = async function(id) {
+      if (!confirm('Bạn có chắc chắn muốn xóa đơn đặt bàn này khỏi hệ thống?')) return;
+      showToast('Đang xóa đơn...');
+      if (typeof deleteBookingFromStorage === 'function') {
+        await deleteBookingFromStorage(id);
+      } else if (window.deleteBookingFromStorage) {
+        await window.deleteBookingFromStorage(id);
+      } else {
+        const local = JSON.parse(localStorage.getItem('olion_bookings') || '[]');
+        const filtered = local.filter(b => String(b.id) !== String(id));
+        localStorage.setItem('olion_bookings', JSON.stringify(filtered));
+      }
+
+      cachedBookings = cachedBookings.filter(b => String(b.id) !== String(id));
+      renderBookingsTable();
+      updateBookingStats();
+      showToast('Đã xóa đơn thành công!');
+    };
+
+    window.seedBookingSample = async function() {
+      const today = new Date();
+      const dateStr = today.toISOString().split('T')[0];
+
+      const sample1 = {
+        customer_name: 'Nguyễn Minh Tuấn',
+        phone: '0909123456',
+        booking_type: 'table',
+        guests_count: 4,
+        booking_date: dateStr,
+        booking_time: '14:00 - 17:00',
+        notes: 'Cần bàn gần ổ cắm điện để 4 bạn dùng laptop làm việc nhóm đồ án.',
+        status: 'pending',
+        created_at: new Date(Date.now() - 3600000 * 2).toISOString()
+      };
+
+      const sample2 = {
+        customer_name: 'Trần Thảo Ly',
+        phone: '0988776655',
+        booking_type: 'space',
+        guests_count: 15,
+        booking_date: dateStr,
+        booking_time: '09:00 - 12:00',
+        notes: 'Thuê không gian tổ chức Workshop vẽ màu nước & giao lưu bạn bè cuối tuần.',
+        status: 'confirmed',
+        created_at: new Date(Date.now() - 3600000 * 5).toISOString()
+      };
+
+      if (typeof saveBookingToStorage === 'function') {
+        await saveBookingToStorage(sample1);
+        await saveBookingToStorage(sample2);
+      }
+      showToast('Đã thêm 2 đơn mẫu thử nghiệm!');
+      loadBookings();
+    };
+
+    window.exportBookingsCsv = function() {
+      if (cachedBookings.length === 0) return alert('Chưa có dữ liệu đặt bàn nào để xuất!');
+      let csv = 'Mã đơn,Khách hàng,Số điện thoại,Dịch vụ,Số lượng khách,Ngày hẹn,Giờ hẹn,Ghi chú,Trạng thái,Thời gian gửi\n';
+      cachedBookings.forEach(b => {
+        const dType = b.booking_type === 'space' ? 'Thuê không gian' : 'Đặt bàn trước';
+        let stText = 'Chờ duyệt';
+        if (b.status === 'confirmed') stText = 'Đã xác nhận';
+        if (b.status === 'completed') stText = 'Hoàn tất';
+        if (b.status === 'cancelled') stText = 'Đã hủy';
+
+        csv += `"${b.id || ''}","${(b.customer_name || '').replace(/"/g, '""')}","${b.phone || ''}","${dType}","${b.guests_count || 1}","${b.booking_date || ''}","${b.booking_time || ''}","${(b.notes || '').replace(/"/g, '""')}","${stText}","${b.created_at ? new Date(b.created_at).toLocaleString('vi-VN') : ''}"\n`;
+      });
+      downloadCsv(csv, 'olion_danh_sach_dat_ban.csv');
+    };
+
     // Minigame Settings
     const minigameToggle = document.getElementById('minigameEnableToggle');
     const DEFAULT_PRIZES = [
@@ -3083,11 +3452,13 @@
       const menuCountEl = document.getElementById('statMenuCount');
       const custCountEl = document.getElementById('statCustomerCount');
       const fbCountEl = document.getElementById('statFeedbackCount');
+      const bookingCountEl = document.getElementById('statBookingCount');
       const ratingAvgEl = document.getElementById('statRatingAvg');
 
       if (menuCountEl) menuCountEl.textContent = cachedMenuItems.length;
       if (custCountEl) custCountEl.textContent = cachedCustomers.length;
       if (fbCountEl) fbCountEl.textContent = cachedFeedbacks.length;
+      if (bookingCountEl) bookingCountEl.textContent = cachedBookings.length;
 
       if (cachedFeedbacks.length > 0) {
         const avg = (cachedFeedbacks.reduce((acc, f) => acc + (f.rating || 5), 0) / cachedFeedbacks.length).toFixed(1);
@@ -3133,9 +3504,10 @@
       if (typeof setupAdminRealtime === 'function') setupAdminRealtime();
       checkSupabaseStatus();
       loadMenu();
-          loadNewsFromCloud();
-          loadOneSignalKey();
+      loadNewsFromCloud();
+      loadOneSignalKey();
       loadCustomers();
+      loadBookings();
       loadFeedbacks();
       loadAnnouncement();
       loadPromotions();
