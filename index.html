@@ -6397,9 +6397,52 @@
       
       window.loadFeaturedNews = async function() {
         try {
-          const { data, error } = await _supabase.from('news_items').select('*').order('created_at', { ascending: false });
-          if (error) throw error;
-          if (!data || data.length === 0) return;
+          const client = window.supabaseClient || window._supabase || (typeof supabaseClient !== 'undefined' ? supabaseClient : null) || (window.supabase ? window.supabase.createClient('https://xwbrbesgnwcngzohprxt.supabase.co', 'sb_publishable_vWuV07_xPU0wNftK0lpnFQ_oA9XHPLS') : null);
+          let data = null;
+          if (client) {
+            const res = await client.from('news_items').select('*').order('created_at', { ascending: false });
+            if (!res.error && res.data && res.data.length > 0) {
+              data = res.data;
+              try { localStorage.setItem('olion_cached_news', JSON.stringify(data)); } catch(e) {}
+            }
+          }
+          if (!data || data.length === 0) {
+            try { data = JSON.parse(localStorage.getItem('olion_cached_news') || '[]'); } catch(e) {}
+          }
+          if (!data || data.length === 0) {
+            data = [
+              {
+                id: "e6cff902-fbd7-4668-b3eb-0d30708fe79e",
+                title: "CARAMEL LATTE — Sự Hòa Quyện Ngọt Ngào & Đậm Đà Cuốn Hút",
+                date: "21/10/2026",
+                category: "Thực Đơn Signature",
+                cover_image: "assets/news/caramel-latte.webp",
+                description: "Một chút caramel ngọt ngào, một chút espresso đậm đà, hòa quyện cùng sữa béo mịn — tạo nên Caramel Latte đầy cuốn hút tại Olion Coffee.",
+                content_html: "<p>Một chút caramel ngọt ngào, một chút espresso đậm đà, hòa quyện cùng sữa béo mịn — tạo nên <strong>Caramel Latte</strong> đầy cuốn hút. ☕🤎</p><p>Sự kết hợp mượt mà giữa espresso đậm đà, sữa béo ngậy và caramel ngọt ngào sẽ mang đến cho bạn trải nghiệm vị giác vô cùng trọn vẹn.</p><p>Ghé <strong>Olion Coffee</strong>, thưởng thức một ly ngọt ngào và tận hưởng chút bình yên giữa ngày nhé! ❤️</p>",
+                is_featured: false
+              },
+              {
+                id: "70d3d568-c478-40ef-a066-7e0cfc6f1982",
+                title: "CÓ THÊM ĐIỀU MỚI: CHO THUÊ KHÔNG GIAN & ĐẶT BÀN TRƯỚC",
+                date: "21/10/2026",
+                category: "Không Gian & Dịch Vụ",
+                cover_image: "assets/banner-booking.jpg",
+                description: "Tại Olion Coffee, chúng mình hiểu rằng mỗi khoảnh khắc học tập, hội họp hay gặp gỡ bạn bè đều cần một không gian đủ ấm cúng, đủ yên tĩnh và trọn vẹn sự tinh tế.",
+                content_html: "<p>Tại Olion Coffee, chúng mình hiểu rằng mỗi khoảnh khắc học tập, hội họp hay gặp gỡ bạn bè đều cần một không gian đủ ấm cúng, đủ yên tĩnh và trọn vẹn sự tinh tế.</p>",
+                is_featured: true
+              },
+              {
+                id: "8b0a9a12-5d25-44be-ad3e-780161daa6c6",
+                title: "OLION’S FIRST WEEK — NHẬT KÝ TUẦN ĐẦU TIÊN",
+                date: "19/09/2026",
+                category: "Sự kiện đặc biệt",
+                cover_image: "assets/news/news-1-flowers.webp",
+                description: "Tuần đầu tiên mở cửa đã khép lại với biết bao cung bậc cảm xúc! Olion Coffee vô cùng trân trọng...",
+                content_html: "<p>Tuần đầu tiên mở cửa đã khép lại với biết bao cung bậc cảm xúc! Olion Coffee vô cùng trân trọng...</p>",
+                is_featured: false
+              }
+            ];
+          }
           
           const featured = data.find(i => i.is_featured) || data[0];
           const subItems = data.filter(i => i.id !== featured.id).slice(0, 4);

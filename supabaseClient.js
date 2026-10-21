@@ -19,18 +19,26 @@ function initSupabase(customUrl, customKey) {
   if (window.supabase && url && key && !url.includes('your-project') && key !== 'your-anon-key') {
     try {
       supabaseClient = window.supabase.createClient(url, key);
+      window.supabaseClient = supabaseClient;
+      window._supabase = supabaseClient;
       console.log('⚡ [Supabase] Đã kết nối cơ sở dữ liệu Cloud thành công:', url);
       return supabaseClient;
     } catch (e) {
       console.warn('⚠️ [Supabase] Lỗi khởi tạo client:', e.message);
       supabaseClient = null;
+      window.supabaseClient = null;
+      window._supabase = null;
       return null;
     }
   } else {
     supabaseClient = null;
+    window.supabaseClient = null;
+    window._supabase = null;
     return null;
   }
 }
+
+window.initSupabase = initSupabase;
 
 // Khởi tạo ngay khi tải file
 if (typeof window !== 'undefined') {

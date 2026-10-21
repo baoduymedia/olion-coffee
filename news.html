@@ -3155,67 +3155,157 @@
   }
 
 
+  const DEFAULT_NEWS_FALLBACK = [
+    {
+      id: "e6cff902-fbd7-4668-b3eb-0d30708fe79e",
+      title: "CARAMEL LATTE — Sự Hòa Quyện Ngọt Ngào & Đậm Đà Cuốn Hút",
+      date: "21/10/2026",
+      category: "Thực Đơn Signature",
+      cover_image: "assets/news/caramel-latte.webp",
+      description: "Một chút caramel ngọt ngào, một chút espresso đậm đà, hòa quyện cùng sữa béo mịn — tạo nên Caramel Latte đầy cuốn hút tại Olion Coffee.",
+      content_html: "<p>Một chút caramel ngọt ngào, một chút espresso đậm đà, hòa quyện cùng sữa béo mịn — tạo nên <strong>Caramel Latte</strong> đầy cuốn hút. ☕🤎</p><p>Sự kết hợp mượt mà giữa espresso đậm đà, sữa béo ngậy và caramel ngọt ngào sẽ mang đến cho bạn trải nghiệm vị giác vô cùng trọn vẹn.</p><p>Ghé <strong>Olion Coffee</strong>, thưởng thức một ly ngọt ngào và tận hưởng chút bình yên giữa ngày nhé! ❤️</p><hr style=\"border:none;border-top:1px dashed rgba(229,154,85,0.3);margin:24px 0;\" /><p style=\"font-size:13.5px;color:var(--text-muted);line-height:1.7;\"><strong>Olion Coffee - Elegance in Every Sip</strong><br>📍 <strong>Địa chỉ:</strong> 80/64a, Dương Quảng Hàm, An Nhơn, TP. Hồ Chí Minh<br>⏰ <strong>Giờ mở cửa:</strong> 8:00 - 20:00 (Thứ 2 - Chủ Nhật)<br>📞 <strong>Hotline:</strong> 0783 657 587</p>"
+    },
+    {
+      id: "70d3d568-c478-40ef-a066-7e0cfc6f1982",
+      title: "CÓ THÊM ĐIỀU MỚI: CHO THUÊ KHÔNG GIAN & ĐẶT BÀN TRƯỚC",
+      date: "21/10/2026",
+      category: "Không Gian & Dịch Vụ",
+      cover_image: "assets/banner-booking.jpg",
+      description: "Tại Olion Coffee, chúng mình hiểu rằng mỗi khoảnh khắc học tập, hội họp hay gặp gỡ bạn bè đều cần một không gian đủ ấm cúng, đủ yên tĩnh và trọn vẹn sự tinh tế.",
+      content_html: "<p>Tại Olion Coffee, chúng mình hiểu rằng mỗi khoảnh khắc học tập, hội họp hay gặp gỡ bạn bè đều cần một không gian đủ ấm cúng, đủ yên tĩnh và trọn vẹn sự tinh tế.</p><p>Chính vì vậy, Olion ra mắt 2 dịch vụ hỗ trợ khách hàng chu đáo:</p><ul><li><strong>01 — Cho thuê không gian:</strong> Phù hợp tổ chức Workshop, CLB, Họp nhóm, Sự kiện nhỏ.</li><li><strong>02 — Đặt bàn trước:</strong> Dành cho cá nhân & nhóm bạn muốn giữ vị trí ngồi ưng ý.</li></ul>"
+    },
+    {
+      id: "8b0a9a12-5d25-44be-ad3e-780161daa6c6",
+      title: "OLION’S FIRST WEEK — NHẬT KÝ TUẦN ĐẦU TIÊN",
+      date: "19/09/2026",
+      category: "Sự kiện đặc biệt",
+      cover_image: "assets/news/news-1-flowers.webp",
+      description: "Tuần đầu tiên mở cửa đã khép lại với biết bao cung bậc cảm xúc! Olion Coffee vô cùng trân trọng...",
+      content_html: "<p>Tuần đầu tiên mở cửa đã khép lại với biết bao cung bậc cảm xúc! Olion Coffee vô cùng trân trọng và biết ơn những lẵng hoa tươi thắm, những lời chúc mừng chân thành từ quý đối tác, bạn bè và đặc biệt là sự ủng hộ nhiệt tình của hàng trăm lượt khách hàng đã ghé thăm quán mỗi ngày.</p><p>Mỗi ly cà phê trao đi là một lời cảm ơn sâu sắc.</p>"
+    },
+    {
+      id: "fd89f1de-1ef4-4993-90bd-71315c94abaa",
+      title: "Khám Phá Bộ Đôi Matcha Latte & Cà Phê Muối",
+      date: "18/09/2026",
+      category: "Thực Đơn Signature",
+      cover_image: "assets/news/news-1-drinks.webp",
+      description: "Tại Olion Coffee, mỗi ly thức uống đều được pha chế bằng cả sự nâng niu và tỉ mỉ...",
+      content_html: "<p>Tại Olion Coffee, mỗi ly thức uống đều được pha chế bằng cả sự nâng niu và tỉ mỉ. Lớp bọt kem muối béo mặn sánh mịn hòa cùng cốt cà phê đậm đà tạo nên hương vị bùng nổ ngay từ ngụm đầu tiên.</p>"
+    },
+    {
+      id: "645c8cb9-cace-43a3-b3d8-d7d0898cddf5",
+      title: "Góc Yên Bình Giữa Lòng Gò Vấp Cho Làm Việc",
+      date: "15/09/2026",
+      category: "Không Gian Quán",
+      cover_image: "assets/news/news-1-space.webp",
+      description: "Bước qua cánh cửa Olion, bạn sẽ cảm nhận ngay một không gian tách biệt khỏi nhịp sống vội vã ngoài phố thị...",
+      content_html: "<p>Bước qua cánh cửa Olion, bạn sẽ cảm nhận ngay một không gian tách biệt khỏi nhịp sống vội vã ngoài phố thị. Tông màu gỗ ấm cúng, hệ thống đèn lồng giấy dịu mắt cùng những chậu cây xanh mướt tạo nên một chốn dừng chân hoàn hảo để đọc sách hay làm việc.</p>"
+    },
+    {
+      id: "b2c24682-4d29-4596-ad28-9edd9faa34f6",
+      title: "Grand Opening Recap — Tuần Lễ Khai Trương",
+      date: "12/09/2026",
+      category: "Chương Trình Khuyến Mãi",
+      cover_image: "assets/news/news-1-recap.webp",
+      description: "Nhìn lại những khoảnh khắc tuyệt vời trong tuần lễ Grand Opening! Khách hàng không chỉ được thưởng thức menu giảm giá 20%...",
+      content_html: "<p>Nhìn lại những khoảnh khắc tuyệt vời trong tuần lễ Grand Opening! Khách hàng không chỉ được thưởng thức menu giảm giá 20% mà còn nhận được hàng trăm phần quà thú vị từ Vòng Quay May Mắn.</p>"
+    }
+  ];
+
   let newsDatabase = {};
   let currentModalId = '';
 
+  function getSupabaseClient() {
+    if (window._supabase) return window._supabase;
+    if (window.supabaseClient) return window.supabaseClient;
+    if (typeof supabaseClient !== 'undefined' && supabaseClient) return supabaseClient;
+    if (typeof initSupabase === 'function') {
+      const c = initSupabase();
+      if (c) return c;
+    }
+    if (window.supabase) {
+      try {
+        const c = window.supabase.createClient('https://xwbrbesgnwcngzohprxt.supabase.co', 'sb_publishable_vWuV07_xPU0wNftK0lpnFQ_oA9XHPLS');
+        window._supabase = c;
+        window.supabaseClient = c;
+        return c;
+      } catch(e) {}
+    }
+    return null;
+  }
+
+  function renderArticles(items) {
+    if (!items || items.length === 0) return;
+    const grid = document.getElementById('articleGrid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    items.forEach(item => {
+      newsDatabase[item.id] = {
+        title: item.title,
+        date: item.date,
+        category: item.category,
+        images: [item.cover_image],
+        desc: item.description,
+        contentHtml: item.content_html
+      };
+
+      grid.innerHTML += `
+        <article class="article-card" onclick="openNewsModal('${item.id}')">
+          <div class="article-img-wrap">
+            <img src="${item.cover_image}" alt="${item.title}" class="article-img" loading="lazy" />
+          </div>
+          <div class="article-content">
+            <div class="article-meta">
+              <span><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;vertical-align:-2px;"></i>${item.date}</span>
+              <span style="color:var(--accent-gold);">${item.category}</span>
+            </div>
+            <h3 class="article-title">${item.title}</h3>
+            <p class="article-desc">${item.description || ''}</p>
+            <div class="article-readmore">Đọc tiếp <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></div>
+          </div>
+        </article>
+      `;
+    });
+    if (window.lucide) lucide.createIcons();
+  }
+
   async function loadNewsFromSupabase() {
+    // 1. Immediately render fallback articles so user NEVER sees a blank screen
+    renderArticles(DEFAULT_NEWS_FALLBACK);
+
+    // 2. Try fetching fresh articles from Supabase Cloud
     try {
-      const { data, error } = await _supabase.from('news_items').select('*').order('created_at', { ascending: false });
-      if (error) throw error;
-      
-      const grid = document.getElementById('articleGrid');
-      grid.innerHTML = '';
-      
-      if (!data || data.length === 0) {
-        grid.innerHTML = '<p style="color:var(--text-muted);">Chưa có bài viết nào.</p>';
-        return;
-      }
-      
-      data.forEach(item => {
-        newsDatabase[item.id] = {
-          title: item.title,
-          date: item.date,
-          category: item.category,
-          images: [item.cover_image],
-          desc: item.description,
-          contentHtml: item.content_html
-        };
-        
-        grid.innerHTML += `
-          <article class="article-card" onclick="openNewsModal('${item.id}')">
-            <div class="article-img-wrap">
-              <img src="${item.cover_image}" class="article-img" loading="lazy" />
-            </div>
-            <div class="article-content">
-              <div class="article-meta">
-                <span><i data-lucide="calendar" style="width:12px;height:12px;margin-right:4px;vertical-align:-2px;"></i>${item.date}</span>
-                <span style="color:var(--accent-gold);">${item.category}</span>
-              </div>
-              <h3 class="article-title">${item.title}</h3>
-              <p class="article-desc">${item.description || ''}</p>
-              <div class="article-readmore">Đọc tiếp <i data-lucide="arrow-right" style="width:16px;height:16px;"></i></div>
-            </div>
-          </article>
-        `;
-      });
-      lucide.createIcons();
-      
-      // Auto open if URL has param
-      const urlParams = new URLSearchParams(window.location.search);
-      const articleId = urlParams.get('article');
-      if(articleId && newsDatabase[articleId]) {
-        openNewsModal(articleId);
+      const client = getSupabaseClient();
+      if (client) {
+        const { data, error } = await client.from('news_items').select('*').order('created_at', { ascending: false });
+        if (!error && data && data.length > 0) {
+          renderArticles(data);
+          try {
+            localStorage.setItem('olion_cached_news', JSON.stringify(data));
+          } catch(e) {}
+        }
       }
     } catch (e) {
-      console.error("Lỗi tải tin tức:", e);
+      console.warn("Lỗi tải tin tức từ Cloud, đang dùng dữ liệu lưu trữ:", e);
+    }
+
+    // 3. Auto open if URL has ?article=...
+    const urlParams = new URLSearchParams(window.location.search);
+    const articleId = urlParams.get('article');
+    if (articleId && newsDatabase[articleId]) {
+      openNewsModal(articleId);
     }
   }
 
   // Load when ready
-  window.addEventListener('DOMContentLoaded', () => {
-    // wait a tiny bit for supabase to initialize
-    setTimeout(loadNewsFromSupabase, 500);
-  });
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(loadNewsFromSupabase, 200);
+    });
+  } else {
+    setTimeout(loadNewsFromSupabase, 100);
+  }
 
 
   function openNewsModal(id) {
