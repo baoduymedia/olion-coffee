@@ -244,21 +244,34 @@
       0%, 35% { left: -120%; }
       65%, 100% { left: 160%; }
     }
+    button {
+      font-family: inherit;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
     .btn-ghost{
       display:flex;align-items:center;justify-content:center;gap:8px;
-      border:1.5px solid var(--card-border);color:var(--cream);
-      font-size:13.5px;font-weight:700;padding:12px 20px;border-radius:12px;
-      text-decoration:none;transition:all .2s ease;
-      position:relative;overflow:hidden;
+      background: rgba(255, 255, 255, 0.08) !important;
+      border: 1.5px solid var(--card-border) !important;
+      color: var(--cream) !important;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 12px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all .2s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      -webkit-appearance: none !important;
+      appearance: none !important;
     }
-    .btn-ghost::before{
-      content:'';position:absolute;bottom:0;left:0;width:100%;height:0%;
-      background:linear-gradient(135deg,rgba(229,154,85,.25) 0%,rgba(180,90,30,.15) 100%);
-      transition:height .3s ease;z-index:0;pointer-events:none;
+    .btn-ghost:hover, .btn-ghost:active{
+      background: rgba(229, 154, 85, 0.2) !important;
+      border-color: var(--gold) !important;
+      color: var(--gold-light) !important;
     }
-    .btn-ghost:hover::before{height:100%}
-    .btn-ghost > *{position:relative;z-index:1}
-    .btn-ghost:hover{background:rgba(229,154,85,.12);border-color:var(--gold);color:var(--gold-light)}
 
     /* ─── SPACES GALLERY ─── */
     .gallery-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
@@ -441,10 +454,10 @@
 
   <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:28px;z-index:2;position:relative;">
     <button type="button" class="btn-main btn-booking-highlight" onclick="document.getElementById('bookingFormSection').scrollIntoView({behavior:'smooth'}); switchType('table');" style="width:auto;padding:14px 28px;font-size:15px;letter-spacing:0.02em;">
-      🗓️ Đặt Bàn Giữ Chỗ Ngay ↓
+      <span>🗓️ Đặt Bàn Giữ Chỗ Ngay ↓</span>
     </button>
-    <button type="button" class="btn-ghost" onclick="document.getElementById('bookingFormSection').scrollIntoView({behavior:'smooth'}); switchType('space');" style="width:auto;padding:14px 22px;font-size:14px;">
-      👥 Thuê Không Gian
+    <button type="button" class="btn-ghost" onclick="document.getElementById('bookingFormSection').scrollIntoView({behavior:'smooth'}); switchType('space');" style="width:auto;padding:14px 22px;font-size:14px;background:rgba(255,255,255,0.08);color:var(--cream);border:1.5px solid var(--card-border);">
+      <span>👥 Thuê Không Gian</span>
     </button>
   </div>
 
@@ -483,8 +496,8 @@
         📅 <strong>Lưu ý:</strong> Vui lòng liên hệ trước ít nhất <strong>1 tuần</strong> để Olion sắp xếp và bố trí không gian phù hợp nhất.
       </div>
       <div style="margin-top:16px;">
-        <button type="button" class="btn-ghost" onclick="document.getElementById('bookingFormSection').scrollIntoView({behavior:'smooth'}); switchType('space');" style="width:100%;font-size:14px;">
-          👥 Đăng Ký Thuê Không Gian ↓
+        <button type="button" class="btn-ghost" onclick="document.getElementById('bookingFormSection').scrollIntoView({behavior:'smooth'}); switchType('space');" style="width:100%;font-size:14px;padding:13px;background:rgba(255,255,255,0.08);color:var(--cream);border:1.5px solid var(--card-border);">
+          <span>👥 Đăng Ký Thuê Không Gian ↓</span>
         </button>
       </div>
     </div>
