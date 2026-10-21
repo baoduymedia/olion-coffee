@@ -3305,6 +3305,70 @@
         opacity: 0;
       }
     }
+
+    /* ======== PROMINENT BOOKING BUTTON (NÚT ĐẶT BÀN NỔI BẬT) ======== */
+    .btn-booking-highlight {
+      background: linear-gradient(135deg, #FF9442 0%, #D86326 50%, #B84714 100%) !important;
+      color: #FFFFFF !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.04em !important;
+      box-shadow: 0 6px 20px rgba(216, 99, 38, 0.55), 0 0 16px rgba(255, 148, 66, 0.45) !important;
+      border: 1px solid rgba(255, 220, 180, 0.4) !important;
+      position: relative !important;
+      overflow: hidden !important;
+      animation: pulseBookingBtn 2.8s infinite ease-in-out !important;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+
+    .btn-booking-highlight:hover {
+      background: linear-gradient(135deg, #FFA45B 0%, #E66A2B 50%, #C8501B 100%) !important;
+      transform: translateY(-3px) scale(1.02) !important;
+      box-shadow: 0 10px 28px rgba(216, 99, 38, 0.75), 0 0 24px rgba(255, 148, 66, 0.6) !important;
+    }
+
+    .btn-booking-highlight::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 70%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: skewX(-25deg);
+      animation: bookingShimmer 3.2s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    @keyframes pulseBookingBtn {
+      0%, 100% {
+        box-shadow: 0 6px 20px rgba(216, 99, 38, 0.55), 0 0 14px rgba(255, 148, 66, 0.4);
+      }
+      50% {
+        box-shadow: 0 8px 28px rgba(216, 99, 38, 0.75), 0 0 26px 4px rgba(255, 148, 66, 0.55);
+      }
+    }
+
+    @keyframes bookingShimmer {
+      0%, 35% { left: -120%; }
+      65%, 100% { left: 160%; }
+    }
+
+    .header-booking-btn {
+      padding: 9px 18px !important;
+      min-height: 40px !important;
+      font-size: 13px !important;
+      display: inline-flex !important;
+    }
+    @media (max-width: 640px) {
+      .header-booking-btn {
+        padding: 7px 12px !important;
+        font-size: 12px !important;
+        min-height: 36px !important;
+      }
+      .header-booking-btn span {
+        font-size: 12px;
+      }
+    }
   </style>
 
 
@@ -3396,6 +3460,12 @@
       </nav>
 
       <div class="header-actions">
+        <!-- Prominent Booking Button -->
+        <button type="button" class="btn btn-booking-highlight header-booking-btn" onclick="openBookingModal('table')" aria-label="Đặt bàn trước tại Olion">
+          <i data-lucide="bookmark-check" style="width:15px;height:15px;margin-right:4px;"></i>
+          <span>Đặt Bàn</span>
+        </button>
+
         <!-- Language Switcher -->
         <div class="lang-toggle-btn" id="langToggleBtn" onclick="toggleLanguage()" title="Chuyển đổi ngôn ngữ / Switch Language" role="button" tabindex="0" aria-label="Đổi ngôn ngữ">
           <span class="lang-pill active" id="langPillVi">VI</span>
@@ -3457,6 +3527,9 @@
       <a href="javascript:void(0)" onclick="if(window.OneSignal) OneSignal.showSlidedownPrompt(); toggleDrawer(false);" class="drawer-link" style="display: flex; color: #4CAF50; font-weight: 700;"><i data-lucide="bell-ring" style="width:16px;height:16px;margin-right:6px;"></i><span>Bật Thông Báo (Ting Ting)</span> <span>→</span></a>
     </div>
     <div class="drawer-footer">
+      <button type="button" class="btn btn-booking-highlight" onclick="toggleDrawer(false); openBookingModal('table');" style="width: 100%; margin-bottom: 8px;">
+        <i data-lucide="bookmark-check" style="width:16px;height:16px;margin-right:6px;"></i> Đặt Bàn Giữ Chỗ Ngay
+      </button>
       <a href="tel:0783657587" class="btn btn-primary" style="width: 100%;">
         <span data-i18n="drawer_call">Gọi Hotline: 0783 657 587</span>
       </a>
@@ -3495,8 +3568,12 @@
           Quán cà phê đẹp ở Dương Quảng Hàm, Gò Vấp với không gian sang trọng và đồ uống thủ công tinh tế. Thưởng thức hương vị nguyên bản, đắm chìm trong góc nhỏ tĩnh lặng giữa lòng Sài Gòn.
         </p>
         <div class="hero-cta-group">
-          <a href="#menu" class="btn btn-primary" data-i18n="hero_cta_menu">Khám phá thực đơn →</a>
-          <a href="#about" class="btn btn-ghost" data-i18n="hero_cta_about">Câu chuyện quán</a>
+          <button type="button" class="btn btn-booking-highlight" onclick="openBookingModal('table')">
+            <i data-lucide="bookmark-check" style="width:17px;height:17px;margin-right:6px;"></i> <span>Đặt Bàn Giữ Chỗ</span>
+          </button>
+          <a href="#menu" class="btn btn-ghost" data-i18n="hero_cta_menu" style="border-color: rgba(255,255,255,0.25);">
+            Khám phá thực đơn →
+          </a>
         </div>
       </div>
 
@@ -3937,13 +4014,16 @@
             </div>
 
             <!-- Service 02 -->
-            <div class="service-feature-card">
+            <div class="service-feature-card" style="border: 1.5px solid rgba(229, 154, 85, 0.45); background: linear-gradient(180deg, rgba(229, 154, 85, 0.08) 0%, rgba(20, 26, 21, 0.95) 100%);">
               <div class="service-feature-head">
-                <div class="service-icon-box">
+                <div class="service-icon-box" style="background: rgba(216, 99, 38, 0.2); border-color: rgba(216, 99, 38, 0.4); color: var(--accent-gold);">
                   <i data-lucide="calendar-check" style="width:24px;height:24px;"></i>
                 </div>
                 <div class="service-title-wrap">
-                  <span class="service-num">02</span>
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <span class="service-num">02</span>
+                    <span style="background: linear-gradient(135deg, #FF9442, #D86326); color: #fff; font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 4px; letter-spacing: 0.05em; text-transform: uppercase;">HOT / ĐẶT NHANH</span>
+                  </div>
                   <h3 class="service-title">ĐẶT BÀN TRƯỚC</h3>
                 </div>
               </div>
@@ -3960,8 +4040,8 @@
                 <span>Vui lòng đặt bàn trước ít nhất <strong>1 ngày</strong>. (Lưu ý: Chỉ xác nhận khi quán phản hồi).</span>
               </div>
               <div class="service-action-row">
-                <button type="button" class="btn btn-primary" onclick="openBookingModal('table')" style="padding: 11px 20px; font-size: 13.5px;">
-                  <i data-lucide="bookmark-check" style="width:15px;height:15px;margin-right:6px;"></i> Đặt Bàn Giữ Chỗ
+                <button type="button" class="btn btn-booking-highlight" onclick="openBookingModal('table')" style="padding: 13px 26px; font-size: 14.5px;">
+                  <i data-lucide="bookmark-check" style="width:17px;height:17px;margin-right:6px;"></i> Đặt Bàn Giữ Chỗ Ngay
                 </button>
               </div>
             </div>
@@ -4307,9 +4387,9 @@
       <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
     </a>
 
-    <a href="#spaces" class="dock-item">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-      <span data-i18n="dock_spaces">Không gian</span>
+    <a href="#services" class="dock-item" onclick="openBookingModal('table'); return false;" style="color: var(--accent-gold);">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      <span style="font-weight: 800; color: var(--accent-gold);">Đặt bàn</span>
     </a>
     <a href="#contact" class="dock-item">
       <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -4462,7 +4542,7 @@
           </div>
 
           <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 18px;">
-            <button type="submit" class="btn btn-primary" id="bkSubmitBtn" style="width: 100%; padding: 13px;">
+            <button type="submit" class="btn btn-booking-highlight" id="bkSubmitBtn" style="width: 100%; padding: 14px; font-size: 15px;">
               <i data-lucide="send" style="width:16px;height:16px;margin-right:6px;"></i> Gửi Yêu Cầu & Kết Nối Fanpage
             </button>
             <div style="display: flex; gap: 10px;">

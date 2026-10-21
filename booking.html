@@ -204,6 +204,46 @@
       position:relative;overflow:hidden;
     }
     .btn-main:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(180,90,30,.55)}
+    .btn-booking-highlight {
+      background: linear-gradient(135deg, #FF9442 0%, var(--gold) 50%, #9e5516 100%) !important;
+      color: #FFFFFF !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.04em !important;
+      box-shadow: 0 8px 28px rgba(216, 99, 38, 0.6), 0 0 18px rgba(255, 148, 66, 0.45) !important;
+      border: 1px solid rgba(255, 220, 180, 0.5) !important;
+      position: relative !important;
+      overflow: hidden !important;
+      animation: pulseBookingBtn 2.8s infinite ease-in-out !important;
+    }
+    .btn-booking-highlight:hover {
+      background: linear-gradient(135deg, #FFA45B 0%, #f3b378 50%, #b85f18 100%) !important;
+      transform: translateY(-3px) scale(1.02) !important;
+      box-shadow: 0 12px 36px rgba(216, 99, 38, 0.8), 0 0 24px rgba(255, 148, 66, 0.6) !important;
+    }
+    .btn-booking-highlight::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 70%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: skewX(-25deg);
+      animation: bookingShimmer 3.2s infinite ease-in-out;
+      pointer-events: none;
+    }
+    @keyframes pulseBookingBtn {
+      0%, 100% {
+        box-shadow: 0 8px 24px rgba(216, 99, 38, 0.5), 0 0 14px rgba(255, 148, 66, 0.4);
+      }
+      50% {
+        box-shadow: 0 10px 32px rgba(216, 99, 38, 0.75), 0 0 24px 4px rgba(255, 148, 66, 0.55);
+      }
+    }
+    @keyframes bookingShimmer {
+      0%, 35% { left: -120%; }
+      65%, 100% { left: 160%; }
+    }
     .btn-ghost{
       display:flex;align-items:center;justify-content:center;gap:8px;
       border:1.5px solid var(--card-border);color:var(--cream);
@@ -399,6 +439,15 @@
     Dù là buổi workshop sáng tạo, họp nhóm sôi nổi hay góc bàn yên tĩnh để học tập — Olion luôn sẵn sàng đồng hành cùng bạn!
   </p>
 
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:28px;z-index:2;position:relative;">
+    <button type="button" class="btn-main btn-booking-highlight" onclick="document.getElementById('bookingFormSection').scrollIntoView({behavior:'smooth'}); switchType('table');" style="width:auto;padding:14px 28px;font-size:15px;letter-spacing:0.02em;">
+      🗓️ Đặt Bàn Giữ Chỗ Ngay ↓
+    </button>
+    <button type="button" class="btn-ghost" onclick="document.getElementById('bookingFormSection').scrollIntoView({behavior:'smooth'}); switchType('space');" style="width:auto;padding:14px 22px;font-size:14px;">
+      👥 Thuê Không Gian
+    </button>
+  </div>
+
   <div class="scroll-cue" onclick="document.getElementById('servicesDetail').scrollIntoView({behavior:'smooth'})">
     <span>Khám phá dịch vụ</span>
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
@@ -433,10 +482,15 @@
       <div class="service-note">
         📅 <strong>Lưu ý:</strong> Vui lòng liên hệ trước ít nhất <strong>1 tuần</strong> để Olion sắp xếp và bố trí không gian phù hợp nhất.
       </div>
+      <div style="margin-top:16px;">
+        <button type="button" class="btn-ghost" onclick="document.getElementById('bookingFormSection').scrollIntoView({behavior:'smooth'}); switchType('space');" style="width:100%;font-size:14px;">
+          👥 Đăng Ký Thuê Không Gian ↓
+        </button>
+      </div>
     </div>
 
     <!-- Service 02 -->
-    <div class="service-card">
+    <div class="service-card" style="border: 1.5px solid rgba(229, 154, 85, 0.5); background: linear-gradient(180deg, rgba(229, 154, 85, 0.1) 0%, rgba(30, 23, 18, 0.95) 100%);">
       <div class="service-head">
         <div class="service-icon">🗓️</div>
         <div>
@@ -454,6 +508,11 @@
       </p>
       <div class="service-note">
         ⏰ <strong>Lưu ý:</strong> Vui lòng đặt bàn trước ít nhất <strong>1 ngày</strong>. Lịch đặt bàn chỉ được tính là thành công khi quán đã phản hồi xác nhận.
+      </div>
+      <div style="margin-top:16px;">
+        <button type="button" class="btn-main btn-booking-highlight" onclick="document.getElementById('bookingFormSection').scrollIntoView({behavior:'smooth'}); switchType('table');" style="width:100%;font-size:15px;">
+          🗓️ Đặt Bàn Giữ Chỗ Ngay ↓
+        </button>
       </div>
     </div>
   </div>
@@ -526,7 +585,7 @@
             <textarea id="pNote" class="form-textarea" style="min-height:80px" required placeholder="Nội dung yêu cầu chi tiết..."></textarea>
           </div>
 
-          <button type="submit" class="btn-main" style="margin-top:6px">
+          <button type="submit" class="btn-main btn-booking-highlight" style="margin-top:6px; font-size:16px;">
             <span>🚀</span> Gửi Yêu Cầu & Mở Fanpage Xác Nhận
           </button>
 
