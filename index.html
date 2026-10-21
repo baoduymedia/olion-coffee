@@ -2370,6 +2370,111 @@
 
     .float-icon-btn img { width: 22px; height: 22px; object-fit: contain; }
 
+    /* ======== QUICK BACK TO TOP BUTTON WITH PROGRESS RING ======== */
+    .back-to-top-btn {
+      position: fixed;
+      right: 18px;
+      bottom: 32px;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(14, 22, 17, 0.94);
+      border: 1.5px solid rgba(197, 155, 99, 0.45);
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 995;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(197, 155, 99, 0.15);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(16px) scale(0.88);
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  visibility 0.3s,
+                  background 0.25s,
+                  border-color 0.25s,
+                  color 0.25s,
+                  box-shadow 0.25s;
+      padding: 0;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .back-to-top-btn.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .back-to-top-btn:hover {
+      background: linear-gradient(135deg, #D86326 0%, #C59B63 100%);
+      color: #0A0F0D;
+      border-color: #F2B872;
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 12px 28px rgba(216, 99, 38, 0.45);
+    }
+
+    .back-to-top-btn:active {
+      transform: scale(0.92);
+    }
+
+    .back-to-top-ring {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .back-to-top-ring-bg {
+      fill: none;
+      stroke: rgba(255, 255, 255, 0.08);
+      stroke-width: 2.5;
+    }
+
+    .back-to-top-ring-progress {
+      fill: none;
+      stroke: var(--accent-gold);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-dasharray: 125.66;
+      stroke-dashoffset: 125.66;
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+      transition: stroke-dashoffset 0.08s linear, stroke 0.25s ease;
+    }
+
+    .back-to-top-btn:hover .back-to-top-ring-progress {
+      stroke: #0A0F0D;
+    }
+
+    .back-to-top-icon {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s ease;
+    }
+
+    .back-to-top-btn:hover .back-to-top-icon {
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 767px) {
+      .back-to-top-btn {
+        right: 14px;
+        bottom: 76px; /* Nằm ngay trên mobile dock (64px), cân đối với nút vòng quay may mắn */
+        width: 44px;
+        height: 44px;
+      }
+    }
+
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -6019,6 +6124,20 @@
     </a>
   </aside>
 
+  <!-- ======== QUICK BACK TO TOP BUTTON WITH PROGRESS RING ======== -->
+  <button type="button" class="back-to-top-btn" id="backToTopBtn" aria-label="Lên đầu trang" title="Lên đầu trang" data-i18n-title="back_to_top">
+    <svg class="back-to-top-ring" viewBox="0 0 46 46">
+      <circle class="back-to-top-ring-bg" cx="23" cy="23" r="20"></circle>
+      <circle class="back-to-top-ring-progress" id="backToTopProgress" cx="23" cy="23" r="20"></circle>
+    </svg>
+    <span class="back-to-top-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="19" x2="12" y2="5"></line>
+        <polyline points="5 12 12 5 19 12"></polyline>
+      </svg>
+    </span>
+  </button>
+
   <!-- ======== SMART WELCOME POPUP (POPUP CHÀO MỪNG THÔNG MINH) ======== -->
   <div class="welcome-overlay" id="welcomeModal" aria-hidden="true" role="dialog" aria-labelledby="welcomeTitle">
     <div class="welcome-box" id="welcomeBox">
@@ -6802,7 +6921,8 @@
           loyalty_btn_lookup: "Tra Cứu",
           loyalty_current_points: "Điểm tích lũy",
           loyalty_pts_unit: "điểm",
-          wheel_float: "Quay Nhận Quà"
+          wheel_float: "Quay Nhận Quà",
+          back_to_top: "Lên đầu trang"
         },
         en: {
           nav_about: "About Us",
@@ -6925,7 +7045,8 @@
           loyalty_btn_lookup: "Check Points",
           loyalty_current_points: "Current Points",
           loyalty_pts_unit: "pts",
-          wheel_float: "Spin & Win"
+          wheel_float: "Spin & Win",
+          back_to_top: "Back to top"
         }
       };
 
@@ -6951,6 +7072,15 @@
           const key = el.getAttribute('data-i18n-placeholder');
           if (dict[key] !== undefined) {
             el.placeholder = dict[key];
+          }
+        });
+
+        // Update titles and aria-labels with data-i18n-title
+        document.querySelectorAll('[data-i18n-title]').forEach(el => {
+          const key = el.getAttribute('data-i18n-title');
+          if (dict[key] !== undefined) {
+            el.setAttribute('title', dict[key]);
+            el.setAttribute('aria-label', dict[key]);
           }
         });
 
@@ -7585,9 +7715,12 @@
         }
       };
 
-      // 1. Scroll Progress Bar & Header Shrink
+      // 1. Scroll Progress Bar, Header Shrink & Quick Back To Top
       const scrollProgress = document.getElementById('scrollProgress');
       const siteHeader = document.getElementById('siteHeader');
+      const backToTopBtn = document.getElementById('backToTopBtn');
+      const backToTopProgress = document.getElementById('backToTopProgress');
+      const ringCircumference = 2 * Math.PI * 20; // 125.66px
 
       window.addEventListener('scroll', () => {
         const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
@@ -7598,7 +7731,29 @@
         if (siteHeader) {
           siteHeader.classList.toggle('scrolled', winScroll > 60);
         }
+
+        if (backToTopBtn) {
+          if (winScroll > 320) {
+            backToTopBtn.classList.add('is-visible');
+          } else {
+            backToTopBtn.classList.remove('is-visible');
+          }
+          if (backToTopProgress && height > 0) {
+            const offset = ringCircumference - (scrolled / 100) * ringCircumference;
+            backToTopProgress.style.strokeDashoffset = Math.max(0, offset);
+          }
+        }
       }, { passive: true });
+
+      if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      }
 
       // 2. Mobile Drawer Navigation
       const burgerBtn = document.getElementById('burgerBtn');
