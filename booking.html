@@ -201,6 +201,7 @@
       padding:16px 28px;border-radius:12px;text-decoration:none;
       box-shadow:0 8px 28px rgba(180,90,30,.4);width:100%;border:none;cursor:pointer;
       transition:all .25s ease;
+      position:relative;overflow:hidden;
     }
     .btn-main:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(180,90,30,.55)}
     .btn-ghost{
@@ -208,7 +209,15 @@
       border:1.5px solid var(--card-border);color:var(--cream);
       font-size:13.5px;font-weight:700;padding:12px 20px;border-radius:12px;
       text-decoration:none;transition:all .2s ease;
+      position:relative;overflow:hidden;
     }
+    .btn-ghost::before{
+      content:'';position:absolute;bottom:0;left:0;width:100%;height:0%;
+      background:linear-gradient(135deg,rgba(229,154,85,.25) 0%,rgba(180,90,30,.15) 100%);
+      transition:height .3s ease;z-index:0;pointer-events:none;
+    }
+    .btn-ghost:hover::before{height:100%}
+    .btn-ghost > *{position:relative;z-index:1}
     .btn-ghost:hover{background:rgba(229,154,85,.12);border-color:var(--gold);color:var(--gold-light)}
 
     /* ─── SPACES GALLERY ─── */
@@ -251,6 +260,116 @@
     .footer{text-align:center;padding:40px 24px 50px;font-size:12.5px;color:rgba(200,180,165,.5);line-height:1.8}
     .footer strong{font-family:var(--serif);font-size:20px;color:var(--gold-light);display:block}
     .footer a{color:var(--gold);text-decoration:none}
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── LUXURY COFFEE CUSTOM CURSOR ─── */
+    @media (hover: hover) and (pointer: fine) {
+      body.has-custom-cursor,
+      body.has-custom-cursor a,
+      body.has-custom-cursor button,
+      body.has-custom-cursor .btn-main,
+      body.has-custom-cursor .btn-ghost,
+      body.has-custom-cursor .type-btn,
+      body.has-custom-cursor .time-btn,
+      body.has-custom-cursor .gallery-img,
+      body.has-custom-cursor [role="button"] {
+        cursor: none !important;
+      }
+
+      .cursor-dot {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 8px;
+        height: 8px;
+        background: var(--gold);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999999;
+        transform: translate(-50%, -50%);
+        transition: transform 0.1s ease-out, background 0.2s ease, width 0.2s ease, height 0.2s ease, opacity 0.25s ease;
+        box-shadow: 0 0 10px rgba(229, 154, 85, 0.85);
+        opacity: 0;
+      }
+
+      .cursor-ring {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 32px;
+        height: 32px;
+        border: 1.5px solid rgba(229, 154, 85, 0.45);
+        background: rgba(229, 154, 85, 0.04);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999998;
+        transform: translate(-50%, -50%);
+        transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                    height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                    border-color 0.25s ease,
+                    background 0.25s ease,
+                    box-shadow 0.25s ease,
+                    opacity 0.25s ease;
+        opacity: 0;
+      }
+
+      body.cursor-active .cursor-dot,
+      body.cursor-active .cursor-ring {
+        opacity: 1;
+      }
+
+      .cursor-ring.cursor-hover {
+        width: 50px;
+        height: 50px;
+        border-color: rgba(229, 154, 85, 0.9);
+        background: rgba(229, 154, 85, 0.12);
+        backdrop-filter: blur(1px);
+        box-shadow: 0 0 22px rgba(229, 154, 85, 0.35);
+      }
+
+      .cursor-dot.cursor-hover {
+        width: 10px;
+        height: 10px;
+        background: var(--gold-light);
+        transform: translate(-50%, -50%) scale(1.2);
+      }
+
+      .cursor-ring.cursor-click {
+        width: 22px;
+        height: 22px;
+        border-color: var(--gold-light);
+        background: rgba(229, 154, 85, 0.28);
+      }
+    }
+
+    /* Caramel Ripple */
+    .caramel-ripple {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(229, 154, 85, 0.45) 0%, rgba(180, 90, 30, 0.12) 70%, transparent 100%);
+      transform: scale(0);
+      animation: caramelRippleAnim 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    @keyframes caramelRippleAnim {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -774,6 +893,111 @@ function copyLink(){
   });
 }
 </script>
+
+  <!-- ======== LUXURY COFFEE MICRO-INTERACTIONS ======== -->
+  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
+  <script>
+    (function initCoffeeMicroInteractions() {
+      // 1. Scroll Reveal
+      const revealTargets = document.querySelectorAll(
+        '.service-card, .booking-card, .sec-title, .gallery-img, .info-row, .benefit-card, .badge-pill'
+      );
+      if ('IntersectionObserver' in window && revealTargets.length) {
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+        revealTargets.forEach((el, i) => {
+          el.classList.add('reveal');
+          obs.observe(el);
+        });
+      }
+
+      // 2. Desktop Custom Cursor
+      const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+      const dot = document.getElementById('cursorDot');
+      const ring = document.getElementById('cursorRing');
+
+      if (!isTouch && dot && ring) {
+        document.body.classList.add('has-custom-cursor');
+        let mouseX = -100, mouseY = -100;
+        let ringX = -100, ringY = -100;
+        let isFirstMove = true;
+
+        window.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX;
+          mouseY = e.clientY;
+          if (isFirstMove) {
+            ringX = mouseX;
+            ringY = mouseY;
+            isFirstMove = false;
+            document.body.classList.add('cursor-active');
+          }
+          dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+        }, { passive: true });
+
+        function renderCursor() {
+          ringX += (mouseX - ringX) * 0.16;
+          ringY += (mouseY - ringY) * 0.16;
+          ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+          requestAnimationFrame(renderCursor);
+        }
+        requestAnimationFrame(renderCursor);
+
+        const hoverSelector = 'a, button, .btn-main, .btn-ghost, .type-btn, .time-btn, .gallery-img, input, select, textarea, [role="button"]';
+        
+        document.addEventListener('mouseover', (e) => {
+          if (e.target && e.target.closest && e.target.closest(hoverSelector)) {
+            ring.classList.add('cursor-hover');
+            dot.classList.add('cursor-hover');
+          }
+        }, { passive: true });
+
+        document.addEventListener('mouseout', (e) => {
+          if (e.target && e.target.closest && e.target.closest(hoverSelector)) {
+            ring.classList.remove('cursor-hover');
+            dot.classList.remove('cursor-hover');
+          }
+        }, { passive: true });
+
+        window.addEventListener('mousedown', () => ring.classList.add('cursor-click'), { passive: true });
+        window.addEventListener('mouseup', () => ring.classList.remove('cursor-click'), { passive: true });
+
+        document.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'), { passive: true });
+        document.addEventListener('mouseenter', () => { if (!isFirstMove) document.body.classList.add('cursor-active'); }, { passive: true });
+      }
+
+      // 3. Caramel Ripple & Haptic
+      document.addEventListener('click', (e) => {
+        const btn = e.target && e.target.closest && e.target.closest('.btn-main, .btn-ghost, .type-btn, .time-btn, .share-btn');
+        if (!btn) return;
+
+        if (navigator.vibrate) {
+          try { navigator.vibrate(15); } catch(err) {}
+        }
+
+        const rect = btn.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+
+        const ripple = document.createElement('span');
+        ripple.className = 'caramel-ripple';
+        ripple.style.width = ripple.style.height = `${size}px`;
+        ripple.style.left = `${x}px`;
+        ripple.style.top = `${y}px`;
+
+        btn.appendChild(ripple);
+        setTimeout(() => ripple.remove(), 650);
+      });
+    })();
+  </script>
 
 <!-- Cloudflare Web Analytics -->
 <script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b6899754248448c5aa66342fbfe6db75"}'></script>
