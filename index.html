@@ -3561,6 +3561,626 @@
         font-size: 12px;
       }
     }
+
+    /* ==========================================================================
+       UX UPGRADE: 1. LIVE STORE STATUS & ATMOSPHERE INDICATOR
+       ========================================================================== */
+    .status-pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+      display: inline-block;
+      position: relative;
+      box-shadow: 0 0 10px #10B981;
+      flex-shrink: 0;
+    }
+    .status-pulse-dot::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      border: 2px solid #10B981;
+      animation: statusPulseRing 2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+    }
+    .status-pulse-dot.closing {
+      background: #F59E0B;
+      box-shadow: 0 0 10px #F59E0B;
+    }
+    .status-pulse-dot.closing::after {
+      border-color: #F59E0B;
+    }
+    .status-pulse-dot.closed {
+      background: #9CA3AF;
+      box-shadow: none;
+    }
+    .status-pulse-dot.closed::after {
+      display: none;
+    }
+    @keyframes statusPulseRing {
+      0% { transform: scale(0.9); opacity: 0.9; }
+      100% { transform: scale(2.2); opacity: 0; }
+    }
+
+    .header-store-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 12px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6EE7B7;
+      letter-spacing: 0.02em;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    .header-store-badge.closing {
+      background: rgba(245, 158, 11, 0.12);
+      border-color: rgba(245, 158, 11, 0.35);
+      color: #FCD34D;
+    }
+    .header-store-badge.closed {
+      background: rgba(156, 163, 175, 0.1);
+      border-color: rgba(156, 163, 175, 0.25);
+      color: #D1D5DB;
+    }
+    @media (max-width: 992px) {
+      .header-store-badge { display: none; }
+    }
+
+    /* Mobile Drawer Status Card */
+    .drawer-status-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.22);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      gap: 10px;
+    }
+    .drawer-status-card.closing {
+      background: rgba(245, 158, 11, 0.1);
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+    .drawer-status-card.closed {
+      background: rgba(156, 163, 175, 0.08);
+      border-color: rgba(156, 163, 175, 0.2);
+    }
+    .drawer-status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #6EE7B7;
+    }
+    .drawer-status-card.closing .drawer-status-indicator { color: #FCD34D; }
+    .drawer-status-card.closed .drawer-status-indicator { color: #D1D5DB; }
+    .drawer-status-map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11.5px;
+      color: var(--accent-gold);
+      background: rgba(197, 155, 99, 0.15);
+      border: 1px solid rgba(197, 155, 99, 0.3);
+      padding: 5px 10px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .drawer-status-map-link:hover {
+      background: var(--accent-gold);
+      color: #0A0F0D;
+    }
+
+    /* Hours Card Live Status */
+    .live-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .live-status-pill.is-open {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #6EE7B7;
+    }
+    .live-status-pill.is-closing {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      color: #FCD34D;
+    }
+    .live-status-pill.is-closed {
+      background: rgba(156, 163, 175, 0.12);
+      border: 1px solid rgba(156, 163, 175, 0.25);
+      color: #D1D5DB;
+    }
+
+    .store-atmosphere-box {
+      background: rgba(17, 26, 19, 0.85);
+      border: 1px solid rgba(197, 155, 99, 0.25);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      transition: all 0.3s ease;
+    }
+    .store-atmosphere-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      margin-bottom: 4px;
+    }
+    .store-atmosphere-text {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin: 0;
+    }
+
+    /* Google Maps Route Button */
+    .btn-map-route {
+      background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%) !important;
+      border: 1px solid rgba(197, 155, 99, 0.4) !important;
+      color: #F5EBE1 !important;
+      font-weight: 700 !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .btn-map-route:hover {
+      background: linear-gradient(135deg, #D86326 0%, #C59B63 100%) !important;
+      color: #0A0F0D !important;
+      border-color: #F2B872 !important;
+      transform: translateY(-2px) !important;
+      box-shadow: 0 6px 20px rgba(216, 99, 38, 0.4) !important;
+    }
+
+    /* ==========================================================================
+       UX UPGRADE: 2. INSTANT MENU SEARCH & TASTE FILTERS
+       ========================================================================== */
+    .menu-control-bar {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .menu-search-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 260px;
+    }
+    .menu-search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 17px;
+      height: 17px;
+      color: var(--accent-gold);
+      pointer-events: none;
+    }
+    .menu-search-input {
+      width: 100%;
+      height: 48px;
+      background: rgba(17, 26, 19, 0.85);
+      border: 1px solid rgba(197, 155, 99, 0.35);
+      border-radius: 999px;
+      padding: 0 42px 0 44px;
+      font-size: 14px;
+      color: var(--text-white);
+      outline: none;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(8px);
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .menu-search-input:focus {
+      border-color: var(--accent-gold);
+      background: rgba(22, 34, 25, 0.98);
+      box-shadow: 0 0 18px rgba(197, 155, 99, 0.35);
+    }
+    .menu-search-input::placeholder {
+      color: rgba(245, 235, 225, 0.45);
+      font-size: 13.5px;
+    }
+    .menu-search-clear {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .menu-search-clear:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--text-white);
+    }
+
+    .btn-taste-quiz {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 48px;
+      padding: 0 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(216, 99, 38, 0.22) 0%, rgba(197, 155, 99, 0.32) 100%);
+      border: 1px solid rgba(216, 99, 38, 0.65);
+      color: #FFFFFF;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 14px rgba(216, 99, 38, 0.25);
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .btn-taste-quiz:hover {
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, rgba(216, 99, 38, 0.4) 0%, rgba(197, 155, 99, 0.5) 100%);
+      border-color: var(--accent-gold);
+      box-shadow: 0 6px 20px rgba(216, 99, 38, 0.45);
+    }
+    .taste-quiz-badge {
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--accent-gold);
+      color: #0A0F0D;
+      padding: 2px 8px;
+      border-radius: 999px;
+      letter-spacing: 0.02em;
+    }
+
+    /* Taste Pills Scroll */
+    .taste-pills-container {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 20px;
+      scrollbar-width: none;
+      padding-bottom: 4px;
+    }
+    .taste-pills-container::-webkit-scrollbar { display: none; }
+    .taste-pills {
+      display: inline-flex;
+      gap: 8px;
+      min-width: 100%;
+    }
+    .taste-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: rgba(17, 26, 19, 0.7);
+      border: 1px solid rgba(197, 155, 99, 0.22);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .taste-pill:hover {
+      color: var(--text-white);
+      border-color: var(--accent-gold);
+      background: rgba(197, 155, 99, 0.15);
+    }
+    .taste-pill.active {
+      background: linear-gradient(135deg, #D86326 0%, #C59B63 100%);
+      border-color: #F2B872;
+      color: #0A0F0D;
+      font-weight: 800;
+      box-shadow: 0 4px 14px rgba(216, 99, 38, 0.35);
+    }
+
+    /* Search Banner & Empty State */
+    .menu-search-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      padding: 12px 18px;
+      background: rgba(17, 26, 19, 0.9);
+      border: 1px solid rgba(197, 155, 99, 0.3);
+      border-radius: 12px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .search-result-count {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--accent-gold);
+    }
+    .search-result-query {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-left: 6px;
+    }
+    .btn-reset-search {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-white);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .btn-reset-search:hover {
+      background: rgba(197, 155, 99, 0.2);
+      border-color: var(--accent-gold);
+    }
+    .menu-empty-state {
+      text-align: center;
+      padding: 44px 20px;
+      background: rgba(17, 26, 19, 0.6);
+      border: 1px dashed rgba(197, 155, 99, 0.3);
+      border-radius: 16px;
+      max-width: 580px;
+      margin: 20px auto;
+    }
+    .empty-icon { font-size: 40px; margin-bottom: 12px; }
+    .empty-title { font-size: 18px; color: var(--text-white); margin-bottom: 8px; font-weight: 700; }
+    .empty-desc { font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+    .empty-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    .menu-card-highlighted {
+      animation: cardHighlightPulse 2.4s ease-out forwards;
+      border-color: var(--accent-gold) !important;
+    }
+    @keyframes cardHighlightPulse {
+      0% { transform: scale(1.05); box-shadow: 0 0 30px rgba(216, 99, 38, 0.85); }
+      50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(197, 155, 99, 0.65); }
+      100% { transform: scale(1); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    }
+
+    /* ==========================================================================
+       UX UPGRADE: 3. TASTE MATCH QUIZ MODAL
+       ========================================================================== */
+    .taste-quiz-box {
+      background: #111A13;
+      border: 1px solid rgba(197, 155, 99, 0.4);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+    }
+    .quiz-progress-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      gap: 8px;
+    }
+    .quiz-step-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+    .quiz-step-dot.active {
+      background: var(--accent-gold);
+      color: #0A0F0D;
+      box-shadow: 0 0 12px rgba(197, 155, 99, 0.5);
+    }
+    .quiz-step-line {
+      width: 40px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      transition: all 0.3s;
+    }
+    .quiz-step-line.active {
+      background: var(--accent-gold);
+    }
+    .quiz-header {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .quiz-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-white);
+      margin: 6px 0 4px;
+    }
+    .quiz-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .quiz-options-grid {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .quiz-opt-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(197, 155, 99, 0.22);
+      border-radius: 12px;
+      color: var(--text-white);
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .quiz-opt-btn:hover {
+      background: rgba(197, 155, 99, 0.12);
+      border-color: var(--accent-gold);
+      transform: translateX(4px);
+    }
+    .quiz-opt-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+      width: 32px;
+      text-align: center;
+    }
+    .quiz-opt-info strong {
+      display: block;
+      font-size: 14px;
+      color: var(--text-white);
+      margin-bottom: 2px;
+    }
+    .quiz-opt-info span {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+    .quiz-back-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 12.5px;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+      padding: 6px;
+      transition: color 0.2s;
+    }
+    .quiz-back-btn:hover {
+      color: var(--accent-gold);
+    }
+
+    /* Quiz Result Card */
+    .quiz-result {
+      text-align: center;
+    }
+    .quiz-result-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(216, 99, 38, 0.18);
+      border: 1px solid rgba(216, 99, 38, 0.4);
+      border-radius: 999px;
+      color: #FFA45B;
+      font-size: 12.5px;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .quiz-result-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(197, 155, 99, 0.35);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      text-align: left;
+      margin-bottom: 18px;
+    }
+    @media (max-width: 520px) {
+      .quiz-result-card {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+    .quiz-result-img-wrap {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(197, 155, 99, 0.4);
+    }
+    @media (max-width: 520px) {
+      .quiz-result-img-wrap {
+        width: 130px;
+        height: 130px;
+        margin: 0 auto;
+      }
+    }
+    .quiz-result-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .quiz-result-tag {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      background: var(--accent-gold);
+      color: #0A0F0D;
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .quiz-result-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-white);
+      margin-bottom: 4px;
+    }
+    .quiz-result-price {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      margin-bottom: 6px;
+    }
+    .quiz-result-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .quiz-result-reason {
+      background: rgba(197, 155, 99, 0.1);
+      border-left: 2px solid var(--accent-gold);
+      padding: 8px 10px;
+      border-radius: 0 6px 6px 0;
+      font-size: 12px;
+      color: #F5EBE1;
+      line-height: 1.45;
+    }
+    .quiz-result-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
   </style>
 
 
@@ -3652,6 +4272,12 @@
       </nav>
 
       <div class="header-actions">
+        <!-- Live Store Status Badge (Desktop) -->
+        <div class="header-store-badge" id="headerStoreBadge" title="Trạng thái mở cửa Olion Coffee">
+          <span class="status-pulse-dot" id="headerPulseDot"></span>
+          <span class="status-badge-text" id="headerStatusText">Đang Mở Cửa</span>
+        </div>
+
         <!-- Prominent Booking Button -->
         <button type="button" class="btn btn-booking-highlight header-booking-btn" onclick="openBookingModal('table')" aria-label="Đặt bàn trước tại Olion">
           <i data-lucide="bookmark-check" style="width:15px;height:15px;margin-right:4px;"></i>
@@ -3706,6 +4332,18 @@
 
     <!-- 2. Drawer Body (Scrollable) -->
     <div class="drawer-body">
+      <!-- Live Store Status (Mobile) -->
+      <div class="drawer-status-card" id="drawerStoreStatus">
+        <div class="drawer-status-indicator">
+          <span class="status-pulse-dot" id="drawerPulseDot"></span>
+          <span class="drawer-status-title" id="drawerStatusTitle">Đang mở cửa • 08:00 - 20:00</span>
+        </div>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=80/64a+D%C6%B0%C6%A1ng+Qu%E1%BA%A3ng+H%C3%A0m,+Ph%C6%B0%E1%BB%9Dng+5,+G%C3%B2+V%E1%BA%A5p,+Th%C3%A0nh+ph%E1%BB%91+H%E1%BB%93+Ch%C3%AD+Minh" target="_blank" rel="noopener noreferrer" class="drawer-status-map-link">
+          <i data-lucide="navigation" style="width:12px;height:12px;"></i>
+          <span>Chỉ đường</span>
+        </a>
+      </div>
+
       <!-- Language Switcher Card -->
       <div class="drawer-lang-card">
         <span class="drawer-lang-label">
@@ -3855,9 +4493,13 @@
         </button>
       </div>
 
-      <p style="text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 2px;">
-        📍 80/64a Dương Quảng Hàm, Gò Vấp, TP.HCM
-      </p>
+      <div style="text-align: center; margin-top: 4px;">
+        <a href="https://www.google.com/maps/dir/?api=1&destination=80/64a+D%C6%B0%C6%A1ng+Qu%E1%BA%A3ng+H%C3%A0m,+Ph%C6%B0%E1%BB%9Dng+5,+G%C3%B2+V%E1%BA%A5p,+Th%C3%A0nh+ph%E1%BB%91+H%E1%BB%93+Ch%C3%AD+Minh" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:5px; font-size: 11.5px; color: var(--accent-gold); text-decoration: none;">
+          <i data-lucide="map-pin" style="width:13px;height:13px;"></i>
+          <span>80/64a Dương Quảng Hàm, Gò Vấp, TP.HCM</span>
+          <i data-lucide="external-link" style="width:11px;height:11px;"></i>
+        </a>
+      </div>
     </div>
   </aside>
 
@@ -4116,6 +4758,47 @@
           <p class="section-desc" data-i18n="menu_desc">Cà phê rang xay, trà sữa đậm vị, nước ép và sữa chua tươi mát — chọn danh mục để xem chi tiết.</p>
         </div>
 
+        <!-- NEW: Menu Control Bar (Instant Live Search + Taste Match Quiz Button) -->
+        <div class="menu-control-bar">
+          <div class="menu-search-wrapper">
+            <i data-lucide="search" class="menu-search-icon"></i>
+            <input type="text" id="menuSearchInput" class="menu-search-input" placeholder="Tìm tên món (vd: Latte, Cà phê muối, Trà vải, Matcha...)" autocomplete="off" spellcheck="false" aria-label="Tìm món trong thực đơn" />
+            <button type="button" id="menuSearchClear" class="menu-search-clear" aria-label="Xóa tìm kiếm" title="Xóa ô tìm kiếm" style="display:none;">
+              <i data-lucide="x" style="width:14px;height:14px;"></i>
+            </button>
+          </div>
+
+          <button type="button" class="btn-taste-quiz" onclick="openTasteQuiz()" aria-label="Trắc nghiệm 15s chọn món chuẩn gu" title="Khám phá món nước chuẩn gu của bạn sau 15 giây">
+            <span class="taste-quiz-sparkle">✨</span>
+            <span class="taste-quiz-text">Hôm Nay Uống Gì?</span>
+            <span class="taste-quiz-badge">Trắc nghiệm 15s</span>
+          </button>
+        </div>
+
+        <!-- NEW: Taste Quick Filter Pills (Lọc Theo Gu) -->
+        <div class="taste-pills-container">
+          <div class="taste-pills" id="tastePills">
+            <button type="button" class="taste-pill active" data-taste="all">
+              <span>✨ Tất cả</span>
+            </button>
+            <button type="button" class="taste-pill" data-taste="signature">
+              <span>⭐ Bán chạy / Signature</span>
+            </button>
+            <button type="button" class="taste-pill" data-taste="coffee">
+              <span>☕ Cà phê đậm đà</span>
+            </button>
+            <button type="button" class="taste-pill" data-taste="refreshing">
+              <span>🍃 Trà & Nước ép thanh mát</span>
+            </button>
+            <button type="button" class="taste-pill" data-taste="creamy">
+              <span>🥛 Béo ngậy & Sữa</span>
+            </button>
+            <button type="button" class="taste-pill" data-taste="plantmilk">
+              <span>🌱 Sữa hạt Oatside</span>
+            </button>
+          </div>
+        </div>
+
         <!-- Category Filter Tabs -->
         <div class="menu-tabs-wrapper">
           <div class="menu-tabs" id="menuTabs">
@@ -4133,6 +4816,40 @@
         </div>
 
         <!-- Category Panels -->
+        <!-- 0. SEARCH & TASTE FILTER RESULTS PANEL -->
+        <div class="menu-category-panel" id="cat-search">
+          <div class="menu-search-banner">
+            <div class="search-result-info">
+              <span class="search-result-count" id="searchResultCount">Tìm thấy 0 món</span>
+              <span class="search-result-query" id="searchResultQuery"></span>
+            </div>
+            <button type="button" class="btn-reset-search" id="btnResetSearch" onclick="resetMenuSearch()">
+              <i data-lucide="rotate-ccw" style="width:13px;height:13px;"></i>
+              <span>Xem toàn bộ menu</span>
+            </button>
+          </div>
+          
+          <div class="menu-grid" id="searchMenuGrid">
+            <!-- Dynamic search result cards -->
+          </div>
+
+          <div class="menu-empty-state" id="menuEmptyState" style="display: none;">
+            <div class="empty-icon">☕🔍</div>
+            <h3 class="empty-title">Chưa tìm thấy món bạn cần</h3>
+            <p class="empty-desc">
+              Olion chưa tìm thấy món nước theo từ khóa <strong id="emptySearchTerm"></strong>. Bạn hãy thử tìm với các từ gợi ý như <em>"latte"</em>, <em>"muối"</em>, <em>"matcha"</em>, <em>"trà"</em> hoặc chọn theo các thẻ vị nhé!
+            </p>
+            <div class="empty-actions">
+              <button type="button" class="btn btn-primary" onclick="resetMenuSearch()" style="padding: 10px 20px; font-size: 13.5px;">
+                Xem Toàn Bộ Menu
+              </button>
+              <button type="button" class="btn btn-ghost" onclick="openTasteQuiz()" style="padding: 10px 20px; font-size: 13.5px;">
+                Thử Gợi Ý "Hôm Nay Uống Gì?"
+              </button>
+            </div>
+          </div>
+        </div>
+
         <!-- 1. CÀ PHÊ -->
         <div class="menu-category-panel active" id="cat-coffee">
           <div class="menu-grid">
@@ -4608,7 +5325,25 @@
 
           <div class="hours-card">
             <div>
-              <h3 class="hours-title" data-i18n="hours_title">Giờ mở cửa</h3>
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;">
+                <h3 class="hours-title" style="margin-bottom:0;" data-i18n="hours_title">Giờ mở cửa</h3>
+                <div class="live-status-pill is-open" id="hoursStatusBadge">
+                  <span class="status-pulse-dot" id="hoursPulseDot"></span>
+                  <span id="hoursStatusText">ĐANG MỞ CỬA</span>
+                </div>
+              </div>
+
+              <!-- Live Atmosphere Alert Box -->
+              <div class="store-atmosphere-box" id="storeAtmosphereBox">
+                <div class="store-atmosphere-header">
+                  <i data-lucide="sparkles" style="width:14px;height:14px;color:var(--accent-gold);"></i>
+                  <span id="storeAtmosphereTime">Thời gian thực (GMT+7) • Mở đến 20:00</span>
+                </div>
+                <p id="storeAtmosphereDesc" class="store-atmosphere-text">
+                  Quán đang phục vụ. Không gian máy lạnh mát rượi, âm nhạc êm dịu, sẵn sàng đón bạn đến làm việc & thưởng thức cà phê!
+                </p>
+              </div>
+
               <div style="margin-top: 14px;">
                 <div class="hours-row">
                   <span style="color: var(--text-muted);" data-i18n="hours_weekday_label">Thứ 2 — Thứ 7</span>
@@ -4616,12 +5351,20 @@
                 </div>
                 <div class="hours-row">
                   <span style="color: var(--text-muted);" data-i18n="hours_weekend_label">Chủ Nhật</span>
-                  <span style="font-weight: 700; color: var(--text-white);">08:00 — 17:00</span>
+                  <span style="font-weight: 700; color: var(--text-white);">08:00 — 20:00</span>
                 </div>
                 <div class="hours-row">
                   <span style="color: var(--text-muted);" data-i18n="hours_holiday_label">Các ngày Lễ / Tết</span>
                   <span style="font-weight: 700; color: var(--accent-gold);" data-i18n="hours_holiday_val">Mở cửa bình thường</span>
                 </div>
+              </div>
+
+              <!-- 1-Tap Google Maps Route Button -->
+              <div style="margin-top: 18px;">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=80/64a+D%C6%B0%C6%A1ng+Qu%E1%BA%A3ng+H%C3%A0m,+Ph%C6%B0%E1%BB%9Dng+5,+G%C3%B2+V%E1%BA%A5p,+Th%C3%A0nh+ph%E1%BB%91+H%E1%BB%93+Ch%C3%AD+Minh" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-map-route" style="width:100%; justify-content:center; gap:8px; padding:12px 18px; border-radius:12px; font-weight:700;">
+                  <i data-lucide="navigation" style="width:16px;height:16px;"></i>
+                  <span>Chỉ Đường Đến Quán (Google Maps)</span>
+                </a>
               </div>
             </div>
 
@@ -5183,6 +5926,185 @@
         <button type="button" class="btn btn-secondary" onclick="shareNewsArticle()" style="font-size: 13px; padding: 10px 16px;">
           <i data-lucide="share-2" style="width:13px;height:13px;margin-right:4px;"></i> Chia sẻ bài viết
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== 18. TASTE MATCH QUIZ MODAL (HÔM NAY UỐNG GÌ?) ======== -->
+  <div class="modal-overlay" id="tasteQuizModal" aria-hidden="true" role="dialog" aria-labelledby="tasteQuizTitle" onclick="if(event.target === this) closeTasteQuiz()">
+    <div class="modal-box taste-quiz-box" style="max-width: 520px;">
+      <button type="button" class="modal-close" onclick="closeTasteQuiz()" aria-label="Đóng popup"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
+
+      <!-- Step Indicator -->
+      <div class="quiz-progress-bar" id="quizProgressBar">
+        <div class="quiz-step-dot active" id="quizDot1">1</div>
+        <div class="quiz-step-line" id="quizLine1"></div>
+        <div class="quiz-step-dot" id="quizDot2">2</div>
+        <div class="quiz-step-line" id="quizLine2"></div>
+        <div class="quiz-step-dot" id="quizDot3">3</div>
+      </div>
+
+      <!-- Step 1: Mood & Energy -->
+      <div class="quiz-step" id="quizStep1">
+        <div class="quiz-header">
+          <div class="section-eyebrow" style="margin-bottom: 4px;">
+            <span>●</span> Bước 1 / 3
+          </div>
+          <h3 class="quiz-title" id="tasteQuizTitle">Hôm nay tâm trạng bạn thế nào?</h3>
+          <p class="quiz-sub">Chọn một cảm giác để Olion chọn món chuẩn tâm trạng nhất:</p>
+        </div>
+        <div class="quiz-options-grid">
+          <button type="button" class="quiz-opt-btn" onclick="selectQuizAnswer(1, 'focus')">
+            <span class="quiz-opt-icon">⚡</span>
+            <div class="quiz-opt-info">
+              <strong>Cần tỉnh táo bừng tỉnh</strong>
+              <span>Tập trung làm việc, học tập, cần nạp năng lượng ngay</span>
+            </div>
+          </button>
+          <button type="button" class="quiz-opt-btn" onclick="selectQuizAnswer(1, 'chill')">
+            <span class="quiz-opt-icon">🍃</span>
+            <div class="quiz-opt-info">
+              <strong>Thư thái & Chill nhẹ nhàng</strong>
+              <span>Gặp gỡ bạn bè, đọc sách, tận hưởng chút bình yên</span>
+            </div>
+          </button>
+          <button type="button" class="quiz-opt-btn" onclick="selectQuizAnswer(1, 'refresh')">
+            <span class="quiz-opt-icon">🌞</span>
+            <div class="quiz-opt-info">
+              <strong>Nóng nực, cần giải khát tức thì</strong>
+              <span>Cần ngụm nước thanh mát bừng tỉnh ngày hè</span>
+            </div>
+          </button>
+          <button type="button" class="quiz-opt-btn" onclick="selectQuizAnswer(1, 'sweet')">
+            <span class="quiz-opt-icon">🧁</span>
+            <div class="quiz-opt-info">
+              <strong>Tự thưởng một chút ngọt ngào</strong>
+              <span>Cần chút êm dịu, thơm béo xoa dịu một ngày bận rộn</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Flavor Preference -->
+      <div class="quiz-step" id="quizStep2" style="display:none;">
+        <div class="quiz-header">
+          <div class="section-eyebrow" style="margin-bottom: 4px;">
+            <span>●</span> Bước 2 / 3
+          </div>
+          <h3 class="quiz-title">Bạn thích nốt hương vị nào nhất?</h3>
+          <p class="quiz-sub">Để Olion cân đối nốt đắng, chua hay béo thơm:</p>
+        </div>
+        <div class="quiz-options-grid">
+          <button type="button" class="quiz-opt-btn" onclick="selectQuizAnswer(2, 'coffee_aroma')">
+            <span class="quiz-opt-icon">☕</span>
+            <div class="quiz-opt-info">
+              <strong>Cà phê rang mộc thơm nồng</strong>
+              <span>Hương espresso nguyên chất, đậm vị đắng hậu ngọt</span>
+            </div>
+          </button>
+          <button type="button" class="quiz-opt-btn" onclick="selectQuizAnswer(2, 'tea_floral')">
+            <span class="quiz-opt-icon">🍵</span>
+            <div class="quiz-opt-info">
+              <strong>Trà hoa trái nhiệt đới</strong>
+              <span>Hương lài, hoa hồng quyện cùng vải, cam, chanh dây</span>
+            </div>
+          </button>
+          <button type="button" class="quiz-opt-btn" onclick="selectQuizAnswer(2, 'creamy_salt')">
+            <span class="quiz-opt-icon">🥛</span>
+            <div class="quiz-opt-info">
+              <strong>Béo ngậy kem muối & sữa mịn</strong>
+              <span>Lớp kem mềm mặn béo, latte bùi bùi quyến rũ</span>
+            </div>
+          </button>
+          <button type="button" class="quiz-opt-btn" onclick="selectQuizAnswer(2, 'healthy_oats')">
+            <span class="quiz-opt-icon">🌱</span>
+            <div class="quiz-opt-info">
+              <strong>Sữa hạt Oatside thanh lành</strong>
+              <span>Dịu nhẹ cho dạ dày, thuần thực vật, thơm tự nhiên</span>
+            </div>
+          </button>
+        </div>
+        <button type="button" class="quiz-back-btn" onclick="prevQuizStep(1)">
+          ← Quay lại bước trước
+        </button>
+      </div>
+
+      <!-- Step 3: Temperature & Style -->
+      <div class="quiz-step" id="quizStep3" style="display:none;">
+        <div class="quiz-header">
+          <div class="section-eyebrow" style="margin-bottom: 4px;">
+            <span>●</span> Bước 3 / 3
+          </div>
+          <h3 class="quiz-title">Kiểu thưởng thức yêu thích của bạn?</h3>
+          <p class="quiz-sub">Lựa chọn cuối cùng để tìm ra ly đồ uống hoàn hảo:</p>
+        </div>
+        <div class="quiz-options-grid">
+          <button type="button" class="quiz-opt-btn" onclick="selectQuizAnswer(3, 'ice_cool')">
+            <span class="quiz-opt-icon">🧊</span>
+            <div class="quiz-opt-info">
+              <strong>Nhiều đá mát rượi cực sảng khoái</strong>
+              <span>Lạnh buốt mát lạnh từng ngụm, đập tan mệt mỏi</span>
+            </div>
+          </button>
+          <button type="button" class="quiz-opt-btn" onclick="selectQuizAnswer(3, 'warm_comfort')">
+            <span class="quiz-opt-icon">🔥</span>
+            <div class="quiz-opt-info">
+              <strong>Ấm áp nhẹ nhàng (Nóng / Ít đá)</strong>
+              <span>Nhâm nhi từng ngụm chậm rãi, ấm bụng và lắng đọng</span>
+            </div>
+          </button>
+          <button type="button" class="quiz-opt-btn" onclick="selectQuizAnswer(3, 'balanced_mild')">
+            <span class="quiz-opt-icon">✨</span>
+            <div class="quiz-opt-info">
+              <strong>Hài hòa cân bằng, vừa vị</strong>
+              <span>Ít ngọt tự nhiên, nốt vị thanh thoát dễ uống</span>
+            </div>
+          </button>
+        </div>
+        <button type="button" class="quiz-back-btn" onclick="prevQuizStep(2)">
+          ← Quay lại bước trước
+        </button>
+      </div>
+
+      <!-- Result Screen -->
+      <div class="quiz-result" id="quizResult" style="display:none;">
+        <div class="quiz-result-badge">
+          <span>✨ 99% Chuẩn Gu Bạn Hôm Nay</span>
+        </div>
+        <div class="quiz-result-card">
+          <div class="quiz-result-img-wrap">
+            <img id="quizResultImg" src="assets/menu/ca_phe_muoi.webp" alt="Món gợi ý — Olion Coffee" width="220" height="220" />
+            <span class="quiz-result-tag" id="quizResultTag">SIGNATURE</span>
+          </div>
+          <div class="quiz-result-body">
+            <h3 class="quiz-result-name" id="quizResultName">CÀ PHÊ MUỐI</h3>
+            <div class="quiz-result-price" id="quizResultPrice">40.000đ</div>
+            <p class="quiz-result-desc" id="quizResultDesc">
+              Đậm đà cà phê kết hợp lớp kem muối mặn béo ngậy.
+            </p>
+            <div class="quiz-result-reason" id="quizResultReason">
+              💡 <strong>Tại sao món này hợp với bạn:</strong> Ly nước hoàn hảo để bạn lấy lại năng lượng, bừng tỉnh cảm xúc với sự hòa quyện tuyệt vời giữa đắng thơm và béo mặn!
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-result-actions">
+          <button type="button" class="btn btn-booking-highlight" id="quizBookBtn" onclick="handleQuizBookTable()" style="width: 100%; padding: 13px 20px; font-size: 14.5px;">
+            <i data-lucide="bookmark-check" style="width:16px;height:16px;margin-right:6px;"></i>
+            <span>Đặt Bàn & Thưởng Thức Món Này</span>
+          </button>
+
+          <div style="display: flex; gap: 10px; width: 100%;">
+            <button type="button" class="btn btn-secondary" onclick="handleQuizViewInMenu()" style="flex: 1; padding: 10px; font-size: 13px; justify-content: center;">
+              <i data-lucide="eye" style="width:14px;height:14px;margin-right:4px;"></i>
+              <span>Xem Trong Menu</span>
+            </button>
+            <button type="button" class="btn btn-ghost" onclick="resetTasteQuiz()" style="flex: 1; padding: 10px; font-size: 13px; justify-content: center;">
+              <i data-lucide="rotate-ccw" style="width:14px;height:14px;margin-right:4px;"></i>
+              <span>Trắc Nghiệm Lại</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -6300,7 +7222,7 @@
       let currentBookingType = 'space'; // 'space' or 'table'
       window.lastFormattedBookingMsg = '';
 
-      window.openBookingModal = function(type = 'space') {
+      window.openBookingModal = function(type = 'space', customNote = '') {
         const modal = document.getElementById('bookingModal');
         if (!modal) return;
         
@@ -6329,6 +7251,10 @@
         if (timeSelect) timeSelect.value = "10:00 - 12:00";
 
         window.selectBookingType(type);
+        if (customNote) {
+          const noteEl = document.getElementById('bkNote');
+          if (noteEl) noteEl.value = customNote;
+        }
         
         // Set minimum date (min 1 day in advance for table, 3 days for space)
         const dateInput = document.getElementById('bkDate');
@@ -7271,6 +8197,7 @@
           const res = await fetchMenuItemsFromCloud();
           const items = res.data;
           if (!items || !Array.isArray(items) || items.length === 0) return;
+          allMenuItemsCache = items;
 
           const grouped = {};
           items.forEach(item => {
@@ -7365,6 +8292,490 @@
           console.warn('Lỗi syncApprovedReviews:', err);
         }
       }
+
+
+      // =========================================================================
+      // UX UPGRADE JS: LIVE STORE STATUS (VIETNAM GMT+7)
+      // =========================================================================
+      function getOlionStoreStatus() {
+        const now = new Date();
+        const vnDateStr = now.toLocaleString("en-US", { timeZone: "Asia/Ho_Chi_Minh" });
+        const vnTime = new Date(vnDateStr);
+        const hours = vnTime.getHours();
+        const minutes = vnTime.getMinutes();
+        const totalMin = hours * 60 + minutes;
+
+        // Open 08:00 (480 min) to 20:00 (1200 min)
+        const openMin = 8 * 60;
+        const closeMin = 20 * 60;
+
+        if (totalMin >= openMin && totalMin < closeMin - 30) {
+          // 08:00 - 19:30
+          return {
+            status: 'open',
+            badgeText: 'ĐANG MỞ CỬA',
+            subText: 'Đang mở cửa • 08:00 - 20:00',
+            hoursSub: 'Thời gian thực (GMT+7) • Mở đến 20:00',
+            atmosphere: 'Quán đang phục vụ. Không gian máy lạnh mát rượi, âm nhạc êm dịu, sẵn sàng đón bạn đến làm việc & thưởng thức cà phê!'
+          };
+        } else if (totalMin >= closeMin - 30 && totalMin < closeMin) {
+          // 19:30 - 20:00
+          const remaining = closeMin - totalMin;
+          return {
+            status: 'closing',
+            badgeText: 'SẮP ĐÓNG CỬA',
+            subText: `Sắp đóng cửa • Còn ${remaining} phút`,
+            hoursSub: `Thời gian thực (GMT+7) • Đóng cửa sau ${remaining} phút`,
+            atmosphere: 'Quán nhận order mang đi & chốt bàn cuối trong ngày đến 20:00. Bạn vẫn có thể đặt bàn trước cho ngày mai!'
+          };
+        } else {
+          // 20:00 - 08:00
+          return {
+            status: 'closed',
+            badgeText: 'TẠM NGHỈ',
+            subText: 'Tạm nghỉ • Mở lại 08:00 sáng mai',
+            hoursSub: 'Thời gian thực (GMT+7) • Mở lại lúc 08:00',
+            atmosphere: 'Olion đang nghỉ ngơi để chuẩn bị nguyên liệu tươi ngon nhất. Bạn vẫn có thể Đặt Bàn Giữ Chỗ trước trực tuyến!'
+          };
+        }
+      }
+
+      function updateOlionStoreStatus() {
+        try {
+          const info = getOlionStoreStatus();
+
+          // Desktop Header Badge
+          const headerBadge = document.getElementById('headerStoreBadge');
+          const headerText = document.getElementById('headerStatusText');
+          const headerDot = document.getElementById('headerPulseDot');
+          if (headerBadge && headerText) {
+            headerBadge.className = 'header-store-badge ' + (info.status === 'closing' ? 'closing' : (info.status === 'closed' ? 'closed' : ''));
+            headerText.textContent = info.badgeText;
+            if (headerDot) {
+              headerDot.className = 'status-pulse-dot ' + (info.status === 'closing' ? 'closing' : (info.status === 'closed' ? 'closed' : ''));
+            }
+          }
+
+          // Mobile Drawer Status
+          const drawerCard = document.getElementById('drawerStoreStatus');
+          const drawerTitle = document.getElementById('drawerStatusTitle');
+          const drawerDot = document.getElementById('drawerPulseDot');
+          if (drawerCard && drawerTitle) {
+            drawerCard.className = 'drawer-status-card ' + (info.status === 'closing' ? 'closing' : (info.status === 'closed' ? 'closed' : ''));
+            drawerTitle.textContent = info.subText;
+            if (drawerDot) {
+              drawerDot.className = 'status-pulse-dot ' + (info.status === 'closing' ? 'closing' : (info.status === 'closed' ? 'closed' : ''));
+            }
+          }
+
+          // Hours Card
+          const hoursBadge = document.getElementById('hoursStatusBadge');
+          const hoursText = document.getElementById('hoursStatusText');
+          const hoursDot = document.getElementById('hoursPulseDot');
+          const atmosTime = document.getElementById('storeAtmosphereTime');
+          const atmosDesc = document.getElementById('storeAtmosphereDesc');
+          if (hoursBadge && hoursText) {
+            hoursBadge.className = 'live-status-pill ' + (info.status === 'open' ? 'is-open' : (info.status === 'closing' ? 'is-closing' : 'is-closed'));
+            hoursText.textContent = info.badgeText;
+            if (hoursDot) {
+              hoursDot.className = 'status-pulse-dot ' + (info.status === 'closing' ? 'closing' : (info.status === 'closed' ? 'closed' : ''));
+            }
+          }
+          if (atmosTime) atmosTime.textContent = info.hoursSub;
+          if (atmosDesc) atmosDesc.textContent = info.atmosphere;
+        } catch (e) {
+          console.warn('Lỗi updateOlionStoreStatus:', e);
+        }
+      }
+
+      // Check and update store status every 30 seconds
+      updateOlionStoreStatus();
+      setInterval(updateOlionStoreStatus, 30000);
+
+      // =========================================================================
+      // UX UPGRADE JS: INSTANT MENU SEARCH & TASTE FILTERS
+      // =========================================================================
+      let allMenuItemsCache = [];
+      let activeTasteFilter = 'all';
+      let previousActivePanelId = 'cat-coffee';
+
+      function normalizeSearchString(str) {
+        if (!str) return '';
+        return str
+          .toString()
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/đ/g, 'd')
+          .replace(/Đ/g, 'd')
+          .trim();
+      }
+
+      function getAllMenuItems() {
+        if (allMenuItemsCache.length > 0) return allMenuItemsCache;
+        try {
+          const local = JSON.parse(localStorage.getItem('olion_menu_items') || '[]');
+          if (Array.isArray(local) && local.length >= 30) {
+            allMenuItemsCache = local;
+            return allMenuItemsCache;
+          }
+        } catch (e) {}
+        if (typeof DEFAULT_MENU_ITEMS !== 'undefined' && Array.isArray(DEFAULT_MENU_ITEMS)) {
+          allMenuItemsCache = DEFAULT_MENU_ITEMS;
+          return allMenuItemsCache;
+        }
+        return [];
+      }
+
+      function filterMenu(query = '', taste = 'all') {
+        const searchInput = document.getElementById('menuSearchInput');
+        const clearBtn = document.getElementById('menuSearchClear');
+        const catSearchPanel = document.getElementById('cat-search');
+        const searchGrid = document.getElementById('searchMenuGrid');
+        const emptyState = document.getElementById('menuEmptyState');
+        const countEl = document.getElementById('searchResultCount');
+        const queryEl = document.getElementById('searchResultQuery');
+        const emptyTermEl = document.getElementById('emptySearchTerm');
+        const menuPanels = document.querySelectorAll('.menu-category-panel');
+        const menuTabBtns = document.querySelectorAll('.menu-tab-btn[data-cat]');
+
+        const trimmedQuery = query.trim();
+        const normQuery = normalizeSearchString(trimmedQuery);
+
+        if (clearBtn) {
+          clearBtn.style.display = trimmedQuery ? 'flex' : 'none';
+        }
+
+        // If no search query AND taste is 'all', return to normal tab mode
+        if (!trimmedQuery && taste === 'all') {
+          if (catSearchPanel) catSearchPanel.classList.remove('active');
+          menuPanels.forEach(p => {
+            p.classList.toggle('active', p.id === previousActivePanelId);
+          });
+          menuTabBtns.forEach(btn => {
+            btn.classList.toggle('active', `cat-${btn.getAttribute('data-cat')}` === previousActivePanelId);
+          });
+          return;
+        }
+
+        // Remember currently active panel before entering search mode
+        const currentActivePanel = Array.from(menuPanels).find(p => p.classList.contains('active') && p.id !== 'cat-search');
+        if (currentActivePanel) previousActivePanelId = currentActivePanel.id;
+
+        // Activate search panel, deactivate other panels & tab buttons
+        menuPanels.forEach(p => p.classList.remove('active'));
+        if (catSearchPanel) catSearchPanel.classList.add('active');
+        menuTabBtns.forEach(btn => btn.classList.remove('active'));
+
+        const items = getAllMenuItems();
+        const filtered = items.filter(item => {
+          // Taste filter check
+          let matchTaste = true;
+          const cat = item.category || '';
+          const nameDesc = ((item.name || '') + ' ' + (item.description || '')).toLowerCase();
+          const badge = (item.badge || '').toUpperCase();
+
+          if (taste === 'signature') {
+            matchTaste = Boolean(badge && (badge.includes('BEST') || badge.includes('HOT') || badge.includes('SIGNATURE') || badge.includes('NEW')));
+          } else if (taste === 'coffee') {
+            matchTaste = (cat === 'Cà phê' || cat === 'Cacao');
+          } else if (taste === 'refreshing') {
+            matchTaste = (cat === 'Trà trái cây' || cat === 'Nước ép');
+          } else if (taste === 'creamy') {
+            matchTaste = /latte|muoi|muối|sua|sữa|yagout|bac xiu|bạc xỉu|caramel|cacao|dua|dừa|beo|béo/i.test(normalizeSearchString(nameDesc));
+          } else if (taste === 'plantmilk') {
+            matchTaste = /oatside|hanh nhan|hạnh nhân|yen mach|yến mạch|thuc vat|thực vật/i.test(normalizeSearchString(nameDesc));
+          }
+
+          if (!matchTaste) return false;
+
+          // Keyword match check
+          if (!normQuery) return true;
+          const normName = normalizeSearchString(item.name || '');
+          const normDesc = normalizeSearchString(item.description || '');
+          const normCat = normalizeSearchString(item.category || '');
+          return normName.includes(normQuery) || normDesc.includes(normQuery) || normCat.includes(normQuery);
+        });
+
+        // Render filtered items
+        if (countEl) countEl.textContent = `Tìm thấy ${filtered.length} món phù hợp`;
+        if (queryEl) {
+          const tasteLabel = document.querySelector(`.taste-pill[data-taste="${taste}"]`);
+          const tasteText = (taste !== 'all' && tasteLabel) ? `[${tasteLabel.textContent.trim()}]` : '';
+          queryEl.textContent = trimmedQuery ? `với từ khóa "${trimmedQuery}" ${tasteText}` : tasteText;
+        }
+
+        if (filtered.length === 0) {
+          if (searchGrid) { searchGrid.innerHTML = ''; searchGrid.style.display = 'none'; }
+          if (emptyState) {
+            emptyState.style.display = 'block';
+            if (emptyTermEl) emptyTermEl.textContent = trimmedQuery ? `"${trimmedQuery}"` : 'gu vị đã chọn';
+          }
+        } else {
+          if (emptyState) emptyState.style.display = 'none';
+          if (searchGrid) {
+            searchGrid.style.display = 'grid';
+            let html = '';
+            filtered.forEach(item => {
+              const isSoldOut = item.is_available === false;
+              let badgeHtml = '';
+              if (isSoldOut) {
+                badgeHtml = '<span class="menu-badge badge-sold-out">HẾT MÓN</span>';
+              } else if (item.badge) {
+                const b = item.badge.toUpperCase();
+                let bClass = 'badge-best';
+                if (b.includes('HOT') || b.includes('CHẠY')) bClass = 'badge-hot';
+                else if (b.includes('NEW') || b.includes('MỚI')) bClass = 'badge-new';
+                else if (b.includes('SIGNATURE')) bClass = 'badge-signature';
+                badgeHtml = `<span class="menu-badge ${bClass}">${escapeHtml(item.badge)}</span>`;
+              }
+              const priceFmt = (Number(item.price) || 0).toLocaleString('vi-VN') + 'đ';
+
+              html += `
+                <article class="menu-card ${isSoldOut ? 'is-sold-out' : ''}" id="card-item-${item.id}">
+                  <div class="menu-card-img-wrap">
+                    ${badgeHtml}
+                    <img src="${escapeHtml(item.image_url || 'assets/menu/espresso.webp')}" alt="${escapeHtml(item.name)} — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" onerror="this.src='assets/menu/espresso.webp'" />
+                  </div>
+                  <div class="menu-card-body">
+                    <h3 class="menu-card-name">${escapeHtml(item.name)}</h3>
+                    <div class="menu-card-price">${priceFmt}</div>
+                    <p class="menu-card-desc">${escapeHtml(item.description || '')}</p>
+                  </div>
+                </article>
+              `;
+            });
+            searchGrid.innerHTML = html;
+          }
+        }
+      }
+
+      window.resetMenuSearch = function() {
+        const searchInput = document.getElementById('menuSearchInput');
+        const clearBtn = document.getElementById('menuSearchClear');
+        if (searchInput) searchInput.value = '';
+        if (clearBtn) clearBtn.style.display = 'none';
+
+        activeTasteFilter = 'all';
+        document.querySelectorAll('.taste-pill').forEach(p => {
+          p.classList.toggle('active', p.getAttribute('data-taste') === 'all');
+        });
+
+        filterMenu('', 'all');
+      };
+
+      // Search input listener with debounce
+      const menuSearchInput = document.getElementById('menuSearchInput');
+      const menuSearchClear = document.getElementById('menuSearchClear');
+      let searchDebounceTimer = null;
+
+      if (menuSearchInput) {
+        menuSearchInput.addEventListener('input', (e) => {
+          clearTimeout(searchDebounceTimer);
+          searchDebounceTimer = setTimeout(() => {
+            filterMenu(e.target.value, activeTasteFilter);
+          }, 180);
+        });
+      }
+
+      if (menuSearchClear) {
+        menuSearchClear.addEventListener('click', () => {
+          if (menuSearchInput) menuSearchInput.value = '';
+          menuSearchClear.style.display = 'none';
+          filterMenu('', activeTasteFilter);
+          if (menuSearchInput) menuSearchInput.focus();
+        });
+      }
+
+      // Taste pills listeners
+      document.querySelectorAll('.taste-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          document.querySelectorAll('.taste-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          activeTasteFilter = pill.getAttribute('data-taste') || 'all';
+          const q = menuSearchInput ? menuSearchInput.value : '';
+          filterMenu(q, activeTasteFilter);
+        });
+      });
+
+      // Clear search when standard category tab is clicked
+      document.querySelectorAll('.menu-tab-btn[data-cat]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (menuSearchInput) menuSearchInput.value = '';
+          if (menuSearchClear) menuSearchClear.style.display = 'none';
+          activeTasteFilter = 'all';
+          document.querySelectorAll('.taste-pill').forEach(p => {
+            p.classList.toggle('active', p.getAttribute('data-taste') === 'all');
+          });
+          const catSearchPanel = document.getElementById('cat-search');
+          if (catSearchPanel) catSearchPanel.classList.remove('active');
+        });
+      });
+
+      // =========================================================================
+      // UX UPGRADE JS: "HÔM NAY UỐNG GÌ?" TASTE MATCH QUIZ
+      // =========================================================================
+      let quizAnswers = { mood: '', flavor: '', style: '' };
+      let matchedQuizDrink = null;
+
+      window.openTasteQuiz = function() {
+        const modal = document.getElementById('tasteQuizModal');
+        if (!modal) return;
+        resetTasteQuiz();
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        if (window.lucide) window.lucide.createIcons();
+      };
+
+      window.closeTasteQuiz = function() {
+        const modal = document.getElementById('tasteQuizModal');
+        if (!modal) return;
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      };
+
+      window.selectQuizAnswer = function(step, val) {
+        if (step === 1) {
+          quizAnswers.mood = val;
+          goToQuizStep(2);
+        } else if (step === 2) {
+          quizAnswers.flavor = val;
+          goToQuizStep(3);
+        } else if (step === 3) {
+          quizAnswers.style = val;
+          calculateQuizResult();
+        }
+      };
+
+      window.prevQuizStep = function(step) {
+        goToQuizStep(step);
+      };
+
+      function goToQuizStep(step) {
+        for (let i = 1; i <= 3; i++) {
+          const stepEl = document.getElementById(`quizStep${i}`);
+          const dotEl = document.getElementById(`quizDot${i}`);
+          const lineEl = document.getElementById(`quizLine${i - 1}`);
+          if (stepEl) stepEl.style.display = (i === step) ? 'block' : 'none';
+          if (dotEl) dotEl.classList.toggle('active', i <= step);
+          if (lineEl) lineEl.classList.toggle('active', i <= step);
+        }
+        const resultEl = document.getElementById('quizResult');
+        if (resultEl) resultEl.style.display = 'none';
+      }
+
+      window.resetTasteQuiz = function() {
+        quizAnswers = { mood: '', flavor: '', style: '' };
+        matchedQuizDrink = null;
+        goToQuizStep(1);
+      };
+
+      function calculateQuizResult() {
+        // Hide steps
+        for (let i = 1; i <= 3; i++) {
+          const stepEl = document.getElementById(`quizStep${i}`);
+          if (stepEl) stepEl.style.display = 'none';
+        }
+        const resultEl = document.getElementById('quizResult');
+        if (resultEl) resultEl.style.display = 'block';
+
+        const items = getAllMenuItems();
+        let targetId = 7; // Default: Cà phê muối
+        let reason = "Sự kết hợp bùng nổ giữa vị đắng đậm đà của cà phê và lớp kem muối mặn béo ngậy giúp bạn bừng tỉnh cảm hứng!";
+
+        const { mood, flavor, style } = quizAnswers;
+
+        if (flavor === 'healthy_oats' || (style === 'balanced_mild' && mood === 'chill')) {
+          targetId = 9; // ESPRESSO OATSIDE
+          reason = "Vị thanh lành, thơm bùi của sữa yến mạch Oatside hòa quyện espresso giúp bạn thư giãn trọn vẹn mà cực kỳ êm bụng.";
+        } else if (flavor === 'tea_floral' || mood === 'refresh') {
+          if (mood === 'sweet') {
+            targetId = 13; // TRÀ VẢI HOA HỒNG
+            reason = "Vải ngọt mọng nước cùng hương hoa hồng thanh tao dịu nhẹ mang lại cảm giác ngọt ngào, thư thái đầy thi vị.";
+          } else {
+            targetId = 15; // TRÀ CHANH DÂY NHIỆT ĐỚI
+            reason = "Vị chua ngọt bùng nổ của chanh dây tươi giúp bạn đập tan cơn khát và nạp lại năng lượng sảng khoái ngay tức thì!";
+          }
+        } else if (flavor === 'creamy_salt' || mood === 'sweet') {
+          if (style === 'warm_comfort') {
+            targetId = 10; // CACAO LATTE
+            reason = "Cacao nguyên chất béo thơm, ấm áp xoa dịu tâm trí sau những giờ làm việc căng thẳng.";
+          } else if (mood === 'chill') {
+            targetId = 21; // MATCHA LATTE
+            reason = "Matcha Nhật Bản thơm lừng hòa cùng sữa béo mịn, mang lại cảm giác bình yên, thư thái tuyệt đối.";
+          } else {
+            targetId = 7; // CÀ PHÊ MUỐI
+            reason = "Lớp kem muối béo ngậy mằn mặn hòa cùng cà phê đậm đà — món Signature được yêu thích nhất tại Olion!";
+          }
+        } else if (flavor === 'coffee_aroma' || mood === 'focus') {
+          if (style === 'warm_comfort') {
+            targetId = 6; // AMERICANO
+            reason = "Vị espresso thanh tao, sạch vị giúp giữ tinh thần tỉnh táo, minh mẫn cả ngày dài.";
+          } else {
+            targetId = 2; // ESPRESSO SỮA
+            reason = "Espresso đậm đà hòa quyện cùng sữa đặc truyền thống tạo nên nốt vị ngọt đắng trọn vẹn, đánh thức mọi giác quan.";
+          }
+        }
+
+        matchedQuizDrink = items.find(i => i.id === targetId) || items[0];
+
+        // Fill Result Card
+        const imgEl = document.getElementById('quizResultImg');
+        const tagEl = document.getElementById('quizResultTag');
+        const nameEl = document.getElementById('quizResultName');
+        const priceEl = document.getElementById('quizResultPrice');
+        const descEl = document.getElementById('quizResultDesc');
+        const reasonEl = document.getElementById('quizResultReason');
+
+        if (matchedQuizDrink) {
+          if (imgEl) {
+            imgEl.src = matchedQuizDrink.image_url || 'assets/menu/ca_phe_muoi.webp';
+            imgEl.alt = matchedQuizDrink.name + ' — Olion Coffee';
+          }
+          if (tagEl) tagEl.textContent = matchedQuizDrink.badge || 'SIGNATURE';
+          if (nameEl) nameEl.textContent = matchedQuizDrink.name;
+          if (priceEl) priceEl.textContent = (Number(matchedQuizDrink.price) || 0).toLocaleString('vi-VN') + 'đ';
+          if (descEl) descEl.textContent = matchedQuizDrink.description || '';
+          if (reasonEl) reasonEl.innerHTML = `💡 <strong>Tại sao món này hợp với bạn:</strong> ${reason}`;
+        }
+
+        if (window.lucide) window.lucide.createIcons();
+      }
+
+      window.handleQuizBookTable = function() {
+        if (!matchedQuizDrink) return;
+        const drinkName = matchedQuizDrink.name;
+        const drinkPrice = (Number(matchedQuizDrink.price) || 0).toLocaleString('vi-VN') + 'đ';
+        closeTasteQuiz();
+        openBookingModal('table', `Khách muốn đặt bàn trước & thưởng thức món ${drinkName} (${drinkPrice})! Nhờ Olion chuẩn bị nhé.`);
+      };
+
+      window.handleQuizViewInMenu = function() {
+        if (!matchedQuizDrink) return;
+        const drinkName = matchedQuizDrink.name;
+        closeTasteQuiz();
+        
+        // Scroll to #menu
+        const menuSec = document.getElementById('menu');
+        if (menuSec) {
+          menuSec.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Search & highlight drink
+        const searchInput = document.getElementById('menuSearchInput');
+        if (searchInput) searchInput.value = drinkName;
+        filterMenu(drinkName, 'all');
+
+        setTimeout(() => {
+          const card = document.querySelector('#searchMenuGrid .menu-card');
+          if (card) {
+            card.classList.add('menu-card-highlighted');
+            setTimeout(() => card.classList.remove('menu-card-highlighted'), 2500);
+          }
+        }, 400);
+      };
 
       // E. Cross-tab Realtime Sync
       window.addEventListener('storage', (e) => {
