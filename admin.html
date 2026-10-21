@@ -791,13 +791,304 @@
       opacity: 1;
     }
 
-    /* RESPONSIVE */
+    /* RESPONSIVE & MOBILE ERGONOMICS */
+    .mobile-topbar {
+      display: none;
+    }
+    .mobile-tab-scroller {
+      display: none;
+    }
+    .sidebar-backdrop {
+      display: none;
+    }
+    .sidebar-close-btn {
+      display: none;
+    }
+    .mobile-menu-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border);
+      color: #EDE5D8;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mobile-menu-btn:hover {
+      background: rgba(229, 154, 85, 0.2);
+      border-color: var(--accent);
+    }
+
     @media (max-width: 900px) {
-      .admin-layout { flex-direction: column; }
-      .sidebar { width: 100%; height: auto; position: static; }
-      .sidebar-nav { flex-direction: row; flex-wrap: wrap; }
-      .content-area { padding: 20px 16px; }
-      .topbar { padding: 0 16px; }
+      .admin-layout { 
+        flex-direction: column; 
+        min-height: 100vh;
+      }
+      
+      /* Mobile Drawer */
+      .sidebar-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 5, 2, 0.75);
+        backdrop-filter: blur(6px);
+        z-index: 998;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+      .sidebar-backdrop.active {
+        opacity: 1;
+        visibility: visible;
+      }
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 290px;
+        max-width: 86vw;
+        height: 100vh;
+        z-index: 999;
+        background: #22120A;
+        border-right: 1px solid rgba(229, 154, 85, 0.25);
+        transform: translateX(-100%);
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: none;
+      }
+      .sidebar.mobile-open {
+        transform: translateX(0);
+        box-shadow: 14px 0 45px rgba(0, 0, 0, 0.85);
+      }
+      .sidebar-close-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        font-size: 15px;
+        margin-left: auto;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .sidebar-close-btn:hover {
+        background: rgba(229, 154, 85, 0.2);
+        color: #FFF;
+      }
+
+      /* Sticky Mobile Topbar */
+      .mobile-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 58px;
+        padding: 0 14px;
+        background: rgba(34, 18, 10, 0.96);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 0;
+        z-index: 120;
+      }
+      .mobile-topbar-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .mobile-topbar-logo {
+        height: 28px;
+        width: auto;
+      }
+      .mobile-topbar-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 16px;
+        font-weight: 700;
+        color: #EDE5D8;
+        letter-spacing: 0.03em;
+      }
+      .mobile-topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* Horizontal Tab Scroller */
+      .mobile-tab-scroller {
+        display: flex;
+        gap: 8px;
+        padding: 8px 12px;
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        background: rgba(25, 13, 7, 0.98);
+        border-bottom: 1px solid var(--border);
+        position: sticky;
+        top: 58px;
+        z-index: 110;
+      }
+      .mobile-tab-scroller::-webkit-scrollbar {
+        display: none;
+      }
+      .mobile-tab-btn {
+        flex-shrink: 0;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        font-size: 12.5px;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s;
+        cursor: pointer;
+        user-select: none;
+      }
+      .mobile-tab-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text);
+      }
+      .mobile-tab-btn.active {
+        background: linear-gradient(135deg, rgba(229, 154, 85, 0.35), rgba(229, 154, 85, 0.15));
+        border-color: var(--accent);
+        color: var(--accent);
+        font-weight: 700;
+        box-shadow: 0 0 12px rgba(229, 154, 85, 0.25);
+      }
+      .mobile-tab-btn .tab-badge {
+        font-size: 10px;
+        font-weight: 700;
+        padding: 1px 6px;
+        border-radius: 999px;
+        background: rgba(229, 154, 85, 0.25);
+        color: var(--accent);
+      }
+      .mobile-tab-btn.active .tab-badge {
+        background: var(--accent);
+        color: #190D07;
+      }
+
+      /* Hide Desktop Topbar on Mobile */
+      .topbar {
+        display: none;
+      }
+
+      .content-area {
+        padding: 18px 14px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .content-area {
+        padding: 12px 10px;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+        margin-bottom: 16px !important;
+      }
+      .stat-card {
+        padding: 12px 10px !important;
+        gap: 10px !important;
+        border-radius: 12px !important;
+      }
+      .stat-icon-wrap {
+        width: 38px !important;
+        height: 38px !important;
+        font-size: 18px !important;
+        border-radius: 10px !important;
+      }
+      .stat-val {
+        font-size: 20px !important;
+      }
+      .stat-label {
+        font-size: 11px !important;
+      }
+      .card {
+        padding: 14px 12px !important;
+        border-radius: 14px !important;
+        margin-bottom: 16px !important;
+      }
+      .card-header {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 10px !important;
+        margin-bottom: 14px !important;
+      }
+      .card-title {
+        font-size: 17px !important;
+      }
+      .charts-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+        margin-bottom: 16px !important;
+      }
+      .chart-card {
+        padding: 14px 10px !important;
+        min-height: 280px !important;
+      }
+      .chart-body {
+        height: 210px !important;
+      }
+      .table-container {
+        -webkit-overflow-scrolling: touch;
+        border-radius: 8px !important;
+      }
+      th, td {
+        padding: 9px 10px !important;
+        font-size: 12px !important;
+      }
+      .btn-sm-primary, .btn-sm-danger {
+        padding: 5px 8px !important;
+        font-size: 11px !important;
+        white-space: nowrap !important;
+        min-height: 30px !important;
+      }
+      
+      /* Mobile Bottom Sheet Modals */
+      .admin-modal-backdrop {
+        padding: 0 !important;
+        align-items: flex-end !important;
+      }
+      .admin-modal-dialog {
+        width: 100% !important;
+        max-width: 100% !important;
+        max-height: 88vh !important;
+        border-radius: 20px 20px 0 0 !important;
+        padding: 18px 16px 28px !important;
+        transform: translateY(100%) !important;
+      }
+      .admin-modal-backdrop.open .admin-modal-dialog {
+        transform: translateY(0) !important;
+      }
+      .admin-modal-dialog::before {
+        content: '';
+        display: block;
+        width: 36px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.25);
+        border-radius: 2px;
+        margin: 0 auto 14px;
+      }
+      .modal-title {
+        font-size: 17px !important;
+      }
+
+      /* Stack form grids in modals on small screens */
+      .admin-modal-dialog form div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 10px !important;
+      }
     }
   </style>
   <!-- Google reCAPTCHA v3 (For Admin Verification) -->
@@ -833,14 +1124,18 @@
   <!-- ======== MAIN ADMIN LAYOUT ======== -->
   <div class="admin-layout">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
+    <!-- BACKDROP FOR MOBILE DRAWER -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <!-- SIDEBAR / MOBILE DRAWER -->
+    <aside class="sidebar" id="adminSidebar">
       <div class="sidebar-header">
         <img src="assets/logo-white.png" alt="Olion Coffee" class="sidebar-logo" />
         <div>
           <div class="sidebar-brand-name">OLION</div>
           <span class="sidebar-badge">Admin System</span>
         </div>
+        <button type="button" class="sidebar-close-btn" id="sidebarCloseBtn" title="Đóng menu">✕</button>
       </div>
 
       <nav class="sidebar-nav">
@@ -884,11 +1179,11 @@
           <span class="nav-icon">🎁</span>
           <span class="nav-text">Chương trình ưu đãi</span>
         </div>
-                <div class="nav-item" data-tab="scanner">
+        <div class="nav-item" data-tab="scanner">
           <span class="nav-icon">📸</span>
           <span class="nav-text">Quét E-Voucher</span>
         </div>
-<div class="nav-item" data-tab="minigame">
+        <div class="nav-item" data-tab="minigame">
           <span class="nav-icon">🎡</span>
           <span class="nav-text">Vòng quay Minigame</span>
         </div>
@@ -914,6 +1209,41 @@
 
     <!-- MAIN WRAPPER -->
     <div class="main-wrapper">
+
+      <!-- MOBILE APP BAR (Visible <= 900px) -->
+      <header class="mobile-topbar">
+        <div class="mobile-topbar-left">
+          <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Mở Menu">☰</button>
+          <img src="assets/logo-white.png" alt="Olion Coffee" class="mobile-topbar-logo" />
+          <span class="mobile-topbar-title">Olion Admin</span>
+        </div>
+        <div class="mobile-topbar-right">
+          <div class="cloud-pill" id="mCloudStatusPill" onclick="switchTab('supabase')" style="padding: 4px 10px; font-size: 11.5px;">
+            <span class="status-dot offline" id="mCloudStatusDot"></span>
+            <span id="mCloudStatusText" style="font-weight: 600;">Cloud</span>
+          </div>
+          <a href="/" target="_blank" class="mobile-menu-btn" style="width: 34px; height: 34px; font-size: 14px;" title="Xem trang chủ">↗</a>
+        </div>
+      </header>
+
+      <!-- MOBILE HORIZONTAL TAB SCROLLER (Visible <= 900px) -->
+      <nav class="mobile-tab-scroller" id="mobileTabScroller">
+        <button type="button" class="mobile-tab-btn active" data-tab="overview">📊 Tổng quan</button>
+        <button type="button" class="mobile-tab-btn" data-tab="menu">☕ Thực đơn <span class="tab-badge" id="mBadgeMenu">8</span></button>
+        <button type="button" class="mobile-tab-btn" data-tab="customers">👑 Tích điểm <span class="tab-badge" id="mBadgeCustomer">4</span></button>
+        <button type="button" class="mobile-tab-btn" data-tab="bookings">📅 Đặt bàn <span class="tab-badge" id="mBadgeBookings" style="display:none; background:var(--accent); color:#000;">0</span></button>
+        <button type="button" class="mobile-tab-btn" data-tab="feedbacks">💬 Góp ý</button>
+        <button type="button" class="mobile-tab-btn" data-tab="announcements">📢 Thông báo</button>
+        <button type="button" class="mobile-tab-btn" data-tab="news">📰 Tin tức</button>
+        <button type="button" class="mobile-tab-btn" data-tab="push">🚀 Push</button>
+        <button type="button" class="mobile-tab-btn" data-tab="promotions">🎁 Ưu đãi</button>
+        <button type="button" class="mobile-tab-btn" data-tab="scanner">📸 Quét QR</button>
+        <button type="button" class="mobile-tab-btn" data-tab="minigame">🎡 Minigame</button>
+        <button type="button" class="mobile-tab-btn" data-tab="supabase">⚡ Cloud</button>
+        <button type="button" class="mobile-tab-btn" data-tab="customizer">🎨 Cài đặt</button>
+      </nav>
+
+      <!-- DESKTOP TOPBAR (Visible > 900px) -->
       <header class="topbar">
         <div class="topbar-title" id="pageTitle">
           <span>📊</span>
@@ -1332,27 +1662,36 @@
 
         <!-- ======== TAB 6: PROMOTIONS ======== -->
         
-        <!-- TAB: NEWS -->
+        <!-- ======== TAB: NEWS (TIN TỨC & SỰ KIỆN) ======== -->
         <section class="tab-content" id="tab-news">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <p style="color: var(--text-muted);">Quản lý các bài viết trên trang chủ và trang Tin Tức. Dữ liệu được đồng bộ trực tiếp lên Cloud.</p>
-            <button class="btn btn-primary" onclick="openNewsFormModal()">+ Viết bài mới</button>
-          </div>
           <div class="card">
-            <div style="overflow-x: auto;">
-              <table class="table">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title">📰 Quản Lý Tin Tức & Bài Viết Sự Kiện</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Đăng tải bài viết, chương trình ưu đãi và cập nhật tin tức trực tiếp lên website</p>
+              </div>
+              <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <button type="button" class="btn-primary" onclick="openNewsFormModal()">
+                  ➕ Soạn Bài Viết Mới
+                </button>
+                <button type="button" class="btn-secondary" onclick="loadNewsFromCloud()">🔄 Tải lại</button>
+              </div>
+            </div>
+
+            <div class="table-container">
+              <table>
                 <thead>
                   <tr>
-                    <th>Ảnh Bìa</th>
-                    <th>Tiêu Đề</th>
-                    <th>Ngày Đăng</th>
-                    <th>Danh Mục</th>
-                    <th>Nổi Bật</th>
-                    <th>Thao Tác</th>
+                    <th style="width: 70px;">Ảnh</th>
+                    <th>Tiêu đề bài viết</th>
+                    <th style="width: 120px;">Ngày đăng</th>
+                    <th style="width: 130px;">Danh mục</th>
+                    <th style="width: 100px;">Nổi bật</th>
+                    <th style="width: 140px; text-align: center;">Thao tác</th>
                   </tr>
                 </thead>
                 <tbody id="newsTableBody">
-                  <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 25px;">Chưa kết nối CSDL Supabase</td></tr>
+                  <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 25px;">⏳ Đang tải danh sách bài viết từ Cloud...</td></tr>
                 </tbody>
               </table>
             </div>
@@ -1367,7 +1706,7 @@
           
           <div class="card" style="max-width: 800px; margin: 0 auto;">
             <h3 style="margin-bottom: 20px; color: var(--accent-gold); display: flex; align-items: center; gap: 8px;">
-              <i data-lucide="send" style="width:20px;height:20px;"></i> Soạn Thông Báo Mới
+              <span>🚀</span> Soạn Thông Báo Mới
             </h3>
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
@@ -1393,13 +1732,13 @@
 
             <div style="display: flex; justify-content: flex-end; gap: 10px;">
               <button class="btn btn-primary" onclick="sendCustomPushNotification()" style="background: #1877F2; border-color: #1877F2; font-weight: bold;">
-                <i data-lucide="zap" style="width:16px;height:16px;margin-right:6px;"></i> Bắn Thông Báo Ngay
+                <span>⚡</span> Bắn Thông Báo Ngay
               </button>
             </div>
           </div>
           
           <div style="max-width: 800px; margin: 30px auto 0; padding: 20px; border-radius: 12px; background: rgba(229,154,85,0.05); border: 1px dashed var(--accent-gold);">
-            <h4 style="color: var(--accent-gold); margin-bottom: 10px; display: flex; align-items: center; gap: 8px;"><i data-lucide="lightbulb" style="width:18px;height:18px;"></i> Mẹo gửi thông báo hiệu quả</h4>
+            <h4 style="color: var(--accent-gold); margin-bottom: 10px; display: flex; align-items: center; gap: 8px;"><span>💡</span> Mẹo gửi thông báo hiệu quả</h4>
             <ul style="color: var(--text-muted); font-size: 13.5px; line-height: 1.6; padding-left: 20px;">
               <li>Sử dụng các <strong>Emoji</strong> (🔥, 🎁, ⚡) ở Tiêu đề để tăng tỷ lệ khách hàng bấm vào đọc.</li>
               <li>Nên copy link của trang Món Bán Chạy hoặc Bài Tin Tức cụ thể dán vào ô <strong>Đường dẫn</strong>. Khi khách bấm thông báo, web sẽ mở thẳng đến chỗ đó.</li>
@@ -1678,7 +2017,7 @@
         
           <!-- ONESIGNAL CONFIG -->
           <div class="card" style="margin-top: 20px;">
-            <h3 style="margin-bottom: 15px; color: var(--accent-gold);"><i data-lucide="bell" style="width:18px;height:18px;margin-bottom:-2px;"></i> Cấu hình Đẩy Thông Báo (OneSignal)</h3>
+            <h3 style="margin-bottom: 15px; color: var(--accent-gold);">🔔 Cấu hình Đẩy Thông Báo (OneSignal)</h3>
             <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 15px;">Điền mã xác thực (REST API Key) để hệ thống có thể tự động gửi thông báo đến điện thoại khách hàng mỗi khi bạn đăng bài viết mới.</p>
             <div style="margin-bottom: 15px;">
               <label style="display: block; margin-bottom: 5px; color: var(--text-muted);">OneSignal REST API Key</label>
@@ -1912,6 +2251,69 @@
     </div>
   </div>
 
+  <!-- ======== MODAL 5: ADD / EDIT NEWS ARTICLE ======== -->
+  <div class="admin-modal-backdrop" id="newsFormModal">
+    <div class="admin-modal-dialog" style="max-width: 680px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="newsFormTitle">📰 Soạn Bài Viết Mới</h3>
+        <button type="button" class="modal-close-btn" onclick="closeNewsFormModal()">✕</button>
+      </div>
+      <form id="newsArticleForm" onsubmit="return false;" style="display: flex; flex-direction: column; gap: 14px;">
+        <input type="hidden" id="newsFormId" value="" />
+        
+        <div>
+          <label style="font-size: 12.5px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 5px;">TIÊU ĐỀ BÀI VIẾT *</label>
+          <input type="text" id="newsFormInputTitle" placeholder="Vd: Grand Opening Recap — Tuần Lễ Khai Trương..." required />
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div>
+            <label style="font-size: 12.5px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 5px;">DANH MỤC *</label>
+            <input type="text" id="newsFormInputCategory" placeholder="Vd: Sự kiện đặc biệt, Khuyến mãi..." required />
+          </div>
+          <div>
+            <label style="font-size: 12.5px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 5px;">NGÀY ĐĂNG *</label>
+            <input type="text" id="newsFormInputDate" placeholder="Vd: 21/10/2026" required />
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 12.5px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 5px;">ẢNH BÌA (IMAGE URL) *</label>
+          <input type="text" id="newsFormInputImage" placeholder="Vd: assets/news/news-1-flowers.webp" required />
+          <div style="display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap;">
+            <button type="button" class="btn-sm-primary" style="font-size: 11px;" onclick="document.getElementById('newsFormInputImage').value='assets/news/news-1-flowers.webp'">🌸 Hoa khai trương</button>
+            <button type="button" class="btn-sm-primary" style="font-size: 11px;" onclick="document.getElementById('newsFormInputImage').value='assets/news/news-1-drinks.webp'">🥤 Thức uống</button>
+            <button type="button" class="btn-sm-primary" style="font-size: 11px;" onclick="document.getElementById('newsFormInputImage').value='assets/news/news-1-space.webp'">🌿 Không gian</button>
+            <button type="button" class="btn-sm-primary" style="font-size: 11px;" onclick="document.getElementById('newsFormInputImage').value='assets/news/news-1-recap.webp'">📸 Recap tuần</button>
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size: 12.5px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 5px;">MÔ TẢ NGẮN (HIỂN THỊ TRÊN THẺ BÀI VIẾT)</label>
+          <textarea id="newsFormInputDesc" rows="2" placeholder="Tóm tắt ngắn gọn nội dung bài viết..."></textarea>
+        </div>
+
+        <div>
+          <label style="font-size: 12.5px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 5px;">NỘI DUNG CHI TIẾT (HỖ TRỢ HTML: &lt;p&gt;, &lt;strong&gt;, &lt;img&gt;...)</label>
+          <textarea id="newsFormInputContent" rows="6" placeholder="<p>Nội dung chi tiết bài viết...</p>"></textarea>
+        </div>
+
+        <div class="switch-wrap" style="padding: 4px 0;">
+          <label class="switch">
+            <input type="checkbox" id="newsFormInputFeatured" />
+            <span class="slider"></span>
+          </label>
+          <span style="font-size: 13.5px; font-weight: 600;">⭐ Đánh dấu là bài viết Nổi Bật (Ghim lên Trang Chủ)</span>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
+          <button type="button" class="btn-secondary" onclick="closeNewsFormModal()">Hủy Bỏ</button>
+          <button type="button" class="btn-primary" onclick="saveNewsArticle()">💾 Lưu Bài Viết Lên Cloud</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- ======== TOAST NOTIFICATION ======== -->
   <div class="toast" id="adminToast">
     <span>✓</span>
@@ -1963,7 +2365,7 @@
       loginPassword.value = '';
     });
 
-    // ---- TAB SWITCHING ----
+    // ---- TAB SWITCHING & MOBILE NAVIGATION ----
     const navItems = document.querySelectorAll('.nav-item');
     const tabContents = document.querySelectorAll('.tab-content');
     const pageTitle = document.getElementById('pageTitle');
@@ -1975,43 +2377,95 @@
       bookings: '📅 Lịch Sử Đặt Bàn & Cho Thuê Không Gian',
       feedbacks: '💬 Quản Lý Góp Ý & Đánh Giá',
       announcements: '📢 Quản Lý Dải Thông Báo Web',
+      news: '📰 Quản Lý Tin Tức & Bài Viết',
+      push: '🚀 Chiến Dịch Bắn Thông Báo (Push)',
       promotions: '🎁 Chương Trình Ưu Đãi & Vouchers',
+      scanner: '📸 Quét Mã E-Voucher Khách Hàng',
       minigame: '🎡 Cấu Hình Vòng Quay Minigame',
       supabase: '⚡ Cấu Hình Supabase Cloud Database',
       customizer: '🎨 Thiết Kế Web & Thông Tin Quán'
     };
 
+    // Mobile Drawer Controls
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+    const adminSidebar = document.getElementById('adminSidebar');
+
+    function openMobileDrawer() {
+      if (adminSidebar) adminSidebar.classList.add('mobile-open');
+      if (sidebarBackdrop) sidebarBackdrop.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileDrawer() {
+      if (adminSidebar) adminSidebar.classList.remove('mobile-open');
+      if (sidebarBackdrop) sidebarBackdrop.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', openMobileDrawer);
+    if (sidebarCloseBtn) sidebarCloseBtn.addEventListener('click', closeMobileDrawer);
+    if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeMobileDrawer);
+
     function switchTab(tabKey) {
+      // 1. Sidebar Nav
       navItems.forEach(item => {
         item.classList.toggle('active', item.dataset.tab === tabKey);
       });
+
+      // 2. Tab Contents
       tabContents.forEach(content => {
         content.classList.toggle('active', content.id === 'tab-' + tabKey);
       });
+
+      // 3. Mobile Tab Scroller Pills
+      document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
+        const isActive = btn.dataset.tab === tabKey;
+        btn.classList.toggle('active', isActive);
+        if (isActive) {
+          try {
+            btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+          } catch (e) {}
+        }
+      });
+
+      // 4. Close mobile drawer if currently open
+      closeMobileDrawer();
+
+      // 5. Update Page Title
       if (pageTitle && tabTitles[tabKey]) {
         const fullTitle = tabTitles[tabKey];
         const icon = fullTitle.split(' ')[0];
         const text = fullTitle.substring(icon.length).trim();
         pageTitle.innerHTML = `<span>${icon}</span> <span>${text}</span>`;
       }
-      if (tabKey === 'overview') updateCharts();
-      if (tabKey === 'menu') {
-        loadMenu();
+
+      // 6. Trigger specific tab loaders
+      try {
+        if (tabKey === 'overview') updateCharts();
+        if (tabKey === 'menu') loadMenu();
+        if (tabKey === 'news') loadNewsFromCloud();
+        if (tabKey === 'customizer') loadOneSignalKey();
+        if (tabKey === 'customers') loadCustomers();
+        if (tabKey === 'bookings') loadBookings();
+        if (tabKey === 'feedbacks') loadFeedbacks();
+        if (tabKey === 'announcements') loadAnnouncement();
+        if (tabKey === 'promotions') loadPromotions();
+        if (tabKey === 'minigame') loadMinigame();
+        if (tabKey === 'supabase') checkSupabaseStatus();
+      } catch (err) {
+        console.warn('Error loading tab:', tabKey, err);
       }
-      if (tabKey === 'news') {
-        loadNewsFromCloud();
-      }
-      if (tabKey === 'customizer') {
-        loadOneSignalKey();
-      }
-      if (tabKey === 'customers') loadCustomers();
-      if (tabKey === 'bookings') loadBookings();
-      if (tabKey === 'feedbacks') loadFeedbacks();
-      if (tabKey === 'minigame') loadMinigame();
     }
 
+    // Attach click events to all nav items & mobile tab buttons
     navItems.forEach(item => {
       item.addEventListener('click', () => switchTab(item.dataset.tab));
+    });
+
+    document.querySelectorAll('.mobile-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchTab(btn.dataset.tab));
     });
 
     
@@ -2341,9 +2795,11 @@
         });
       }
 
-      // Update sidebar badge
+      // Update sidebar & mobile badge
       const sideBadge = document.getElementById('sidebarMenuBadge');
       if (sideBadge) sideBadge.textContent = cachedMenuItems.length;
+      const mBadge = document.getElementById('mBadgeMenu');
+      if (mBadge) mBadge.textContent = cachedMenuItems.length;
       updateOverviewStats();
     }
 
@@ -2411,16 +2867,12 @@
       closeMenuModal();
       showToast(idVal ? `Đã cập nhật món "${name}" thành công!` : `Đã thêm món mới "${name}" thành công!`);
       loadMenu();
-          loadNewsFromCloud();
-          loadOneSignalKey();
     });
 
     window.handleToggleMenuAvailable = async function(id, isAvailable) {
       await toggleMenuItemAvailabilityInCloud(id, isAvailable);
       showToast(isAvailable ? 'Món đã được bật phục vụ!' : 'Món đã được chuyển sang tạm hết hàng.');
       loadMenu();
-          loadNewsFromCloud();
-          loadOneSignalKey();
     };
 
     window.handleDeleteMenuItem = async function(id) {
@@ -2429,8 +2881,6 @@
         await deleteMenuItemFromCloud(id);
         showToast('Đã xóa món khỏi thực đơn thành công.');
         loadMenu();
-          loadNewsFromCloud();
-          loadOneSignalKey();
       }
     };
 
@@ -2442,6 +2892,147 @@
       });
       downloadCsv(csv, 'olion_menu_items.csv');
     });
+
+    // =========================================================================
+    // 2.1 NEWS & ARTICLES MANAGEMENT CRUD (SUPABASE CLOUD)
+    // =========================================================================
+    let cachedNewsItems = [];
+    let editingNewsId = null;
+
+    async function loadNewsFromCloud() {
+      const tbody = document.getElementById('newsTableBody');
+      if (!tbody) return;
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 25px;">⏳ Đang tải bài viết từ Cloud...</td></tr>';
+
+      try {
+        const client = window.supabaseClient || window._supabase || initSupabase();
+        if (client) {
+          const { data, error } = await client.from('news_items').select('*').order('created_at', { ascending: false });
+          if (!error && data) {
+            cachedNewsItems = data;
+            renderNewsTable();
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('Lỗi tải tin tức từ Supabase:', e);
+      }
+
+      renderNewsTable();
+    }
+
+    function renderNewsTable() {
+      const tbody = document.getElementById('newsTableBody');
+      if (!tbody) return;
+      if (!cachedNewsItems || cachedNewsItems.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 25px;">Chưa có bài viết nào trên hệ thống. Bấm "+ Soạn Bài Viết Mới" để tạo bài viết đầu tiên.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = cachedNewsItems.map(item => `
+        <tr>
+          <td>
+            <img src="${escapeHtml(item.cover_image || 'assets/logo.png')}" style="width: 52px; height: 40px; border-radius: 6px; object-fit: cover; border: 1px solid var(--border);" onerror="this.src='assets/logo.png'">
+          </td>
+          <td>
+            <div style="font-weight: 600; color: #FFF; font-size: 13.5px;">${escapeHtml(item.title || '')}</div>
+            <div style="font-size: 12px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 320px;">${escapeHtml(item.description || '')}</div>
+          </td>
+          <td style="white-space: nowrap; font-size: 12px;">${escapeHtml(item.date || '')}</td>
+          <td><span class="badge badge-warning">${escapeHtml(item.category || 'Tin tức')}</span></td>
+          <td>${item.is_featured ? '<span class="badge badge-gold">⭐ Nổi bật</span>' : '<span style="color:var(--text-muted);font-size:12px;">Thường</span>'}</td>
+          <td style="text-align: center; white-space: nowrap;">
+            <button type="button" class="btn-sm-primary" onclick="editNews('${item.id}')">✏️ Sửa</button>
+            <button type="button" class="btn-sm-danger" onclick="deleteNews('${item.id}')">🗑️ Xóa</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function openNewsFormModal() {
+      editingNewsId = null;
+      document.getElementById('newsFormTitle').textContent = '📰 Soạn Bài Viết Mới';
+      document.getElementById('newsFormInputTitle').value = '';
+      document.getElementById('newsFormInputCategory').value = 'Sự kiện đặc biệt';
+
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const yyyy = today.getFullYear();
+      document.getElementById('newsFormInputDate').value = `${dd}/${mm}/${yyyy}`;
+
+      document.getElementById('newsFormInputImage').value = 'assets/news/news-1-flowers.webp';
+      document.getElementById('newsFormInputDesc').value = '';
+      document.getElementById('newsFormInputContent').value = '<p>Nội dung chi tiết bài viết...</p>';
+      document.getElementById('newsFormInputFeatured').checked = false;
+      document.getElementById('newsFormModal').classList.add('open');
+    }
+
+    function closeNewsFormModal() {
+      document.getElementById('newsFormModal').classList.remove('open');
+    }
+
+    function editNews(id) {
+      const item = cachedNewsItems.find(i => String(i.id) === String(id));
+      if (!item) return;
+      editingNewsId = id;
+      document.getElementById('newsFormTitle').textContent = '✏️ Chỉnh Sửa Bài Viết';
+      document.getElementById('newsFormInputTitle').value = item.title || '';
+      document.getElementById('newsFormInputCategory').value = item.category || '';
+      document.getElementById('newsFormInputDate').value = item.date || '';
+      document.getElementById('newsFormInputImage').value = item.cover_image || '';
+      document.getElementById('newsFormInputDesc').value = item.description || '';
+      document.getElementById('newsFormInputContent').value = item.content_html || '';
+      document.getElementById('newsFormInputFeatured').checked = !!item.is_featured;
+      document.getElementById('newsFormModal').classList.add('open');
+    }
+
+    async function saveNewsArticle() {
+      const client = window.supabaseClient || window._supabase || initSupabase();
+      if (!client) return alert('Chưa kết nối Supabase Cloud! Vui lòng kiểm tra tab Cơ sở dữ liệu Cloud.');
+
+      const title = document.getElementById('newsFormInputTitle').value.trim();
+      const category = document.getElementById('newsFormInputCategory').value.trim();
+      const date = document.getElementById('newsFormInputDate').value.trim();
+      const cover_image = document.getElementById('newsFormInputImage').value.trim() || 'assets/logo.png';
+      const description = document.getElementById('newsFormInputDesc').value.trim();
+      const content_html = document.getElementById('newsFormInputContent').value.trim();
+      const is_featured = document.getElementById('newsFormInputFeatured').checked;
+
+      if (!title || !category || !date) return alert('Vui lòng điền đủ Tiêu đề, Danh mục và Ngày đăng!');
+
+      const payload = { title, category, date, cover_image, description, content_html, is_featured };
+
+      try {
+        if (editingNewsId) {
+          const { error } = await client.from('news_items').update(payload).eq('id', editingNewsId);
+          if (error) throw error;
+          showToast('Đã cập nhật bài viết thành công!');
+        } else {
+          const { error } = await client.from('news_items').insert([payload]);
+          if (error) throw error;
+          showToast('Đã thêm bài viết mới lên Supabase Cloud!');
+        }
+        closeNewsFormModal();
+        await loadNewsFromCloud();
+      } catch (e) {
+        alert('Lỗi lưu bài viết: ' + e.message);
+      }
+    }
+
+    async function deleteNews(id) {
+      if (!confirm('Bạn có chắc chắn muốn xóa bài viết này khỏi Cloud không?')) return;
+      const client = window.supabaseClient || window._supabase || initSupabase();
+      if (!client) return alert('Chưa kết nối Supabase!');
+      try {
+        const { error } = await client.from('news_items').delete().eq('id', id);
+        if (error) throw error;
+        showToast('Đã xóa bài viết thành công!');
+        await loadNewsFromCloud();
+      } catch (e) {
+        alert('Lỗi xóa bài viết: ' + e.message);
+      }
+    }
 
     // =========================================================================
     // 3. LOYALTY PROGRAM & CUSTOMER MANAGEMENT
@@ -2504,9 +3095,11 @@
         });
       }
 
-      // Update badge
+      // Update sidebar & mobile badge
       const sideBadge = document.getElementById('sidebarCustomerBadge');
       if (sideBadge) sideBadge.textContent = cachedCustomers.length;
+      const mCustBadge = document.getElementById('mBadgeCustomer');
+      if (mCustBadge) mCustBadge.textContent = cachedCustomers.length;
       updateOverviewStats();
     }
 
@@ -2919,6 +3512,8 @@
       if (completedEl) completedEl.textContent = completed;
       if (overviewEl) overviewEl.textContent = total;
 
+      const mBadgeBookings = document.getElementById('mBadgeBookings');
+
       if (sidebarBadge) {
         if (pending > 0) {
           sidebarBadge.style.display = 'inline-block';
@@ -2930,6 +3525,18 @@
           sidebarBadge.title = `${total} đơn đặt bàn`;
         } else {
           sidebarBadge.style.display = 'none';
+        }
+      }
+
+      if (mBadgeBookings) {
+        if (pending > 0) {
+          mBadgeBookings.style.display = 'inline-block';
+          mBadgeBookings.textContent = pending;
+        } else if (total > 0) {
+          mBadgeBookings.style.display = 'inline-block';
+          mBadgeBookings.textContent = total;
+        } else {
+          mBadgeBookings.style.display = 'none';
         }
       }
     }
@@ -3268,6 +3875,24 @@
       showToast('Đã cập nhật thông báo lên Supabase thành công!');
     });
 
+    async function loadAnnouncement() {
+      if (typeof fetchSiteSettingsFromCloud === 'function') {
+        try {
+          const { data } = await fetchSiteSettingsFromCloud();
+          if (data) {
+            if (document.getElementById('announcementEnableToggle')) {
+              document.getElementById('announcementEnableToggle').checked = !!data.is_notification_active;
+            }
+            if (document.getElementById('announcementTextInput')) {
+              document.getElementById('announcementTextInput').value = data.notification_text || '';
+            }
+          }
+        } catch (e) {
+          console.warn('Lỗi loadAnnouncement:', e);
+        }
+      }
+    }
+
 
     function getPromotions() {
       try {
@@ -3368,22 +3993,21 @@
 
       const cloudStatusDot = document.getElementById('cloudStatusDot');
       const cloudStatusText = document.getElementById('cloudStatusText');
+      const mCloudStatusDot = document.getElementById('mCloudStatusDot');
+      const mCloudStatusText = document.getElementById('mCloudStatusText');
       const supabaseBadgeStatus = document.getElementById('supabaseBadgeStatus');
 
-      if (url && key && !url.includes('your-project')) {
-        cloudStatusDot.className = 'status-dot active';
-        cloudStatusText.textContent = 'Cloud: Supabase Đã Kết Nối';
-        if (supabaseBadgeStatus) {
-          supabaseBadgeStatus.className = 'badge badge-success';
-          supabaseBadgeStatus.textContent = '🟢 Đã kết nối Supabase Cloud';
-        }
-      } else {
-        cloudStatusDot.className = 'status-dot offline';
-        cloudStatusText.textContent = 'Chế độ: Offline (LocalStorage)';
-        if (supabaseBadgeStatus) {
-          supabaseBadgeStatus.className = 'badge badge-warning';
-          supabaseBadgeStatus.textContent = '🟠 Chế độ Offline (Chưa cấu hình API Key)';
-        }
+      const isConnected = !!(url && key && !url.includes('your-project'));
+
+      if (cloudStatusDot) cloudStatusDot.className = isConnected ? 'status-dot active' : 'status-dot offline';
+      if (cloudStatusText) cloudStatusText.textContent = isConnected ? 'Cloud: Supabase Đã Kết Nối' : 'Chế độ: Offline (LocalStorage)';
+
+      if (mCloudStatusDot) mCloudStatusDot.className = isConnected ? 'status-dot active' : 'status-dot offline';
+      if (mCloudStatusText) mCloudStatusText.textContent = isConnected ? 'Cloud: Online' : 'Cloud: Offline';
+
+      if (supabaseBadgeStatus) {
+        supabaseBadgeStatus.className = isConnected ? 'badge badge-success' : 'badge badge-warning';
+        supabaseBadgeStatus.textContent = isConnected ? '🟢 Đã kết nối Supabase Cloud' : '🟠 Chế độ Offline (Chưa cấu hình API Key)';
       }
     }
 
@@ -3509,20 +4133,20 @@
       } catch (e) {}
     }
 
-    // Initial Data Load
+    // Initial Data Load (Safe & Isolated)
     function loadAllData() {
-      if (typeof setupAdminRealtime === 'function') setupAdminRealtime();
-      checkSupabaseStatus();
-      loadMenu();
-      loadNewsFromCloud();
-      loadOneSignalKey();
-      loadCustomers();
-      loadBookings();
-      loadFeedbacks();
-      loadAnnouncement();
-      loadPromotions();
-      loadMinigame();
-      loadStoreSettings();
+      try { if (typeof setupAdminRealtime === 'function') setupAdminRealtime(); } catch (e) { console.warn(e); }
+      try { checkSupabaseStatus(); } catch (e) { console.warn(e); }
+      try { loadMenu(); } catch (e) { console.warn(e); }
+      try { loadNewsFromCloud(); } catch (e) { console.warn(e); }
+      try { loadOneSignalKey(); } catch (e) { console.warn(e); }
+      try { loadCustomers(); } catch (e) { console.warn(e); }
+      try { loadBookings(); } catch (e) { console.warn(e); }
+      try { loadFeedbacks(); } catch (e) { console.warn(e); }
+      try { loadAnnouncement(); } catch (e) { console.warn(e); }
+      try { loadPromotions(); } catch (e) { console.warn(e); }
+      try { loadMinigame(); } catch (e) { console.warn(e); }
+      try { loadStoreSettings(); } catch (e) { console.warn(e); }
     }
     loadAllData();
       async function restoreDefaultMenu() {
