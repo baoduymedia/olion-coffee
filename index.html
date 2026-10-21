@@ -2767,328 +2767,7 @@
       margin-top: 14px;
     }
 
-    /* ===== 20/10 WOMEN'S DAY PROMO SECTION ===== */
-    .promo-2010-section {
-      position: relative;
-      overflow: hidden;
-      padding: 72px 0 80px;
-      scroll-margin-top: 110px;
-      background: linear-gradient(135deg, #1a0a10 0%, #2d1020 35%, #1e1520 70%, #0f0a18 100%);
-      border-top: 1px solid rgba(220, 120, 140, 0.2);
-      border-bottom: 1px solid rgba(220, 120, 140, 0.2);
-    }
-    .promo-petals-bg {
-      position: absolute; inset: 0;
-      pointer-events: none; overflow: hidden;
-      z-index: 0;
-    }
-    .promo-petal {
-      position: absolute;
-      font-size: 18px;
-      opacity: 0;
-      animation: petalFall linear infinite;
-      user-select: none;
-    }
-    @keyframes petalFall {
-      0%   { opacity: 0; transform: translateY(-40px) rotate(0deg); }
-      10%  { opacity: 0.7; }
-      90%  { opacity: 0.5; }
-      100% { opacity: 0; transform: translateY(110vh) rotate(360deg); }
-    }
-    .promo-2010-inner {
-      position: relative; z-index: 1;
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      gap: 56px;
-      align-items: center;
-    }
-    @media (max-width: 768px) {
-      .promo-2010-inner { grid-template-columns: 1fr; gap: 32px; text-align: center; }
-      .promo-offers-grid { grid-template-columns: 1fr; }
-      .promo-cta-row { flex-direction: column; align-items: center; }
-    }
-    /* Visual side */
-    .promo-2010-visual {
-      display: flex; flex-direction: column; align-items: center; gap: 16px;
-    }
-    .promo-banner-poster {
-      width: min(240px, 70vw);
-      aspect-ratio: 1/1;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 2px solid rgba(230,170,185,.35);
-      box-shadow: 0 12px 35px rgba(180, 50, 80, 0.4), 0 0 70px rgba(220,100,130,0.2);
-    }
-    .promo-banner-img {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-    }
-    .promo-date-badge {
-      background: linear-gradient(135deg, #c8647a, #a04060);
-      color: #fff;
-      font-family: var(--font-display);
-      font-size: 28px; font-weight: 700;
-      padding: 10px 28px;
-      border-radius: 50px;
-      letter-spacing: 0.04em;
-      box-shadow: 0 8px 24px rgba(180,60,90,0.4);
-    }
-    /* Content side */
-    .promo-eyebrow {
-      display: flex; align-items: center; gap: 8px;
-      color: #e0909a; font-size: 13px; font-weight: 600;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    .promo-heart { font-size: 16px; animation: heartBeat 1.2s ease-in-out infinite; display: inline-block; }
-    @keyframes heartBeat {
-      0%, 100% { transform: scale(1); } 50% { transform: scale(1.3); }
-    }
-    .promo-title {
-      font-family: var(--font-display);
-      font-size: clamp(28px, 4vw, 44px);
-      line-height: 1.2;
-      color: #f5e6ea;
-      margin-bottom: 16px;
-    }
-    .promo-title em {
-      font-style: italic;
-      color: #e8909a;
-      background: linear-gradient(135deg, #e8909a, #c06070);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .promo-desc {
-      color: rgba(230,210,215,0.75);
-      font-size: 15px; line-height: 1.7;
-      margin-bottom: 28px;
-      max-width: 540px;
-    }
-    /* Offer cards */
-    .promo-offers-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 28px;
-    }
-    .promo-offer-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(200,100,120,0.25);
-      border-radius: 14px;
-      padding: 16px 12px;
-      display: flex; flex-direction: column; align-items: center;
-      gap: 8px; text-align: center;
-      transition: all 0.3s ease;
-      cursor: default;
-    }
-    .promo-offer-card:hover {
-      background: rgba(200,100,120,0.12);
-      border-color: rgba(200,100,120,0.5);
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(180,60,90,0.2);
-    }
-    .promo-offer-icon { font-size: 28px; }
-    .promo-offer-text { display: flex; flex-direction: column; gap: 2px; }
-    .promo-offer-text strong { color: #f0c0c8; font-size: 13px; font-weight: 700; }
-    .promo-offer-text span { color: rgba(220,190,200,0.7); font-size: 11px; line-height: 1.4; }
-    /* Real offer highlight */
-    .promo-real-offer {
-      display: flex; align-items: flex-start; gap: 16px;
-      background: rgba(200,100,120,0.1);
-      border: 1px solid rgba(200,100,120,0.35);
-      border-radius: 16px;
-      padding: 20px 22px;
-      margin-bottom: 20px;
-    }
-    .promo-real-offer-icon { font-size: 40px; flex-shrink: 0; line-height: 1; }
-    .promo-real-offer-body strong {
-      display: block; color: #f0c0c8; font-size: 16px; font-weight: 700; margin-bottom: 6px;
-    }
-    .promo-real-offer-body p {
-      color: rgba(230,205,210,0.85); font-size: 14px; line-height: 1.6; margin: 0;
-    }
-    .promo-real-offer-body em { color: #f0b0c0; font-style: normal; font-weight: 700; }
-    /* Quote */
-    .promo-quote {
-      border-left: 3px solid rgba(200,100,120,0.5);
-      padding: 10px 16px;
-      margin: 0 0 24px;
-      color: rgba(220,185,195,0.8);
-      font-size: 14px; line-height: 1.7;
-      font-style: italic;
-    }
-    /* Countdown */
-    .promo-countdown-wrap {
-      margin-bottom: 28px;
-    }
-    .promo-countdown-label {
-      display: block;
-      color: rgba(220,170,180,0.8);
-      font-size: 12px; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    .promo-countdown {
-      display: flex; align-items: center; gap: 8px;
-    }
-    .countdown-box {
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(200,100,120,0.3);
-      border-radius: 10px;
-      padding: 10px 14px;
-      min-width: 60px;
-      text-align: center;
-    }
-    .countdown-box span {
-      display: block;
-      font-family: var(--font-display);
-      font-size: 26px; font-weight: 700;
-      color: #f0c0c8;
-      line-height: 1;
-    }
-    .countdown-box small {
-      display: block;
-      color: rgba(200,160,170,0.6);
-      font-size: 10px; font-weight: 600;
-      text-transform: uppercase; letter-spacing: 0.06em;
-      margin-top: 4px;
-    }
-    .countdown-sep {
-      color: rgba(200,100,120,0.6);
-      font-size: 22px; font-weight: 700;
-      margin-bottom: 16px;
-    }
-    /* CTA buttons */
-    .promo-cta-row {
-      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-    }
-    .promo-cta-btn {
-      background: linear-gradient(135deg, #c8647a, #a04060) !important;
-      border-color: transparent !important;
-      box-shadow: 0 8px 24px rgba(180,60,90,0.4) !important;
-      padding: 14px 28px !important;
-      font-size: 15px !important;
-    }
-    .promo-cta-btn:hover {
-      background: linear-gradient(135deg, #d8748a, #b05070) !important;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(180,60,90,0.5) !important;
-    }
-    .promo-cta-call {
-      color: rgba(220,170,180,0.9);
-      text-decoration: none;
-      font-size: 14px; font-weight: 600;
-      border: 1px solid rgba(200,100,120,0.3);
-      padding: 13px 22px;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-    }
-    .promo-cta-call:hover {
-      color: #f0c0c8;
-      border-color: rgba(200,100,120,0.7);
-      background: rgba(200,100,120,0.1);
-    }
 
-    /* Top 20/10 Announcement Ribbon */
-    .promo-top-bar {
-      background: linear-gradient(90deg, #3d1424 0%, #7a2243 50%, #3d1424 100%);
-      color: #fff;
-      font-size: 13px;
-      padding: 9px 16px;
-      text-align: center;
-      position: relative;
-      z-index: 1002;
-      border-bottom: 1px solid rgba(255, 180, 200, 0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .promo-top-badge {
-      background: #fff;
-      color: #7a2243;
-      font-weight: 800;
-      font-size: 11px;
-      padding: 3px 10px;
-      border-radius: 99px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-    }
-    .promo-top-link {
-      color: #ffebf1;
-      text-decoration: underline;
-      font-weight: 700;
-      cursor: pointer;
-      transition: color 0.2s ease;
-    }
-    .promo-top-link:hover {
-      color: #fff;
-    }
-
-    /* Floating 20/10 Gift Button */
-    .promo-float-btn {
-      position: fixed;
-      bottom: 24px;
-      left: 24px;
-      z-index: 990;
-      background: linear-gradient(135deg, #d84570 0%, #8a1d42 100%);
-      color: #fff;
-      border: 1.5px solid rgba(255, 200, 220, 0.4);
-      padding: 10px 18px;
-      border-radius: 50px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 13.5px;
-      text-decoration: none;
-      box-shadow: 0 6px 20px rgba(216, 69, 112, 0.45);
-      cursor: pointer;
-      animation: promoPulse 2.5s infinite;
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-    @keyframes promoPulse {
-      0%, 100% { box-shadow: 0 6px 20px rgba(216, 69, 112, 0.45); transform: scale(1); }
-      50% { box-shadow: 0 10px 30px rgba(216, 69, 112, 0.7); transform: scale(1.04); }
-    }
-    .promo-float-btn:hover {
-      transform: translateY(-2px) scale(1.06);
-    }
-    @media (max-width: 767px) {
-      .promo-float-btn {
-        bottom: 85px;
-        left: 12px;
-        padding: 8px 14px;
-        font-size: 12px;
-      }
-    }
-
-    /* 20/10 Popup Modal */
-    .promo-modal-card {
-      background: linear-gradient(160deg, #240f1a 0%, #150810 100%);
-      border: 1.5px solid rgba(220, 110, 140, 0.35);
-      border-radius: 24px;
-      padding: 24px 20px 28px;
-      max-width: 440px;
-      width: 90%;
-      text-align: center;
-      color: #f5e6ea;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(200, 70, 105, 0.3);
-      position: relative;
-    }
-    .promo-modal-img {
-      width: min(260px, 80%);
-      aspect-ratio: 1/1;
-      object-fit: cover;
-      border-radius: 18px;
-      margin: 0 auto 16px;
-      display: block;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255, 200, 220, 0.3);
-    }
-    /* ===== END 20/10 SECTION ===== */
 
     /* Announcement Banner */
 
@@ -3270,12 +2949,6 @@
   <!-- Scroll Progress Indicator -->
   <div class="scroll-progress" id="scrollProgress"></div>
 
-  <!-- Floating 20/10 Gift Button -->
-  <a href="/ws2010" class="promo-float-btn" aria-label="Ưu đãi 20/10 Olion Coffee">
-    <span style="font-size: 16px;">💐</span>
-    <span>Ưu Đãi 20/10</span>
-  </a>
-
   <!-- Announcement Banner (Controlled from Admin) -->
   <div id="announcementBanner" class="announcement-banner" style="display: none;" role="region" aria-label="Thông báo ưu đãi">
     <div class="shell announcement-content">
@@ -3288,20 +2961,12 @@
 
   <!-- ======== 1. SITE HEADER (SEMANTIC NAV) ======== -->
   <header class="site-header" id="siteHeader">
-    <!-- Persistent 20/10 Top Announcement Ribbon Inside Header -->
-    <div class="promo-top-bar" id="promoTopBar">
-      <span class="promo-top-badge">🌷 20/10 SPECIAL</span>
-      <span><strong>Tặng cành hoa nhỏ</strong> cho phái đẹp khi ghé mua nước hôm nay!</span>
-      <a href="/ws2010" class="promo-top-link">Xem chi tiết & đếm ngược →</a>
-    </div>
-
     <div class="shell header-container">
       <a href="#hero" class="header-brand" aria-label="Trang chủ Olion Coffee — Elegance in Every Sip">
         <img src="assets/logo-white.webp" alt="Logo thương hiệu Olion Coffee — Elegance in Every Sip" width="160" height="48" loading="eager" decoding="async" />
       </a>
 
       <nav class="header-nav" id="headerNav" aria-label="Thanh điều hướng chính">
-        <a href="/ws2010" class="nav-link" style="color: #f7a8be !important; font-weight: 700;">🌷 Ưu đãi 20/10</a>
         <a href="#about" class="nav-link" data-i18n="nav_about">Về Olion</a>
         <a href="#signature" class="nav-link" data-i18n="nav_signature">Signature</a>
         <a href="#menu" class="nav-link" data-i18n="nav_menu">Thực đơn</a>
@@ -3359,7 +3024,6 @@
       </div>
 
       <a href="#hero" class="drawer-link"><span data-i18n="drawer_home">Trang chủ</span> <span>→</span></a>
-      <a href="/ws2010" onclick="toggleDrawer(false)" class="drawer-link" style="color: #f7a8be !important; font-weight: 700;"><span>🌷 Ưu Đãi 20/10 (Tặng Hoa)</span> <span>→</span></a>
       <a href="#about" class="drawer-link"><span data-i18n="drawer_about">Về Olion Coffee</span> <span>→</span></a>
       <a href="#signature" class="drawer-link"><span data-i18n="drawer_signature">Món Signature</span> <span>→</span></a>
       <a href="#menu" class="drawer-link"><span data-i18n="drawer_menu">Thực đơn đồ uống</span> <span>→</span></a>
@@ -3411,10 +3075,8 @@
           Quán cà phê đẹp ở Dương Quảng Hàm, Gò Vấp với không gian sang trọng và đồ uống thủ công tinh tế. Thưởng thức hương vị nguyên bản, đắm chìm trong góc nhỏ tĩnh lặng giữa lòng Sài Gòn.
         </p>
         <div class="hero-cta-group">
-          <a href="/ws2010" class="btn btn-primary" style="background: linear-gradient(135deg, #d84570 0%, #8a1d42 100%) !important; border: 1px solid rgba(255,200,220,0.5) !important; box-shadow: 0 8px 24px rgba(216, 69, 112, 0.45) !important;">
-            🌷 Ưu Đãi 20/10 (Tặng Hoa)
-          </a>
-          <a href="#menu" class="btn btn-ghost" data-i18n="hero_cta_menu">Khám phá thực đơn →</a>
+          <a href="#menu" class="btn btn-primary" data-i18n="hero_cta_menu">Khám phá thực đơn →</a>
+          <a href="#about" class="btn btn-ghost" data-i18n="hero_cta_about">Câu chuyện quán</a>
         </div>
       </div>
 
@@ -3483,70 +3145,7 @@
       </div>
     </section>
 
-    <!-- ======== 20/10 WOMEN'S DAY PROMO SECTION ======== -->
-    <section class="promo-2010-section" id="promo2010" aria-label="Ưu đãi ngày Phụ nữ Việt Nam 20/10">
-      <div class="promo-petals-bg" id="promoPetals"></div>
-      <div class="shell promo-2010-inner">
-        <!-- Left: Image / Badge -->
-        <div class="promo-2010-visual">
-          <div class="promo-banner-poster">
-            <img src="assets/banner-2010.jpg" alt="20/10 - Dành tặng những điều dịu dàng nhất" class="promo-banner-img" loading="lazy" />
-          </div>
-          <div class="promo-date-badge">20/10</div>
-        </div>
 
-        <!-- Right: Content -->
-        <div class="promo-2010-content">
-          <div class="promo-eyebrow">
-            <span class="promo-heart">♥</span>
-            <span>Ngày Phụ Nữ Việt Nam</span>
-          </div>
-          <h2 class="promo-title">
-            Dành Tặng Những<br>
-            <em>Điều Dịu Dàng Nhất</em> 🌷
-          </h2>
-          <p class="promo-desc">
-            🫶🏻 Olion gửi lời chúc đến tất cả những cô gái luôn xinh đẹp, vui vẻ và gặp thật nhiều điều may mắn.
-          </p>
-
-          <!-- Real offer card -->
-          <div class="promo-real-offer">
-            <div class="promo-real-offer-icon">💐</div>
-            <div class="promo-real-offer-body">
-              <strong>Quà Bất Ngờ Từ Olion</strong>
-              <p>Các bạn nữ khi ghé Olion mua nước sẽ được <em>tặng một cành hoa nhỏ</em> như lời chúc ngọt ngào. Hy vọng món quà nhỏ này sẽ khiến ngày của bạn vui hơn một chút nhé!</p>
-            </div>
-          </div>
-
-          <blockquote class="promo-quote">
-            "Nếu chưa biết hẹn nhau ở đâu, ghé Olion làm một ly nước, cùng trò chuyện và tận hưởng một ngày thật vui nhé!" ☕️🤎
-          </blockquote>
-
-          <!-- Countdown -->
-          <div class="promo-countdown-wrap">
-            <span class="promo-countdown-label">⏰ Chương trình kết thúc sau</span>
-            <div class="promo-countdown" id="promoCountdown">
-              <div class="countdown-box"><span id="cdDays">00</span><small>Ngày</small></div>
-              <div class="countdown-sep">:</div>
-              <div class="countdown-box"><span id="cdHours">00</span><small>Giờ</small></div>
-              <div class="countdown-sep">:</div>
-              <div class="countdown-box"><span id="cdMins">00</span><small>Phút</small></div>
-              <div class="countdown-sep">:</div>
-              <div class="countdown-box"><span id="cdSecs">00</span><small>Giây</small></div>
-            </div>
-          </div>
-
-          <div class="promo-cta-row">
-            <a href="tel:0783657587" class="btn btn-primary promo-cta-btn">
-              ☕ Ghé Olion Hôm Nay
-            </a>
-            <a href="#contact" class="promo-cta-call">
-              📍 80/64a Dương Quảng Hàm
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- ======== 4. ABOUT SECTION ======== -->
     <section class="about-section" id="about" aria-label="Về chúng tôi">
@@ -6190,70 +5789,7 @@
         return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
       }
 
-      // ===== 20/10 WOMEN'S DAY PROMO =====
-      (function() {
-        // Petal animation
-        const petalContainer = document.getElementById('promoPetals');
-        const petals = ['🌸','🌹','🌷','✿','❀','♥','🌺'];
-        if (petalContainer) {
-          for (let i = 0; i < 22; i++) {
-            const p = document.createElement('span');
-            p.className = 'promo-petal';
-            p.textContent = petals[i % petals.length];
-            p.style.left = Math.random() * 100 + '%';
-            p.style.top = (Math.random() * -40) + 'px';
-            const dur = 6 + Math.random() * 10;
-            p.style.animationDuration = dur + 's';
-            p.style.animationDelay = (Math.random() * 8) + 's';
-            p.style.fontSize = (12 + Math.random() * 16) + 'px';
-            p.style.opacity = 0;
-            petalContainer.appendChild(p);
-          }
-        }
 
-        // Countdown to end of today (23:59:59)
-        function updateCountdown() {
-          const now = new Date();
-          const endDate = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
-          const diff = Math.max(0, endDate - now);
-          const cd = document.getElementById('promoCountdown');
-          if (!cd) return;
-          
-          const hours = Math.floor(diff / (1000 * 60 * 60));
-          const mins  = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-          const secs  = Math.floor((diff % (1000 * 60)) / 1000);
-          
-          const daysEl = document.getElementById('cdDays');
-          if (daysEl) daysEl.textContent = '00';
-          document.getElementById('cdHours').textContent = String(hours).padStart(2,'0');
-          document.getElementById('cdMins').textContent  = String(mins).padStart(2,'0');
-          document.getElementById('cdSecs').textContent  = String(secs).padStart(2,'0');
-        }
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
-
-        // Auto show 20/10 Popup Modal after 1.5 seconds if not dismissed this session
-        setTimeout(() => {
-          if (sessionStorage.getItem('olion_promo_2010_seen') !== 'true') {
-            const modal = document.getElementById('promo2010Modal');
-            if (modal) {
-              modal.classList.add('active');
-              sessionStorage.setItem('olion_promo_2010_seen', 'true');
-            }
-          }
-        }, 1500);
-
-        // Global function to smoothly scroll to promo2010 section
-        window.scrollToPromo2010 = function() {
-          const sec = document.getElementById('promo2010');
-          if (sec) {
-            sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          } else {
-            window.location.href = '#promo2010';
-          }
-        };
-      })();
-      // ===== END 20/10 PROMO =====
 
       // A. Announcement Banner
       window.dismissAnnouncement = function() {
@@ -6644,30 +6180,7 @@
         <div id="guideContent" style="color: var(--text-body); font-size: 0.9rem; line-height: 1.6;"></div>
       </div>
     </div>
-  <!-- ======== 19. 20/10 PROMO POPUP MODAL ======== -->
-  <div class="modal-overlay" id="promo2010Modal" onclick="if(event.target === this) this.classList.remove('active')">
-    <div class="promo-modal-card">
-      <button type="button" class="modal-close-btn" onclick="document.getElementById('promo2010Modal').classList.remove('active')">✕</button>
-      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #f7a8be; margin-bottom: 8px;">
-        🌷 HAPPY VIETNAMESE WOMEN'S DAY 20/10
-      </div>
-      <img src="assets/banner-2010.jpg" alt="20/10 - Dành tặng những điều dịu dàng nhất" class="promo-modal-img" />
-      <h3 style="font-family: var(--font-heading); color: #fff; font-size: 1.35rem; margin-bottom: 8px;">
-        Dành Tặng Những <span style="color: #f7a8be; font-style: italic;">Điều Dịu Dàng Nhất</span>
-      </h3>
-      <p style="color: rgba(240, 215, 225, 0.88); font-size: 0.9rem; line-height: 1.55; margin-bottom: 18px;">
-        Các bạn nữ khi ghé Olion mua nước sẽ được <strong>tặng một cành hoa nhỏ</strong> như lời chúc ngọt ngào!
-      </p>
-      <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-        <a href="/ws2010" class="btn btn-primary" style="background: linear-gradient(135deg, #d84570 0%, #8a1d42 100%) !important; padding: 12px 20px; font-size: 13.5px;">
-          Xem Trang Ưu Đãi 20/10 🌸
-        </a>
-        <a href="https://www.olioncoffee.app/ws2010" target="_blank" class="btn btn-ghost" style="border-color: rgba(255, 180, 200, 0.4); color: #f7a8be; padding: 12px 18px; font-size: 13.5px;">
-          Chia Sẻ Ưu Đãi 🔗
-        </a>
-      </div>
-    </div>
-  </div>
+
 
   <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b6899754248448c5aa66342fbfe6db75"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
