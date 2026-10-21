@@ -382,15 +382,21 @@
             </div>
             <div class="form-group">
               <label class="form-label">Khung giờ *</label>
-              <select id="pTime" class="form-input" required>
+              <select id="pTime" class="form-input" required onchange="handlePageTimeSelectChange()">
                 <option value="08:00 - 10:00">08:00 - 10:00 (Sáng sớm)</option>
                 <option value="10:00 - 12:00" selected>10:00 - 12:00 (Trưa)</option>
                 <option value="13:00 - 15:00">13:00 - 15:00 (Đầu giờ chiều)</option>
                 <option value="15:00 - 17:00">15:00 - 17:00 (Chiều mát)</option>
                 <option value="17:00 - 19:30">17:00 - 19:30 (Tối ấm cúng)</option>
-                <option value="Cả buổi / Khác">Cả buổi / Khác</option>
+                <option value="Cả buổi">Cả buổi (Sáng / Chiều / Tối)</option>
+                <option value="custom">✏️ Tự nhập khung giờ riêng...</option>
               </select>
             </div>
+          </div>
+
+          <div id="pCustomTimeWrap" class="form-group" style="display: none; margin-top: -4px;">
+            <label class="form-label" style="color: var(--gold-light);">Khung giờ riêng của bạn *</label>
+            <input type="text" id="pCustomTime" class="form-input" placeholder="Ví dụ: 09:30 - 11:30 hoặc 14:00 - 18:00..." />
           </div>
 
           <div class="form-group">
@@ -655,14 +661,37 @@ function backToPageForm() {
   if (successArea) successArea.style.display = 'none';
 }
 
+function handlePageTimeSelectChange() {
+  const sel = document.getElementById('pTime');
+  const wrap = document.getElementById('pCustomTimeWrap');
+  const input = document.getElementById('pCustomTime');
+  if (!sel || !wrap) return;
+  if (sel.value === 'custom') {
+    wrap.style.display = 'block';
+    if (input) input.focus();
+  } else {
+    wrap.style.display = 'none';
+  }
+}
+
 function handlePageSubmit(e){
   e.preventDefault();
   const name = (document.getElementById('pName')?.value || '').trim();
   const phone = (document.getElementById('pPhone')?.value || '').trim();
   const guests = (document.getElementById('pGuests')?.value || '').trim();
   const date = document.getElementById('pDate')?.value || '';
-  const time = document.getElementById('pTime')?.value || '';
+  let time = document.getElementById('pTime')?.value || '';
   const note = (document.getElementById('pNote')?.value || '').trim();
+
+  if (time === 'custom') {
+    const customTimeVal = (document.getElementById('pCustomTime')?.value || '').trim();
+    if (!customTimeVal) {
+      alert('Vui lòng nhập khung giờ riêng bạn mong muốn (Ví dụ: 09:30 - 11:30).');
+      document.getElementById('pCustomTime')?.focus();
+      return;
+    }
+    time = customTimeVal;
+  }
 
   if(!name || !phone || !date || !time){
     alert('Vui lòng điền đầy đủ các mục bắt buộc (*)');

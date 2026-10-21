@@ -4293,15 +4293,21 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="bkTime">Khung giờ dự kiến *</label>
-              <select id="bkTime" class="form-input" required>
+              <select id="bkTime" class="form-input" required onchange="handleTimeSelectChange('modal')">
                 <option value="08:00 - 10:00">08:00 - 10:00 (Sáng sớm)</option>
                 <option value="10:00 - 12:00" selected>10:00 - 12:00 (Trưa)</option>
                 <option value="13:00 - 15:00">13:00 - 15:00 (Đầu giờ chiều)</option>
                 <option value="15:00 - 17:00">15:00 - 17:00 (Chiều mát)</option>
                 <option value="17:00 - 19:30">17:00 - 19:30 (Tối ấm cúng)</option>
-                <option value="Cả buổi / Khung giờ khác">Cả buổi / Khác</option>
+                <option value="Cả buổi">Cả buổi (Sáng / Chiều / Tối)</option>
+                <option value="custom">✏️ Tự nhập khung giờ riêng...</option>
               </select>
             </div>
+          </div>
+
+          <div id="bkCustomTimeWrap" class="form-group" style="display: none; margin-top: -4px;">
+            <label class="form-label" for="bkCustomTime" style="color: var(--accent-gold);">Khung giờ riêng của bạn *</label>
+            <input type="text" id="bkCustomTime" class="form-input" placeholder="Ví dụ: 09:30 - 11:30 hoặc 14:00 - 18:00..." />
           </div>
 
           <div class="form-group">
@@ -5766,6 +5772,14 @@
           phoneInput.value = localStorage.getItem('olion_customer_phone') || '';
         }
 
+        // Reset custom time input if modal is opened
+        const timeSelect = document.getElementById('bkTime');
+        const customWrap = document.getElementById('bkCustomTimeWrap');
+        const customInput = document.getElementById('bkCustomTime');
+        if (customWrap) customWrap.style.display = 'none';
+        if (customInput) customInput.value = '';
+        if (timeSelect) timeSelect.value = "10:00 - 12:00";
+
         window.selectBookingType(type);
         
         // Set minimum date (min 1 day in advance for table, 3 days for space)
@@ -5787,6 +5801,20 @@
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
         if (window.lucide) window.lucide.createIcons();
+      };
+
+      window.handleTimeSelectChange = function(context) {
+        const isModal = context === 'modal';
+        const sel = document.getElementById(isModal ? 'bkTime' : 'pTime');
+        const wrap = document.getElementById(isModal ? 'bkCustomTimeWrap' : 'pCustomTimeWrap');
+        const input = document.getElementById(isModal ? 'bkCustomTime' : 'pCustomTime');
+        if (!sel || !wrap) return;
+        if (sel.value === 'custom') {
+          wrap.style.display = 'block';
+          if (input) input.focus();
+        } else {
+          wrap.style.display = 'none';
+        }
       };
 
       window.closeBookingModal = function() {
@@ -5887,8 +5915,18 @@
         const phone = (document.getElementById('bkPhone')?.value || '').trim();
         const guests = (document.getElementById('bkGuests')?.value || '').trim();
         const date = document.getElementById('bkDate')?.value || '';
-        const time = document.getElementById('bkTime')?.value || '';
+        let time = document.getElementById('bkTime')?.value || '';
         const note = (document.getElementById('bkNote')?.value || '').trim();
+
+        if (time === 'custom') {
+          const customTimeVal = (document.getElementById('bkCustomTime')?.value || '').trim();
+          if (!customTimeVal) {
+            alert('Vui lòng nhập khung giờ riêng bạn mong muốn (Ví dụ: 09:30 - 11:30).');
+            document.getElementById('bkCustomTime')?.focus();
+            return;
+          }
+          time = customTimeVal;
+        }
 
         if (!name || !phone || !date || !time) {
           alert('Vui lòng điền đầy đủ các thông tin bắt buộc (*)');
