@@ -4181,6 +4181,246 @@
       flex-direction: column;
       gap: 10px;
     }
+
+    /* ==========================================================================
+       VISUAL HIERARCHY & SECTION DIFFERENTIATION (PHÂN TÁCH KHÔNG GIAN THỊ GIÁC)
+       ========================================================================== */
+    .section-divider {
+      width: 100%;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+      background: transparent;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(229, 154, 85, 0.28) 50%, transparent 100%);
+    }
+    .divider-pip {
+      padding: 0 16px;
+      font-size: 11px;
+      color: var(--accent-gold);
+      opacity: 0.75;
+      letter-spacing: 2px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-shadow: 0 0 12px rgba(229, 154, 85, 0.7);
+      user-select: none;
+    }
+
+    /* Watermark & Eyebrows */
+    .section-header {
+      position: relative;
+      text-align: center;
+      margin-bottom: clamp(32px, 5vw, 52px);
+      z-index: 2;
+    }
+    .section-watermark {
+      position: absolute;
+      top: -36px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-heading);
+      font-size: clamp(72px, 10vw, 120px);
+      font-weight: 900;
+      color: rgba(229, 154, 85, 0.055);
+      letter-spacing: 0.08em;
+      user-select: none;
+      pointer-events: none;
+      z-index: 0;
+      line-height: 1;
+    }
+    .about-watermark {
+      position: absolute;
+      top: -32px;
+      left: 0;
+      font-family: var(--font-heading);
+      font-size: clamp(72px, 10vw, 120px);
+      font-weight: 900;
+      color: rgba(229, 154, 85, 0.055);
+      letter-spacing: 0.08em;
+      user-select: none;
+      pointer-events: none;
+      z-index: 0;
+      line-height: 1;
+    }
+
+    .eyebrow-num {
+      font-size: 10px;
+      font-weight: 800;
+      background: rgba(229, 154, 85, 0.22);
+      color: #FFA45B;
+      padding: 1px 7px;
+      border-radius: 999px;
+      letter-spacing: 0.04em;
+      margin-right: 4px;
+      border: 1px solid rgba(229, 154, 85, 0.3);
+    }
+
+    /* ==========================================
+       INDIVIDUAL SECTION PALETTES & MOODS
+       ========================================== */
+
+    /* 1. ABOUT SECTION: Warm Forest Cafe Sanctuary */
+    .about-section {
+      padding: var(--section-py) 0;
+      background: radial-gradient(circle at 10% 20%, rgba(216, 99, 38, 0.09) 0%, transparent 55%),
+                  radial-gradient(circle at 90% 80%, rgba(197, 155, 99, 0.08) 0%, transparent 55%),
+                  #0E1410 !important;
+      position: relative;
+    }
+    .feature-pill {
+      background: rgba(20, 29, 22, 0.8) !important;
+      border: 1px solid rgba(197, 155, 99, 0.22) !important;
+      border-radius: var(--radius-md);
+      padding: 16px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .feature-pill:hover {
+      background: rgba(26, 38, 29, 0.95) !important;
+      border-color: var(--accent-gold) !important;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5), 0 0 14px rgba(229, 154, 85, 0.2);
+    }
+
+    /* 2. SIGNATURE SECTION: VIP Velvet Spotlight Stage */
+    .signature-section {
+      padding: var(--section-py) 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(216, 99, 38, 0.24) 0%, transparent 75%),
+                  linear-gradient(180deg, #090D0A 0%, #050706 100%) !important;
+      position: relative;
+      border-top: 1px solid rgba(229, 154, 85, 0.35) !important;
+      border-bottom: 1px solid rgba(229, 154, 85, 0.2) !important;
+      box-shadow: inset 0 24px 48px rgba(0,0,0,0.6);
+    }
+    .signature-card {
+      border: 1.5px solid rgba(229, 154, 85, 0.35) !important;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.65), 0 0 18px rgba(216, 99, 38, 0.15) !important;
+    }
+    .signature-card:hover {
+      border-color: #F2B872 !important;
+      transform: translateY(-5px) !important;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.85), 0 0 28px rgba(216, 99, 38, 0.35) !important;
+    }
+
+    /* 3. MENU SECTION: Roastery Bar & Tasting Studio */
+    .menu-section {
+      padding: var(--section-py) 0;
+      scroll-margin-top: 90px;
+      background: radial-gradient(circle at 85% 15%, rgba(197, 155, 99, 0.09) 0%, transparent 50%),
+                  radial-gradient(circle at 15% 85%, rgba(46, 204, 113, 0.04) 0%, transparent 50%),
+                  #101712 !important;
+      position: relative;
+    }
+
+    /* 4. SPACES SECTION: Architectural Gallery Lookbook */
+    .spaces-section {
+      padding: var(--section-py) 0;
+      background: radial-gradient(circle at 50% 100%, rgba(216, 99, 38, 0.1) 0%, transparent 65%),
+                  #070A08 !important;
+      position: relative;
+    }
+    .space-card {
+      border: 1.5px solid rgba(197, 155, 99, 0.25) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5) !important;
+    }
+    .space-card:hover {
+      border-color: var(--accent-gold) !important;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.7), 0 0 22px rgba(197, 155, 99, 0.25) !important;
+    }
+
+    /* 5. SERVICES SECTION: Warm Roasted Caramel & Chestnut Leather (VIP Invitation) */
+    .services-section {
+      padding: var(--section-py) 0;
+      background: radial-gradient(circle at 50% 15%, rgba(216, 99, 38, 0.2) 0%, transparent 60%),
+                  linear-gradient(180deg, #160F0B 0%, #1D140E 50%, #130D09 100%) !important;
+      border-top: 1.5px solid rgba(216, 99, 38, 0.55) !important;
+      border-bottom: 1.5px solid rgba(216, 99, 38, 0.4) !important;
+      box-shadow: inset 0 0 60px rgba(0,0,0,0.65) !important;
+      position: relative;
+    }
+
+    /* 6. NEWS SECTION: Coffee Journal & Editorial */
+    .news-section {
+      padding: var(--section-py) 0;
+      background: radial-gradient(circle at 80% 25%, rgba(197, 155, 99, 0.08) 0%, transparent 50%),
+                  #0D1310 !important;
+      position: relative;
+    }
+
+    /* 7. FAQ SECTION: Salon Q&A Accordion */
+    .faq-section {
+      padding: var(--section-py) 0;
+      background: radial-gradient(circle at 20% 50%, rgba(197, 155, 99, 0.06) 0%, transparent 50%),
+                  #080C09 !important;
+      position: relative;
+    }
+    .faq-item {
+      background: rgba(18, 26, 20, 0.75) !important;
+      border: 1px solid rgba(197, 155, 99, 0.2) !important;
+      border-radius: 14px !important;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3) !important;
+      transition: all 0.3s ease;
+    }
+    .faq-item:hover, .faq-item.active {
+      background: rgba(24, 34, 27, 0.95) !important;
+      border-color: var(--accent-gold) !important;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 14px rgba(229, 154, 85, 0.15) !important;
+    }
+
+    /* 8. REVIEWS SECTION: Warm Community Gathering Table */
+    .reviews-section {
+      padding: var(--section-py) 0;
+      background: radial-gradient(circle at 50% 50%, rgba(216, 99, 38, 0.12) 0%, transparent 65%),
+                  #111813 !important;
+      border-top: 1px solid rgba(197, 155, 99, 0.3) !important;
+      border-bottom: 1px solid rgba(197, 155, 99, 0.2) !important;
+      position: relative;
+    }
+    .review-card {
+      background: rgba(20, 29, 22, 0.85) !important;
+      border: 1px solid rgba(197, 155, 99, 0.25) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+      position: relative;
+      overflow: hidden;
+    }
+    .review-card::before {
+      content: '“';
+      position: absolute;
+      top: -12px;
+      right: 16px;
+      font-size: 78px;
+      font-family: var(--font-heading);
+      color: rgba(229, 154, 85, 0.12);
+      pointer-events: none;
+      line-height: 1;
+    }
+    .review-card:hover {
+      border-color: var(--accent-gold) !important;
+      transform: translateY(-4px) !important;
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.6), 0 0 16px rgba(229, 154, 85, 0.2) !important;
+    }
+
+    /* 9. CONTACT SECTION: Grounded Destination Base */
+    .contact-section {
+      padding: var(--section-py) 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(197, 155, 99, 0.12) 0%, transparent 70%),
+                  #0A0F0C !important;
+      position: relative;
+    }
+    .contact-card, .hours-card {
+      box-shadow: 0 12px 32px rgba(0,0,0,0.5), 0 0 20px rgba(197, 155, 99, 0.1) !important;
+    }
+
   </style>
 
 
@@ -4608,14 +4848,22 @@
 
 
 
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider" aria-hidden="true">
+      <span class="divider-line"></span>
+      <span class="divider-pip">✦</span>
+      <span class="divider-line"></span>
+    </div>
     <!-- ======== 4. ABOUT SECTION ======== -->
     <section class="about-section" id="about" aria-label="Về chúng tôi">
 
       <div class="shell">
         <div class="about-grid">
           <div class="about-text-col">
+            <div class="about-watermark" aria-hidden="true">01</div>
             <div class="section-eyebrow" data-i18n="about_eyebrow">
-              <span>●</span> Về Olion Coffee
+              <span class="eyebrow-num">01</span> Về Olion Coffee
             </div>
             <h2 class="section-title" data-i18n="about_title">
               Chắt chiu từng giọt,<br>
@@ -4691,12 +4939,20 @@
       </div>
     </section>
 
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider" aria-hidden="true">
+      <span class="divider-line"></span>
+      <span class="divider-pip">✦</span>
+      <span class="divider-line"></span>
+    </div>
     <!-- ======== 5. SIGNATURE SHOWCASE ======== -->
     <section class="signature-section" id="signature" aria-label="Món Signature đặc sắc">
       <div class="shell">
         <div class="section-header">
+          <div class="section-watermark" aria-hidden="true">02</div>
           <div class="section-eyebrow" data-i18n="sig_eyebrow">
-            <i data-lucide="flame" style="width:14px;height:14px;"></i> Món Bán Chạy
+            <span class="eyebrow-num">02</span> Món Bán Chạy • Signature
           </div>
           <h2 class="section-title" data-i18n="sig_title">
             Món <span class="accent">Signature</span> của quán
@@ -4745,12 +5001,20 @@
       
     </section>
 
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider" aria-hidden="true">
+      <span class="divider-line"></span>
+      <span class="divider-pip">✦</span>
+      <span class="divider-line"></span>
+    </div>
     <!-- ======== 6. MENU SECTION ======== -->
     <section class="menu-section" id="menu" aria-label="Thực đơn đồ uống Olion Coffee">
       <div class="shell">
         <div class="section-header">
+          <div class="section-watermark" aria-hidden="true">03</div>
           <div class="section-eyebrow" data-i18n="menu_eyebrow">
-            <span>●</span> Thực Đơn Đa Dạng
+            <span class="eyebrow-num">03</span> Bảng Thực Đơn Đồ Uống
           </div>
           <h2 class="section-title" data-i18n="menu_title">
             Khám phá <span class="accent">món ngon</span> yêu thích
@@ -4959,12 +5223,20 @@
       </div>
     </section>
 
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider" aria-hidden="true">
+      <span class="divider-line"></span>
+      <span class="divider-pip">✦</span>
+      <span class="divider-line"></span>
+    </div>
     <!-- ======== 7. SPACES SECTION ======== -->
     <section class="spaces-section" id="spaces" aria-label="Không gian quán Olion Coffee">
       <div class="shell">
         <div class="section-header">
+          <div class="section-watermark" aria-hidden="true">04</div>
           <div class="section-eyebrow" data-i18n="spaces_eyebrow">
-            <span>●</span> Không Gian Quán
+            <span class="eyebrow-num">04</span> Không Gian &amp; Góc Ngồi
           </div>
           <h2 class="section-title" data-i18n="spaces_title">
             Nơi dừng chân <span class="accent">ấm áp</span>
@@ -4992,12 +5264,20 @@
       </div>
     </section>
 
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider" aria-hidden="true">
+      <span class="divider-line"></span>
+      <span class="divider-pip">✦</span>
+      <span class="divider-line"></span>
+    </div>
     <!-- ======== 7.1 SERVICES SECTION: CÓ THÊM ĐIỀU MỚI (CHO THUÊ KHÔNG GIAN & ĐẶT BÀN) ======== -->
     <section class="services-section" id="services" aria-label="Dịch vụ cho thuê không gian và đặt bàn trước tại Olion Coffee">
       <div class="shell">
         <div class="section-header">
+          <div class="section-watermark" aria-hidden="true">05</div>
           <div class="section-eyebrow">
-            <span>●</span> Có Thêm Điều Mới!
+            <span class="eyebrow-num">05</span> Dịch Vụ Mới Tại Olion
           </div>
           <h2 class="section-title">
             Không Gian Cho Những <span class="accent">Buổi Gặp Gỡ Ý Nghĩa</span>
@@ -5105,12 +5385,20 @@
       </div>
     </section>
 
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider" aria-hidden="true">
+      <span class="divider-line"></span>
+      <span class="divider-pip">✦</span>
+      <span class="divider-line"></span>
+    </div>
     <!-- ======== 8. NEWS & EVENTS (TIN TỨC & SỰ KIỆN) ======== -->
     <section class="news-section" id="news" aria-label="Tin tức và sự kiện Olion Coffee">
       <div class="shell">
         <div class="section-header">
+          <div class="section-watermark" aria-hidden="true">06</div>
           <div class="section-eyebrow" data-i18n="news_eyebrow">
-            <span>●</span> Bản Tin & Sự Kiện
+            <span class="eyebrow-num">06</span> Bản Tin &amp; Câu Chuyện
           </div>
           <h2 class="section-title" data-i18n="news_title">
             Tin tức & <span class="accent">Sự kiện</span>
@@ -5127,12 +5415,20 @@
       </div>
     </section>
 
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider" aria-hidden="true">
+      <span class="divider-line"></span>
+      <span class="divider-pip">✦</span>
+      <span class="divider-line"></span>
+    </div>
     <!-- ======== 9. FAQ ACCORDION ======== -->
     <section class="faq-section" id="faq" aria-label="Hỏi đáp thường gặp">
       <div class="shell">
         <div class="section-header">
+          <div class="section-watermark" aria-hidden="true">07</div>
           <div class="section-eyebrow" data-i18n="faq_eyebrow">
-            <span>●</span> Hỏi Đáp Nhanh
+            <span class="eyebrow-num">07</span> Hỏi Đáp Thường Gặp
           </div>
           <h2 class="section-title" data-i18n="faq_title">
             Bạn <span class="accent">thắc mắc?</span>
@@ -5198,12 +5494,20 @@
       </div>
     </section>
 
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider" aria-hidden="true">
+      <span class="divider-line"></span>
+      <span class="divider-pip">✦</span>
+      <span class="divider-line"></span>
+    </div>
     <!-- ======== 9. REVIEWS & TESTIMONIALS ======== -->
     <section class="reviews-section" id="reviews" aria-label="Đánh giá từ khách hàng">
       <div class="shell">
         <div class="section-header">
+          <div class="section-watermark" aria-hidden="true">08</div>
           <div class="section-eyebrow" data-i18n="reviews_eyebrow">
-            <span>●</span> Cảm Nhận Khách Hàng
+            <span class="eyebrow-num">08</span> Cảm Nhận Khách Hàng
           </div>
           <h2 class="section-title" data-i18n="reviews_title">
             Khách hàng <span class="accent">nói gì</span> về Olion?
@@ -5257,12 +5561,20 @@
       </div>
     </section>
 
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider" aria-hidden="true">
+      <span class="divider-line"></span>
+      <span class="divider-pip">✦</span>
+      <span class="divider-line"></span>
+    </div>
     <!-- ======== 10. CONTACT SECTION ======== -->
     <section class="contact-section" id="contact" aria-label="Thông tin liên hệ quán">
       <div class="shell">
         <div class="section-header">
+          <div class="section-watermark" aria-hidden="true">09</div>
           <div class="section-eyebrow" data-i18n="contact_eyebrow">
-            <span>●</span> Thông Tin Liên Hệ
+            <span class="eyebrow-num">09</span> Thông Tin Ghé Quán
           </div>
           <h2 class="section-title" data-i18n="contact_title">
             Bạn <span class="accent">muốn ghé</span> chơi?
