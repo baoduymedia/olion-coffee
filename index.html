@@ -4560,6 +4560,97 @@
       }
     }
 
+
+    /* ==========================================================================
+       MOBILE CENTERING & BALANCE FIX (CÂN BẰNG MÀN HÌNH & CHỐNG LỆCH PHẢI)
+       ========================================================================== */
+    .btn-map-route {
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      white-space: normal !important;
+      text-transform: none !important;
+      font-size: 13.5px !important;
+      min-height: 44px !important;
+      padding: 10px 14px !important;
+      border-radius: 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px !important;
+      text-align: center !important;
+      word-break: normal !important;
+      overflow: visible !important;
+      background: linear-gradient(135deg, #2D3748 0%, #1A202C 100%) !important;
+      border: 1px solid rgba(197, 155, 99, 0.4) !important;
+      color: #F5EBE1 !important;
+      letter-spacing: 0.02em !important;
+    }
+    .btn-map-route i {
+      width: 16px !important;
+      height: 16px !important;
+      flex-shrink: 0 !important;
+    }
+    .btn-map-route span {
+      font-weight: 700 !important;
+      line-height: 1.35 !important;
+    }
+    .btn-map-route:hover {
+      background: linear-gradient(135deg, #D86326 0%, #C59B63 100%) !important;
+      color: #0A0F0D !important;
+      border-color: #F2B872 !important;
+    }
+
+    @media (max-width: 767px) {
+      /* Hide redundant floating widgets that cover content and skew layout on mobile */
+      .floating-social-dock {
+        display: none !important;
+      }
+      .install-float-btn {
+        display: none !important;
+      }
+
+      /* Perfect balance & equal margins */
+      .shell {
+        padding-left: 14px !important;
+        padding-right: 14px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        box-sizing: border-box !important;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+      }
+
+      .contact-card, .hours-card {
+        padding: 20px 16px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        border-radius: 16px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+
+      .hours-row {
+        font-size: 13.5px !important;
+        padding: 10px 0 !important;
+      }
+
+      .store-atmosphere-box {
+        padding: 10px 12px !important;
+      }
+
+      .quote-box {
+        padding: 12px 14px !important;
+      }
+    }
+
   </style>
 
 
@@ -5811,8 +5902,8 @@
 
               <!-- 1-Tap Google Maps Route Button -->
               <div style="margin-top: 18px;">
-                <a href="https://www.google.com/maps/dir/?api=1&destination=80/64a+D%C6%B0%C6%A1ng+Qu%E1%BA%A3ng+H%C3%A0m,+Ph%C6%B0%E1%BB%9Dng+5,+G%C3%B2+V%E1%BA%A5p,+Th%C3%A0nh+ph%E1%BB%91+H%E1%BB%93+Ch%C3%AD+Minh" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-map-route" style="width:100%; justify-content:center; gap:8px; padding:12px 18px; border-radius:12px; font-weight:700;">
-                  <i data-lucide="navigation" style="width:16px;height:16px;"></i>
+                <a href="https://www.google.com/maps/dir/?api=1&destination=80/64a+D%C6%B0%C6%A1ng+Qu%E1%BA%A3ng+H%C3%A0m,+Ph%C6%B0%E1%BB%9Dng+5,+G%C3%B2+V%E1%BA%A5p,+Th%C3%A0nh+ph%E1%BB%91+H%E1%BB%93+Ch%C3%AD+Minh" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-map-route">
+                  <i data-lucide="navigation"></i>
                   <span>Chỉ Đường Đến Quán (Google Maps)</span>
                 </a>
               </div>
