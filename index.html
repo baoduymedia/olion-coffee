@@ -587,12 +587,13 @@
       .header-container { height: 62px; }
     }
 
-    /* Mobile Drawer */
+    /* ======== LUXURY MOBILE DRAWER (MENU DỌC DI ĐỘNG CAO CẤP) ======== */
     .mobile-drawer-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.65);
-      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       z-index: 1050;
       opacity: 0;
       pointer-events: none;
@@ -606,57 +607,248 @@
       top: 0;
       right: 0;
       bottom: 0;
-      width: min(320px, 80vw);
-      background: #111A13;
-      border-left: 1px solid var(--border-subtle);
+      width: min(340px, 86vw);
+      background: linear-gradient(180deg, #18130E 0%, #0E0B08 100%);
+      border-left: 1px solid rgba(229, 154, 85, 0.22);
       z-index: 1051;
-      padding: 80px 24px 32px;
+      padding: 0;
       display: flex;
       flex-direction: column;
       transform: translateX(100%);
       transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
+      box-shadow: -14px 0 50px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
     }
 
     .mobile-drawer.active { transform: translateX(0); }
 
-    .drawer-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      color: var(--text-muted);
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .drawer-nav { display: flex; flex-direction: column; gap: 16px; }
-
-    .drawer-nav a {
+    .drawer-header {
+      padding: 18px 20px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 0;
-      font-size: 16px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      color: var(--text-cream);
+      background: rgba(255, 255, 255, 0.02);
+      flex-shrink: 0;
     }
 
-    .drawer-nav a span { color: var(--accent-gold); }
-
-    .drawer-footer {
-      margin-top: auto;
+    .drawer-brand {
       display: flex;
       flex-direction: column;
+      gap: 2px;
+      text-decoration: none;
+    }
+
+    .drawer-brand img {
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .drawer-brand span {
+      font-size: 9.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-gold);
+      font-style: italic;
+      font-family: var(--font-body);
+    }
+
+    .drawer-close {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .drawer-close:hover, .drawer-close:active {
+      background: rgba(229, 154, 85, 0.2);
+      color: #FFFFFF;
+      border-color: var(--accent-gold);
+    }
+
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .drawer-lang-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 12px;
+    }
+
+    .drawer-lang-label {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .drawer-quick-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 6px;
+      margin-bottom: 12px;
+    }
+
+    .drawer-quick-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 9px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-cream);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .drawer-quick-pill:hover, .drawer-quick-pill:active {
+      background: rgba(229, 154, 85, 0.15);
+      border-color: var(--accent-gold);
+      color: #FFFFFF;
+    }
+
+    .drawer-nav-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.06);
+      margin: 8px 0;
+    }
+
+    .drawer-menu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .drawer-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 14.5px;
+      font-weight: 500;
+      text-transform: none !important;
+      letter-spacing: 0.01em;
+      color: var(--text-cream) !important;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .drawer-link:hover, .drawer-link:active {
+      background: rgba(229, 154, 85, 0.1);
+      color: #FFFFFF !important;
+      border-color: rgba(229, 154, 85, 0.25);
+      transform: translateX(4px);
+    }
+
+    .drawer-link-left {
+      display: flex;
+      align-items: center;
       gap: 12px;
+    }
+
+    .drawer-link-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-gold);
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+
+    .drawer-link:hover .drawer-link-icon {
+      background: rgba(216, 99, 38, 0.25);
+      border-color: var(--accent-gold);
+      color: #FFFFFF;
+    }
+
+    .drawer-link-arrow {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 18px;
+      font-family: monospace;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .drawer-link:hover .drawer-link-arrow {
+      color: var(--accent-gold);
+      transform: translateX(3px);
+    }
+
+    .drawer-link.highlight {
+      background: rgba(229, 154, 85, 0.08);
+      border-color: rgba(229, 154, 85, 0.25);
+      color: var(--accent-gold) !important;
+      font-weight: 600;
+    }
+
+    .drawer-footer {
+      padding: 14px 18px 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(0, 0, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .drawer-social-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding-top: 4px;
+    }
+
+    .drawer-social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-cream);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .drawer-social-btn:hover {
+      background: var(--accent-gold);
+      color: #fff;
+      transform: translateY(-2px);
     }
 
     /* ======== HERO ======== */
@@ -3501,41 +3693,171 @@
   <!-- Mobile Drawer Overlay & Menu -->
   <div class="mobile-drawer-overlay" id="drawerOverlay"></div>
   <aside class="mobile-drawer" id="mobileDrawer" aria-label="Menu di động">
-    <button type="button" class="drawer-close" id="drawerClose" aria-label="Đóng menu"><i data-lucide="x" style="width:20px;height:20px;"></i></button>
-    <div class="drawer-nav">
-      <!-- Mobile Language Switcher Row -->
-      <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 0 14px; border-bottom: 1px solid rgba(255,255,255,0.08);">
-        <span style="font-size: 13px; color: var(--text-muted);" data-i18n="drawer_lang_label">Ngôn ngữ / Language:</span>
-        <div class="lang-toggle-btn" onclick="toggleLanguage()">
+    <!-- 1. Drawer Header: Brand + Close button -->
+    <div class="drawer-header">
+      <a href="#hero" class="drawer-brand" onclick="toggleDrawer(false)">
+        <img src="assets/logo-white.webp" alt="Olion Coffee" />
+        <span>Elegance in Every Sip</span>
+      </a>
+      <button type="button" class="drawer-close" id="drawerClose" aria-label="Đóng menu">
+        <i data-lucide="x" style="width:18px;height:18px;"></i>
+      </button>
+    </div>
+
+    <!-- 2. Drawer Body (Scrollable) -->
+    <div class="drawer-body">
+      <!-- Language Switcher Card -->
+      <div class="drawer-lang-card">
+        <span class="drawer-lang-label">
+          <i data-lucide="globe" style="width:14px;height:14px;color:var(--accent-gold);"></i>
+          <span data-i18n="drawer_lang_label">Ngôn ngữ / Language:</span>
+        </span>
+        <div class="lang-toggle-btn" onclick="toggleLanguage()" style="margin: 0;">
           <span class="lang-pill active" id="langPillViMobile">VI</span>
           <span class="lang-pill" id="langPillEnMobile">EN</span>
         </div>
       </div>
 
-      <a href="#hero" class="drawer-link"><span data-i18n="drawer_home">Trang chủ</span> <span>→</span></a>
-      <a href="#about" class="drawer-link"><span data-i18n="drawer_about">Về Olion Coffee</span> <span>→</span></a>
-      <a href="#signature" class="drawer-link"><span data-i18n="drawer_signature">Món Signature</span> <span>→</span></a>
-      <a href="#menu" class="drawer-link"><span data-i18n="drawer_menu">Thực đơn đồ uống</span> <span>→</span></a>
-      <a href="javascript:void(0)" onclick="toggleDrawer(false); openMenuBoard();" class="drawer-link" style="color: var(--accent-gold); font-weight: 700;"><i data-lucide="file-text" style="width:16px;height:16px;margin-right:6px;"></i><span data-i18n="drawer_menu_board">Bảng Menu Tổng (Toàn Trang)</span> <span>→</span></a>
-      <a href="javascript:void(0)" onclick="toggleDrawer(false); openLoyaltyModal();" class="drawer-link" style="display: none !important; color: #F3B378; font-weight: 700;"><i data-lucide="crown" style="width:16px;height:16px;margin-right:6px;"></i><span data-i18n="drawer_loyalty">Tra Cứu Điểm Tích Lũy</span> <span>→</span></a>
-      <a href="#spaces" class="drawer-link"><span data-i18n="drawer_spaces">Không gian quán</span> <span>→</span></a>
-      <a href="#services" class="drawer-link" style="color: var(--accent-gold); font-weight: 700;"><i data-lucide="calendar" style="width:16px;height:16px;margin-right:6px;"></i><span data-i18n="drawer_services">Đặt bàn & Thuê không gian</span> <span>→</span></a>
-      <a href="#news" class="drawer-link"><span data-i18n="drawer_news">Tin tức & Sự kiện</span> <span>→</span></a>
-      <a href="#faq" class="drawer-link"><span data-i18n="drawer_faq">Hỏi đáp</span> <span>→</span></a>
-      <a href="#contact" class="drawer-link"><span data-i18n="drawer_contact">Thông tin liên hệ</span> <span>→</span></a>
-      <a href="javascript:void(0)" id="drawerInstallBtn" class="drawer-link" style="display: flex; color: var(--accent-gold); font-weight: 700;"><i data-lucide="download" style="width:16px;height:16px;margin-right:6px;"></i><span data-i18n="nav_install">Cài Đặt App Olion</span> <span>→</span></a>
-      <a href="javascript:void(0)" onclick="if(window.OneSignal) OneSignal.showSlidedownPrompt(); toggleDrawer(false);" class="drawer-link" style="display: flex; color: #4CAF50; font-weight: 700;"><i data-lucide="bell-ring" style="width:16px;height:16px;margin-right:6px;"></i><span>Bật Thông Báo (Ting Ting)</span> <span>→</span></a>
+      <!-- Quick Action: Prominent Đặt Bàn Card -->
+      <button type="button" class="btn btn-booking-highlight" onclick="toggleDrawer(false); openBookingModal('table');" style="width: 100%; padding: 12px 16px; border-radius: 12px; font-size: 14px; margin-bottom: 4px;">
+        <i data-lucide="bookmark-check" style="width:17px;height:17px;margin-right:6px;"></i>
+        <span>Đặt Bàn Giữ Chỗ Ngay</span>
+      </button>
+
+      <!-- Quick Secondary Links -->
+      <div class="drawer-quick-grid">
+        <a href="javascript:void(0)" onclick="toggleDrawer(false); openMenuBoard();" class="drawer-quick-pill">
+          <i data-lucide="file-text" style="width:14px;height:14px;color:var(--accent-gold);"></i>
+          <span data-i18n="drawer_menu_board">Bảng Menu Tổng</span>
+        </a>
+        <a href="#services" onclick="toggleDrawer(false);" class="drawer-quick-pill">
+          <i data-lucide="users" style="width:14px;height:14px;color:var(--accent-gold);"></i>
+          <span>Thuê Không Gian</span>
+        </a>
+      </div>
+
+      <div class="drawer-nav-divider"></div>
+
+      <!-- Navigation Links -->
+      <nav class="drawer-menu-list">
+        <a href="#hero" class="drawer-link">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon"><i data-lucide="home" style="width:16px;height:16px;"></i></div>
+            <span data-i18n="drawer_home">Trang chủ</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </a>
+
+        <a href="#about" class="drawer-link">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon"><i data-lucide="coffee" style="width:16px;height:16px;"></i></div>
+            <span data-i18n="drawer_about">Về Olion Coffee</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </a>
+
+        <a href="#signature" class="drawer-link">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon"><i data-lucide="sparkles" style="width:16px;height:16px;"></i></div>
+            <span data-i18n="drawer_signature">Món Signature</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </a>
+
+        <a href="#menu" class="drawer-link">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon"><i data-lucide="cup-soda" style="width:16px;height:16px;"></i></div>
+            <span data-i18n="drawer_menu">Thực đơn đồ uống</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </a>
+
+        <a href="#spaces" class="drawer-link">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon"><i data-lucide="image" style="width:16px;height:16px;"></i></div>
+            <span data-i18n="drawer_spaces">Không gian quán</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </a>
+
+        <a href="#services" class="drawer-link highlight">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon"><i data-lucide="calendar-check" style="width:16px;height:16px;"></i></div>
+            <span data-i18n="drawer_services">Đặt bàn & Dịch vụ</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </a>
+
+        <a href="#news" class="drawer-link">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon"><i data-lucide="newspaper" style="width:16px;height:16px;"></i></div>
+            <span data-i18n="drawer_news">Tin tức & Sự kiện</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </a>
+
+        <a href="#faq" class="drawer-link">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon"><i data-lucide="help-circle" style="width:16px;height:16px;"></i></div>
+            <span data-i18n="drawer_faq">Hỏi đáp</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </a>
+
+        <a href="#contact" class="drawer-link">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon"><i data-lucide="map-pin" style="width:16px;height:16px;"></i></div>
+            <span data-i18n="drawer_contact">Thông tin liên hệ</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </a>
+
+        <div class="drawer-nav-divider"></div>
+
+        <a href="javascript:void(0)" id="drawerInstallBtn" class="drawer-link" style="color: var(--accent-gold) !important;">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon" style="background: rgba(216,99,38,0.15); border-color: rgba(216,99,38,0.3);"><i data-lucide="download" style="width:16px;height:16px;"></i></div>
+            <span data-i18n="nav_install">Cài Đặt App Olion</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </a>
+
+        <a href="javascript:void(0)" onclick="if(window.OneSignal) OneSignal.showSlidedownPrompt(); toggleDrawer(false);" class="drawer-link" style="color: #6FCF97 !important;">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon" style="background: rgba(76,175,80,0.12); border-color: rgba(76,175,80,0.25); color: #6FCF97;"><i data-lucide="bell-ring" style="width:16px;height:16px;"></i></div>
+            <span>Bật Thông Báo Ưu Đãi</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </a>
+      </nav>
     </div>
+
+    <!-- 3. Drawer Footer -->
     <div class="drawer-footer">
-      <button type="button" class="btn btn-booking-highlight" onclick="toggleDrawer(false); openBookingModal('table');" style="width: 100%; margin-bottom: 8px;">
-        <i data-lucide="bookmark-check" style="width:16px;height:16px;margin-right:6px;"></i> Đặt Bàn Giữ Chỗ Ngay
-      </button>
-      <a href="tel:0783657587" class="btn btn-primary" style="width: 100%;">
-        <span data-i18n="drawer_call">Gọi Hotline: 0783 657 587</span>
+      <a href="tel:0783657587" class="btn btn-primary" style="width: 100%; border-radius: 12px; font-size: 13.5px; padding: 11px;">
+        <i data-lucide="phone" style="width:15px;height:15px;margin-right:6px;"></i>
+        <span data-i18n="drawer_call">Hotline: 0783 657 587</span>
       </a>
-      <button type="button" class="btn btn-ghost" onclick="toggleDrawer(); openFeedbackModal();" style="width: 100%;">
-        <span data-i18n="drawer_feedback">Góp ý & Đánh giá</span>
-      </button>
+
+      <!-- Quick Social Icons Row -->
+      <div class="drawer-social-row">
+        <a href="https://www.facebook.com/profile.php?id=61594159312837" target="_blank" rel="noopener noreferrer" class="drawer-social-btn" title="Facebook" aria-label="Facebook">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="drawer-social-btn" title="Zalo" aria-label="Zalo">
+          <img src="assets/zalo-logo.webp" alt="Zalo" width="18" height="18" style="object-fit: contain; border-radius: 4px;" />
+        </a>
+        <a href="https://www.tiktok.com/@olion.coffee" target="_blank" rel="noopener noreferrer" class="drawer-social-btn" title="TikTok" aria-label="TikTok">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.12-3.44-3.1-3.66-5.39-.17-1.89.28-3.8 1.25-5.39 1.43-2.3 4.12-3.64 6.78-3.32v4.05c-1.66-.27-3.33.22-4.38 1.5-.6.7-.93 1.6-.96 2.53-.02 1.07.3 2.12.91 2.99.9 1.22 2.45 1.83 3.94 1.5 1.53-.33 2.65-1.55 2.87-3.08.1-1.39.05-2.79.05-4.18V.02z"/></svg>
+        </a>
+        <button type="button" class="drawer-social-btn" onclick="toggleDrawer(false); openFeedbackModal();" title="Góp ý quán" aria-label="Góp ý quán">
+          <i data-lucide="message-square" style="width:16px;height:16px;"></i>
+        </button>
+      </div>
+
+      <p style="text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 2px;">
+        📍 80/64a Dương Quảng Hàm, Gò Vấp, TP.HCM
+      </p>
     </div>
   </aside>
 
