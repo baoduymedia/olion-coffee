@@ -262,7 +262,9 @@
       flex:1;max-width:110px;
     }
     .share-btn:hover{background:rgba(200,96,122,.1);border-color:rgba(200,96,122,.45);color:var(--rose-light)}
-    .share-btn .si{font-size:24px;line-height:1}
+    .share-btn .si{width:26px;height:26px;display:flex;align-items:center;justify-content:center;line-height:1}
+    .share-btn .si img{width:26px;height:26px;object-fit:contain;display:block}
+    .share-btn .si svg{width:22px;height:22px;display:block}
 
     /* ─── FOOTER ─── */
     .page-footer{
@@ -429,17 +431,23 @@
         <a class="share-btn"
            href="https://www.facebook.com/sharer/sharer.php?u=https://www.olioncoffee.app/ws2010"
            target="_blank" rel="noopener">
-          <span class="si">📘</span>
+          <span class="si">
+            <img src="assets/icon-facebook.webp" alt="Facebook" width="26" height="26" style="border-radius:50%;display:block;object-fit:cover;" />
+          </span>
           <span>Facebook</span>
         </a>
         <a class="share-btn"
            href="https://zalo.me/share?href=https://www.olioncoffee.app/ws2010&title=20/10 Olion Coffee"
            target="_blank" rel="noopener">
-          <span class="si">💬</span>
+          <span class="si">
+            <img src="assets/zalo-logo.webp" alt="Zalo" width="26" height="26" style="border-radius:6px;display:block;object-fit:cover;" />
+          </span>
           <span>Zalo</span>
         </a>
         <div class="share-btn" onclick="copyLink()">
-          <span class="si">🔗</span>
+          <span class="si">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+          </span>
           <span id="copyTxt">Sao chép</span>
         </div>
       </div>
