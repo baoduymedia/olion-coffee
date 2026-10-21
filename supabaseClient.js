@@ -1329,6 +1329,18 @@ async function saveBookingToStorage(bookingData) {
       
       const { data, error } = await client.from('bookings').insert([payload]).select();
       if (!error && data && data.length > 0) {
+        // Tự động đồng bộ thông tin khách vào bảng customers (CRM)
+        try {
+          await client.from('customers').upsert([{
+            name: booking.customer_name,
+            contact: booking.phone,
+            source: booking.booking_type === 'space' ? 'Thuê không gian' : 'Đặt bàn trước',
+            notes: `Đặt lúc ${new Date().toLocaleString('vi-VN')} - Ngày ${booking.booking_date} (${booking.booking_time}), ${booking.guests_count} khách.`
+          }], { onConflict: 'contact' });
+        } catch(cErr) {
+          console.warn('⚠️ [CRM Sync] Lỗi upsert customer:', cErr);
+        }
+
         try {
           const local = JSON.parse(localStorage.getItem('olion_bookings') || '[]');
           const idx = local.findIndex(b => b.id === booking.id);
@@ -1340,7 +1352,7 @@ async function saveBookingToStorage(bookingData) {
         } catch (e) {}
         return { success: true, source: 'supabase', data: data[0] };
       } else if (error) {
-        console.warn('⚠️ [Supabase Bookings] Chưa có bảng hoặc lỗi insert:', error.message);
+        console.warn('⚠️ [Supabase Bookings] Lỗi insert:', error.message);
       }
     } catch (err) {
       console.warn('⚠️ [Supabase Bookings] Exception insert:', err.message);

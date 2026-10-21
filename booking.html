@@ -889,7 +889,7 @@ function handlePageTimeSelectChange() {
   }
 }
 
-function handlePageSubmit(e){
+async function handlePageSubmit(e){
   e.preventDefault();
   const name = (document.getElementById('pName')?.value || '').trim();
   const phone = (document.getElementById('pPhone')?.value || '').trim();
@@ -955,9 +955,9 @@ function handlePageSubmit(e){
       created_at: new Date().toISOString()
     };
     if (typeof saveBookingToStorage === 'function') {
-      saveBookingToStorage(bookingPayload);
+      await saveBookingToStorage(bookingPayload);
     } else if (window.saveBookingToStorage) {
-      window.saveBookingToStorage(bookingPayload);
+      await window.saveBookingToStorage(bookingPayload);
     } else {
       const local = JSON.parse(localStorage.getItem('olion_bookings') || '[]');
       bookingPayload.id = 'bk_' + Date.now();

@@ -1160,10 +1160,10 @@
         <section class="tab-content" id="tab-bookings">
           <div class="card">
             <div class="card-header" style="flex-wrap: wrap; gap: 14px;">
-              <div>
-                <h3 class="card-title">📅 Quản Lý Lịch Đặt Bàn & Cho Thuê Không Gian</h3>
-                <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Theo dõi và xử lý đơn đặt bàn trước hoặc yêu cầu thuê không gian workshop từ trang chủ & trang /booking</p>
-              </div>
+                <h3 class="card-title">
+                  📅 Quản Lý Lịch Đặt Bàn & Cho Thuê Không Gian
+                  <span class="badge badge-success" id="bkCloudSyncStatus" style="font-size: 11px; margin-left: 8px; vertical-align: middle;">☁️ Supabase Cloud Realtime</span>
+                </h3>
               <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                 <button type="button" class="btn-primary" id="seedBookingBtn" onclick="seedBookingSample()">
                   ➕ Thêm đơn mẫu
@@ -2886,6 +2886,16 @@
       }
 
       cachedBookings = res.data || [];
+      const cloudStatusEl = document.getElementById('bkCloudSyncStatus');
+      if (cloudStatusEl) {
+        if (res.source === 'supabase') {
+          cloudStatusEl.className = 'badge badge-success';
+          cloudStatusEl.textContent = '☁️ Supabase Cloud Realtime';
+        } else {
+          cloudStatusEl.className = 'badge badge-warning';
+          cloudStatusEl.textContent = '💾 Bộ nhớ cục bộ (Offline)';
+        }
+      }
       renderBookingsTable();
       updateBookingStats();
     }

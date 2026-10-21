@@ -8783,8 +8783,15 @@
         window.open('https://m.me/61594159312837', '_blank');
       };
 
-      window.handleBookingSubmit = function(e) {
+      window.handleBookingSubmit = async function(e) {
         if (e) e.preventDefault();
+        const submitBtn = document.getElementById('bkSubmitBtn');
+        const origBtnText = submitBtn ? submitBtn.textContent : '';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Đang lưu yêu cầu...';
+        }
+
         const name = (document.getElementById('bkName')?.value || '').trim();
         const phone = (document.getElementById('bkPhone')?.value || '').trim();
         const guests = (document.getElementById('bkGuests')?.value || '').trim();
@@ -8796,6 +8803,7 @@
           const customTimeVal = (document.getElementById('bkCustomTime')?.value || '').trim();
           if (!customTimeVal) {
             alert('Vui lòng nhập khung giờ riêng bạn mong muốn (Ví dụ: 09:30 - 11:30).');
+            if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origBtnText; }
             document.getElementById('bkCustomTime')?.focus();
             return;
           }
@@ -8804,6 +8812,7 @@
 
         if (!name || !phone || !date || !time) {
           alert('Vui lòng điền đầy đủ các thông tin bắt buộc (*)');
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origBtnText; }
           return;
         }
 
@@ -8849,9 +8858,9 @@
             created_at: new Date().toISOString()
           };
           if (typeof saveBookingToStorage === 'function') {
-            saveBookingToStorage(bookingPayload);
+            await saveBookingToStorage(bookingPayload);
           } else if (window.saveBookingToStorage) {
-            window.saveBookingToStorage(bookingPayload);
+            await window.saveBookingToStorage(bookingPayload);
           } else {
             const local = JSON.parse(localStorage.getItem('olion_bookings') || '[]');
             bookingPayload.id = 'bk_' + Date.now();
@@ -8860,6 +8869,11 @@
           }
         } catch(err) {
           console.warn('Booking save error:', err);
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = origBtnText;
+          }
         }
 
         // Save customer info locally
