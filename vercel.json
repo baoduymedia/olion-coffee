@@ -12,7 +12,7 @@
       ]
     },
     {
-      "source": "/(.*)\\.(webp|jpg|jpeg|png|svg|ico|woff2|woff)",
+      "source": "/(.*)\\.(webp|jpg|jpeg|png|gif|svg|ico|woff2|woff|ttf|otf|eot)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -25,7 +25,16 @@
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=86400, stale-while-revalidate=604800"
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     },
