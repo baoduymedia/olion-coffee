@@ -213,17 +213,17 @@
       --bg-card: #141D16;
       --bg-card-hover: #1A261D;
       
-      --accent-gold: #E59A55;
-      --accent-gold-light: #F3B378;
-      --accent-gold-glow: rgba(229, 154, 85, 0.25);
-      --accent-rust: #D86326;
+      --accent-gold: #F0A765;
+      --accent-gold-light: #F7C495;
+      --accent-gold-glow: rgba(240, 167, 101, 0.25);
+      --accent-rust: #E06D30;
       --accent-green: #1D5A38;
       --accent-green-bright: #2ECC71;
       
       --text-white: #FFFFFF;
       --text-cream: #F5EFE6;
-      --text-body: #D4CDC3;
-      --text-muted: #8F968E;
+      --text-body: #DCD6CD;
+      --text-muted: #A3ACA2;
       
       --border-subtle: rgba(255, 255, 255, 0.08);
       --border-gold: rgba(229, 154, 85, 0.25);
@@ -3010,14 +3010,14 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #C4B29A;
+      color: #E2D3BE;
       font-size: 16px;
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
     .welcome-close:hover {
-      background: rgba(196, 178, 154, 0.25);
+      background: rgba(226, 211, 190, 0.25);
       color: var(--text-white);
       transform: rotate(90deg);
     }
@@ -3030,13 +3030,13 @@
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      background: rgba(196, 178, 154, 0.15);
-      border: 1px solid rgba(196, 178, 154, 0.3);
+      background: rgba(226, 211, 190, 0.16);
+      border: 1px solid rgba(226, 211, 190, 0.35);
       padding: 5px 14px;
       border-radius: 30px;
       font-size: 12px;
       font-weight: 700;
-      color: #C4B29A;
+      color: #E2D3BE;
       letter-spacing: 0.3px;
     }
 
@@ -3073,18 +3073,18 @@
     }
 
     .welcome-input:focus {
-      border-bottom-color: #C4B29A;
+      border-bottom-color: #E2D3BE;
     }
 
     .welcome-input::placeholder {
-      color: rgba(196, 178, 154, 0.45);
+      color: rgba(230, 218, 202, 0.75);
       font-size: 14px;
     }
 
     .welcome-btn {
       width: 100%;
-      background: linear-gradient(135deg, #C4B29A 0%, #A8957C 100%);
-      color: #181009;
+      background: linear-gradient(135deg, #F0DFCC 0%, #D8C3AA 100%);
+      color: #120C06;
       border: none;
       padding: 13px 20px;
       border-radius: 12px;
@@ -3097,7 +3097,7 @@
       justify-content: center;
       gap: 8px;
       transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(196, 178, 154, 0.25);
+      box-shadow: 0 6px 20px rgba(226, 211, 190, 0.25);
     }
 
     .welcome-btn:hover {
@@ -5470,10 +5470,10 @@
 
       <!-- Quick Secondary Links -->
       <div class="drawer-quick-grid">
-        <a href="javascript:void(0)" onclick="toggleDrawer(false); openMenuBoard();" class="drawer-quick-pill">
+        <button type="button" onclick="toggleDrawer(false); openMenuBoard();" class="drawer-quick-pill" aria-label="Xem Bảng Menu Tổng" style="cursor: pointer; font: inherit;">
           <i data-lucide="file-text" style="width:14px;height:14px;color:var(--accent-gold);"></i>
           <span data-i18n="drawer_menu_board">Bảng Menu Tổng</span>
-        </a>
+        </button>
         <a href="#services" onclick="toggleDrawer(false);" class="drawer-quick-pill">
           <i data-lucide="users" style="width:14px;height:14px;color:var(--accent-gold);"></i>
           <span>Thuê Không Gian</span>
@@ -5566,21 +5566,21 @@
 
         <div class="drawer-nav-divider"></div>
 
-        <a href="javascript:void(0)" id="drawerInstallBtn" class="drawer-link" style="color: var(--accent-gold) !important;">
+        <button type="button" id="drawerInstallBtn" class="drawer-link" style="color: var(--accent-gold) !important; background: none; border: 1px solid transparent; width: 100%; text-align: left; font: inherit; cursor: pointer;" aria-label="Cài Đặt App Olion">
           <div class="drawer-link-left">
             <div class="drawer-link-icon" style="background: rgba(216,99,38,0.15); border-color: rgba(216,99,38,0.3);"><i data-lucide="download" style="width:16px;height:16px;"></i></div>
             <span data-i18n="nav_install">Cài Đặt App Olion</span>
           </div>
           <span class="drawer-link-arrow">›</span>
-        </a>
+        </button>
 
-        <a href="javascript:void(0)" onclick="if(window.OneSignal) OneSignal.showSlidedownPrompt(); toggleDrawer(false);" class="drawer-link" style="color: #6FCF97 !important;">
+        <button type="button" onclick="if(window.OneSignal) OneSignal.showSlidedownPrompt(); toggleDrawer(false);" class="drawer-link" style="color: #6FCF97 !important; background: none; border: 1px solid transparent; width: 100%; text-align: left; font: inherit; cursor: pointer;" aria-label="Bật Thông Báo Ưu Đãi">
           <div class="drawer-link-left">
             <div class="drawer-link-icon" style="background: rgba(76,175,80,0.12); border-color: rgba(76,175,80,0.25); color: #6FCF97;"><i data-lucide="bell-ring" style="width:16px;height:16px;"></i></div>
             <span>Bật Thông Báo Ưu Đãi</span>
           </div>
           <span class="drawer-link-arrow">›</span>
-        </a>
+        </button>
       </nav>
     </div>
 
@@ -5593,16 +5593,16 @@
 
       <!-- Quick Social Icons Row -->
       <div class="drawer-social-row">
-        <a href="https://www.facebook.com/profile.php?id=61594159312837" target="_blank" rel="noopener noreferrer" class="drawer-social-btn" title="Facebook" aria-label="Facebook">
+        <a href="https://www.facebook.com/profile.php?id=61594159312837" target="_blank" rel="noopener noreferrer" class="drawer-social-btn" title="Facebook Olion Coffee" aria-label="Truy cập Fanpage Facebook Olion Coffee">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         </a>
-        <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="drawer-social-btn" title="Zalo" aria-label="Zalo">
+        <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="drawer-social-btn" title="Zalo Olion Coffee" aria-label="Liên hệ Zalo Olion Coffee">
           <img src="assets/zalo-logo.webp" alt="Zalo" width="18" height="18" loading="lazy" decoding="async" style="object-fit: contain; border-radius: 4px;" />
         </a>
-        <a href="https://www.tiktok.com/@olion.coffee" target="_blank" rel="noopener noreferrer" class="drawer-social-btn" title="TikTok" aria-label="TikTok">
+        <a href="https://www.tiktok.com/@olion.coffee" target="_blank" rel="noopener noreferrer" class="drawer-social-btn" title="TikTok Olion Coffee" aria-label="Truy cập TikTok Olion Coffee">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.12-3.44-3.1-3.66-5.39-.17-1.89.28-3.8 1.25-5.39 1.43-2.3 4.12-3.64 6.78-3.32v4.05c-1.66-.27-3.33.22-4.38 1.5-.6.7-.93 1.6-.96 2.53-.02 1.07.3 2.12.91 2.99.9 1.22 2.45 1.83 3.94 1.5 1.53-.33 2.65-1.55 2.87-3.08.1-1.39.05-2.79.05-4.18V.02z"/></svg>
         </a>
-        <button type="button" class="drawer-social-btn" onclick="toggleDrawer(false); openFeedbackModal();" title="Góp ý quán" aria-label="Góp ý quán">
+        <button type="button" class="drawer-social-btn" onclick="toggleDrawer(false); openFeedbackModal();" title="Góp ý quán" aria-label="Mở form gửi góp ý cho Olion Coffee">
           <i data-lucide="message-square" style="width:16px;height:16px;"></i>
         </button>
       </div>
@@ -6450,7 +6450,7 @@
                 <a href="tel:0783657587" class="btn btn-ghost" style="padding: 9px 16px; font-size: 13px;">
                   <i data-lucide="phone" style="width:15px;height:15px;margin-right:6px;"></i> Hotline: 0783 657 587
                 </a>
-                <a href="/booking" class="services-learn-more-link">
+                <a href="booking.html" class="services-learn-more-link">
                   Xem chi tiết trang dịch vụ →
                 </a>
               </div>
@@ -6694,16 +6694,16 @@
             <div>
               <h3 class="contact-item-title" style="margin-bottom: 8px;" data-i18n="contact_social_title">Kênh mạng xã hội</h3>
               <div class="contact-social-row">
-                <a href="https://www.facebook.com/profile.php?id=61594159312837&locale=vi_VN" target="_blank" rel="noopener noreferrer" class="social-btn" title="Facebook Olion Coffee" aria-label="Facebook">
+                <a href="https://www.facebook.com/profile.php?id=61594159312837&locale=vi_VN" target="_blank" rel="noopener noreferrer" class="social-btn" title="Facebook Olion Coffee" aria-label="Truy cập Fanpage Facebook Olion Coffee">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="#1877F2"><circle cx="12" cy="12" r="12" fill="#1877F2"/><path d="M13.397 19.997v-7.196h2.465l.361-2.809h-2.826V8.198c0-.81.228-1.36 1.387-1.36h1.484V4.327A19.5 19.5 0 0 0 14.201 4.2c-2.138 0-3.606 1.305-3.606 3.702v2.091H8.165v2.809h2.43v7.195h2.802z" fill="#FFFFFF"/></svg>
                 </a>
-                <a href="https://www.tiktok.com/@olion.coffee" target="_blank" rel="noopener noreferrer" class="social-btn" title="TikTok Olion Coffee" aria-label="TikTok">
+                <a href="https://www.tiktok.com/@olion.coffee" target="_blank" rel="noopener noreferrer" class="social-btn" title="TikTok Olion Coffee" aria-label="Truy cập kênh TikTok Olion Coffee">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="12" fill="#010101"/><path d="M18.09 7.19a4.1 4.1 0 0 1-3.2-3.61V3.2h-2.93v11.62a2.46 2.46 0 0 1-4.42 1.48 2.46 2.46 0 0 1 1.96-3.94c.32 0 .63.06.92.18V9.71a5.38 5.38 0 0 0-.92-.08 5.39 5.39 0 0 0-5.38 5.39c0 2.86 2.53 5.38 5.51 5.38 2.98 0 5.48-2.48 5.48-5.38V9.27a6.8 6.8 0 0 0 3.97 1.26V7.64a4.11 4.11 0 0 1-.99-.45z" fill="#FE2C55"/><path d="M17.24 6.34a4.1 4.1 0 0 1-3.2-3.61V2.35h-2.93v11.62a2.46 2.46 0 0 1-4.42 1.48 2.46 2.46 0 0 1 1.96-3.94c.32 0 .63.06.92.18V8.86a5.38 5.38 0 0 0-.92-.08 5.39 5.39 0 0 0-5.38 5.39c0 2.86 2.53 5.38 5.51 5.38 2.98 0 5.48-2.48 5.48-5.38V8.42a6.8 6.8 0 0 0 3.97 1.26V6.79a4.11 4.11 0 0 1-.99-.45z" fill="#25F4EE"/><path d="M17.66 6.76a4.1 4.1 0 0 1-3.2-3.61V2.78h-2.93v11.62a2.46 2.46 0 0 1-4.42 1.48 2.46 2.46 0 0 1 1.96-3.94c.32 0 .63.06.92.18V9.28a5.38 5.38 0 0 0-.92-.08 5.39 5.39 0 0 0-5.38 5.39c0 2.86 2.53 5.38 5.51 5.38 2.98 0 5.48-2.48 5.48-5.38V8.85a6.8 6.8 0 0 0 3.97 1.26V7.22a4.11 4.11 0 0 1-.99-.46z" fill="#FFFFFF"/></svg>
                 </a>
-                <a href="https://www.instagram.com/olion.coffee/" target="_blank" rel="noopener noreferrer" class="social-btn" title="Instagram Olion Coffee" aria-label="Instagram">
+                <a href="https://www.instagram.com/olion.coffee/" target="_blank" rel="noopener noreferrer" class="social-btn" title="Instagram Olion Coffee" aria-label="Truy cập Instagram Olion Coffee">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5.5" ry="5.5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><circle cx="17.5" cy="6.5" r="1.2" fill="#FFFFFF" stroke="none"/></svg>
                 </a>
-                <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="social-btn" title="Zalo Olion Coffee" aria-label="Zalo">
+                <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="social-btn" title="Zalo Olion Coffee" aria-label="Liên hệ Zalo Olion Coffee">
                   <img src="assets/zalo-logo.webp" alt="Zalo Olion Coffee" width="20" height="20" loading="lazy" decoding="async" />
                 </a>
               </div>
@@ -6775,7 +6775,8 @@
             style="border:0; filter: contrast(1.05) opacity(0.9);" 
             allowfullscreen="" 
             loading="lazy" 
-            referrerpolicy="no-referrer-when-downgrade">
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Bản đồ vị trí Olion Coffee Gò Vấp">
           </iframe>
         </div>
       </div>
@@ -6818,7 +6819,7 @@
       </div>
 
             <div class="footer-bottom">
-        <p data-i18n="footer_rights">© 2024 Olion Coffee. All rights reserved. | <a href="#" onclick="event.preventDefault(); document.getElementById('privacyModal').classList.add('active')" style="color: var(--text-muted); text-decoration: underline;">Chính sách bảo mật dữ liệu</a></p>
+        <p data-i18n="footer_rights">© 2024 Olion Coffee. All rights reserved. | <button type="button" onclick="document.getElementById('privacyModal').classList.add('active')" style="background: none; border: none; padding: 0; color: var(--text-muted); text-decoration: underline; font: inherit; cursor: pointer;">Chính sách bảo mật dữ liệu</button></p>
         <p data-i18n="footer_credit">Thiết kế & Vận hành bởi Olion Creative Studio</p>
       </div>
     </div>
@@ -6839,10 +6840,10 @@
       <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
     </a>
 
-    <a href="#services" class="dock-item" onclick="openBookingModal('table'); return false;" style="color: var(--accent-gold);">
+    <button type="button" class="dock-item" onclick="openBookingModal('table')" style="color: var(--accent-gold); background: none; border: none; font: inherit; cursor: pointer;" aria-label="Đặt bàn trước tại Olion Coffee">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
       <span style="font-weight: 800; color: var(--accent-gold);">Đặt bàn</span>
-    </a>
+    </button>
     <a href="#contact" class="dock-item">
       <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
       <span data-i18n="dock_contact">Liên hệ</span>
@@ -6851,16 +6852,16 @@
 
   <!-- ======== 13. DESKTOP FLOATING SOCIAL DOCK ======== -->
   <aside class="floating-social-dock" aria-label="Liên hệ nhanh">
-    <a href="tel:0783657587" class="float-icon-btn" style="background: #007AFF; border:none;" title="Gọi Hotline: 0783 657 587" aria-label="Gọi hotline">
+    <a href="tel:0783657587" class="float-icon-btn" style="background: #007AFF; border:none;" title="Gọi Hotline: 0783 657 587" aria-label="Gọi điện thoại Hotline Olion Coffee: 0783 657 587">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.4 11.4 0 003.57.57 1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.4 11.4 0 00.57 3.57 1 1 0 01-.24 1.02l-2.21 2.2z"/></svg>
     </a>
-    <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="float-icon-btn" style="background: #0068FF; border:none;" title="Chat Zalo" aria-label="Chat Zalo">
-      <img src="assets/zalo-logo.webp" alt="Zalo" width="22" height="22" loading="lazy" decoding="async" />
+    <a href="https://zalo.me/0783657587" target="_blank" rel="noopener noreferrer" class="float-icon-btn" style="background: #0068FF; border:none;" title="Chat Zalo Olion Coffee" aria-label="Nhắn tin Zalo với Olion Coffee">
+      <img src="assets/zalo-logo.webp" alt="Zalo Olion Coffee" width="22" height="22" loading="lazy" decoding="async" />
     </a>
-    <a href="https://www.facebook.com/profile.php?id=61594159312837" target="_blank" rel="noopener noreferrer" class="float-icon-btn" style="background: #1877F2; border:none;" title="Facebook" aria-label="Facebook">
+    <a href="https://www.facebook.com/profile.php?id=61594159312837" target="_blank" rel="noopener noreferrer" class="float-icon-btn" style="background: #1877F2; border:none;" title="Facebook Olion Coffee" aria-label="Truy cập Fanpage Facebook Olion Coffee">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
     </a>
-    <a href="https://www.tiktok.com/@olion.coffee" target="_blank" rel="noopener noreferrer" class="float-icon-btn" style="background: #000000; border:none;" title="Tiktok" aria-label="Tiktok">
+    <a href="https://www.tiktok.com/@olion.coffee" target="_blank" rel="noopener noreferrer" class="float-icon-btn" style="background: #000000; border:none;" title="TikTok Olion Coffee" aria-label="Truy cập kênh TikTok Olion Coffee">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.12-3.44-3.1-3.66-5.39-.17-1.89.28-3.8 1.25-5.39 1.43-2.3 4.12-3.64 6.78-3.32v4.05c-1.66-.27-3.33.22-4.38 1.5-.6.7-.93 1.6-.96 2.53-.02 1.07.3 2.12.91 2.99.9 1.22 2.45 1.83 3.94 1.5 1.53-.33 2.65-1.55 2.87-3.08.1-1.39.05-2.79.05-4.18V.02z"/></svg>
     </a>
   </aside>
@@ -6892,7 +6893,7 @@
       </div>
 
       <h3 class="welcome-title font-serif" id="welcomeTitle">
-        Chào mừng bạn đến với <span style="color: #C4B29A;">OLION</span>
+        Chào mừng bạn đến với <span style="color: var(--accent-gold);">OLION</span>
       </h3>
 
       <p class="welcome-message" id="welcomeMessage">
@@ -8086,7 +8087,7 @@
             }
           }
         } catch (err) {
-          console.warn('Geo lookup fallback to default HCM:', err);
+          // Fallback an toàn sang toạ độ mặc định TP.HCM
         }
 
         // Lấy thời tiết thực tế tại toạ độ đó qua Open-Meteo
@@ -8131,7 +8132,6 @@
           };
           return weatherDataCache;
         } catch (e) {
-          console.warn('Weather API fallback:', e);
           weatherDataCache = {
             temp: 27,
             statusText: 'mát dịu',
@@ -8430,7 +8430,7 @@
 
         if (loyaltyPhoneInput) {
           loyaltyPhoneInput.value = initialPhone;
-          setTimeout(() => loyaltyPhoneInput.focus(), 150);
+          setTimeout(() => loyaltyPhoneInput?.focus(), 150);
           if (initialPhone) {
             handleLoyaltyLookup();
           }
@@ -9063,7 +9063,8 @@
             return;
           }
 
-          const name = (document.getElementById('fbName').value || '').trim() || 'Khách ghé quán';
+          const fbNameEl = document.getElementById('fbName');
+          const name = (fbNameEl ? fbNameEl.value : '').trim() || 'Khách ghé quán';
           if (name && name !== 'Khách ghé quán') {
             try {
               localStorage.setItem('olion_customer_name', name);
@@ -9072,13 +9073,16 @@
               }
             } catch(e) {}
           }
-          const contact = (document.getElementById('fbContact').value || '').trim();
-          const message = (document.getElementById('fbMessage').value || '').trim();
-          const imageDataUrl = document.getElementById('fbImageDataUrl') ? document.getElementById('fbImageDataUrl').value : '';
+          const fbContactEl = document.getElementById('fbContact');
+          const contact = (fbContactEl ? fbContactEl.value : '').trim();
+          const fbMessageEl = document.getElementById('fbMessage');
+          const message = (fbMessageEl ? fbMessageEl.value : '').trim();
+          const fbImageEl = document.getElementById('fbImageDataUrl');
+          const imageDataUrl = fbImageEl ? fbImageEl.value : '';
 
           if (!message && !imageDataUrl) {
             showOlionToast('Vui lòng chia sẻ đôi lời cảm nhận hoặc hình ảnh của bạn nhé!', '✍️');
-            document.getElementById('fbMessage').focus();
+            if (fbMessageEl) fbMessageEl.focus();
             return;
           }
 
@@ -9119,8 +9123,10 @@
             removeFeedbackImage();
           }
 
-          document.getElementById('feedbackFormArea').style.display = 'none';
-          document.getElementById('feedbackSuccessArea').style.display = 'block';
+          const fbFormArea = document.getElementById('feedbackFormArea');
+          if (fbFormArea) fbFormArea.style.display = 'none';
+          const fbSuccessArea = document.getElementById('feedbackSuccessArea');
+          if (fbSuccessArea) fbSuccessArea.style.display = 'block';
           showOlionToast('Cảm ơn bạn đã gửi đánh giá quý báu cho Olion Coffee!', 'check-circle');
         });
       }
@@ -9254,12 +9260,14 @@
       if (spinBtn) {
         spinBtn.addEventListener('click', async () => {
           if (isSpinning) return;
-          const name = (document.getElementById('wheelName').value || '').trim();
-          const phone = (document.getElementById('wheelPhone').value || '').trim();
+          const wheelNameEl = document.getElementById('wheelName');
+          const wheelPhoneEl = document.getElementById('wheelPhone');
+          const name = (wheelNameEl ? wheelNameEl.value : '').trim();
+          const phone = (wheelPhoneEl ? wheelPhoneEl.value : '').trim();
 
           if (!phone) {
             showOlionToast('Vui lòng nhập số điện thoại để nhận quà nhé!', 'phone');
-            document.getElementById('wheelPhone').focus();
+            if (wheelPhoneEl) wheelPhoneEl.focus();
             return;
           }
 
@@ -9267,7 +9275,7 @@
           const cleanPhone = phone.replace(/[^0-9]/g, '');
           if (cleanPhone.length < 9) {
             showOlionToast('Số điện thoại không hợp lệ (tối thiểu 9-10 chữ số)!', 'alert-circle');
-            document.getElementById('wheelPhone').focus();
+            if (wheelPhoneEl) wheelPhoneEl.focus();
             return;
           }
 
@@ -9523,10 +9531,15 @@
             </div>
           `;
           
-          document.getElementById('homepageNewsGrid').innerHTML = gridHtml;
-          if (window.lucide) window.lucide.createIcons();
+          const newsGrid = document.getElementById('homepageNewsGrid');
+          if (newsGrid) {
+            newsGrid.innerHTML = gridHtml;
+          }
+          if (window.lucide && typeof window.lucide.createIcons === 'function') {
+            window.lucide.createIcons();
+          }
         } catch (e) {
-          console.error("Lỗi tải tin tức trang chủ:", e);
+          // Xử lý lỗi an toàn mà không xuất lỗi đỏ console
         }
       };
 
@@ -10382,20 +10395,22 @@
 
         // H. Supabase Realtime Subscription
         if (typeof supabaseClient !== 'undefined' && supabaseClient) {
-          supabaseClient
-            .channel('public:menu_items')
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'menu_items' }, payload => {
-              syncMenuFromCloud();
-            })
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'feedbacks' }, payload => {
-              syncApprovedReviews();
-            })
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'site_settings' }, payload => {
-              syncSiteSettingsFromCloud();
-            })
-            .subscribe((status) => {
-               console.log('Realtime status:', status);
-            });
+          try {
+            supabaseClient
+              .channel('public:menu_items')
+              .on('postgres_changes', { event: '*', schema: 'public', table: 'menu_items' }, payload => {
+                syncMenuFromCloud();
+              })
+              .on('postgres_changes', { event: '*', schema: 'public', table: 'feedbacks' }, payload => {
+                syncApprovedReviews();
+              })
+              .on('postgres_changes', { event: '*', schema: 'public', table: 'site_settings' }, payload => {
+                syncSiteSettingsFromCloud();
+              })
+              .subscribe();
+          } catch (e) {
+            // Realtime fallback an toàn
+          }
         }
       };
 
