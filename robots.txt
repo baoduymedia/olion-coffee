@@ -1,4 +1,30 @@
+# ==============================================================================
+# OLION COFFEE — ROBOTS.TXT
+# Website: https://www.olioncoffee.app/
+# ==============================================================================
+
 User-agent: *
 Allow: /
+Allow: /index.html
+Allow: /booking.html
+Allow: /news.html
+Allow: /assets/
 
+# Block Admin Portal & internal dashboard from indexing to conserve crawl budget
+Disallow: /admin.html
+Disallow: /admin
+Disallow: /api/
+Disallow: /*?preview=*
+
+# Search Engine Specific Directives
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /assets/
+
+User-agent: Bingbot
+Allow: /
+
+# XML Sitemap Index
 Sitemap: https://www.olioncoffee.app/sitemap.xml

@@ -1,15 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <!-- Trang chủ Olion Coffee -->
   <url>
     <loc>https://www.olioncoffee.app/</loc>
-    <lastmod>2024-10-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-10-22T08:00:00+07:00</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.olioncoffee.app/assets/banner-booking.jpg</image:loc>
+      <image:title>Olion Coffee - Cà Phê Gò Vấp Không Gian Yên Tĩnh Fine Dining</image:title>
+      <image:caption>Không gian thưởng thức cà phê yên tĩnh và sang trọng tại Olion Coffee Gò Vấp</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.olioncoffee.app/assets/space-4.webp</image:loc>
+      <image:title>Toàn cảnh không gian Olion Coffee</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.olioncoffee.app/assets/menu/ca_phe_muoi.webp</image:loc>
+      <image:title>Cà Phê Muối Signature Olion Coffee</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.olioncoffee.app/assets/menu/matcha_latte.webp</image:loc>
+      <image:title>Matcha Latte Olion Coffee</image:title>
+    </image:image>
   </url>
+
+  <!-- Trang Đặt Bàn & Cho Thuê Không Gian -->
   <url>
-    <loc>https://www.olioncoffee.app/news</loc>
-    <lastmod>2024-10-01T00:00:00+00:00</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://www.olioncoffee.app/booking.html</loc>
+    <lastmod>2026-10-22T08:00:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.olioncoffee.app/assets/banner-booking.jpg</image:loc>
+      <image:title>Đặt bàn và cho thuê không gian tại Olion Coffee</image:title>
+    </image:image>
+  </url>
+
+  <!-- Trang Tin Tức & Sự Kiện -->
+  <url>
+    <loc>https://www.olioncoffee.app/news.html</loc>
+    <lastmod>2026-10-22T08:00:00+07:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.olioncoffee.app/assets/news/caramel-latte.webp</image:loc>
+      <image:title>Caramel Latte Olion Coffee</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.olioncoffee.app/assets/news/news-1-flowers.webp</image:loc>
+      <image:title>Olion's First Week Recap</image:title>
+    </image:image>
   </url>
 </urlset>
