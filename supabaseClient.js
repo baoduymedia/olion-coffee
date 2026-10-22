@@ -207,19 +207,31 @@ async function canUserSubmitFeedback(contact) {
  * Thực thi Google reCAPTCHA v3 (nếu đã cấu hình Site Key)
  */
 async function executeReCaptcha(action = 'submit_feedback') {
-  if (typeof window !== 'undefined' && window.grecaptcha && window.RECAPTCHA_SITE_KEY && window.RECAPTCHA_SITE_KEY !== 'YOUR_RECAPTCHA_SITE_KEY') {
+  if (typeof window !== 'undefined' && window.RECAPTCHA_SITE_KEY && window.RECAPTCHA_SITE_KEY !== 'YOUR_RECAPTCHA_SITE_KEY') {
     try {
-      return await new Promise((resolve) => {
-        window.grecaptcha.ready(async () => {
-          try {
-            const token = await window.grecaptcha.execute(window.RECAPTCHA_SITE_KEY, { action });
-            resolve(token);
-          } catch (e) {
-            console.warn('⚠️ [reCAPTCHA] Lỗi token:', e.message);
-            resolve(null);
-          }
+      if (!window.grecaptcha) {
+        await new Promise((resolve) => {
+          const s = document.createElement('script');
+          s.src = `https://www.google.com/recaptcha/api.js?render=${window.RECAPTCHA_SITE_KEY}`;
+          s.async = true;
+          s.onload = () => resolve(true);
+          s.onerror = () => resolve(false);
+          document.head.appendChild(s);
         });
-      });
+      }
+      if (window.grecaptcha) {
+        return await new Promise((resolve) => {
+          window.grecaptcha.ready(async () => {
+            try {
+              const token = await window.grecaptcha.execute(window.RECAPTCHA_SITE_KEY, { action });
+              resolve(token);
+            } catch (e) {
+              console.warn('⚠️ [reCAPTCHA] Lỗi token:', e.message);
+              resolve(null);
+            }
+          });
+        });
+      }
     } catch (e) {
       return null;
     }
