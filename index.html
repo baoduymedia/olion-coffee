@@ -3,9 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  
+  <!-- ======== CRITICAL LCP & RESOURCE HINTS (PLACED AT HIGHEST POSITION IN HEAD) ======== -->
+  <link rel="preload" as="image" href="assets/space-4-mobile.webp" media="(max-width: 767px)" type="image/webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/space-4.webp" media="(min-width: 768px)" type="image/webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/logo-white.webp" type="image/webp" fetchpriority="high" />
+
+  <!-- Preconnect & DNS-Prefetch for External API & Asset Domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+  <link rel="preconnect" href="https://xwbrbesgnwcngzohprxt.supabase.co" />
+  <link rel="dns-prefetch" href="https://xwbrbesgnwcngzohprxt.supabase.co" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+  <link rel="preconnect" href="https://unpkg.com" />
+  <link rel="dns-prefetch" href="https://unpkg.com" />
+
   <link rel="manifest" href="manifest.json" />
 
-  
   <!-- ======== 1. PRIMARY TECHNICAL SEO & LOCAL SEO METADATA ======== -->
   <title>Olion Coffee: Cà phê Gò Vấp không gian yên tĩnh fine dining</title>
   <meta name="title" content="Olion Coffee: Cà phê Gò Vấp không gian yên tĩnh fine dining" />
@@ -26,9 +43,9 @@
   <meta property="og:site_name" content="Olion Coffee" />
   <meta property="og:title" content="Olion Coffee — Cà Phê Gò Vấp, Không Gian Yên Tĩnh & Fine Dining" />
   <meta property="og:description" content="Khám phá Olion Coffee - quán cà phê Gò Vấp phong cách fine dining với không gian yên tĩnh, thức uống tinh tế và trải nghiệm phục vụ đẳng cấp hàng đầu." />
-  <meta property="og:image" content="https://www.olioncoffee.app/assets/banner-booking.jpg" />
-  <meta property="og:image:secure_url" content="https://www.olioncoffee.app/assets/banner-booking.jpg" />
-  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:image" content="https://www.olioncoffee.app/assets/banner-booking.webp" />
+  <meta property="og:image:secure_url" content="https://www.olioncoffee.app/assets/banner-booking.webp" />
+  <meta property="og:image:type" content="image/webp" />
   <meta property="og:image:alt" content="Không gian thưởng thức cà phê yên tĩnh tại Olion Coffee Gò Vấp" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -39,7 +56,7 @@
   <meta name="twitter:url" content="https://www.olioncoffee.app/" />
   <meta name="twitter:title" content="Olion Coffee — Cà Phê Gò Vấp, Không Gian Yên Tĩnh & Fine Dining" />
   <meta name="twitter:description" content="Khám phá Olion Coffee - quán cà phê Gò Vấp phong cách fine dining với không gian yên tĩnh, thức uống tinh tế và trải nghiệm phục vụ đẳng cấp hàng đầu." />
-  <meta name="twitter:image" content="https://www.olioncoffee.app/assets/banner-booking.jpg" />
+  <meta name="twitter:image" content="https://www.olioncoffee.app/assets/banner-booking.webp" />
   <meta name="twitter:image:alt" content="Không gian thưởng thức cà phê yên tĩnh tại Olion Coffee Gò Vấp" />
 
   <!-- ======== 4. THEME & FAVICONS ======== -->
@@ -47,9 +64,7 @@
   <link rel="icon" href="assets/logo-transparent.webp" type="image/webp" />
   <link rel="apple-touch-icon" href="assets/logo-transparent.webp" />
 
-  <!-- ======== 5. PERFORMANCE & RESOURCE HINTS (CORE WEB VITALS) ======== -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- ======== 5. FONT PRELOADS & ASYNC STYLES ======== -->
   <link rel="preload" href="https://fonts.gstatic.com/s/cormorantgaramond/v21/co3ZmX5slCNuHLi8bLeY9MK7whWMhyjYrEtHmSqn7B6DxjY.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecnFHGPc.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
@@ -57,25 +72,9 @@
   <noscript>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" />
   </noscript>
-  <link rel="preload" as="image" href="assets/space-4.webp" type="image/webp" fetchpriority="high" />
-  <link rel="preload" as="image" href="assets/logo-white.webp" type="image/webp" fetchpriority="high" />
   
   <!-- Lucide Icons CDN with defer -->
   <script src="https://unpkg.com/lucide@latest" defer></script>
-<script>
-  let currentNewsId = '';
-  function shareToFB() {
-    const url = encodeURIComponent(window.location.origin + "/news?article=" + currentNewsId);
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank', 'width=600,height=400');
-  }
-
-  function copyLink() {
-    const url = window.location.origin + "/news?article=" + currentNewsId;
-    navigator.clipboard.writeText(url).then(() => {
-      alert("Đã sao chép đường link bài viết!");
-    });
-  }
-</script>
 
   <!-- Supabase Cloud SDK with defer -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
@@ -106,7 +105,7 @@
         "alternateName": ["Olion Coffee Saigon", "Olion Cafe Gò Vấp", "Olion Coffee Dương Quảng Hàm", "Quán Cà Phê Gò Vấp Đẹp"],
         "url": "https://www.olioncoffee.app/",
         "logo": "https://www.olioncoffee.app/assets/logo-transparent.webp",
-        "image": "https://www.olioncoffee.app/assets/banner-booking.jpg",
+        "image": "https://www.olioncoffee.app/assets/banner-booking.webp",
         "slogan": "Cà Phê Gò Vấp, Không Gian Yên Tĩnh & Fine Dining",
         "description": "Olion Coffee là quán cà phê phong cách Boutique sang trọng, không gian yên tĩnh toạ lạc tại 80/64a Dương Quảng Hàm, Phường An Nhơn, Gò Vấp, TP.HCM. Chuyên phục vụ Cà Phê Muối, Bạc Xỉu Kem Trứng, Matcha Nhật Bản và Trà Trái Cây nguyên chất tươi ngon.",
         "telephone": "0783657587",
@@ -562,9 +561,11 @@
       flex-direction: column;
       justify-content: center;
       gap: 5px;
-      width: 42px;
-      height: 42px;
-      padding: 10px;
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
+      padding: 12px;
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -667,8 +668,10 @@
     }
 
     .drawer-close {
-      width: 36px;
-      height: 36px;
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -729,6 +732,7 @@
       justify-content: center;
       gap: 6px;
       padding: 9px 12px;
+      min-height: 48px;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 10px;
@@ -762,6 +766,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 10px 12px;
+      min-height: 48px;
       border-radius: 10px;
       font-size: 14.5px;
       font-weight: 500;
@@ -844,8 +849,10 @@
     }
 
     .drawer-social-btn {
-      width: 36px;
-      height: 36px;
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -885,6 +892,12 @@
     }
 
     .hero-slide.active { opacity: 1; }
+
+    .hero-slide picture {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
 
     .hero-slide img {
       width: 100%;
@@ -969,6 +982,20 @@
       border-radius: var(--radius-full);
       background: rgba(255, 255, 255, 0.3);
       transition: all 0.3s ease;
+      position: relative;
+      padding: 0;
+      border: none;
+      cursor: pointer;
+    }
+
+    .hero-dot::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 48px;
+      min-height: 48px;
     }
 
     .hero-dot.active { width: 26px; background: var(--accent-gold); }
@@ -1688,7 +1715,7 @@
 
     .menu-tab-btn {
       padding: 10px 20px;
-      min-height: 42px;
+      min-height: 48px;
       border-radius: var(--radius-full);
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
@@ -2534,8 +2561,10 @@
     }
 
     .social-btn {
-      width: 44px;
-      height: 44px;
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--border-subtle);
@@ -2733,6 +2762,8 @@
         text-transform: uppercase;
         flex: 1;
         padding: 6px 0;
+        min-height: 48px;
+        min-width: 48px;
       }
 
       .dock-item svg {
@@ -2779,14 +2810,15 @@
       .floating-social-dock {
         bottom: 145px;
         right: 12px;
-        transform: scale(0.9);
         transform-origin: bottom right;
       }
     }
 
     .float-icon-btn {
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
       border-radius: 50%;
       background: rgba(20, 29, 22, 0.9);
       border: 1px solid var(--border-gold);
@@ -2812,8 +2844,10 @@
       position: fixed;
       right: 18px;
       bottom: 32px;
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
       border-radius: 50%;
       background: rgba(14, 22, 17, 0.94);
       border: 1.5px solid rgba(197, 155, 99, 0.45);
@@ -2907,8 +2941,10 @@
       .back-to-top-btn {
         right: 14px;
         bottom: 76px; /* Nằm ngay trên mobile dock (64px), cân đối với nút vòng quay may mắn */
-        width: 44px;
-        height: 44px;
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        min-height: 48px;
       }
     }
 
@@ -2979,7 +3015,7 @@
     }
 
     .welcome-box {
-      background: rgba(24, 16, 9, 0.94);
+      background: rgba(24, 16, 9, 0.96);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(196, 178, 154, 0.38);
@@ -3002,8 +3038,10 @@
       position: absolute;
       top: 18px;
       right: 18px;
-      width: 34px;
-      height: 34px;
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      min-height: 48px;
       border-radius: 50%;
       background: rgba(196, 178, 154, 0.12);
       border: 1px solid rgba(196, 178, 154, 0.2);
@@ -3112,7 +3150,7 @@
       left: 0;
       height: 3px;
       width: 100%;
-      background: #C4B29A;
+      background: var(--accent-gold);
       transform-origin: left;
       animation: welcomeCountdown 8s linear forwards;
     }
@@ -3136,6 +3174,14 @@
 
     .star-btn {
       font-size: 32px;
+      min-width: 48px;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
       color: rgba(255, 255, 255, 0.2);
       transition: color 0.2s ease, transform 0.2s ease;
     }
@@ -3663,16 +3709,16 @@
       .faq-question { font-size: 14px; }
     }
 
-    /* ======== FORM INPUT MIN-HEIGHT WCAG 44px ======== */
+    /* ======== FORM INPUT MIN-HEIGHT WCAG 48px ======== */
     .form-input, .form-textarea {
-      min-height: 44px;
+      min-height: 48px;
     }
     .form-textarea { min-height: 100px; }
 
     /* ======== CONTACT ICON MIN TAP TARGET ======== */
     .contact-item-icon {
-      min-width: 44px;
-      min-height: 44px;
+      min-width: 48px;
+      min-height: 48px;
     }
 
     /* ======== ABOUT MOSAIC MOBILE FIX ======== */
@@ -4033,8 +4079,10 @@
       font-size: 16px !important;
     }
     .social-btn {
-      width: 44px !important;
-      height: 44px !important;
+      width: 48px !important;
+      height: 48px !important;
+      min-width: 48px !important;
+      min-height: 48px !important;
     }
     .menu-tab {
       padding: 12px 24px !important;
@@ -4527,6 +4575,7 @@
       align-items: center;
       gap: 6px;
       padding: 8px 16px;
+      min-height: 48px;
       border-radius: 999px;
       background: rgba(17, 26, 19, 0.7);
       border: 1px solid rgba(197, 155, 99, 0.22);
@@ -5136,17 +5185,19 @@
       }
 
       .header-booking-btn {
-        padding: 7px 12px !important;
+        padding: 8px 14px !important;
         font-size: 12px !important;
-        min-height: 36px !important;
+        min-height: 44px !important;
         white-space: nowrap !important;
       }
 
       .burger-btn {
         display: flex !important;
-        width: 38px !important;
-        height: 38px !important;
-        padding: 8px !important;
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        min-height: 48px !important;
+        padding: 12px !important;
         flex-shrink: 0 !important;
         border-radius: 8px !important;
       }
@@ -5165,15 +5216,17 @@
       }
 
       .header-booking-btn {
-        padding: 6px 9px !important;
+        padding: 7px 11px !important;
         font-size: 11px !important;
-        min-height: 32px !important;
+        min-height: 44px !important;
       }
 
       .burger-btn {
-        width: 34px !important;
-        height: 34px !important;
-        padding: 7px !important;
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        min-height: 48px !important;
+        padding: 12px !important;
       }
     }
 
@@ -5622,13 +5675,22 @@
     <section class="hero-section" id="hero" aria-label="Giới thiệu thương hiệu Olion Coffee">
       <div class="hero-background">
         <div class="hero-slide active">
-          <img src="assets/space-4.webp" alt="Không gian sang trọng ấm cúng tại Olion Coffee Dương Quảng Hàm Gò Vấp" width="1440" height="900" loading="eager" fetchpriority="high" decoding="async" />
+          <picture>
+            <source media="(max-width: 767px)" srcset="assets/space-4-mobile.webp" width="768" height="480" />
+            <img src="assets/space-4.webp" alt="Không gian sang trọng ấm cúng tại Olion Coffee Dương Quảng Hàm Gò Vấp" width="1440" height="900" loading="eager" fetchpriority="high" decoding="async" />
+          </picture>
         </div>
         <div class="hero-slide">
-          <img src="assets/space-1.webp" alt="Quầy pha chế cà phê thủ công tại quán Olion Coffee" width="1440" height="900" loading="lazy" decoding="async" />
+          <picture>
+            <source media="(max-width: 767px)" srcset="assets/space-1-mobile.webp" width="768" height="480" />
+            <img src="assets/space-1.webp" alt="Quầy pha chế cà phê thủ công tại quán Olion Coffee" width="1440" height="900" loading="lazy" decoding="async" />
+          </picture>
         </div>
         <div class="hero-slide">
-          <img src="assets/space-3.webp" alt="Không gian thưởng thức cà phê yên tĩnh tại Olion Coffee Gò Vấp" width="1440" height="900" loading="lazy" decoding="async" />
+          <picture>
+            <source media="(max-width: 767px)" srcset="assets/space-3-mobile.webp" width="768" height="480" />
+            <img src="assets/space-3.webp" alt="Không gian thưởng thức cà phê yên tĩnh tại Olion Coffee Gò Vấp" width="1440" height="900" loading="lazy" decoding="async" />
+          </picture>
         </div>
       </div>
       <div class="hero-overlay"></div>
@@ -7522,7 +7584,7 @@
         <button type="button" class="menu-board-btn" id="menuBoardZoomBtn" title="Phóng to / Thu nhỏ">
           <i data-lucide="zoom-in" style="width:15px;height:15px;"></i> <span id="menuBoardZoomText">Phóng to</span>
         </button>
-        <a href="assets/olion-menu-board.png" download="Olion_Coffee_Menu_Tong.png" class="menu-board-btn" title="Tải ảnh menu độ phân giải cao">
+        <a href="assets/olion-menu-board.webp" download="Olion_Coffee_Menu_Tong.webp" class="menu-board-btn" title="Tải ảnh menu độ phân giải cao">
           <i data-lucide="download" style="width:15px;height:15px;"></i> <span>Tải ảnh</span>
         </a>
         <button type="button" class="menu-board-close" id="menuBoardCloseBtn" onclick="closeMenuBoard()" aria-label="Đóng menu"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
@@ -8296,10 +8358,15 @@
         if (progressBar) {
           progressBar.classList.remove('paused');
           progressBar.style.animation = 'none';
-          // Reflow restart animation
-          void progressBar.offsetWidth;
-          progressBar.style.animation = `welcomeCountdown ${duration / 1000}s linear forwards`;
-          progressBar.style.display = 'block';
+          // Tái khởi động animation mượt mà qua requestAnimationFrame, tránh kích hoạt forced reflow
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              if (progressBar) {
+                progressBar.style.animation = `welcomeCountdown ${duration / 1000}s linear forwards`;
+                progressBar.style.display = 'block';
+              }
+            });
+          });
         }
         clearTimeout(welcomeAutoCloseTimer);
         welcomeAutoCloseTimer = setTimeout(() => {
@@ -9210,7 +9277,6 @@
         }
       }
 
-      let wheelAngle = 0;
       let isSpinning = false;
 
       function drawWheel(angle) {
@@ -10745,14 +10811,16 @@
         const x = e.clientX - rect.left - size / 2;
         const y = e.clientY - rect.top - size / 2;
 
-        const ripple = document.createElement('span');
-        ripple.className = 'caramel-ripple';
-        ripple.style.width = ripple.style.height = `${size}px`;
-        ripple.style.left = `${x}px`;
-        ripple.style.top = `${y}px`;
+        requestAnimationFrame(() => {
+          const ripple = document.createElement('span');
+          ripple.className = 'caramel-ripple';
+          ripple.style.width = ripple.style.height = `${size}px`;
+          ripple.style.left = `${x}px`;
+          ripple.style.top = `${y}px`;
 
-        btn.appendChild(ripple);
-        setTimeout(() => ripple.remove(), 650);
+          btn.appendChild(ripple);
+          setTimeout(() => ripple.remove(), 650);
+        });
       });
     })();
   </script>
