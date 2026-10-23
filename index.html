@@ -346,9 +346,9 @@
           <span class="lang-pill" id="langPillEn">EN</span>
         </div>
 
-        <!-- Loyalty Points Lookup Button (Hidden) -->
-        <button type="button" class="btn btn-ghost loyalty-nav-btn" onclick="openLoyaltyModal()" style="display: none !important; padding: 8px 14px; min-height: 38px; font-size: 12.5px;" aria-label="Tra cứu điểm tích lũy">
-          <i data-lucide="crown" style="width:16px;height:16px;"></i> <span data-i18n="nav_loyalty">Tích điểm</span>
+        <!-- Loyalty Points Lookup Button (Desktop) -->
+        <button type="button" class="btn btn-ghost loyalty-nav-btn desktop-only" onclick="openLoyaltyModal()" style="padding: 8px 12px; min-height: 44px; font-size: 12.5px; border: 1px solid rgba(229,154,85,0.3); color: var(--accent-gold);" aria-label="Thẻ tích điểm điện tử Olion">
+          <i data-lucide="award" style="width:16px;height:16px;margin-right:4px;"></i> <span>Tích điểm</span>
         </button>
 
         <a href="tel:0783657587" class="header-phone-pill" title="Gọi Hotline đặt bàn & tư vấn">
@@ -514,6 +514,14 @@
         </a>
 
         <div class="drawer-nav-divider"></div>
+
+        <button type="button" class="drawer-link" onclick="openLoyaltyModal(); closeMobileDrawer();" style="color: #F2AC6D !important; background: none; border: 1px solid transparent; width: 100%; text-align: left; font: inherit; cursor: pointer;" aria-label="Thẻ Tích Điểm Điện Tử">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon" style="background: rgba(229,154,85,0.15); border-color: rgba(229,154,85,0.3);"><i data-lucide="award" style="width:16px;height:16px;"></i></div>
+            <span>Thẻ Tích Điểm Điện Tử</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </button>
 
         <button type="button" id="drawerInstallBtn" class="drawer-link" style="color: var(--accent-gold) !important; background: none; border: 1px solid transparent; width: 100%; text-align: left; font: inherit; cursor: pointer;" aria-label="Cài Đặt App Olion">
           <div class="drawer-link-left">
@@ -1093,6 +1101,12 @@
             <button type="button" class="taste-pill" data-taste="plantmilk">
               <span>🌱 Sữa hạt Oatside</span>
             </button>
+            <button type="button" class="taste-pill" data-taste="decaf">
+              <span>🌙 Không Caffeine</span>
+            </button>
+            <button type="button" class="taste-pill" data-taste="favorites" id="tastePillFavorites">
+              <span>❤️ Yêu thích <span id="favCount">0</span></span>
+            </button>
           </div>
         </div>
 
@@ -1188,6 +1202,7 @@
           <div class="menu-grid">
             <article class="menu-card">
               <div class="menu-card-img-wrap">
+                <button type="button" class="btn-fav-card" aria-label="Lưu món yêu thích" onclick="toggleFavoriteDrink(this, event)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>
                 <img src="assets/menu/tran_chau_trang.webp" alt="Topping Trân Châu Trắng giòn dai — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
               </div>
               <div class="menu-card-body">
@@ -1199,6 +1214,7 @@
 
             <article class="menu-card">
               <div class="menu-card-img-wrap">
+                <button type="button" class="btn-fav-card" aria-label="Lưu món yêu thích" onclick="toggleFavoriteDrink(this, event)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>
                 <img src="assets/menu/tran_chau_o_long.webp" alt="Topping Trân Châu Ô Long dẻo thơm — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
               </div>
               <div class="menu-card-body">
@@ -1210,6 +1226,7 @@
 
             <article class="menu-card">
               <div class="menu-card-img-wrap">
+                <button type="button" class="btn-fav-card" aria-label="Lưu món yêu thích" onclick="toggleFavoriteDrink(this, event)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>
                 <img src="assets/menu/thach_suong_sao.webp" alt="Topping Thạch Sương Sáo thanh nhiệt — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
               </div>
               <div class="menu-card-body">
@@ -1221,6 +1238,7 @@
 
             <article class="menu-card">
               <div class="menu-card-img-wrap">
+                <button type="button" class="btn-fav-card" aria-label="Lưu món yêu thích" onclick="toggleFavoriteDrink(this, event)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>
                 <img src="assets/menu/thach_que_hoa.webp" alt="Topping Thạch Quế Hoa thanh nhẹ — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
               </div>
               <div class="menu-card-body">
@@ -1232,6 +1250,7 @@
 
             <article class="menu-card">
               <div class="menu-card-img-wrap">
+                <button type="button" class="btn-fav-card" aria-label="Lưu món yêu thích" onclick="toggleFavoriteDrink(this, event)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>
                 <img src="assets/menu/thach_vai_hoa_hong.webp" alt="Topping Thạch Vải Hoa Hồng thơm dịu — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
               </div>
               <div class="menu-card-body">
@@ -1243,6 +1262,7 @@
 
             <article class="menu-card">
               <div class="menu-card-img-wrap">
+                <button type="button" class="btn-fav-card" aria-label="Lưu món yêu thích" onclick="toggleFavoriteDrink(this, event)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></button>
                 <img src="assets/menu/thach_ca_phe.webp" alt="Topping Thạch Cà Phê thủ công — Olion Coffee" class="menu-card-img" width="300" height="300" loading="lazy" decoding="async" />
               </div>
               <div class="menu-card-body">
@@ -1898,9 +1918,14 @@
         <h3 class="font-serif" id="bookingModalTitle" style="font-size: 24px; margin-bottom: 6px; color: var(--text-white);">
           Đăng Ký Đặt Chỗ Tại <span style="color: var(--accent-gold);">Olion</span>
         </h3>
-        <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 16px;">
+        <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 12px;">
           Nội dung yêu cầu đã được <strong>tự động điền sẵn</strong>. Bạn có thể chỉnh sửa lại hoặc bấm gửi ngay:
         </p>
+
+        <div class="booking-social-proof">
+          <span>🔥</span> Hơn <strong>28 lượt khách</strong> đã đặt bàn & thuê không gian tuần này
+        </div>
+        <div id="recentBookingNotice" class="recent-booking-banner" style="display: none;"></div>
 
         <!-- Segmented Service Choice -->
         <div class="bk-type-grid" id="bkTypeGrid">
@@ -2019,25 +2044,63 @@
     </div>
   </div>
 
-  <!-- ======== MODAL: TRA CỨU ĐIỂM TÍCH LŨY (LOYALTY PROGRAM - HIDDEN) ======== -->
-  <div class="modal-overlay" id="loyaltyLookupModal" aria-hidden="true" role="dialog" aria-labelledby="loyaltyTitle" style="display: none !important;">
-    <div class="modal-box" style="max-width: 480px;">
+  <!-- ======== MODAL: THẺ TÍCH ĐIỂM & THÀNH VIÊN OLION ======== -->
+  <div class="modal-overlay" id="loyaltyLookupModal" aria-hidden="true" role="dialog" aria-labelledby="loyaltyTitle">
+    <div class="modal-box" style="max-width: 500px; padding: 28px 22px;">
       <button type="button" class="modal-close" onclick="closeLoyaltyModal()" aria-label="Đóng popup"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
-      <div class="section-eyebrow" style="margin-bottom: 8px;"><i data-lucide="crown" style="width:14px;height:14px;margin-right:4px;"></i> <span data-i18n="loyalty_eyebrow">Thành Viên Olion</span></div>
-      <h3 class="font-serif" id="loyaltyTitle" style="font-size: 22px; margin-bottom: 6px; color: var(--text-white);" data-i18n="loyalty_title">Tra Cứu Điểm Tích Lũy</h3>
-      <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 18px;" data-i18n="loyalty_desc">Nhập số điện thoại để kiểm tra số điểm hiện có và các ưu đãi đang chờ bạn!</p>
-      
-      <form id="loyaltyLookupForm" onsubmit="handleLoyaltyLookup(event)">
-        <div class="form-group">
-          <label class="form-label" for="loyaltySearchPhone" data-i18n="loyalty_input_label">Số điện thoại của bạn</label>
-          <div style="display: flex; gap: 8px;">
-            <input type="tel" class="form-input" id="loyaltySearchPhone" placeholder="Ví dụ: 0908123456" required pattern="[0-9]{9,11}" data-i18n-placeholder="loyalty_phone_placeholder" />
-            <button type="submit" class="btn btn-primary" id="loyaltySearchBtn" style="white-space: nowrap; padding: 0 20px;">
-              <span data-i18n="loyalty_btn_lookup">Tra Cứu</span>
-            </button>
-          </div>
+      <div class="section-eyebrow" style="margin-bottom: 6px;"><i data-lucide="award" style="width:14px;height:14px;margin-right:4px;"></i> <span>Thành Viên Olion</span></div>
+      <h3 class="font-serif" id="loyaltyTitle" style="font-size: 22px; margin-bottom: 4px; color: var(--text-white);">Thẻ Tích Điểm Điện Tử 1 Chạm</h3>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">Tích đủ 8 tem cà phê để nhận ngay <strong>01 ly nước miễn phí tùy chọn</strong> tại quầy Olion!</p>
+
+      <!-- 8-Stamp Digital Card -->
+      <div class="stamp-card-wrap">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+          <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-gold); font-weight: 700;">OLION DIGITAL CARD</span>
+          <span style="font-size: 11px; background: rgba(46,204,113,0.2); color: #2ecc71; padding: 2px 8px; border-radius: 999px; font-weight: 600;">Member</span>
         </div>
-      </form>
+        <div class="stamp-card-code" id="loyaltyMemberCode">OLION-8869</div>
+        <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Đưa mã này cho thu ngân khi thanh toán để tích tem</div>
+
+        <div class="stamp-grid" id="stampGrid">
+          <div class="stamp-slot stamped"><span class="stamp-icon">☕</span><span>Tem 1</span></div>
+          <div class="stamp-slot stamped"><span class="stamp-icon">☕</span><span>Tem 2</span></div>
+          <div class="stamp-slot"><span class="stamp-icon">☕</span><span>Tem 3</span></div>
+          <div class="stamp-slot"><span class="stamp-icon">☕</span><span>Tem 4</span></div>
+          <div class="stamp-slot"><span class="stamp-icon">☕</span><span>Tem 5</span></div>
+          <div class="stamp-slot"><span class="stamp-icon">☕</span><span>Tem 6</span></div>
+          <div class="stamp-slot"><span class="stamp-icon">☕</span><span>Tem 7</span></div>
+          <div class="stamp-slot reward"><span class="stamp-icon">🎁</span><span>Tặng 1 ly</span></div>
+        </div>
+
+        <div style="font-size: 12.5px; color: var(--accent-gold-light); font-weight: 600;" id="stampStatusText">
+          Bạn đã tích được <span id="currentStampCount" style="color:#2ecc71; font-size:15px; font-weight:800;">2</span> / 8 tem!
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 18px;">
+        <button type="button" class="btn btn-secondary" onclick="simulateAddStamp()" style="font-size: 12px; padding: 7px 14px;">
+          ☕ Thử tích 1 tem
+        </button>
+        <button type="button" class="btn btn-ghost" onclick="resetLoyaltyStamps()" style="font-size: 12px; padding: 7px 14px;">
+          ↺ Đặt lại thẻ
+        </button>
+      </div>
+
+      <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; text-align: left;">
+        <div style="font-size: 12px; font-weight: 700; color: var(--text-cream); margin-bottom: 8px;">
+          🔍 Hoặc tra cứu lịch sử tích điểm theo số điện thoại:
+        </div>
+        <form id="loyaltyLookupForm" onsubmit="handleLoyaltyLookup(event)">
+          <div class="form-group" style="margin-bottom: 0;">
+            <div style="display: flex; gap: 8px;">
+              <input type="tel" class="form-input" id="loyaltySearchPhone" placeholder="Ví dụ: 0908123456" required pattern="[0-9]{9,11}" />
+              <button type="submit" class="btn btn-primary" id="loyaltySearchBtn" style="white-space: nowrap; padding: 0 16px; font-size: 13px;">
+                <span>Tra Cứu</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
 
       <div id="loyaltyResultCard" style="display: none; margin-top: 18px; text-align: left;">
         <div style="background: rgba(14, 22, 17, 0.9); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 18px;">

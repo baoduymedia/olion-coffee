@@ -1301,6 +1301,13 @@
                 <div class="stat-label">Lịch đặt bàn & không gian</div>
               </div>
             </div>
+            <div class="stat-card" onclick="switchTab('menu')" style="cursor: pointer;">
+              <div class="stat-icon-wrap" style="background: rgba(231,76,60,0.15); color: #e74c3c;">🚫</div>
+              <div>
+                <div class="stat-val" id="statSoldOutCount" style="color: #e74c3c;">0</div>
+                <div class="stat-label">Món tạm hết hàng</div>
+              </div>
+            </div>
           </div>
 
           <!-- Quick Shortcuts -->
@@ -4186,12 +4193,17 @@
       const custCountEl = document.getElementById('statCustomerCount');
       const fbCountEl = document.getElementById('statFeedbackCount');
       const bookingCountEl = document.getElementById('statBookingCount');
+      const soldOutCountEl = document.getElementById('statSoldOutCount');
       const ratingAvgEl = document.getElementById('statRatingAvg');
 
       if (menuCountEl) menuCountEl.textContent = cachedMenuItems.length;
       if (custCountEl) custCountEl.textContent = cachedCustomers.length;
       if (fbCountEl) fbCountEl.textContent = cachedFeedbacks.length;
       if (bookingCountEl) bookingCountEl.textContent = cachedBookings.length;
+      if (soldOutCountEl) {
+        const soldOut = (cachedMenuItems || []).filter(i => i.is_available === false).length;
+        soldOutCountEl.textContent = soldOut;
+      }
 
       if (cachedFeedbacks.length > 0) {
         const avg = (cachedFeedbacks.reduce((acc, f) => acc + (f.rating || 5), 0) / cachedFeedbacks.length).toFixed(1);
