@@ -7,7 +7,7 @@
   <!-- ======== CRITICAL LCP & RESOURCE HINTS (PLACED AT HIGHEST POSITION IN HEAD) ======== -->
   <link rel="preload" as="image" href="assets/space-4-mobile.webp" media="(max-width: 767px)" type="image/webp" fetchpriority="high" />
   <link rel="preload" as="image" href="assets/space-4.webp" media="(min-width: 768px)" type="image/webp" fetchpriority="high" />
-  <link rel="preload" href="style.css" as="style" />
+  <link rel="preload" href="style.css?v=2.2" as="style" />
 
   <!-- Preconnect for Google Fonts & Supabase (EXACTLY 2 PRECONNECTS) -->
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -59,7 +59,7 @@
   <!-- ======== 5. CORE STYLES & ESSENTIAL FONTS (Cormorant 600/700 & Poppins 400/600) ======== -->
   <link rel="preload" href="https://fonts.gstatic.com/s/cormorantgaramond/v21/co3bmX5slCNuHLi8bLeY9MK7whWMhyjYpntKky2F7i6C.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="https://fonts.gstatic.com/s/poppins/v24/pxiEyp8kv8JHgFVrJJfecnFHGPc.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=2.2" />
   
   <!-- Lucide Icons (Lazy-loaded on interaction or idle to unblock FCP & LCP) -->
   <script>
@@ -2554,7 +2554,7 @@
     </div>
     <div class="menu-board-hint" id="menuBoardHint"><i data-lucide="🌟" style="width:14px;height:14px;margin-right:4px;"></i> Nhấp vào ảnh hoặc bấm nút [Phóng to] để xem chi tiết từng món</div>
   </div>
-  <script src="main.js" defer></script>
+  <script src="main.js?v=2.2" defer></script>
 
   <!-- ======== 18. APP DOWNLOAD MODAL (3 NỀN TẢNG: IOS, ANDROID, PC) ======== -->
   <div class="modal-overlay" id="downloadAppModal" onclick="if(event.target === this) this.classList.remove('active')">
