@@ -167,10 +167,130 @@ window.resetLoyaltyStamps = function() {
   }
 };
 
+// Toast Notification Handler
+let toastTimer = null;
+window.showOlionToast = function(msg, icon = 'sparkles') {
+  const toast = document.getElementById('olionToast');
+  const msgEl = document.getElementById('olionToastMsg');
+  const iconEl = document.getElementById('olionToastIcon');
+  if (!toast || !msgEl) return;
+  msgEl.textContent = msg;
+  if (iconEl) {
+    if (icon && icon.length > 2 && /^[a-z0-9-]+$/.test(icon)) {
+      iconEl.innerHTML = `<i data-lucide="${icon}" style="width:18px;height:18px;"></i>`;
+    } else {
+      iconEl.textContent = icon;
+    }
+    if (window.lucide) window.lucide.createIcons();
+  }
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3200);
+};
+
+// Share & Earn Referral System
+window.openShareEarnModal = function() {
+  const modal = document.getElementById('shareEarnModal');
+  if (!modal) return;
+  modal.classList.add('active');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  if (localStorage.getItem('olion_share_rewarded')) {
+    const statusEl = document.getElementById('shareRewardClaimStatus');
+    if (statusEl) statusEl.innerHTML = '✓ <strong>Bạn đã nhận +1 tem thưởng!</strong> Tiếp tục chia sẻ để bạn bè cùng nhận mã giảm 15% nhé.';
+  }
+  if (window.lucide) window.lucide.createIcons();
+};
+
+window.closeShareEarnModal = function() {
+  const modal = document.getElementById('shareEarnModal');
+  if (!modal) return;
+  modal.classList.remove('active');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+};
+
+function rewardShareBonus() {
+  if (!localStorage.getItem('olion_share_rewarded')) {
+    localStorage.setItem('olion_share_rewarded', 'true');
+    let stamps = parseInt(localStorage.getItem('olion_stamps') || '2', 10);
+    if (isNaN(stamps) || stamps < 0) stamps = 2;
+    if (stamps < 8) {
+      stamps += 1;
+      localStorage.setItem('olion_stamps', stamps);
+      if (typeof window.renderLoyaltyStamps === 'function') window.renderLoyaltyStamps();
+    }
+    const statusEl = document.getElementById('shareRewardClaimStatus');
+    if (statusEl) statusEl.innerHTML = '🎉 <strong>Tuyệt vời!</strong> Bạn vừa được cộng +1 tem vào Thẻ thành viên!';
+    if (window.showOlionToast) {
+      setTimeout(() => {
+        window.showOlionToast('🎉 Tặng bạn +1 tem vào Thẻ tích điểm Olion!', 'award');
+      }, 500);
+    }
+  }
+}
+
+window.copyShareVoucher = function() {
+  const code = 'OLIONBANBE15';
+  rewardShareBonus();
+  const finishCopy = () => {
+    const btnText = document.getElementById('copyVoucherBtnText');
+    if (btnText) {
+      btnText.textContent = '✓ Đã chép!';
+      setTimeout(() => { btnText.textContent = 'Sao chép'; }, 2000);
+    }
+    if (window.showOlionToast) window.showOlionToast('Đã sao chép mã giảm 15%: OLIONBANBE15', 'check');
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(finishCopy).catch(finishCopy);
+  } else {
+    finishCopy();
+  }
+};
+
+window.handleShareAction = function(platform) {
+  const shareUrl = 'https://www.olioncoffee.app/?ref=share';
+  const shareTitle = 'Olion Coffee — Quán Cà Phê Yên Tĩnh Fine Dining Gò Vấp';
+  const shareText = 'Ghé Olion Coffee thưởng thức Cà Phê Muối Fine Dining và không gian yên tĩnh tuyệt đẹp! Nhập mã OLIONBANBE15 để được giảm 15% nhé:';
+  
+  rewardShareBonus();
+
+  if (platform === 'zalo') {
+    window.open(`https://zalo.me/share?url=${encodeURIComponent(shareUrl)}`, '_blank');
+  } else if (platform === 'facebook') {
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`, '_blank', 'width=600,height=500');
+  } else if (platform === 'native') {
+    if (navigator.share) {
+      navigator.share({ title: shareTitle, text: shareText, url: shareUrl }).catch(() => {});
+    } else {
+      if (navigator.clipboard) navigator.clipboard.writeText(shareUrl);
+      if (window.showOlionToast) window.showOlionToast('Đã sao chép link website Olion!', 'link');
+    }
+  } else if (platform === 'copy') {
+    const finishCopy = () => {
+      const btnText = document.getElementById('copyLinkBtnText');
+      if (btnText) {
+        btnText.textContent = '✓ Đã chép!';
+        setTimeout(() => { btnText.textContent = 'Sao chép link'; }, 2000);
+      }
+      if (window.showOlionToast) window.showOlionToast('Đã sao chép link chia sẻ!', 'link');
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareUrl).then(finishCopy).catch(finishCopy);
+    } else {
+      finishCopy();
+    }
+  }
+};
+
+window.shareApp = window.openShareEarnModal;
+
 // Initialize Favs count & render stamps on ready
 document.addEventListener('DOMContentLoaded', () => {
   try {
-    if (typeof renderMenuPanels === 'function') renderMenuPanels(be);
+    if (typeof renderMenuPanels === 'function' && typeof be !== 'undefined') renderMenuPanels(be);
     const favs = JSON.parse(localStorage.getItem('olion_fav_drinks') || '[]');
     const badge = document.getElementById('favCount');
     if (badge) badge.textContent = favs.length;
@@ -186,6 +306,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     if (typeof renderLoyaltyStamps === 'function') renderLoyaltyStamps();
+
+    // Check referral visitor
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('ref')) {
+      setTimeout(() => {
+        if (window.showOlionToast) window.showOlionToast('🎁 Chào mừng bạn! Mã giảm 15%: OLIONBANBE15', 'gift');
+      }, 1500);
+    }
   } catch(e) { console.warn("Init error:", e); }
 });
 

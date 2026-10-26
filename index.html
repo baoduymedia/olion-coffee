@@ -360,8 +360,8 @@
           <span>0783 657 587</span>
         </a>
         
-        <button type="button" class="btn btn-ghost header-share-btn" onclick="shareApp()" style="padding: 8px 14px; min-height: 38px; font-size: 12.5px; border-radius: 20px;" aria-label="Chia sẻ Web">
-          <i data-lucide="share-2" style="width:16px;height:16px;"></i><span style="margin-left:6px;" data-i18n="nav_share">Chia sẻ</span>
+        <button type="button" class="btn btn-ghost header-share-btn desktop-only" onclick="openShareEarnModal()" style="padding: 8px 14px; min-height: 44px; font-size: 12.5px; border-radius: 20px; border: 1px solid rgba(229,154,85,0.4); color: #F5EFE6; background: rgba(229,154,85,0.12);" aria-label="Chia sẻ nhận quà 15%">
+          <i data-lucide="gift" style="width:16px;height:16px;color:var(--accent-gold);"></i><span style="margin-left:6px;" data-i18n="nav_share">Nhận 15%</span>
         </button>
         <button type="button" class="btn btn-ghost header-feedback-btn" onclick="openFeedbackModal()" style="padding: 8px 16px; min-height: 38px; font-size: 12.5px;" aria-label="Mở bảng góp ý quán">
           <span data-i18n="nav_feedback">Góp ý quán</span>
@@ -523,6 +523,14 @@
           <div class="drawer-link-left">
             <div class="drawer-link-icon" style="background: rgba(229,154,85,0.15); border-color: rgba(229,154,85,0.3);"><i data-lucide="award" style="width:16px;height:16px;"></i></div>
             <span>Thẻ Tích Điểm Điện Tử</span>
+          </div>
+          <span class="drawer-link-arrow">›</span>
+        </button>
+
+        <button type="button" class="drawer-link" onclick="openShareEarnModal(); toggleDrawer(false);" style="color: #2ecc71 !important; background: none; border: 1px solid transparent; width: 100%; text-align: left; font: inherit; cursor: pointer;" aria-label="Chia Sẻ Nhận Quà (15% + 1 Tem)">
+          <div class="drawer-link-left">
+            <div class="drawer-link-icon" style="background: rgba(46,204,113,0.15); border-color: rgba(46,204,113,0.3); color: #2ecc71;"><i data-lucide="gift" style="width:16px;height:16px;"></i></div>
+            <span>Chia Sẻ Nhận Quà (15% + 1 Tem)</span>
           </div>
           <span class="drawer-link-arrow">›</span>
         </button>
@@ -1789,6 +1797,8 @@
           <a href="#signature" data-i18n="nav_signature">Món Bán Chạy</a>
           <a href="#menu" data-i18n="nav_menu">Thực Đơn</a>
           <a href="#spaces" data-i18n="nav_spaces">Không Gian</a>
+          <a href="news.html">Tin Tức &amp; Blog</a>
+          <a href="table-qr.html">In Standee QR Để Bàn</a>
           <a href="#faq" data-i18n="nav_faq">Hỏi Đáp</a>
         </div>
 
@@ -2082,12 +2092,23 @@
         </div>
       </div>
 
-      <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 18px;">
+      <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 14px;">
         <button type="button" class="btn btn-secondary" onclick="simulateAddStamp()" style="font-size: 12px; padding: 7px 14px;">
           ☕ Thử tích 1 tem
         </button>
         <button type="button" class="btn btn-ghost" onclick="resetLoyaltyStamps()" style="font-size: 12px; padding: 7px 14px;">
           ↺ Đặt lại thẻ
+        </button>
+      </div>
+
+      <!-- Share & Earn Bonus Callout -->
+      <div style="background: rgba(229,154,85,0.12); border: 1px dashed var(--accent-gold); border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+        <div style="text-align: left;">
+          <div style="font-size: 12px; font-weight: 700; color: #fff;">🎁 Tặng +1 tem khi chia sẻ cho bạn bè</div>
+          <div style="font-size: 11px; color: var(--text-muted);">Nhận thêm mã giảm 15% cho hóa đơn tiếp theo</div>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="closeLoyaltyModal(); openShareEarnModal();" style="font-size: 11.5px; padding: 6px 12px; white-space: nowrap;">
+          Nhận ngay
         </button>
       </div>
 
@@ -2142,6 +2163,52 @@
       </div>
 
       <div id="loyaltyErrorCard" style="display: none; margin-top: 16px; padding: 14px; background: rgba(231, 76, 60, 0.1); border: 1px solid rgba(231, 76, 60, 0.3); border-radius: var(--radius-md); font-size: 13px; color: #FF9B90; text-align: center;">
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== MODAL: CHIA SẺ NHẬN QUÀ (SHARE & EARN) ======== -->
+  <div class="modal-overlay" id="shareEarnModal" aria-hidden="true" role="dialog" aria-labelledby="shareEarnTitle" onclick="if(event.target === this) closeShareEarnModal()">
+    <div class="modal-box" style="max-width: 480px; padding: 28px 22px; text-align: center;">
+      <button type="button" class="modal-close" onclick="closeShareEarnModal()" aria-label="Đóng popup"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
+      <div class="section-eyebrow" style="margin-bottom: 6px; justify-content: center;"><i data-lucide="gift" style="width:14px;height:14px;margin-right:4px;"></i> <span>Lan Tỏa Hương Vị</span></div>
+      <h3 class="font-serif" id="shareEarnTitle" style="font-size: 24px; margin-bottom: 8px; color: var(--text-white);">Chia Sẻ Nhận Quà Kép</h3>
+      <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px;">
+        Chỉ cần 1 chạm chia sẻ Olion Coffee cho bạn bè, bạn sẽ nhận ngay <strong>Mã Giảm 15%</strong> và được <strong>+1 Tem Thưởng</strong> vào Thẻ tích điểm 8 tem!
+      </p>
+
+      <!-- Reward Highlight Box -->
+      <div style="background: linear-gradient(135deg, rgba(229,154,85,0.15), rgba(216,99,38,0.08)); border: 1.5px dashed var(--accent-gold); border-radius: 14px; padding: 18px 16px; margin-bottom: 20px;">
+        <div style="font-size: 11.5px; color: var(--accent-gold-light); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px;">Mã Ưu Đãi Dành Riêng Cho Bạn &amp; Bạn Bè</div>
+        <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap;">
+          <code id="shareVoucherCode" style="font-size: 19px; font-weight: 800; color: #fff; background: rgba(0,0,0,0.5); padding: 7px 16px; border-radius: 8px; border: 1px solid rgba(229,154,85,0.4); letter-spacing: 1.5px;">OLIONBANBE15</code>
+          <button type="button" class="btn btn-primary" onclick="copyShareVoucher()" style="padding: 8px 16px; font-size: 12.5px; font-weight: 700; border-radius: 8px;">
+            <i data-lucide="copy" style="width:14px;height:14px;margin-right:4px;vertical-align:-2px;"></i> <span id="copyVoucherBtnText">Sao chép</span>
+          </button>
+        </div>
+        <div style="font-size: 12px; color: #2ecc71; font-weight: 600; line-height: 1.4;" id="shareRewardClaimStatus">
+          ☕ Tặng ngay +1 tem khi bạn bấm một trong các nút chia sẻ bên dưới!
+        </div>
+      </div>
+
+      <!-- Social Share Buttons -->
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px;">
+        <button type="button" class="btn" onclick="handleShareAction('zalo')" style="background: #0068ff; color: #fff; border: none; font-size: 13px; font-weight: 600; padding: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; border-radius: 10px; cursor: pointer;">
+          <span>💬 Chia sẻ Zalo</span>
+        </button>
+        <button type="button" class="btn" onclick="handleShareAction('facebook')" style="background: #1877f2; color: #fff; border: none; font-size: 13px; font-weight: 600; padding: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; border-radius: 10px; cursor: pointer;">
+          <span>🌐 Facebook</span>
+        </button>
+        <button type="button" class="btn" onclick="handleShareAction('native')" style="background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.15); font-size: 13px; font-weight: 600; padding: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; border-radius: 10px; cursor: pointer;">
+          <i data-lucide="share-2" style="width:15px;height:15px;"></i> <span>Chia sẻ khác</span>
+        </button>
+        <button type="button" class="btn" onclick="handleShareAction('copy')" style="background: rgba(229,154,85,0.18); color: var(--accent-gold-light); border: 1px solid var(--accent-gold); font-size: 13px; font-weight: 600; padding: 10px; display: flex; align-items: center; justify-content: center; gap: 6px; border-radius: 10px; cursor: pointer;">
+          <i data-lucide="link" style="width:15px;height:15px;"></i> <span id="copyLinkBtnText">Sao chép link</span>
+        </button>
+      </div>
+
+      <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">
+        Link giới thiệu: <span style="color: var(--accent-gold); word-break: break-all;">https://www.olioncoffee.app/?ref=share</span>
       </div>
     </div>
   </div>
@@ -2559,7 +2626,7 @@
     </div>
     <div class="menu-board-hint" id="menuBoardHint"><i data-lucide="🌟" style="width:14px;height:14px;margin-right:4px;"></i> Nhấp vào ảnh hoặc bấm nút [Phóng to] để xem chi tiết từng món</div>
   </div>
-  <script src="main.js?v=2.4" defer></script>
+  <script src="main.js?v=2.5" defer></script>
 
   <!-- ======== 18. APP DOWNLOAD MODAL (3 NỀN TẢNG: IOS, ANDROID, PC) ======== -->
   <div class="modal-overlay" id="downloadAppModal" onclick="if(event.target === this) this.classList.remove('active')">

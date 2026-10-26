@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>In Standee / Table Tent QR Để Bàn — Olion Coffee</title>
+  <meta name="description" content="Trang tạo và in ấn mẫu Standee Mica, Table Tent QR Code để bàn sang trọng chuẩn nhận diện Olion Coffee Gò Vấp." />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-dark: #0A0F0D;
+      --bg-card: #121A15;
+      --gold-primary: #C59B63;
+      --gold-light: #F2AC6D;
+      --gold-dark: #916E3F;
+      --text-white: #FFFFFF;
+      --text-cream: #F5EBE1;
+      --text-muted: #A3B899;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #1a221e;
+      color: var(--text-cream);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 60px;
+    }
+
+    /* Screen Control Toolbar */
+    .screen-toolbar {
+      width: 100%;
+      background: #0d1410;
+      border-bottom: 1px solid rgba(197, 155, 99, 0.3);
+      padding: 14px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .toolbar-container {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .toolbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-white);
+    }
+
+    .toolbar-brand img {
+      height: 34px;
+      width: auto;
+    }
+
+    .toolbar-brand-title {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--gold-light);
+    }
+
+    .toolbar-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(197, 155, 99, 0.25);
+      border-radius: 8px;
+      padding: 4px 10px;
+    }
+
+    .control-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .control-select, .control-input {
+      background: #18231c;
+      color: #fff;
+      border: 1px solid rgba(197, 155, 99, 0.4);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .control-select:focus, .control-input:focus {
+      border-color: var(--gold-light);
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--gold-primary), #D86326);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13.5px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(216, 99, 38, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .btn-action:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(216, 99, 38, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-cream);
+      border: 1px solid rgba(197, 155, 99, 0.4);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-outline:hover {
+      background: rgba(197, 155, 99, 0.15);
+      border-color: var(--gold-light);
+    }
+
+    /* Print Stage & Canvas Area */
+    .print-stage {
+      padding: 30px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      width: 100%;
+    }
+
+    /* Standee Base Card Container */
+    .standee-card {
+      background: var(--bg-card);
+      color: var(--text-cream);
+      position: relative;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-sizing: border-box;
+      border: 2px solid var(--gold-primary);
+      transition: all 0.3s ease;
+    }
+
+    /* A5 Preset: 148mm x 210mm (~560px x 794px on screen 96dpi) */
+    .standee-card.size-a5 {
+      width: 560px;
+      min-height: 794px;
+      padding: 36px 32px 30px;
+    }
+
+    /* A6 Preset: 105mm x 148mm (~396px x 560px on screen 96dpi) */
+    .standee-card.size-a6 {
+      width: 410px;
+      min-height: 580px;
+      padding: 24px 20px 20px;
+    }
+
+    /* Table Tent Foldable Mode (Double side) */
+    .table-tent-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .table-tent-divider {
+      width: 100%;
+      height: 24px;
+      border-top: 2px dashed rgba(197, 155, 99, 0.5);
+      border-bottom: 2px dashed rgba(197, 155, 99, 0.5);
+      background: rgba(0, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Clean White Theme (for low-ink printing) */
+    .standee-card.theme-white {
+      background: #FFFFFF !important;
+      color: #1a1a1a !important;
+      border-color: #C59B63 !important;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .standee-card.theme-white .standee-inner-frame {
+      border-color: #C59B63 !important;
+      background: #FAFAFA !important;
+    }
+
+    .standee-card.theme-white .standee-title {
+      color: #111111 !important;
+    }
+
+    .standee-card.theme-white .standee-subtitle {
+      color: #7A5828 !important;
+    }
+
+    .standee-card.theme-white .table-badge {
+      background: #C59B63 !important;
+      color: #FFFFFF !important;
+      border-color: #916E3F !important;
+    }
+
+    .standee-card.theme-white .qr-container {
+      background: #FFFFFF !important;
+      border-color: #C59B63 !important;
+    }
+
+    .standee-card.theme-white .info-pill {
+      background: #F3EFEA !important;
+      border-color: #D8C7B2 !important;
+      color: #222222 !important;
+    }
+
+    .standee-card.theme-white .store-footer {
+      color: #555555 !important;
+      border-top-color: #E0D6C8 !important;
+    }
+
+    .standee-card.theme-white .wifi-box {
+      background: #F8F5F0 !important;
+      border-color: #D8C7B2 !important;
+      color: #1a1a1a !important;
+    }
+
+    /* Inner Ornate Frame */
+    .standee-inner-frame {
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgba(197, 155, 99, 0.45);
+      border-radius: 8px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      background: radial-gradient(circle at 50% 20%, rgba(197, 155, 99, 0.08) 0%, transparent 70%), rgba(10, 15, 13, 0.7);
+    }
+
+    /* Corner flourishes */
+    .corner-bracket {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-color: var(--gold-primary);
+      pointer-events: none;
+    }
+
+    .corner-top-left { top: 6px; left: 6px; border-top: 2px solid; border-left: 2px solid; }
+    .corner-top-right { top: 6px; right: 6px; border-top: 2px solid; border-right: 2px solid; }
+    .corner-bottom-left { bottom: 6px; left: 6px; border-bottom: 2px solid; border-left: 2px solid; }
+    .corner-bottom-right { bottom: 6px; right: 6px; border-bottom: 2px solid; border-right: 2px solid; }
+
+    /* Brand Header */
+    .standee-logo-img {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      margin-bottom: 8px;
+    }
+
+    .standee-title {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      color: var(--text-white);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+      line-height: 1.1;
+    }
+
+    .standee-subtitle {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 13px;
+      color: var(--gold-light);
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    /* Table Number Indicator */
+    .table-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5px 22px;
+      background: linear-gradient(135deg, rgba(197, 155, 99, 0.25), rgba(216, 99, 38, 0.2));
+      border: 1.5px solid var(--gold-primary);
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: #FFFFFF;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    }
+
+    /* QR Code Display Box */
+    .qr-container {
+      background: #FFFFFF;
+      padding: 14px;
+      border-radius: 12px;
+      border: 3px solid var(--gold-primary);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .qr-container img, .qr-container canvas {
+      display: block;
+      width: 175px;
+      height: 175px;
+    }
+
+    .size-a6 .qr-container img, .size-a6 .qr-container canvas {
+      width: 135px;
+      height: 135px;
+    }
+
+    /* Call to Action Text */
+    .cta-heading {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-white);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .cta-subtext {
+      font-size: 12.5px;
+      color: var(--gold-light);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    /* Promo & Voucher Banner */
+    .promo-box {
+      background: rgba(229, 154, 85, 0.12);
+      border: 1px dashed var(--gold-primary);
+      border-radius: 8px;
+      padding: 8px 14px;
+      width: 100%;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .promo-tag {
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--gold-primary);
+      color: #0A0F0D;
+      padding: 2px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .promo-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-cream);
+    }
+
+    /* Wifi Information Box */
+    .wifi-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(197, 155, 99, 0.3);
+      border-radius: 8px;
+      padding: 8px 16px;
+      width: 100%;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .wifi-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .wifi-label {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .wifi-val {
+      font-weight: 700;
+      color: var(--gold-light);
+      font-family: monospace;
+      font-size: 13px;
+    }
+
+    /* Store Footer */
+    .store-footer {
+      margin-top: auto;
+      width: 100%;
+      border-top: 1px solid rgba(197, 155, 99, 0.25);
+      padding-top: 10px;
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .store-footer strong {
+      color: var(--text-cream);
+    }
+
+    /* PRINT SPECIFIC STYLES */
+    @media print {
+      body {
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      .screen-toolbar, .no-print {
+        display: none !important;
+      }
+
+      .print-stage {
+        padding: 0 !important;
+        gap: 0 !important;
+        width: 100% !important;
+      }
+
+      .standee-card {
+        box-shadow: none !important;
+        margin: 0 auto !important;
+        page-break-after: always;
+        break-after: page;
+      }
+
+      .standee-card.size-a5 {
+        width: 148mm !important;
+        height: 210mm !important;
+        max-height: 210mm !important;
+        padding: 8mm !important;
+        border-radius: 0 !important;
+      }
+
+      .standee-card.size-a6 {
+        width: 105mm !important;
+        height: 148mm !important;
+        max-height: 148mm !important;
+        padding: 6mm !important;
+        border-radius: 0 !important;
+      }
+
+      @page {
+        margin: 0;
+        size: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Screen Control Toolbar (Hidden when printing) -->
+  <header class="screen-toolbar no-print">
+    <div class="toolbar-container">
+      <a href="index.html" class="toolbar-brand">
+        <img src="assets/logo-white.webp" alt="Olion Coffee" onerror="this.src='assets/logo.png'" />
+        <span class="toolbar-brand-title">Olion Coffee — Standee Print</span>
+      </a>
+
+      <div class="toolbar-controls">
+        <!-- Table Selector -->
+        <div class="control-group">
+          <label class="control-label" for="tableSelect">Số Bàn:</label>
+          <select id="tableSelect" class="control-select" onchange="updateStandee()">
+            <option value="01">Bàn 01</option>
+            <option value="02">Bàn 02</option>
+            <option value="03">Bàn 03</option>
+            <option value="04">Bàn 04</option>
+            <option value="05" selected>Bàn 05</option>
+            <option value="06">Bàn 06</option>
+            <option value="07">Bàn 07</option>
+            <option value="08">Bàn 08</option>
+            <option value="09">Bàn 09</option>
+            <option value="10">Bàn 10</option>
+            <option value="11">Bàn 11</option>
+            <option value="12">Bàn 12</option>
+            <option value="15">Bàn 15 (VIP)</option>
+            <option value="20">Bàn 20 (Sân Vườn)</option>
+            <option value="custom">-- Bàn Tùy Chọn --</option>
+          </select>
+          <input type="text" id="customTableInput" class="control-input" placeholder="Tên bàn..." style="display: none; width: 100px;" oninput="updateStandee()" />
+        </div>
+
+        <!-- Size Selector -->
+        <div class="control-group">
+          <label class="control-label" for="sizeSelect">Khổ Giấy:</label>
+          <select id="sizeSelect" class="control-select" onchange="updateStandee()">
+            <option value="size-a5" selected>Standee Mica A5 (148 × 210 mm)</option>
+            <option value="size-a6">Standee Mica A6 (105 × 148 mm)</option>
+          </select>
+        </div>
+
+        <!-- Theme Selector -->
+        <div class="control-group">
+          <label class="control-label" for="themeSelect">Chế Độ In:</label>
+          <select id="themeSelect" class="control-select" onchange="updateStandee()">
+            <option value="theme-dark" selected>Luxury Dark & Gold (Đẹp Nhất)</option>
+            <option value="theme-white">Clean White (Tiết Kiệm Mực)</option>
+          </select>
+        </div>
+
+        <!-- Action Buttons -->
+        <button type="button" class="btn-action" onclick="window.print()">
+          <span>🖨️ In Standee Này</span>
+        </button>
+
+        <button type="button" class="btn-outline" onclick="generateBatchCards()">
+          <span>📋 Tạo Hàng Loạt (Bàn 1 - 10)</span>
+        </button>
+
+        <a href="admin.html" class="btn-outline">
+          <span>⚙️ Về Admin</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Print Stage Area -->
+  <main class="print-stage" id="printStage">
+    <!-- Active Standee Card -->
+    <article class="standee-card size-a5" id="mainStandeeCard">
+      <div class="standee-inner-frame">
+        <!-- Corner brackets -->
+        <div class="corner-bracket corner-top-left"></div>
+        <div class="corner-bracket corner-top-right"></div>
+        <div class="corner-bracket corner-bottom-left"></div>
+        <div class="corner-bracket corner-bottom-right"></div>
+
+        <!-- Brand Header -->
+        <img src="assets/logo-white.webp" alt="Olion Coffee" class="standee-logo-img" id="cardLogo" onerror="this.src='assets/logo.png'" />
+        <h1 class="standee-title">OLION COFFEE</h1>
+        <div class="standee-subtitle">Elegance in Every Sip</div>
+
+        <!-- Table Badge -->
+        <div class="table-badge" id="cardTableBadge">✦ BÀN 05 ✦</div>
+
+        <!-- QR Code Container -->
+        <div class="qr-container">
+          <div id="qrcodeTarget"></div>
+        </div>
+
+        <!-- Call to Action -->
+        <h2 class="cta-heading">Quét Mã Đặt Nước &amp; Xem Menu</h2>
+        <div class="cta-subtext">Khám phá 39 món nước thủ công tinh tế</div>
+
+        <!-- Promo Banner -->
+        <div class="promo-box">
+          <span class="promo-tag">Ưu đãi</span>
+          <span class="promo-text">Nhập mã <strong>OLIONBANBE15</strong> giảm 15% &amp; Tích Tem 🎁</span>
+        </div>
+
+        <!-- Wifi Box -->
+        <div class="wifi-box">
+          <div class="wifi-item">
+            <span class="wifi-label">📶 Wifi:</span>
+            <span class="wifi-val">Olion Coffee</span>
+          </div>
+          <div class="wifi-item">
+            <span class="wifi-label">🔑 Mật khẩu:</span>
+            <span class="wifi-val">olioncoffee2024</span>
+          </div>
+        </div>
+
+        <!-- Store Footer Info -->
+        <footer class="store-footer">
+          📍 <strong>80/64a Dương Quảng Hàm, P. An Nhơn, Gò Vấp, TP.HCM</strong><br />
+          📞 Hotline: <strong>0783 657 587</strong> • 🌐 Website: <strong>olioncoffee.app</strong>
+        </footer>
+      </div>
+    </article>
+  </main>
+
+  <!-- Self-hosted QRCode Library -->
+  <script src="assets/qrcode.min.js"></script>
+
+  <script>
+    let currentQr = null;
+
+    function getTableText() {
+      const select = document.getElementById('tableSelect');
+      if (select.value === 'custom') {
+        const customVal = document.getElementById('customTableInput').value.trim();
+        return customVal || 'BÀN VIP';
+      }
+      return 'BÀN ' + select.value;
+    }
+
+    function getTableParam() {
+      const select = document.getElementById('tableSelect');
+      if (select.value === 'custom') {
+        const customVal = document.getElementById('customTableInput').value.trim();
+        return encodeURIComponent(customVal || 'VIP');
+      }
+      return select.value;
+    }
+
+    function renderQr(containerId, url, size) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = '';
+
+      if (typeof QRCode !== 'undefined') {
+        try {
+          new QRCode(container, {
+            text: url,
+            width: size,
+            height: size,
+            colorDark: "#0A0F0D",
+            colorLight: "#FFFFFF",
+            correctLevel: QRCode.CorrectLevel.H
+          });
+          return;
+        } catch (e) {
+          console.warn("QRCode constructor error, falling back:", e);
+        }
+      }
+
+      // Fallback to high-res QR image
+      const img = document.createElement('img');
+      img.src = `https://api.qrserver.com/v1/create-qr-code/?size=${size}x${size}&data=${encodeURIComponent(url)}`;
+      img.alt = 'QR Code';
+      img.width = size;
+      img.height = size;
+      container.appendChild(img);
+    }
+
+    function updateStandee() {
+      const card = document.getElementById('mainStandeeCard');
+      const tableSelect = document.getElementById('tableSelect');
+      const customInput = document.getElementById('customTableInput');
+      const sizeSelect = document.getElementById('sizeSelect');
+      const themeSelect = document.getElementById('themeSelect');
+      const badge = document.getElementById('cardTableBadge');
+      const logo = document.getElementById('cardLogo');
+
+      // Custom Table Input toggle
+      if (tableSelect.value === 'custom') {
+        customInput.style.display = 'inline-block';
+      } else {
+        customInput.style.display = 'none';
+      }
+
+      const tableText = getTableText();
+      const tableParam = getTableParam();
+      badge.textContent = `✦ ${tableText.toUpperCase()} ✦`;
+
+      // Apply Size
+      card.className = `standee-card ${sizeSelect.value} ${themeSelect.value}`;
+
+      // Logo according to theme
+      if (themeSelect.value === 'theme-white') {
+        logo.src = 'assets/logo.png';
+      } else {
+        logo.src = 'assets/logo-white.webp';
+      }
+
+      // Generate Target URL
+      const qrUrl = `https://www.olioncoffee.app/?table=${tableParam}#menu`;
+      const qrSize = sizeSelect.value === 'size-a6' ? 135 : 175;
+      renderQr('qrcodeTarget', qrUrl, qrSize);
+    }
+
+    // Generate Batch cards for tables 1 to 10
+    function generateBatchCards() {
+      if (!confirm('Bạn có muốn tạo mẫu in hàng loạt từ Bàn 01 đến Bàn 10 trên từng trang riêng biệt không?')) return;
+
+      const printStage = document.getElementById('printStage');
+      printStage.innerHTML = '';
+
+      const sizeSelect = document.getElementById('sizeSelect');
+      const themeSelect = document.getElementById('themeSelect');
+      const isA6 = sizeSelect.value === 'size-a6';
+      const qrSize = isA6 ? 135 : 175;
+      const logoSrc = themeSelect.value === 'theme-white' ? 'assets/logo.png' : 'assets/logo-white.webp';
+
+      for (let i = 1; i <= 10; i++) {
+        const tableNum = (i < 10 ? '0' : '') + i;
+        const tableParam = tableNum;
+        const qrUrl = `https://www.olioncoffee.app/?table=${tableParam}#menu`;
+        const qrId = `batchQr_${tableNum}`;
+
+        const card = document.createElement('article');
+        card.className = `standee-card ${sizeSelect.value} ${themeSelect.value}`;
+        card.innerHTML = `
+          <div class="standee-inner-frame">
+            <div class="corner-bracket corner-top-left"></div>
+            <div class="corner-bracket corner-top-right"></div>
+            <div class="corner-bracket corner-bottom-left"></div>
+            <div class="corner-bracket corner-bottom-right"></div>
+
+            <img src="${logoSrc}" alt="Olion Coffee" class="standee-logo-img" onerror="this.src='assets/logo.png'" />
+            <h1 class="standee-title">OLION COFFEE</h1>
+            <div class="standee-subtitle">Elegance in Every Sip</div>
+
+            <div class="table-badge">✦ BÀN ${tableNum} ✦</div>
+
+            <div class="qr-container">
+              <div id="${qrId}"></div>
+            </div>
+
+            <h2 class="cta-heading">Quét Mã Đặt Nước &amp; Xem Menu</h2>
+            <div class="cta-subtext">Khám phá 39 món nước thủ công tinh tế</div>
+
+            <div class="promo-box">
+              <span class="promo-tag">Ưu đãi</span>
+              <span class="promo-text">Nhập mã <strong>OLIONBANBE15</strong> giảm 15% &amp; Tích Tem 🎁</span>
+            </div>
+
+            <div class="wifi-box">
+              <div class="wifi-item">
+                <span class="wifi-label">📶 Wifi:</span>
+                <span class="wifi-val">Olion Coffee</span>
+              </div>
+              <div class="wifi-item">
+                <span class="wifi-label">🔑 Mật khẩu:</span>
+                <span class="wifi-val">olioncoffee2024</span>
+              </div>
+            </div>
+
+            <footer class="store-footer">
+              📍 <strong>80/64a Dương Quảng Hàm, P. An Nhơn, Gò Vấp, TP.HCM</strong><br />
+              📞 Hotline: <strong>0783 657 587</strong> • 🌐 Website: <strong>olioncoffee.app</strong>
+            </footer>
+          </div>
+        `;
+        printStage.appendChild(card);
+        renderQr(qrId, qrUrl, qrSize);
+      }
+
+      setTimeout(() => {
+        alert('Đã tạo xong 10 bàn! Hãy bấm nút In (Print) hoặc nhấn tổ hợp phím Ctrl + P để in tất cả.');
+      }, 300);
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      updateStandee();
+    });
+  </script>
+</body>
+</html>

@@ -48,9 +48,52 @@
       <image:loc>https://www.olioncoffee.app/assets/news/caramel-latte.webp</image:loc>
       <image:title>Caramel Latte Olion Coffee</image:title>
     </image:image>
+  </url>
+
+  <!-- Bài viết SEO: Quán Cà Phê Yên Tĩnh Gò Vấp -->
+  <url>
+    <loc>https://www.olioncoffee.app/news.html?article=post-yen-tinh-go-vap</loc>
+    <lastmod>2026-10-25T08:00:00+07:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.olioncoffee.app/assets/news/news-1-flowers.webp</image:loc>
-      <image:title>Olion's First Week Recap</image:title>
+      <image:loc>https://www.olioncoffee.app/assets/space-4.webp</image:loc>
+      <image:title>Top Quán Cà Phê Yên Tĩnh Chạy Deadline &amp; Đọc Sách Lý Tưởng Tại Gò Vấp</image:title>
+      <image:caption>Không gian yên tĩnh, bàn lớn và ổ cắm điện tiện lợi tại Olion Coffee Gò Vấp</image:caption>
     </image:image>
+  </url>
+
+  <!-- Bài viết SEO: Cà Phê Muối Fine Dining Chuẩn Gu Giữa Lòng Gò Vấp -->
+  <url>
+    <loc>https://www.olioncoffee.app/news.html?article=post-ca-phe-muoi-go-vap</loc>
+    <lastmod>2026-10-25T08:00:00+07:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.olioncoffee.app/assets/menu/ca_phe_muoi.webp</image:loc>
+      <image:title>Bí Quyết Tạo Nên Ly Cà Phê Muối Fine Dining Chuẩn Gu Giữa Lòng Gò Vấp</image:title>
+      <image:caption>Cà phê muối Olion Coffee với lớp kem muối biển hồng Himalaya sánh mịn</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Bài viết SEO: Menu 17 Món 0% Caffeine (Decaf) Tại Olion -->
+  <url>
+    <loc>https://www.olioncoffee.app/news.html?article=post-decaf-khong-caffeine</loc>
+    <lastmod>2026-10-25T08:00:00+07:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.olioncoffee.app/assets/menu/tra_vai_hoa_hong.webp</image:loc>
+      <image:title>Uống Cà Phê Buổi Tối Sợ Mất Ngủ? Trải Nghiệm Menu 17 Món 0% Caffeine (Decaf) Tại Olion</image:title>
+      <image:caption>Bộ sưu tập 17 món thanh mát 0% caffeine bảo vệ giấc ngủ tại Olion Coffee Gò Vấp</image:caption>
+    </image:image>
+  </url>
+
+  <!-- Trang In Standee & Table Tent QR Để Bàn -->
+  <url>
+    <loc>https://www.olioncoffee.app/table-qr.html</loc>
+    <lastmod>2026-10-26T08:00:00+07:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>
