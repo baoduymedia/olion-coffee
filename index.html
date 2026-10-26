@@ -360,8 +360,14 @@
           <span>0783 657 587</span>
         </a>
         
-        <button type="button" class="btn btn-ghost header-share-btn desktop-only" onclick="openShareEarnModal()" style="padding: 8px 14px; min-height: 44px; font-size: 12.5px; border-radius: 20px; border: 1px solid rgba(229,154,85,0.4); color: #F5EFE6; background: rgba(229,154,85,0.12);" aria-label="Chia sẻ nhận quà 15%">
-          <i data-lucide="gift" style="width:16px;height:16px;color:var(--accent-gold);"></i><span style="margin-left:6px;" data-i18n="nav_share">Nhận 15%</span>
+        <!-- Default Standard Share Button (Shown when Share & Earn is OFF) -->
+        <button type="button" class="btn btn-ghost header-share-btn desktop-only" id="headerNormalShareBtn" onclick="shareApp()" style="padding: 8px 14px; min-height: 38px; font-size: 12.5px; border-radius: 20px;" aria-label="Chia sẻ Web">
+          <i data-lucide="share-2" style="width:16px;height:16px;"></i><span style="margin-left:6px;" data-i18n="nav_share">Chia sẻ</span>
+        </button>
+
+        <!-- Share & Earn Promo Button (Default HIDDEN, shown ONLY when enabled in Admin) -->
+        <button type="button" class="btn btn-ghost header-share-btn desktop-only" id="headerShareEarnBtn" onclick="openShareEarnModal()" style="display: none !important; padding: 8px 14px; min-height: 44px; font-size: 12.5px; border-radius: 20px; border: 1px solid rgba(229,154,85,0.4); color: #F5EFE6; background: rgba(229,154,85,0.12);" aria-label="Chia sẻ nhận quà">
+          <i data-lucide="gift" style="width:16px;height:16px;color:var(--accent-gold);"></i><span style="margin-left:6px;" id="headerShareEarnBtnText">Nhận 15%</span>
         </button>
         <button type="button" class="btn btn-ghost header-feedback-btn" onclick="openFeedbackModal()" style="padding: 8px 16px; min-height: 38px; font-size: 12.5px;" aria-label="Mở bảng góp ý quán">
           <span data-i18n="nav_feedback">Góp ý quán</span>
@@ -527,10 +533,11 @@
           <span class="drawer-link-arrow">›</span>
         </button>
 
-        <button type="button" class="drawer-link" onclick="openShareEarnModal(); toggleDrawer(false);" style="color: #2ecc71 !important; background: none; border: 1px solid transparent; width: 100%; text-align: left; font: inherit; cursor: pointer;" aria-label="Chia Sẻ Nhận Quà (15% + 1 Tem)">
+        <!-- Share & Earn Drawer Link (Default HIDDEN, shown ONLY when enabled in Admin) -->
+        <button type="button" class="drawer-link" id="drawerShareEarnBtn" onclick="openShareEarnModal(); toggleDrawer(false);" style="display: none !important; color: #2ecc71 !important; background: none; border: 1px solid transparent; width: 100%; text-align: left; font: inherit; cursor: pointer;" aria-label="Chia Sẻ Nhận Quà">
           <div class="drawer-link-left">
             <div class="drawer-link-icon" style="background: rgba(46,204,113,0.15); border-color: rgba(46,204,113,0.3); color: #2ecc71;"><i data-lucide="gift" style="width:16px;height:16px;"></i></div>
-            <span>Chia Sẻ Nhận Quà (15% + 1 Tem)</span>
+            <span id="drawerShareEarnText">Chia Sẻ Nhận Quà (15% + 1 Tem)</span>
           </div>
           <span class="drawer-link-arrow">›</span>
         </button>
@@ -2101,11 +2108,11 @@
         </button>
       </div>
 
-      <!-- Share & Earn Bonus Callout -->
-      <div style="background: rgba(229,154,85,0.12); border: 1px dashed var(--accent-gold); border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+      <!-- Share & Earn Bonus Callout (Default HIDDEN, shown ONLY when enabled in Admin) -->
+      <div id="loyaltyShareEarnBanner" style="display: none !important; background: rgba(229,154,85,0.12); border: 1px dashed var(--accent-gold); border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; align-items: center; justify-content: space-between; gap: 10px;">
         <div style="text-align: left;">
-          <div style="font-size: 12px; font-weight: 700; color: #fff;">🎁 Tặng +1 tem khi chia sẻ cho bạn bè</div>
-          <div style="font-size: 11px; color: var(--text-muted);">Nhận thêm mã giảm 15% cho hóa đơn tiếp theo</div>
+          <div style="font-size: 12px; font-weight: 700; color: #fff;" id="loyaltyShareBannerTitle">🎁 Tặng +1 tem khi chia sẻ cho bạn bè</div>
+          <div style="font-size: 11px; color: var(--text-muted);" id="loyaltyShareBannerSub">Nhận thêm mã giảm 15% cho hóa đơn tiếp theo</div>
         </div>
         <button type="button" class="btn btn-primary" onclick="closeLoyaltyModal(); openShareEarnModal();" style="font-size: 11.5px; padding: 6px 12px; white-space: nowrap;">
           Nhận ngay
@@ -2626,7 +2633,7 @@
     </div>
     <div class="menu-board-hint" id="menuBoardHint"><i data-lucide="🌟" style="width:14px;height:14px;margin-right:4px;"></i> Nhấp vào ảnh hoặc bấm nút [Phóng to] để xem chi tiết từng món</div>
   </div>
-  <script src="main.js?v=2.5" defer></script>
+  <script src="main.js?v=2.6" defer></script>
 
   <!-- ======== 18. APP DOWNLOAD MODAL (3 NỀN TẢNG: IOS, ANDROID, PC) ======== -->
   <div class="modal-overlay" id="downloadAppModal" onclick="if(event.target === this) this.classList.remove('active')">

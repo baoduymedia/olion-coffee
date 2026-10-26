@@ -1763,9 +1763,81 @@
 
 
         <section class="tab-content" id="tab-promotions">
+          <!-- ======== CARD 1: QUẢN LÝ TÍNH NĂNG CHIA SẺ NHẬN QUÀ (SHARE & EARN) ======== -->
+          <div class="card" style="margin-bottom: 24px; border: 1.5px solid rgba(229,154,85,0.4); background: linear-gradient(180deg, rgba(229,154,85,0.06), rgba(0,0,0,0.3));">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                  <h3 class="card-title" style="margin: 0; font-size: 17px; color: var(--text-white);">🎁 Tính Năng: Chia Sẻ Nhận Quà (Referral Loop)</h3>
+                  <span id="shareEarnStatusBadge" class="badge badge-warning" style="font-size: 11px; padding: 3px 8px; font-weight: 700;">ĐANG TẮT</span>
+                </div>
+                <p style="font-size: 12.5px; color: var(--text-muted); margin-top: 4px; margin-bottom: 0;">
+                  Bật/tắt và quản lý quà tặng khi khách hàng chia sẻ website Olion cho bạn bè (Mặc định: TẮT).
+                </p>
+              </div>
+
+              <!-- Master Toggle Switch -->
+              <div class="switch-wrap">
+                <span style="font-size: 13px; color: var(--text-muted);" id="shareEarnSwitchLabel">Trạng thái: Tắt</span>
+                <label class="switch">
+                  <input type="checkbox" id="shareEarnEnableToggle" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="card-body" style="padding-top: 8px;">
+              <form id="shareEarnConfigForm" onsubmit="return false;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-bottom: 16px;">
+                  <div>
+                    <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 5px; font-weight: 600;">Mã Voucher Tặng Khách</label>
+                    <input type="text" id="shareEarnVoucherCode" value="OLIONBANBE15" style="font-weight: 700; color: var(--accent); font-family: monospace; letter-spacing: 1px;" placeholder="Vd: OLIONBANBE15" />
+                  </div>
+                  <div>
+                    <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 5px; font-weight: 600;">Mức Giảm Giá Hiển Thị</label>
+                    <input type="text" id="shareEarnDiscountText" value="Giảm 15% tổng hóa đơn" placeholder="Vd: Giảm 15% tổng hóa đơn" />
+                  </div>
+                  <div>
+                    <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 5px; font-weight: 600;">Tem Thưởng Tích Thêm</label>
+                    <select id="shareEarnStampBonus" style="width: 100%; padding: 9px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 6px; color: #fff;">
+                      <option value="1" selected>+1 Tem Thưởng (Thẻ 8 Tem)</option>
+                      <option value="2">+2 Tem Thưởng</option>
+                      <option value="0">Không tặng tem (Chỉ tặng mã)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 5px; font-weight: 600;">Link Chia Sẻ Mặc Định</label>
+                    <input type="text" id="shareEarnTargetUrl" value="https://www.olioncoffee.app/?ref=share" placeholder="https://www.olioncoffee.app/?ref=share" />
+                  </div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                  <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 5px; font-weight: 600;">Lời Nhắn Khi Khách Chia Sẻ (Facebook / Zalo / Copy)</label>
+                  <textarea id="shareEarnMessageText" rows="2" style="width: 100%; padding: 10px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 6px; color: #fff; font-family: inherit; font-size: 13px;">Ghé Olion Coffee thưởng thức Cà Phê Muối Fine Dining và không gian yên tĩnh tuyệt đẹp! Nhập mã OLIONBANBE15 để được giảm 15% nhé:</textarea>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.08);">
+                  <div style="font-size: 12.5px; color: var(--text-muted);">
+                    📊 Thống kê: Đã có <strong id="shareEarnCountDisplay" style="color: #2ECC71; font-size: 15px;">0</strong> lượt khách tương tác chia sẻ.
+                  </div>
+
+                  <div style="display: flex; gap: 10px;">
+                    <button type="button" class="btn-secondary" id="resetShareEarnStatsBtn" style="font-size: 12px; padding: 7px 12px;">
+                      ↺ Đặt lại số liệu
+                    </button>
+                    <button type="button" class="btn-primary" id="saveShareEarnSettingsBtn" style="padding: 8px 18px; font-weight: 700;">
+                      💾 Lưu Cấu Hình Chia Sẻ
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- ======== CARD 2: VOUCHERS KHÁC ======== -->
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">🎁 Tạo & Quản lý Chương Trình Ưu Đãi (Vouchers)</h3>
+              <h3 class="card-title">🎟️ Tạo &amp; Quản lý Chương Trình Ưu Đãi Khác (Vouchers)</h3>
             </div>
 
             <form id="newPromoForm" onsubmit="return false;" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) 140px; gap: 14px; margin-bottom: 28px; background: rgba(0,0,0,0.25); padding: 18px; border-radius: 12px; border: 1px dashed var(--border);">
@@ -4022,6 +4094,7 @@
     }
 
     function loadPromotions() {
+      loadShareEarnSettings();
       const promos = getPromotions();
       const tbody = document.getElementById('promoTableBody');
       tbody.innerHTML = '';
@@ -4092,6 +4165,123 @@
       document.getElementById('newPromoForm').reset();
       showToast(`Đã thêm mã ưu đãi mới: ${code}!`);
     });
+
+    // ==========================================
+    // SHARE & EARN SETTINGS MANAGER (DEFAULT: OFF)
+    // ==========================================
+    const DEFAULT_SHARE_EARN_SETTINGS = {
+      is_active: false, // Default is OFF
+      voucher_code: 'OLIONBANBE15',
+      discount_text: 'Giảm 15% tổng hóa đơn',
+      stamp_bonus: 1,
+      target_url: 'https://www.olioncoffee.app/?ref=share',
+      share_title: 'Olion Coffee — Quán Cà Phê Yên Tĩnh Fine Dining Gò Vấp',
+      share_message: 'Ghé Olion Coffee thưởng thức Cà Phê Muối Fine Dining và không gian yên tĩnh tuyệt đẹp! Nhập mã OLIONBANBE15 để được giảm 15% nhé:'
+    };
+
+    function getShareEarnSettings() {
+      try {
+        const raw = localStorage.getItem('olion_share_earn_settings');
+        if (raw) return { ...DEFAULT_SHARE_EARN_SETTINGS, ...JSON.parse(raw) };
+      } catch(e) {}
+      return { ...DEFAULT_SHARE_EARN_SETTINGS };
+    }
+
+    function updateShareEarnUI(settings) {
+      const toggle = document.getElementById('shareEarnEnableToggle');
+      const badge = document.getElementById('shareEarnStatusBadge');
+      const label = document.getElementById('shareEarnSwitchLabel');
+      const codeInp = document.getElementById('shareEarnVoucherCode');
+      const descInp = document.getElementById('shareEarnDiscountText');
+      const stampSel = document.getElementById('shareEarnStampBonus');
+      const urlInp = document.getElementById('shareEarnTargetUrl');
+      const msgInp = document.getElementById('shareEarnMessageText');
+      const countEl = document.getElementById('shareEarnCountDisplay');
+
+      if (toggle) toggle.checked = !!settings.is_active;
+      if (badge) {
+        badge.textContent = settings.is_active ? 'ĐANG BẬT' : 'ĐANG TẮT';
+        badge.className = settings.is_active ? 'badge badge-success' : 'badge badge-warning';
+      }
+      if (label) label.textContent = settings.is_active ? 'Trạng thái: Bật' : 'Trạng thái: Tắt';
+      if (codeInp) codeInp.value = settings.voucher_code || 'OLIONBANBE15';
+      if (descInp) descInp.value = settings.discount_text || 'Giảm 15% tổng hóa đơn';
+      if (stampSel) stampSel.value = String(typeof settings.stamp_bonus !== 'undefined' ? settings.stamp_bonus : 1);
+      if (urlInp) urlInp.value = settings.target_url || 'https://www.olioncoffee.app/?ref=share';
+      if (msgInp) msgInp.value = settings.share_message || DEFAULT_SHARE_EARN_SETTINGS.share_message;
+      if (countEl) countEl.textContent = localStorage.getItem('olion_share_stats_count') || '0';
+    }
+
+    async function loadShareEarnSettings() {
+      let settings = getShareEarnSettings();
+      if (typeof fetchSiteSettingsFromCloud === 'function') {
+        try {
+          const { data } = await fetchSiteSettingsFromCloud();
+          if (data && data.share_earn_settings) {
+            settings = { ...DEFAULT_SHARE_EARN_SETTINGS, ...data.share_earn_settings };
+            localStorage.setItem('olion_share_earn_settings', JSON.stringify(settings));
+          }
+        } catch(e) {}
+      }
+      updateShareEarnUI(settings);
+    }
+
+    function setupShareEarnAdminEvents() {
+      const toggle = document.getElementById('shareEarnEnableToggle');
+      if (toggle) {
+        toggle.addEventListener('change', () => {
+          const badge = document.getElementById('shareEarnStatusBadge');
+          const label = document.getElementById('shareEarnSwitchLabel');
+          if (badge) {
+            badge.textContent = toggle.checked ? 'ĐANG BẬT' : 'ĐANG TẮT';
+            badge.className = toggle.checked ? 'badge badge-success' : 'badge badge-warning';
+          }
+          if (label) label.textContent = toggle.checked ? 'Trạng thái: Bật' : 'Trạng thái: Tắt';
+        });
+      }
+
+      const saveBtn = document.getElementById('saveShareEarnSettingsBtn');
+      if (saveBtn) {
+        saveBtn.addEventListener('click', async () => {
+          saveBtn.textContent = 'Đang lưu...';
+          const settings = {
+            is_active: document.getElementById('shareEarnEnableToggle')?.checked || false,
+            voucher_code: document.getElementById('shareEarnVoucherCode')?.value.trim() || 'OLIONBANBE15',
+            discount_text: document.getElementById('shareEarnDiscountText')?.value.trim() || 'Giảm 15% tổng hóa đơn',
+            stamp_bonus: parseInt(document.getElementById('shareEarnStampBonus')?.value || '1', 10),
+            target_url: document.getElementById('shareEarnTargetUrl')?.value.trim() || 'https://www.olioncoffee.app/?ref=share',
+            share_title: 'Olion Coffee — Quán Cà Phê Yên Tĩnh Fine Dining Gò Vấp',
+            share_message: document.getElementById('shareEarnMessageText')?.value.trim() || DEFAULT_SHARE_EARN_SETTINGS.share_message
+          };
+          localStorage.setItem('olion_share_earn_settings', JSON.stringify(settings));
+
+          if (typeof updateSiteSettingsToCloud === 'function') {
+            try {
+              await updateSiteSettingsToCloud({ share_earn_settings: settings, is_share_earn_active: settings.is_active });
+            } catch(e) {}
+          }
+
+          saveBtn.textContent = '💾 Lưu Cấu Hình Chia Sẻ';
+          if (typeof showToast === 'function') {
+            showToast(settings.is_active ? '✅ Đã BẬT và lưu cấu hình Chia Sẻ Nhận Quà!' : '✅ Đã TẮT tính năng Chia Sẻ Nhận Quà!');
+          }
+        });
+      }
+
+      const resetBtn = document.getElementById('resetShareEarnStatsBtn');
+      if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+          if (confirm('Đặt lại số lượt khách tương tác chia sẻ về 0?')) {
+            localStorage.setItem('olion_share_stats_count', '0');
+            const countEl = document.getElementById('shareEarnCountDisplay');
+            if (countEl) countEl.textContent = '0';
+            if (typeof showToast === 'function') showToast('Đã làm mới số liệu thống kê!');
+          }
+        });
+      }
+    }
+
+    setupShareEarnAdminEvents();
 
     // Supabase Cloud Config
     function checkSupabaseStatus() {
