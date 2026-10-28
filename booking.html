@@ -326,85 +326,7 @@
       transform: translateY(0);
     }
 
-    /* ─── LUXURY COFFEE CUSTOM CURSOR ─── */
-    @media (hover: hover) and (pointer: fine) {
-      body.has-custom-cursor,
-      body.has-custom-cursor a,
-      body.has-custom-cursor button,
-      body.has-custom-cursor .btn-main,
-      body.has-custom-cursor .btn-ghost,
-      body.has-custom-cursor .type-btn,
-      body.has-custom-cursor .time-btn,
-      body.has-custom-cursor .gallery-img,
-      body.has-custom-cursor [role="button"] {
-        cursor: none !important;
-      }
 
-      .cursor-dot {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 8px;
-        height: 8px;
-        background: var(--gold);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999999;
-        transform: translate(-50%, -50%);
-        transition: transform 0.1s ease-out, background 0.2s ease, width 0.2s ease, height 0.2s ease, opacity 0.25s ease;
-        box-shadow: 0 0 10px rgba(229, 154, 85, 0.85);
-        opacity: 0;
-      }
-
-      .cursor-ring {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 32px;
-        height: 32px;
-        border: 1.5px solid rgba(229, 154, 85, 0.45);
-        background: rgba(229, 154, 85, 0.04);
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9999998;
-        transform: translate(-50%, -50%);
-        transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                    height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                    border-color 0.25s ease,
-                    background 0.25s ease,
-                    box-shadow 0.25s ease,
-                    opacity 0.25s ease;
-        opacity: 0;
-      }
-
-      body.cursor-active .cursor-dot,
-      body.cursor-active .cursor-ring {
-        opacity: 1;
-      }
-
-      .cursor-ring.cursor-hover {
-        width: 50px;
-        height: 50px;
-        border-color: rgba(229, 154, 85, 0.9);
-        background: rgba(229, 154, 85, 0.12);
-        backdrop-filter: blur(1px);
-        box-shadow: 0 0 22px rgba(229, 154, 85, 0.35);
-      }
-
-      .cursor-dot.cursor-hover {
-        width: 10px;
-        height: 10px;
-        background: var(--gold-light);
-        transform: translate(-50%, -50%) scale(1.2);
-      }
-
-      .cursor-ring.cursor-click {
-        width: 22px;
-        height: 22px;
-        border-color: var(--gold-light);
-        background: rgba(229, 154, 85, 0.28);
-      }
-    }
 
     /* Caramel Ripple */
     .caramel-ripple {
@@ -1166,9 +1088,6 @@ function copyLink(){
 </script>
 
   <!-- ======== LUXURY COFFEE MICRO-INTERACTIONS ======== -->
-  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
-  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
-
   <script>
     (function initCoffeeMicroInteractions() {
       // 1. Scroll Reveal
@@ -1190,61 +1109,7 @@ function copyLink(){
         });
       }
 
-      // 2. Desktop Custom Cursor
-      const isTouch = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-      const dot = document.getElementById('cursorDot');
-      const ring = document.getElementById('cursorRing');
-
-      if (!isTouch && dot && ring) {
-        document.body.classList.add('has-custom-cursor');
-        let mouseX = -100, mouseY = -100;
-        let ringX = -100, ringY = -100;
-        let isFirstMove = true;
-
-        window.addEventListener('mousemove', (e) => {
-          mouseX = e.clientX;
-          mouseY = e.clientY;
-          if (isFirstMove) {
-            ringX = mouseX;
-            ringY = mouseY;
-            isFirstMove = false;
-            document.body.classList.add('cursor-active');
-          }
-          dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
-        }, { passive: true });
-
-        function renderCursor() {
-          ringX += (mouseX - ringX) * 0.16;
-          ringY += (mouseY - ringY) * 0.16;
-          ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
-          requestAnimationFrame(renderCursor);
-        }
-        requestAnimationFrame(renderCursor);
-
-        const hoverSelector = 'a, button, .btn-main, .btn-ghost, .type-btn, .time-btn, .gallery-img, input, select, textarea, [role="button"]';
-        
-        document.addEventListener('mouseover', (e) => {
-          if (e.target && e.target.closest && e.target.closest(hoverSelector)) {
-            ring.classList.add('cursor-hover');
-            dot.classList.add('cursor-hover');
-          }
-        }, { passive: true });
-
-        document.addEventListener('mouseout', (e) => {
-          if (e.target && e.target.closest && e.target.closest(hoverSelector)) {
-            ring.classList.remove('cursor-hover');
-            dot.classList.remove('cursor-hover');
-          }
-        }, { passive: true });
-
-        window.addEventListener('mousedown', () => ring.classList.add('cursor-click'), { passive: true });
-        window.addEventListener('mouseup', () => ring.classList.remove('cursor-click'), { passive: true });
-
-        document.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'), { passive: true });
-        document.addEventListener('mouseenter', () => { if (!isFirstMove) document.body.classList.add('cursor-active'); }, { passive: true });
-      }
-
-      // 3. Caramel Ripple & Haptic
+      // 2. Caramel Ripple & Haptic
       document.addEventListener('click', (e) => {
         const btn = e.target && e.target.closest && e.target.closest('.btn-main, .btn-ghost, .type-btn, .time-btn, .share-btn');
         if (!btn) return;
