@@ -19,3 +19,275 @@
 .stamp-icon{font-size:20px;margin-bottom:2px}
 .btn-loyalty-trigger{display:inline-flex;align-items:center;gap:6px;background:rgba(229,154,85,.12);border:1px solid rgba(229,154,85,.3);color:var(--accent-gold);border-radius:999px;padding:7px 12px;font-size:12px;cursor:pointer;transition:all .25s ease}
 .btn-loyalty-trigger:hover{background:var(--accent-gold);color:#0a0f0d}
+
+
+/* ======== SMART WELCOME POPUP & APP/NOTIF INVITATIONS ======== */
+.welcome-notif-card {
+  background: rgba(229, 154, 85, 0.08);
+  border: 1px dashed rgba(229, 154, 85, 0.35);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  transition: all 0.25s ease;
+  text-align: left;
+}
+.welcome-notif-card:hover {
+  background: rgba(229, 154, 85, 0.14);
+  border-color: rgba(229, 154, 85, 0.55);
+}
+.welcome-notif-opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  margin: 0;
+}
+.welcome-notif-opt input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.welcome-notif-custom-check {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 6px;
+  border: 1.5px solid var(--accent-gold);
+  background: rgba(24, 16, 9, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #120c06;
+  margin-top: 2px;
+  transition: all 0.2s ease;
+}
+.welcome-notif-opt input[type="checkbox"]:checked + .welcome-notif-custom-check {
+  background: var(--accent-gold);
+  border-color: var(--accent-gold);
+  color: #120c06;
+}
+.welcome-notif-opt input[type="checkbox"]:not(:checked) + .welcome-notif-custom-check svg,
+.welcome-notif-opt input[type="checkbox"]:not(:checked) + .welcome-notif-custom-check i {
+  display: none !important;
+}
+.welcome-notif-label-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.35;
+}
+.welcome-notif-label-text .notif-highlight {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+.welcome-notif-label-text .notif-subtext {
+  font-size: 11.5px;
+  color: var(--text-muted);
+}
+.welcome-returning-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+.welcome-btn-secondary {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(229, 154, 85, 0.4);
+  color: var(--text-cream);
+  padding: 11px 16px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+}
+.welcome-btn-secondary:hover {
+  background: rgba(229, 154, 85, 0.15);
+  border-color: var(--accent-gold);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.welcome-btn-pwa {
+  width: 100%;
+  background: rgba(46, 204, 113, 0.1);
+  border: 1px solid rgba(46, 204, 113, 0.35);
+  color: #2ecc71;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s ease;
+}
+.welcome-btn-pwa:hover {
+  background: rgba(46, 204, 113, 0.2);
+  border-color: #2ecc71;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Smart Floating Perk Bar (Bottom Banner) */
+.smart-perk-bar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(120px);
+  z-index: 998;
+  width: calc(100% - 32px);
+  max-width: 620px;
+  background: rgba(20, 13, 7, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(229, 154, 85, 0.4);
+  border-radius: 16px;
+  padding: 12px 18px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 25px rgba(229, 154, 85, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, visibility 0.4s ease;
+}
+.smart-perk-bar.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+.smart-perk-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+.smart-perk-icon {
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(229, 154, 85, 0.25) 0%, rgba(229, 154, 85, 0.08) 100%);
+  border: 1px solid rgba(229, 154, 85, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+.smart-perk-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+}
+.smart-perk-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.smart-perk-badge {
+  background: rgba(231, 76, 60, 0.2);
+  color: #ff7675;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 999px;
+  border: 1px solid rgba(231, 76, 60, 0.3);
+}
+.smart-perk-desc {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.smart-perk-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.smart-perk-btn-notif {
+  background: var(--accent-gold);
+  color: #140b07;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.smart-perk-btn-notif:hover {
+  background: #f2ac6d;
+  transform: translateY(-1px);
+}
+.smart-perk-btn-app {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-cream);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 11px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.smart-perk-btn-app:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.smart-perk-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+.smart-perk-close:hover {
+  color: #fff;
+}
+@media (max-width: 600px) {
+  .smart-perk-bar {
+    bottom: 84px;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 14px;
+    gap: 10px;
+  }
+  .smart-perk-desc {
+    white-space: normal;
+  }
+  .smart-perk-actions {
+    justify-content: flex-end;
+  }
+}
