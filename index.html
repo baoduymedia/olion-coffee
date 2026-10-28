@@ -1913,7 +1913,7 @@
             <input type="tel" id="welcomePhone" class="welcome-input" placeholder="Số điện thoại (10 số để nhận quà tri ân)" required pattern="^(03|05|07|08|09)[0-9]{8}$" autocomplete="tel" />
           </div>
 
-          <!-- Nút chọn nhận thông báo & ưu đãi (Pre-checked) -->
+          <!-- Nút chọn nhận thông báo món mới & sự kiện (Pre-checked) -->
           <div class="welcome-notif-card">
             <label class="welcome-notif-opt" for="welcomeNotifCheckbox">
               <input type="checkbox" id="welcomeNotifCheckbox" checked />
@@ -1921,14 +1921,14 @@
                 <i data-lucide="check" style="width:13px;height:13px;"></i>
               </span>
               <span class="welcome-notif-label-text">
-                <span class="notif-highlight">🔔 Bật thông báo nhận Voucher 15%</span>
-                <span class="notif-subtext">Nhận mã giảm giá độc quyền & thông báo giờ vàng Flash Sale</span>
+                <span class="notif-highlight">🔔 Nhận thông báo món mới & sự kiện</span>
+                <span class="notif-subtext">Cập nhật thức uống theo mùa, lịch mở cửa ngày lễ & tin tức Olion</span>
               </span>
             </label>
           </div>
 
           <button type="submit" class="welcome-btn" id="welcomeSubmitBtn">
-            <span>🎁 Bắt đầu & Nhận ưu đãi</span>
+            <span>☕ Bắt đầu trải nghiệm</span>
           </button>
         </form>
       </div>
@@ -1942,11 +1942,11 @@
           </button>
           <button type="button" class="welcome-btn-secondary" id="welcomeReturningNotifBtn" onclick="triggerWelcomePushOptIn()">
             <i data-lucide="bell" style="width:16px;height:16px;margin-right:6px;color:var(--accent-gold);"></i>
-            <span>Bật Thông Báo Nhận Ưu Đãi VIP</span>
+            <span>Bật Thông Báo Món Mới & Sự Kiện</span>
           </button>
           <button type="button" class="welcome-btn-pwa" id="welcomeReturningPwaBtn" onclick="closeWelcomeModal(); triggerPwaInstall();">
             <i data-lucide="smartphone" style="width:16px;height:16px;margin-right:6px;color:#2ecc71;"></i>
-            <span>Cài App Olion (Tự Động 1 Chạm)</span>
+            <span>Cài App Olion (Mở Nhanh 1 Chạm)</span>
           </button>
         </div>
       </div>
@@ -2077,7 +2077,7 @@
 
         <div style="background: rgba(229,154,85,0.08); border: 1px dashed rgba(229,154,85,0.3); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 10px;">
           <div style="font-size: 12px; color: var(--text-cream); line-height: 1.4;">
-            🔔 <strong>Nhận thông báo:</strong> Tin cập nhật giữ chỗ & quà tặng bí mật khi đến quán.
+            🔔 <strong>Nhận thông báo:</strong> Cập nhật trạng thái giữ bàn & chỉ đường khi bạn đến.
           </div>
           <button type="button" class="btn btn-outline" onclick="triggerPushNotificationOptIn('booking_success')" style="font-size: 11.5px; padding: 6px 12px; white-space: nowrap; color: #6FCF97; border-color: rgba(111,207,151,0.4);">
             Bật thông báo
@@ -2149,14 +2149,14 @@
       <!-- Quick Action: Save Card / PWA Install & Push Notifications -->
       <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(229,154,85,0.25); border-radius: 12px; padding: 10px 12px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 8px;">
         <div style="font-size: 11.5px; color: var(--text-muted); text-align: left;">
-          ⚡ <strong>Tiện ích thành viên:</strong> Lưu thẻ vào màn hình chính hoặc nhận thông báo khi có ưu đãi đặc biệt:
+          ⚡ <strong>Tiện ích thành viên:</strong> Lưu thẻ vào màn hình chính để tích tem nhanh chóng:
         </div>
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
           <button type="button" class="btn btn-outline" onclick="closeLoyaltyModal(); triggerPwaInstall();" style="flex: 1; min-width: 160px; font-size: 11.5px; padding: 7px 10px; justify-content: center; gap: 6px;">
-            <i data-lucide="smartphone" style="width:13px;height:13px;"></i> <span>📲 Cài App lưu thẻ (Tự động)</span>
+            <i data-lucide="smartphone" style="width:13px;height:13px;"></i> <span>📲 Cài App lưu thẻ ra màn hình</span>
           </button>
           <button type="button" class="btn btn-outline" onclick="triggerPushNotificationOptIn('loyalty_card')" style="flex: 1; min-width: 160px; font-size: 11.5px; padding: 7px 10px; justify-content: center; gap: 6px; color: #6FCF97; border-color: rgba(111,207,151,0.4);">
-            <i data-lucide="bell" style="width:13px;height:13px;"></i> <span>🔔 Nhận thông báo quà tặng</span>
+            <i data-lucide="bell" style="width:13px;height:13px;"></i> <span>🔔 Nhận thông báo khi tích tem</span>
           </button>
         </div>
       </div>
@@ -2311,11 +2311,11 @@
         <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
           <button type="button" class="btn btn-primary" onclick="triggerPushNotificationOptIn('wheel_prize')" style="width: 100%; justify-content: center; font-size: 12.5px; padding: 9px 12px; background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%); border: none; box-shadow: 0 4px 12px rgba(46,204,113,0.3);">
             <i data-lucide="bell" style="width: 14px; height: 14px;"></i>
-            <span>🔔 Bật thông báo để lưu quà & nhắc hạn</span>
+            <span>🔔 Bật thông báo để cập nhật tin mới từ quán</span>
           </button>
           <button type="button" class="btn btn-outline" onclick="closeWheelModal(); triggerPwaInstall();" style="width: 100%; justify-content: center; font-size: 12px; padding: 8px 12px; border-color: rgba(229,154,85,0.4); color: var(--accent-gold);">
             <i data-lucide="smartphone" style="width: 13px; height: 13px;"></i>
-            <span>📲 Cài App để lưu mã vào màn hình chính (Tự động)</span>
+            <span>📲 Cài App xem menu & lưu mã tiện lợi</span>
           </button>
         </div>
       </div>
@@ -2697,7 +2697,7 @@
     </div>
     <div class="menu-board-hint" id="menuBoardHint"><i data-lucide="🌟" style="width:14px;height:14px;margin-right:4px;"></i> Nhấp vào ảnh hoặc bấm nút [Phóng to] để xem chi tiết từng món</div>
   </div>
-  <script src="main.js?v=2.8" defer></script>
+  <script src="main.js?v=2.9" defer></script>
 
   <!-- ======== 18. APP DOWNLOAD MODAL (3 NỀN TẢNG: IOS, ANDROID, PC) ======== -->
   <div class="modal-overlay" id="downloadAppModal" onclick="if(event.target === this) this.classList.remove('active')">
@@ -2870,28 +2870,28 @@
     }, { once: true, passive: true });
   </script>
 
-  <!-- ======== SMART APP & NOTIFICATION INVITATION BAR ======== -->
-  <aside class="smart-perk-bar" id="smartPerkBar" role="region" aria-label="Ưu đãi thành viên Olion">
+  <!-- ======== SMART APP & NOTIFICATION BAR ======== -->
+  <aside class="smart-perk-bar" id="smartPerkBar" role="region" aria-label="Trải nghiệm ứng dụng Olion">
     <div class="smart-perk-content">
-      <div class="smart-perk-icon">🎁</div>
+      <div class="smart-perk-icon">☕</div>
       <div class="smart-perk-text">
         <div class="smart-perk-title">
-          <span>Ưu đãi thành viên Olion</span>
-          <span class="smart-perk-badge">-15% ĐƠN ĐẦU</span>
+          <span>Trải nghiệm App Olion Coffee</span>
+          <span class="smart-perk-badge" style="background:rgba(229,154,85,0.2);color:var(--accent-gold);border-color:rgba(229,154,85,0.4);">TIỆN LỢI 0MB</span>
         </div>
-        <div class="smart-perk-desc">Bật thông báo hoặc cài App để nhận mã giảm giá & tin giờ vàng!</div>
+        <div class="smart-perk-desc">Mở menu nhanh 1 chạm và nhận thông báo món mới, sự kiện từ quán!</div>
       </div>
     </div>
     <div class="smart-perk-actions">
-      <button type="button" class="smart-perk-btn-notif" onclick="triggerSmartPerkNotif()" aria-label="Bật thông báo nhận ưu đãi">
+      <button type="button" class="smart-perk-btn-notif" onclick="triggerSmartPerkNotif()" aria-label="Nhận thông báo">
         <i data-lucide="bell" style="width:13px;height:13px;"></i>
-        <span>Bật thông báo</span>
+        <span>Nhận thông báo</span>
       </button>
       <button type="button" class="smart-perk-btn-app" onclick="triggerSmartPerkApp()" aria-label="Cài đặt App Olion">
         <i data-lucide="download" style="width:13px;height:13px;"></i>
         <span>Cài App</span>
       </button>
-      <button type="button" class="smart-perk-close" onclick="dismissSmartPerkBar()" aria-label="Đóng banner ưu đãi">
+      <button type="button" class="smart-perk-close" onclick="dismissSmartPerkBar()" aria-label="Đóng banner">
         <i data-lucide="x" style="width:15px;height:15px;"></i>
       </button>
     </div>
