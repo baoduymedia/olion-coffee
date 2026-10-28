@@ -2,7 +2,7 @@
 // OLION COFFEE — SERVICE WORKER (PWA & OFFLINE CACHING)
 // ==============================================================================
 
-const CACHE_NAME = "olion-coffee-v9.0";
+const CACHE_NAME = "olion-coffee-v9.1";
 
 const PRECACHE_ASSETS = [
   './',

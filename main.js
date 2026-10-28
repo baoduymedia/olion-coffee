@@ -436,11 +436,156 @@ window.closeMobileDrawer = function() {
   document.body.style.overflow = '';
 };
 
-;window.openDownloadAppModal=typeof Fe==='function'?Fe:function(){const e=document.getElementById('downloadAppModal');if(e)e.classList.add('active');};
-window.triggerPushNotificationOptIn=function(source='general'){try{localStorage.setItem('olion_notif_requested','true');localStorage.setItem('olion_notif_source',source);if(window.OneSignal&&window.OneSignal.Slidedown){window.OneSignal.Slidedown.promptPush({force:true});}else if(window.OneSignalDeferred){window.OneSignalDeferred.push(function(OneSignal){OneSignal.Slidedown.promptPush({force:true});});}else if('Notification' in window&&Notification.permission!=='granted'){Notification.requestPermission();}}catch(e){console.warn('OneSignal promptPush error:',e);}};
-window.triggerWelcomePushOptIn=function(){if(typeof window.closeWelcomeModal==='function')window.closeWelcomeModal();window.triggerPushNotificationOptIn('welcome_returning');if(window.showOlionToast){window.showOlionToast('Đang kích hoạt thông báo ưu đãi...','bell');}};
-window.triggerSmartPerkNotif=function(){window.dismissSmartPerkBar();window.triggerPushNotificationOptIn('smart_perk_bar');if(window.showOlionToast){window.showOlionToast('Đang kích hoạt thông báo ưu đãi...','bell');}};
-window.triggerSmartPerkApp=function(){window.dismissSmartPerkBar();if(typeof window.openDownloadAppModal==='function'){window.openDownloadAppModal();}};
-window.dismissSmartPerkBar=function(){const bar=document.getElementById('smartPerkBar');if(bar){bar.classList.remove('visible');sessionStorage.setItem('olion_smart_perk_dismissed','true');}};
-function initSmartPerkBar(){if(sessionStorage.getItem('olion_smart_perk_dismissed')==='true')return;setTimeout(()=>{const bar=document.getElementById('smartPerkBar');if(bar&&sessionStorage.getItem('olion_smart_perk_dismissed')!=='true'){bar.classList.add('visible');if(window.lucide&&window.lucide.createIcons)window.lucide.createIcons();}},12000);}
-if('requestIdleCallback' in window){requestIdleCallback(()=>setTimeout(initSmartPerkBar,1500));}else{setTimeout(initSmartPerkBar,3000);}
+
+// ==============================================================================
+// SMART PWA DIRECT AUTO-INSTALL & PUSH NOTIFICATION SYSTEM
+// ==============================================================================
+window.triggerPwaInstall = async function() {
+  if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true) {
+    if (window.showOlionToast) window.showOlionToast('Bạn đang sử dụng App Olion Coffee rồi! ☕', 'check-circle');
+    return;
+  }
+
+  const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  if (isIos) {
+    const modal = document.getElementById('downloadAppModal');
+    if (modal) {
+      modal.classList.add('active');
+      if (typeof window.switchInstallPlatform === 'function') window.switchInstallPlatform('ios');
+    }
+    return;
+  }
+
+  if (/FBAN|FBAV|Zalo|Line/i.test(navigator.userAgent)) {
+    alert('Bạn đang xem web trong ứng dụng Zalo/Facebook!\n\nĐể tự động cài App:\n1. Bấm dấu 3 chấm (...) ở góc trên.\n2. Chọn "Mở bằng trình duyệt" (Chrome / Safari).\n3. Bấm lại nút "Cài đặt" để máy tự động cài App nhé!');
+    return;
+  }
+
+  const promptEvent = window.deferredInstallPrompt || window.Ne;
+  if (promptEvent) {
+    try {
+      promptEvent.prompt();
+      const choiceResult = await promptEvent.userChoice;
+      if (choiceResult && choiceResult.outcome === 'accepted') {
+        if (window.showOlionToast) window.showOlionToast('Đang cài đặt App Olion Coffee vào thiết bị của bạn...', 'smartphone');
+        window.deferredInstallPrompt = null;
+        window.Ne = null;
+      }
+      return;
+    } catch(err) {
+      console.warn('triggerPwaInstall error:', err);
+    }
+  }
+
+  const isAndroid = /android/i.test(navigator.userAgent);
+  if (isAndroid) {
+    if (window.showOlionToast) window.showOlionToast('Bấm dấu 3 chấm ⋮ ở góc trên Chrome ➔ Chọn "Cài đặt ứng dụng"!', 'smartphone');
+  } else {
+    if (window.showOlionToast) window.showOlionToast('Bấm biểu tượng Cài đặt [⊕] trên thanh địa chỉ URL để cài App!', 'monitor');
+  }
+  const modal = document.getElementById('downloadAppModal');
+  if (modal) {
+    modal.classList.add('active');
+    if (typeof window.switchInstallPlatform === 'function') window.switchInstallPlatform(isAndroid ? 'android' : 'pc');
+  }
+};
+
+window.openDownloadAppModal = function(platform) {
+  window.triggerPwaInstall();
+};
+
+window.triggerPushNotificationOptIn = async function(source = 'general') {
+  try {
+    localStorage.setItem('olion_notif_requested', 'true');
+    localStorage.setItem('olion_notif_source', source);
+
+    if (/FBAN|FBAV|Zalo|Line/i.test(navigator.userAgent)) {
+      alert('Bạn đang xem trong ứng dụng Zalo/Facebook!\n\nVui lòng mở bằng trình duyệt (Chrome/Safari) để bật thông báo và nhận mã giảm giá.');
+      return;
+    }
+
+    if (!('Notification' in window)) {
+      if (window.showOlionToast) window.showOlionToast('Trình duyệt này không hỗ trợ thông báo.', 'alert-circle');
+      return;
+    }
+
+    if (Notification.permission === 'granted') {
+      if (window.showOlionToast) window.showOlionToast('Bạn đã bật nhận thông báo Olion Coffee rồi! 🎁 Mã voucher: OLION15', 'gift');
+      return;
+    }
+
+    if (Notification.permission === 'denied') {
+      alert('Bạn đang chặn thông báo trên trình duyệt web này!\n\nĐể nhận mã giảm giá và ưu đãi giờ vàng:\n1. Bấm vào biểu tượng 🔒 (hoặc Cài đặt trang web) bên trái thanh địa chỉ URL.\n2. Bật "Cho phép" (Allow) mục Thông báo.\n3. Tải lại trang web là xong!');
+      return;
+    }
+
+    if (window.OneSignal && window.OneSignal.Notifications && typeof window.OneSignal.Notifications.requestPermission === 'function') {
+      try {
+        const granted = await window.OneSignal.Notifications.requestPermission();
+        if (granted) {
+          if (window.showOlionToast) window.showOlionToast('Bật thông báo thành công! Tặng bạn mã: OLION15 🎁', 'gift');
+          return;
+        }
+      } catch (err) {
+        console.warn('OneSignal Notifications error:', err);
+      }
+    }
+
+    const permission = await Notification.requestPermission();
+    if (permission === 'granted') {
+      if (window.showOlionToast) window.showOlionToast('Bật thông báo thành công! Tặng bạn mã: OLION15 🎁', 'gift');
+      if (window.OneSignalDeferred) {
+        window.OneSignalDeferred.push(async function(OneSignal) {
+          try {
+            if (OneSignal.Notifications && OneSignal.Notifications.requestPermission) {
+              await OneSignal.Notifications.requestPermission();
+            }
+          } catch(e) {}
+        });
+      }
+    } else if (permission === 'denied') {
+      if (window.showOlionToast) window.showOlionToast('Bạn đã từ chối nhận thông báo.', 'alert-circle');
+    }
+  } catch(e) {
+    console.error('Push notification opt-in error:', e);
+  }
+};
+
+window.triggerWelcomePushOptIn = function() {
+  if (typeof window.closeWelcomeModal === 'function') window.closeWelcomeModal();
+  window.triggerPushNotificationOptIn('welcome_returning');
+};
+
+window.triggerSmartPerkNotif = function() {
+  window.dismissSmartPerkBar();
+  window.triggerPushNotificationOptIn('smart_perk_bar');
+};
+
+window.triggerSmartPerkApp = function() {
+  window.dismissSmartPerkBar();
+  window.triggerPwaInstall();
+};
+
+window.dismissSmartPerkBar = function() {
+  const bar = document.getElementById('smartPerkBar');
+  if (bar) {
+    bar.classList.remove('visible');
+    sessionStorage.setItem('olion_smart_perk_dismissed', 'true');
+  }
+};
+
+function initSmartPerkBar() {
+  if (sessionStorage.getItem('olion_smart_perk_dismissed') === 'true') return;
+  setTimeout(() => {
+    const bar = document.getElementById('smartPerkBar');
+    if (bar && sessionStorage.getItem('olion_smart_perk_dismissed') !== 'true') {
+      bar.classList.add('visible');
+      if (window.lucide && window.lucide.createIcons) window.lucide.createIcons();
+    }
+  }, 12000);
+}
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(() => setTimeout(initSmartPerkBar, 1500));
+} else {
+  setTimeout(initSmartPerkBar, 3000);
+}
