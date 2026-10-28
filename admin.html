@@ -1446,32 +1446,53 @@
         <!-- ======== TAB 3: QUẢN LÝ TÍCH ĐIỂM (LOYALTY) ======== -->
         <section class="tab-content" id="tab-customers">
           <div class="card">
-            <div class="card-header">
+            <div class="card-header" style="flex-wrap: wrap; gap: 14px;">
               <div>
-                <h3 class="card-title">👑 Quản Lý Tích Điểm (Loyalty Program)</h3>
-                <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Tra cứu số điện thoại khách hàng, cộng điểm khi mua nước và đổi thưởng trừ điểm</p>
+                <h3 class="card-title">👑 Quản Lý Khách Hàng & Thành Viên (Loyalty CRM)</h3>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Hệ thống thẻ thành viên & tích điểm hợp nhất: Tra cứu 1 chạm, tích tem 0-8, đổi ly tặng, quản lý hạng thẻ</p>
               </div>
               <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <button type="button" class="btn-primary" onclick="openLoyaltyModal()" style="background: linear-gradient(135deg, #9B59B6, #8E44AD);">
-                  💎 Tra Cứu & Tích Điểm Nhanh
+                <button type="button" class="btn-primary" onclick="openLoyaltyModal()" style="background: linear-gradient(135deg, #2ECC71, #27AE60);">
+                  ☕ POS Thu Ngân Nhanh
                 </button>
                 <button type="button" class="btn-secondary" onclick="openAddCustomerModal()">
-                  ➕ Thêm Khách Hàng
+                  ➕ Thêm Thành Viên
                 </button>
                 <button type="button" class="btn-secondary" id="exportCustomerCsvBtn">📥 Xuất CSV</button>
                 <button type="button" class="btn-secondary" id="refreshCustomersBtn">🔄 Tải lại</button>
               </div>
             </div>
 
+            <!-- Mini KPI Counters -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 20px;">
+              <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;">
+                <div style="font-size: 12px; color: var(--text-muted);">Tổng Thành Viên</div>
+                <div style="font-size: 22px; font-weight: 800; color: #fff; margin-top: 4px;" id="crmStatTotal">0</div>
+              </div>
+              <div style="background: rgba(46,204,113,0.08); border: 1px solid rgba(46,204,113,0.3); border-radius: 10px; padding: 14px 16px;">
+                <div style="font-size: 12px; color: #2ecc71;">🎁 Đủ 8 Tem Nhận Quà</div>
+                <div style="font-size: 22px; font-weight: 800; color: #2ecc71; margin-top: 4px;" id="crmStatReadyReward">0</div>
+              </div>
+              <div style="background: rgba(231,76,60,0.08); border: 1px solid rgba(231,76,60,0.3); border-radius: 10px; padding: 14px 16px;">
+                <div style="font-size: 12px; color: #ff7675;">☕ Ly Free Đã Trao</div>
+                <div style="font-size: 22px; font-weight: 800; color: #ff7675; margin-top: 4px;" id="crmStatFreeDrinks">0</div>
+              </div>
+              <div style="background: rgba(155,89,182,0.08); border: 1px solid rgba(155,89,182,0.3); border-radius: 10px; padding: 14px 16px;">
+                <div style="font-size: 12px; color: #d2a8e8;">💎 Thành Viên VIP</div>
+                <div style="font-size: 22px; font-weight: 800; color: #d2a8e8; margin-top: 4px;" id="crmStatVip">0</div>
+              </div>
+            </div>
+
             <!-- Search and Filter Bar -->
             <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 22px;">
-              <input type="text" id="customerSearchInput" placeholder="🔍 Nhập số điện thoại hoặc họ tên khách hàng để tìm kiếm..." />
+              <input type="text" id="customerSearchInput" placeholder="🔍 Nhập số điện thoại, họ tên hoặc mã thẻ (OLION-xxxx) để tìm..." />
               <select id="customerTierFilter">
-                <option value="all">Tất cả hạng thẻ</option>
-                <option value="Kim Cương">Kim Cương (>= 200 điểm)</option>
-                <option value="Vàng">Vàng (>= 100 điểm)</option>
-                <option value="Bạc">Bạc (>= 50 điểm)</option>
-                <option value="Thành viên">Thành viên mới</option>
+                <option value="all">Tất cả thành viên</option>
+                <option value="reward_ready">🎁 Đủ 8 tem (Sẵn sàng nhận ly free)</option>
+                <option value="Kim Cương">💎 Kim Cương (>= 20 tem)</option>
+                <option value="Vàng">👑 Hạng Vàng (>= 10 tem)</option>
+                <option value="Bạc">🥈 Hạng Bạc (>= 5 tem)</option>
+                <option value="Thành viên">☕ Thành viên mới</option>
               </select>
             </div>
 
@@ -1480,13 +1501,13 @@
               <table>
                 <thead>
                   <tr>
-                    <th>Họ tên khách hàng</th>
-                    <th>Số điện thoại / Liên hệ</th>
-                    <th>Điểm tích lũy</th>
+                    <th>Thành viên (Tên & Mã TV)</th>
+                    <th>Số điện thoại</th>
+                    <th>Tem tích lũy (0-8)</th>
+                    <th>Ly đã tặng</th>
                     <th>Hạng thẻ</th>
                     <th>Nguồn ghi nhận</th>
-                    <th>Ghi chú</th>
-                    <th style="text-align: right;">Thao tác</th>
+                    <th style="text-align: right;">Thao tác nhanh</th>
                   </tr>
                 </thead>
                 <tbody id="customerTableBody">
@@ -2244,86 +2265,86 @@
 
   <!-- ======== MODAL 2: LOYALTY & TÍCH ĐIỂM (POS MODAL) ======== -->
   <div class="admin-modal-backdrop" id="loyaltyModal">
-    <div class="admin-modal-dialog">
+    <div class="admin-modal-dialog" style="max-width: 540px;">
       <div class="modal-header">
-        <h3 class="modal-title">💎 Tra Cứu & Tích Điểm Khách Hàng (POS)</h3>
+        <h3 class="modal-title">☕ POS Thu Ngân: Thẻ Thành Viên & Tích Tem</h3>
         <button type="button" class="modal-close-btn" onclick="closeLoyaltyModal()">✕</button>
       </div>
 
       <!-- Phone lookup box -->
-      <div style="margin-bottom: 20px;">
-        <label style="font-size: 12.5px; font-weight: 600; color: var(--text-muted); display: block; margin-bottom: 6px;">TRA CỨU NHANH THEO SỐ ĐIỆN THOẠI</label>
+      <div style="margin-bottom: 18px;">
+        <label style="font-size: 12px; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 6px; letter-spacing: 0.5px;">TRA CỨU THÀNH VIÊN THEO SỐ ĐIỆN THOẠI</label>
         <div style="display: flex; gap: 10px;">
-          <input type="text" id="loyaltyLookupPhone" placeholder="Nhập SĐT khách hàng (Vd: 0908123456)..." />
+          <input type="text" id="loyaltyLookupPhone" placeholder="Nhập SĐT khách hàng (Vd: 0908123456)..." onkeydown="if(event.key==='Enter'){event.preventDefault();lookupLoyaltyCustomer(this.value);}" />
           <button type="button" class="btn-primary" id="loyaltyLookupBtn" style="white-space: nowrap;">🔍 Tìm kiếm</button>
         </div>
       </div>
 
       <!-- Customer Card Info Display -->
-      <div id="loyaltyCustomerCard" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+      <div id="loyaltyCustomerCard" style="background: rgba(0,0,0,0.35); border: 1.5px solid rgba(229,154,85,0.4); border-radius: 14px; padding: 18px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
           <div>
-            <h4 style="font-size: 17px; color: #EDE5D8; margin-bottom: 2px;" id="loyaltyCustName">Chưa chọn khách hàng</h4>
-            <div style="font-size: 13px; color: var(--accent);" id="loyaltyCustPhone">Vui lòng nhập SĐT hoặc chọn từ danh sách</div>
+            <h4 style="font-size: 18px; font-weight: 800; color: #EDE5D8; margin-bottom: 2px;" id="loyaltyCustName">Chưa chọn khách hàng</h4>
+            <div style="font-size: 13px; color: var(--accent); font-family: monospace;" id="loyaltyCustPhone">Vui lòng nhập SĐT để tra cứu</div>
+            <div style="font-size: 12px; color: var(--text-muted); font-family: monospace; margin-top: 2px;" id="loyaltyCustCode">OLION-xxxx</div>
           </div>
           <div id="loyaltyCustTierBadge">
             <span class="badge badge-warning">Thành viên</span>
           </div>
         </div>
 
-        <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(229,154,85,0.08); border: 1px dashed rgba(229,154,85,0.3); padding: 10px 16px; border-radius: 8px;">
-          <span style="font-size: 13px; color: var(--text-muted);">Điểm tích lũy hiện có:</span>
-          <span style="font-size: 22px; font-weight: 800; color: var(--accent);" id="loyaltyCustPoints">0 Điểm</span>
+        <!-- Visual 8 Stamp Slots for Cashier -->
+        <div style="margin: 14px 0 10px 0;">
+          <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
+            <span style="color: var(--text-muted);">Tiến độ thẻ 8 tem:</span>
+            <span style="font-weight: 800; color: #2ecc71;" id="loyaltyCustStampRatio">0 / 8 tem</span>
+          </div>
+          <div id="loyaltyCustStampGrid" style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px;">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; background: rgba(229,154,85,0.08); border: 1px dashed rgba(229,154,85,0.3); padding: 8px 14px; border-radius: 8px; margin-top: 10px;">
+          <span style="font-size: 12px; color: var(--text-muted);">Số ly free đã đổi: <strong id="loyaltyCustFreeCount" style="color: #ff7675;">0 ly</strong></span>
+          <span style="font-size: 12px; color: var(--text-muted);">Điểm chi tiêu: <strong id="loyaltyCustPoints" style="color: var(--accent);">0 đ</strong></span>
         </div>
       </div>
 
-      <!-- Point Action Form -->
-      <form id="loyaltyActionForm" onsubmit="return false;" style="display: flex; flex-direction: column; gap: 16px;">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-          <button type="button" class="btn-primary" id="tabModeEarn" style="justify-content: center; background: linear-gradient(135deg, #2ECC71, #27AE60);">
-            ➕ Cộng Điểm (Mua Nước)
-          </button>
-          <button type="button" class="btn-secondary" id="tabModeRedeem" style="justify-content: center;">
-            ➖ Trừ Điểm (Đổi Quà)
-          </button>
-        </div>
+      <!-- Quick 1-Tap Cashier Buttons -->
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px;">
+        <button type="button" class="btn-primary" onclick="adminPosAddStamp()" style="padding: 13px; font-size: 15px; font-weight: 700; background: linear-gradient(135deg, #2ECC71, #27AE60); justify-content: center;">
+          ☕ CỘNG +1 TEM MUA NƯỚC
+        </button>
+        <button type="button" class="btn-primary" id="adminPosRedeemBtn" onclick="adminPosRedeemDrink()" style="padding: 12px; font-size: 14px; font-weight: 700; background: linear-gradient(135deg, #E74C3C, #C0392B); justify-content: center;">
+          🎁 ĐỔI 1 LY MIỄN PHÍ (TRỪ 8 TEM)
+        </button>
+      </div>
 
-        <div id="earnPointsSection">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+      <!-- Accordion for Advanced Point Adjustment -->
+      <details style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px;">
+        <summary style="font-size: 12.5px; color: var(--text-muted); cursor: pointer; font-weight: 600;">⚙️ Tùy chọn nâng cao (Cộng/Trừ điểm chi tiêu & ghi chú)</summary>
+        <form id="loyaltyActionForm" onsubmit="return false;" style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
             <div>
-              <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Tiền hóa đơn (VNĐ)</label>
+              <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 3px;">Tiền hóa đơn (VNĐ)</label>
               <input type="number" id="loyaltyBillAmount" placeholder="100000" step="1000" />
-              <span style="font-size: 11px; color: var(--text-muted); margin-top: 3px; display: block;">💡 10.000đ = 1 điểm</span>
             </div>
             <div>
-              <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Hoặc nhập thẳng số điểm (+)</label>
+              <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 3px;">Số điểm cộng (+)</label>
               <input type="number" id="loyaltyPointsEarnInput" placeholder="10" min="1" />
             </div>
           </div>
-        </div>
-
-        <div id="redeemPointsSection" style="display: none;">
           <div>
-            <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Số điểm cần trừ / đổi quà (-)</label>
-            <input type="number" id="loyaltyPointsRedeemInput" placeholder="50" min="1" />
-            <div style="display: flex; gap: 6px; margin-top: 6px;">
-              <button type="button" class="btn-sm-primary" onclick="document.getElementById('loyaltyPointsRedeemInput').value=30; document.getElementById('loyaltyReasonInput').value='Đổi Free Topping Thạch'">30đ (Thạch)</button>
-              <button type="button" class="btn-sm-primary" onclick="document.getElementById('loyaltyPointsRedeemInput').value=50; document.getElementById('loyaltyReasonInput').value='Đổi Voucher Giảm 20k'">50đ (-20k)</button>
-              <button type="button" class="btn-sm-primary" onclick="document.getElementById('loyaltyPointsRedeemInput').value=100; document.getElementById('loyaltyReasonInput').value='Đổi 1 ly Cà phê Muối'">100đ (Free Drink)</button>
-            </div>
+            <label style="font-size: 11px; color: var(--text-muted); display: block; margin-bottom: 3px;">Lý do / Ghi chú</label>
+            <input type="text" id="loyaltyReasonInput" placeholder="Vd: Mua nước tại quán..." value="Mua nước tại quán" />
           </div>
-        </div>
+          <button type="submit" class="btn-secondary" id="confirmLoyaltyBtn" style="justify-content: center;">✓ Lưu Điểm Chi Tiêu</button>
+        </form>
+      </details>
 
-        <div>
-          <label style="font-size: 12px; color: var(--text-muted); display: block; margin-bottom: 4px;">Lý do / Ghi chú giao dịch</label>
-          <input type="text" id="loyaltyReasonInput" placeholder="Vd: Mua 2 ly Cà Phê Muối..." value="Mua nước tại quán" />
-        </div>
-
-        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 10px;">
-          <button type="button" class="btn-secondary" onclick="closeLoyaltyModal()">Đóng</button>
-          <button type="submit" class="btn-primary" id="confirmLoyaltyBtn">✓ Xác Nhận Giao Dịch Điểm</button>
-        </div>
-      </form>
+      <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+        <button type="button" class="btn-secondary" onclick="closeLoyaltyModal()">Đóng cửa sổ</button>
+      </div>
     </div>
   </div>
 
@@ -3174,55 +3195,92 @@
     // =========================================================================
     let cachedCustomers = [];
     let selectedLoyaltyCustomer = null;
-    let loyaltyMode = 'earn'; // 'earn' or 'redeem'
+    let loyaltyMode = 'earn';
 
     async function loadCustomers() {
       const tbody = document.getElementById('customerTableBody');
-      const search = (document.getElementById('customerSearchInput').value || '').toLowerCase();
-      const tierFilter = document.getElementById('customerTierFilter').value;
+      const search = (document.getElementById('customerSearchInput')?.value || '').toLowerCase().trim();
+      const tierFilter = document.getElementById('customerTierFilter')?.value || 'all';
 
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 25px;">⏳ Đang tải khách hàng...</td></tr>';
+      if (tbody) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 25px;">⏳ Đang tải danh sách thành viên...</td></tr>';
+      }
 
-      const res = await fetchCustomersFromCloud();
+      const res = await (window.fetchCustomersFromCloud ? window.fetchCustomersFromCloud() : { data: [] });
       cachedCustomers = res.data || [];
 
+      // Update KPI counters
+      const totalCount = cachedCustomers.length;
+      const readyRewardCount = cachedCustomers.filter(c => (Number(c.stamps_count) || 0) >= 8).length;
+      const freeDrinksCount = cachedCustomers.reduce((acc, c) => acc + (Number(c.free_drinks_earned) || 0), 0);
+      const vipCount = cachedCustomers.filter(c => ['Bạc', 'Vàng', 'Kim Cương'].includes(c.tier)).length;
+
+      const statTotalEl = document.getElementById('crmStatTotal');
+      if (statTotalEl) statTotalEl.textContent = totalCount;
+      const statRewardEl = document.getElementById('crmStatReadyReward');
+      if (statRewardEl) statRewardEl.textContent = readyRewardCount;
+      const statFreeEl = document.getElementById('crmStatFreeDrinks');
+      if (statFreeEl) statFreeEl.textContent = freeDrinksCount;
+      const statVipEl = document.getElementById('crmStatVip');
+      if (statVipEl) statVipEl.textContent = vipCount;
+
       const filtered = cachedCustomers.filter(c => {
-        const matchText = (c.name || '').toLowerCase().includes(search) || (c.contact || '').toLowerCase().includes(search);
-        const matchTier = tierFilter === 'all' || c.tier === tierFilter;
+        const matchText = (c.name || '').toLowerCase().includes(search) || 
+                          (c.contact || '').toLowerCase().includes(search) ||
+                          (c.member_code || '').toLowerCase().includes(search);
+        let matchTier = true;
+        if (tierFilter === 'reward_ready') {
+          matchTier = (Number(c.stamps_count) || 0) >= 8;
+        } else if (tierFilter !== 'all') {
+          matchTier = c.tier === tierFilter;
+        }
         return matchText && matchTier;
       });
 
+      if (!tbody) return;
       tbody.innerHTML = '';
       if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 30px;">Chưa có khách hàng nào phù hợp</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 30px;">Chưa có thành viên nào phù hợp</td></tr>';
       } else {
         filtered.forEach(c => {
           let tierBadge = '<span class="badge badge-warning">Thành viên</span>';
           if (c.tier === 'Kim Cương') tierBadge = '<span class="badge badge-purple">💎 Kim Cương</span>';
-          else if (c.tier === 'Vàng') tierBadge = '<span class="badge badge-gold">👑 Vàng</span>';
-          else if (c.tier === 'Bạc') tierBadge = '<span class="badge badge-silver">🥈 Bạc</span>';
+          else if (c.tier === 'Vàng') tierBadge = '<span class="badge badge-gold">👑 Hạng Vàng</span>';
+          else if (c.tier === 'Bạc') tierBadge = '<span class="badge badge-silver">🥈 Hạng Bạc</span>';
+
+          const stamps = Number(c.stamps_count != null ? c.stamps_count : 0);
+          const isReady = stamps >= 8;
+          const freeDrinks = Number(c.free_drinks_earned || 0);
 
           const tr = document.createElement('tr');
           tr.innerHTML = `
             <td>
-              <strong style="color: #EDE5D8;">${escapeHtml(c.name || 'Khách hàng')}</strong>
+              <strong style="color: #EDE5D8; font-size: 14.5px;">${escapeHtml(c.name || 'Khách hàng')}</strong>
+              <div style="font-size: 11px; color: var(--accent); font-family: monospace; font-weight: 700;">${escapeHtml(c.member_code || ('OLION-' + (c.contact||'').slice(-4)))}</div>
               <div style="font-size: 11px; color: var(--text-muted);">Gia nhập: ${escapeHtml(c.date || 'Gần đây')}</div>
             </td>
-            <td><strong style="color: var(--accent); font-family: monospace; font-size: 14px;">${escapeHtml(c.contact || '')}</strong></td>
+            <td><strong style="color: #fff; font-family: monospace; font-size: 14px;">${escapeHtml(c.contact || '')}</strong></td>
             <td>
-              <span style="font-size: 15px; font-weight: 800; color: #EDE5D8;">${c.points || 0}</span>
-              <span style="font-size: 11px; color: var(--text-muted);">điểm</span>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span style="font-size: 15px; font-weight: 800; color: ${isReady ? '#2ECC71' : '#EDE5D8'};">☕ ${stamps}/8</span>
+                ${isReady ? '<span class="badge badge-success" style="font-size: 10px; animation: pulse 1.5s infinite;">🎁 ĐỦ 8 TEM</span>' : ''}
+              </div>
+              <div style="width: 100px; height: 6px; background: rgba(255,255,255,0.1); border-radius: 99px; overflow: hidden; margin-top: 4px;">
+                <div style="width: ${Math.min(100, (stamps/8)*100)}%; height: 100%; background: ${isReady ? '#2ECC71' : 'var(--accent)'}; border-radius: 99px; transition: width 0.3s ease;"></div>
+              </div>
+            </td>
+            <td>
+              ${freeDrinks > 0 ? `<strong style="color: #ff7675; font-size: 13.5px;">🎁 x${freeDrinks} ly</strong>` : '<span style="color: var(--text-muted);">0</span>'}
             </td>
             <td>${tierBadge}</td>
-            <td><span class="badge badge-warning">${escapeHtml(c.source || 'Website')}</span></td>
-            <td style="max-width: 200px; font-size: 12px; color: var(--text-muted); text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-              ${escapeHtml(c.notes || '—')}
-            </td>
+            <td><span class="badge badge-warning" style="font-size: 11px;">${escapeHtml(c.source || 'Website')}</span></td>
             <td style="text-align: right;">
-              <div style="display: inline-flex; gap: 6px;">
-                <button type="button" class="btn-sm-primary" style="background: rgba(155, 89, 182, 0.2); color: #D2A8E8; border-color: rgba(155, 89, 182, 0.4);" onclick="openLoyaltyModal('${c.contact}')">💎 Tích điểm</button>
-                <button type="button" class="btn-sm-primary" onclick="openPointHistoryModal(\'${c.id}\', '${c.contact}', '${escapeHtml(c.name)}')">📜 Lịch sử</button>
-                <button type="button" class="btn-sm-danger" onclick="handleDeleteCustomer(\'${c.id}\')">Xóa</button>
+              <div style="display: inline-flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end;">
+                <button type="button" class="btn-sm-primary" style="background: rgba(46, 204, 113, 0.2); color: #2ecc71; border-color: rgba(46, 204, 113, 0.4); padding: 5px 9px;" onclick="adminQuickAddStamp('${c.id}', '${c.contact}')" title="Cộng +1 tem mua nước">➕1 ☕</button>
+                <button type="button" class="btn-sm-secondary" style="padding: 5px 7px; font-size: 11px;" onclick="adminQuickSubStamp('${c.id}', '${c.contact}')" title="Trừ 1 tem">-1</button>
+                ${isReady ? `<button type="button" class="btn-sm-primary" style="background: linear-gradient(135deg, #E74C3C, #C0392B); color: #fff; font-weight: 700; border: none; padding: 5px 10px;" onclick="adminRedeemFreeDrink('${c.id}', '${c.contact}')">🎁 Đổi Ly Free</button>` : ''}
+                <button type="button" class="btn-sm-primary" style="background: rgba(155, 89, 182, 0.2); color: #D2A8E8; border-color: rgba(155, 89, 182, 0.4);" onclick="openLoyaltyModal('${c.contact}')">⚡ POS</button>
+                <button type="button" class="btn-sm-danger" onclick="handleDeleteCustomer('${c.id}')">Xóa</button>
               </div>
             </td>
           `;
@@ -3235,16 +3293,53 @@
       if (sideBadge) sideBadge.textContent = cachedCustomers.length;
       const mCustBadge = document.getElementById('mBadgeCustomer');
       if (mCustBadge) mCustBadge.textContent = cachedCustomers.length;
-      updateOverviewStats();
+      if (typeof updateOverviewStats === 'function') updateOverviewStats();
     }
 
-    document.getElementById('customerSearchInput').addEventListener('input', loadCustomers);
-    document.getElementById('customerTierFilter').addEventListener('change', loadCustomers);
-    document.getElementById('refreshCustomersBtn').addEventListener('click', loadCustomers);
+    // Quick Stamp Add / Minus / Redeem actions
+    window.adminQuickAddStamp = async function(id, phone) {
+      if (!phone) return;
+      showToast('Đang cộng tem...');
+      const res = await window.addCustomerStampInCloud(id, phone, 1, 'Thu ngân POS cộng tem');
+      if (res && res.rewardReady) {
+        if (typeof playNotificationSound === 'function') playNotificationSound();
+        alert(`🎉 KHÁCH ĐÃ ĐỦ 8 TEM! Khách hàng ${phone} đủ điều kiện nhận 01 ly nước miễn phí ngay tại quầy!`);
+        showToast(`🎉 Khách ${phone} đã đủ 8 tem nhận quà!`);
+      } else {
+        showToast(`☕ Đã cộng +1 tem cho ${phone}!`);
+      }
+      loadCustomers();
+    };
 
-    // POS Loyalty Modal
+    window.adminQuickSubStamp = async function(id, phone) {
+      if (!phone) return;
+      await window.addCustomerStampInCloud(id, phone, -1, 'Thu ngân điều chỉnh tem');
+      showToast(`Đã điều chỉnh -1 tem của ${phone}`);
+      loadCustomers();
+    };
+
+    window.adminRedeemFreeDrink = async function(id, phone) {
+      if (!phone) return;
+      if (!confirm(`Xác nhận đổi 01 ly nước miễn phí (trừ 8 tem) cho khách hàng ${phone}?`)) return;
+      showToast('Đang xử lý đổi ly free...');
+      const res = await window.redeemCustomerDrinkInCloud(id, phone, 'Đổi 1 ly free tại quầy');
+      if (res && res.success) {
+        showToast(`🎁 Đã đổi thành công 1 ly miễn phí cho ${phone}! Thẻ đã reset về ${res.member?.stamps_count || 0} tem.`);
+        loadCustomers();
+      } else {
+        alert(res?.error || 'Không thể đổi ly miễn phí.');
+      }
+    };
+
+    document.getElementById('customerSearchInput')?.addEventListener('input', loadCustomers);
+    document.getElementById('customerTierFilter')?.addEventListener('change', loadCustomers);
+    document.getElementById('refreshCustomersBtn')?.addEventListener('click', loadCustomers);
+
+    // POS Loyalty Modal (Cashier 1-Click Interface)
     function openLoyaltyModal(phone = '') {
-      document.getElementById('loyaltyModal').classList.add('open');
+      const modal = document.getElementById('loyaltyModal');
+      if (!modal) return;
+      modal.classList.add('open');
       if (phone) {
         document.getElementById('loyaltyLookupPhone').value = phone;
         lookupLoyaltyCustomer(phone);
@@ -3252,223 +3347,239 @@
         document.getElementById('loyaltyLookupPhone').value = '';
         selectLoyaltyCust(cachedCustomers[0] || null);
       }
-      setLoyaltyMode('earn');
     }
 
     function closeLoyaltyModal() {
-      document.getElementById('loyaltyModal').classList.remove('open');
+      const modal = document.getElementById('loyaltyModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function renderPosStampGrid(stampsCount = 0) {
+      const grid = document.getElementById('loyaltyCustStampGrid');
+      if (!grid) return;
+      let html = '';
+      for (let i = 1; i <= 8; i++) {
+        const isStamped = i <= stampsCount;
+        const isReward = i === 8;
+        if (isReward) {
+          html += `<div style="aspect-ratio:1; border-radius:8px; background:${isStamped ? '#E74C3C' : 'rgba(231,76,60,0.15)'}; border:1px solid ${isStamped ? '#ff7675' : 'rgba(231,76,60,0.4)'}; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:10px; color:${isStamped ? '#fff' : '#ff7675'}; font-weight:700;">🎁${isStamped?'ĐỦ':'8'}</div>`;
+        } else {
+          html += `<div style="aspect-ratio:1; border-radius:8px; background:${isStamped ? 'var(--accent)' : 'rgba(255,255,255,0.06)'}; border:1px solid ${isStamped ? '#f2ac6d' : 'rgba(255,255,255,0.1)'}; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:10px; color:${isStamped ? '#120803' : 'var(--text-muted)'}; font-weight:700;">☕${i}</div>`;
+        }
+      }
+      grid.innerHTML = html;
     }
 
     function selectLoyaltyCust(cust) {
       selectedLoyaltyCustomer = cust;
       const nameEl = document.getElementById('loyaltyCustName');
       const phoneEl = document.getElementById('loyaltyCustPhone');
+      const codeEl = document.getElementById('loyaltyCustCode');
       const badgeEl = document.getElementById('loyaltyCustTierBadge');
       const pointsEl = document.getElementById('loyaltyCustPoints');
+      const ratioEl = document.getElementById('loyaltyCustStampRatio');
+      const freeEl = document.getElementById('loyaltyCustFreeCount');
+      const redeemBtn = document.getElementById('adminPosRedeemBtn');
 
       if (cust) {
+        const stamps = Number(cust.stamps_count != null ? cust.stamps_count : 0);
         nameEl.textContent = cust.name || 'Khách hàng';
         phoneEl.textContent = 'SĐT: ' + (cust.contact || '');
-        pointsEl.textContent = (cust.points || 0) + ' Điểm';
+        if (codeEl) codeEl.textContent = cust.member_code || ('OLION-' + (cust.contact || '').slice(-4));
+        if (pointsEl) pointsEl.textContent = (cust.points || 0) + ' đ';
+        if (ratioEl) ratioEl.textContent = `${stamps} / 8 tem ${stamps >= 8 ? '🎉 (ĐỦ 8 TEM!)' : ''}`;
+        if (freeEl) freeEl.textContent = (cust.free_drinks_earned || 0) + ' ly';
 
         let badgeHtml = '<span class="badge badge-warning">Thành viên</span>';
         if (cust.tier === 'Kim Cương') badgeHtml = '<span class="badge badge-purple">💎 Kim Cương</span>';
         else if (cust.tier === 'Vàng') badgeHtml = '<span class="badge badge-gold">👑 Hạng Vàng</span>';
         else if (cust.tier === 'Bạc') badgeHtml = '<span class="badge badge-silver">🥈 Hạng Bạc</span>';
         badgeEl.innerHTML = badgeHtml;
+
+        renderPosStampGrid(stamps);
+
+        if (redeemBtn) {
+          if (stamps >= 8) {
+            redeemBtn.disabled = false;
+            redeemBtn.style.opacity = '1';
+            redeemBtn.style.cursor = 'pointer';
+            redeemBtn.innerHTML = '🎁 ĐỔI 1 LY MIỄN PHÍ NGAY (ĐỦ 8 TEM)';
+          } else {
+            redeemBtn.disabled = true;
+            redeemBtn.style.opacity = '0.5';
+            redeemBtn.style.cursor = 'not-allowed';
+            redeemBtn.innerHTML = `🎁 ĐỔI 1 LY MIỄN PHÍ (CẦN THÊM ${8 - stamps} TEM)`;
+          }
+        }
       } else {
         nameEl.textContent = 'Khách chưa có trong hệ thống';
-        phoneEl.textContent = 'Có thể tự động tạo mới khi tích điểm!';
-        pointsEl.textContent = '0 Điểm';
+        phoneEl.textContent = 'Nhập SĐT để tự động tạo Thẻ Thành Viên!';
+        if (codeEl) codeEl.textContent = 'OLION-xxxx';
+        if (pointsEl) pointsEl.textContent = '0 đ';
+        if (ratioEl) ratioEl.textContent = '0 / 8 tem';
+        if (freeEl) freeEl.textContent = '0 ly';
         badgeEl.innerHTML = '<span class="badge badge-warning">Khách mới</span>';
+        renderPosStampGrid(0);
+        if (redeemBtn) {
+          redeemBtn.disabled = true;
+          redeemBtn.style.opacity = '0.5';
+        }
       }
     }
 
     function lookupLoyaltyCustomer(phone) {
-      const clean = (phone || '').trim();
+      const clean = (phone || '').replace(/[^0-9]/g, '').trim();
       if (!clean) return;
-      const match = cachedCustomers.find(c => c.contact === clean || c.contact.includes(clean));
+      const match = cachedCustomers.find(c => c.contact === clean || (c.contact && c.contact.includes(clean)));
       if (match) {
         selectLoyaltyCust(match);
       } else {
+        const code = window.generateMemberCode ? window.generateMemberCode(clean) : ('OLION-' + clean.slice(-4));
         selectLoyaltyCust({
           id: null,
-          name: 'Khách hàng mới',
+          name: 'Khách hàng mới (' + clean + ')',
           contact: clean,
+          member_code: code,
+          stamps_count: 0,
+          total_stamps: 0,
+          free_drinks_earned: 0,
           points: 0,
           tier: 'Thành viên'
         });
       }
     }
 
-    document.getElementById('loyaltyLookupBtn').addEventListener('click', () => {
-      lookupLoyaltyCustomer(document.getElementById('loyaltyLookupPhone').value);
+    document.getElementById('loyaltyLookupBtn')?.addEventListener('click', () => {
+      lookupLoyaltyCustomer(document.getElementById('loyaltyLookupPhone')?.value);
     });
 
-    function setLoyaltyMode(mode) {
-      loyaltyMode = mode;
-      const btnEarn = document.getElementById('tabModeEarn');
-      const btnRedeem = document.getElementById('tabModeRedeem');
-      const secEarn = document.getElementById('earnPointsSection');
-      const secRedeem = document.getElementById('redeemPointsSection');
-
-      if (mode === 'earn') {
-        btnEarn.className = 'btn-primary';
-        btnEarn.style.background = 'linear-gradient(135deg, #2ECC71, #27AE60)';
-        btnRedeem.className = 'btn-secondary';
-        btnRedeem.style.background = 'rgba(255, 255, 255, 0.08)';
-        secEarn.style.display = 'block';
-        secRedeem.style.display = 'none';
-        document.getElementById('loyaltyReasonInput').value = 'Mua nước tại quán';
-      } else {
-        btnEarn.className = 'btn-secondary';
-        btnEarn.style.background = 'rgba(255, 255, 255, 0.08)';
-        btnRedeem.className = 'btn-primary';
-        btnRedeem.style.background = 'linear-gradient(135deg, #E74C3C, #C0392B)';
-        secEarn.style.display = 'none';
-        secRedeem.style.display = 'block';
-        document.getElementById('loyaltyReasonInput').value = 'Đổi voucher giảm giá';
-      }
-    }
-
-    document.getElementById('tabModeEarn').addEventListener('click', () => setLoyaltyMode('earn'));
-    document.getElementById('tabModeRedeem').addEventListener('click', () => setLoyaltyMode('redeem'));
-
-    // Bill to points converter
-    document.getElementById('loyaltyBillAmount').addEventListener('input', (e) => {
-      const val = parseFloat(e.target.value) || 0;
-      document.getElementById('loyaltyPointsEarnInput').value = Math.floor(val / 10000);
-    });
-
-    // Submit Point Adjustment
-    document.getElementById('loyaltyActionForm').addEventListener('submit', async () => {
-      const phoneInput = document.getElementById('loyaltyLookupPhone').value.trim();
+    // POS Cashier 1-Tap Handlers
+    window.adminPosAddStamp = async function() {
+      const phoneInput = (document.getElementById('loyaltyLookupPhone')?.value || '').replace(/[^0-9]/g, '').trim();
       const targetPhone = selectedLoyaltyCustomer?.contact || phoneInput;
-      if (!targetPhone) return alert('Vui lòng nhập số điện thoại khách hàng!');
+      if (!targetPhone || targetPhone.length < 10) return alert('Vui lòng nhập đúng số điện thoại khách hàng (10 số)!');
 
-      let pointsDelta = 0;
-      let reason = document.getElementById('loyaltyReasonInput').value.trim();
-
-      if (loyaltyMode === 'earn') {
-        pointsDelta = parseInt(document.getElementById('loyaltyPointsEarnInput').value) || 0;
-        if (pointsDelta <= 0) return alert('Vui lòng nhập số điểm cộng lớn hơn 0!');
-      } else {
-        const redeemPoints = parseInt(document.getElementById('loyaltyPointsRedeemInput').value) || 0;
-        if (redeemPoints <= 0) return alert('Vui lòng nhập số điểm cần trừ lớn hơn 0!');
-        if (selectedLoyaltyCustomer && selectedLoyaltyCustomer.points < redeemPoints) {
-          return alert(`Khách hàng chỉ có ${selectedLoyaltyCustomer.points} điểm, không đủ để trừ ${redeemPoints} điểm!`);
-        }
-        pointsDelta = -redeemPoints;
-      }
-
-      // If customer does not exist in DB yet, create them first
+      // Auto create customer if not exists
       if (!selectedLoyaltyCustomer || !selectedLoyaltyCustomer.id) {
-        await saveCustomerToCloud({
+        await window.saveCustomerToCloud({
           name: 'Khách hàng POS',
           contact: targetPhone,
-          points: 0,
-          source: 'POS Quầy thu ngân'
+          stamps_count: 0,
+          source: 'Quầy thu ngân POS'
         });
       }
 
-      showToast('Đang xử lý giao dịch tích điểm...');
-      const res = await adjustCustomerPointsInCloud(
-        selectedLoyaltyCustomer?.id,
-        targetPhone,
-        pointsDelta,
-        reason,
-        loyaltyMode === 'earn' ? 'earn' : 'redeem'
-      );
+      showToast('Đang cộng tem...');
+      const res = await window.addCustomerStampInCloud(selectedLoyaltyCustomer?.id, targetPhone, 1, 'Cộng tem mua nước tại quầy POS');
+      if (res && res.rewardReady) {
+        if (typeof playNotificationSound === 'function') playNotificationSound();
+        alert(`🎉 KHÁCH ĐÃ ĐỦ 8 TEM! Khách hàng ${targetPhone} đủ điều kiện nhận 01 ly nước miễn phí ngay bây giờ!`);
+      }
+      showToast(`☕ Đã cộng +1 tem cho ${targetPhone}!`);
+      
+      // Reload and re-select customer
+      await loadCustomers();
+      const updated = cachedCustomers.find(c => c.contact === targetPhone);
+      if (updated) selectLoyaltyCust(updated);
+    };
 
-      // Đồng bộ vào bảng loyalty_members nếu có
-      if (loyaltyMode === 'earn' && window.addLoyaltyMemberPoints) {
-        await window.addLoyaltyMemberPoints(targetPhone, pointsDelta, selectedLoyaltyCustomer?.name || 'Khách hàng');
-      } else if (loyaltyMode === 'redeem' && window.redeemLoyaltyMemberPoints) {
-        await window.redeemLoyaltyMemberPoints(targetPhone, Math.abs(pointsDelta), reason);
+    window.adminPosRedeemDrink = async function() {
+      const targetPhone = selectedLoyaltyCustomer?.contact;
+      if (!targetPhone) return alert('Chưa chọn khách hàng!');
+      if ((selectedLoyaltyCustomer.stamps_count || 0) < 8) {
+        return alert('Khách hàng chưa đủ 8 tem để đổi ly miễn phí!');
       }
 
-      showToast(pointsDelta > 0 ? `🎉 Đã cộng +${pointsDelta} điểm cho khách ${targetPhone}!` : `✨ Đã trừ ${Math.abs(pointsDelta)} điểm thành công!`);
-      closeLoyaltyModal();
-      loadCustomers();
+      if (!confirm(`Xác nhận đổi 1 ly nước miễn phí (trừ 8 tem) cho khách hàng ${targetPhone}?`)) return;
+
+      showToast('Đang đổi ly free...');
+      const res = await window.redeemCustomerDrinkInCloud(selectedLoyaltyCustomer.id, targetPhone, 'Đổi 1 ly miễn phí tại quầy');
+      if (res && res.success) {
+        showToast(`🎁 Đã đổi thành công 1 ly miễn phí cho ${targetPhone}!`);
+        await loadCustomers();
+        const updated = cachedCustomers.find(c => c.contact === targetPhone);
+        if (updated) selectLoyaltyCust(updated);
+      }
+    };
+
+    // Advanced Point form handler
+    document.getElementById('loyaltyActionForm')?.addEventListener('submit', async () => {
+      const phoneInput = (document.getElementById('loyaltyLookupPhone')?.value || '').trim();
+      const targetPhone = selectedLoyaltyCustomer?.contact || phoneInput;
+      if (!targetPhone) return alert('Vui lòng nhập số điện thoại!');
+
+      const pts = parseInt(document.getElementById('loyaltyPointsEarnInput')?.value) || 0;
+      const reason = document.getElementById('loyaltyReasonInput')?.value || 'Tích điểm chi tiêu';
+
+      if (pts <= 0) return alert('Vui lòng nhập số điểm lớn hơn 0!');
+
+      await window.adjustCustomerPointsInCloud(selectedLoyaltyCustomer?.id, targetPhone, pts, reason, 'earn');
+      showToast(`Đã lưu điểm chi tiêu cho khách ${targetPhone}`);
+      await loadCustomers();
+      const updated = cachedCustomers.find(c => c.contact === targetPhone);
+      if (updated) selectLoyaltyCust(updated);
     });
 
     // Add customer modal
     function openAddCustomerModal() {
-      document.getElementById('newCustomerForm').reset();
-      document.getElementById('addCustomerModal').classList.add('open');
+      document.getElementById('newCustomerForm')?.reset();
+      document.getElementById('addCustomerModal')?.classList.add('open');
     }
     function closeAddCustomerModal() {
-      document.getElementById('addCustomerModal').classList.remove('open');
+      document.getElementById('addCustomerModal')?.classList.remove('open');
     }
 
-    document.getElementById('newCustomerForm').addEventListener('submit', async () => {
-      const name = document.getElementById('newCustName').value.trim();
-      const contact = document.getElementById('newCustContact').value.trim();
-      const points = parseInt(document.getElementById('newCustPoints').value) || 0;
-      const notes = document.getElementById('newCustNotes').value.trim();
+    document.getElementById('newCustomerForm')?.addEventListener('submit', async () => {
+      const name = document.getElementById('newCustName')?.value.trim();
+      const contact = (document.getElementById('newCustContact')?.value || '').replace(/[^0-9]/g, '').trim();
+      const points = parseInt(document.getElementById('newCustPoints')?.value) || 10;
+      const notes = document.getElementById('newCustNotes')?.value.trim();
 
-      if (!contact) return alert('Vui lòng nhập số điện thoại / liên hệ!');
+      if (!name) return alert('Vui lòng nhập họ và tên khách hàng!');
+      if (!contact || contact.length < 10) return alert('Vui lòng nhập đúng số điện thoại (10 số)!');
 
-      showToast('Đang thêm khách hàng...');
-      await saveCustomerToCloud({ name, contact, points, notes, source: 'Quản trị viên tạo' });
+      showToast('Đang thêm thành viên mới...');
+      const memberCode = window.generateMemberCode ? window.generateMemberCode(contact) : ('OLION-' + contact.slice(-4));
+      await window.saveCustomerToCloud({
+        name,
+        contact,
+        member_code: memberCode,
+        stamps_count: 1,
+        total_stamps: 1,
+        free_drinks_earned: 0,
+        points,
+        tier: 'Thành viên',
+        notes,
+        source: 'Quản trị viên tạo tại POS'
+      });
       closeAddCustomerModal();
-      showToast(`Đã thêm khách hàng ${name} thành công!`);
+      showToast(`Đã thêm thành viên ${name} thành công (+1 tem khởi đầu)!`);
       loadCustomers();
     });
 
-    // Point History Modal
-    async function openPointHistoryModal(id, phone, name) {
-      document.getElementById('historyModalTitle').textContent = `📜 Lịch Sử Giao Dịch: ${name} (${phone})`;
-      const tbody = document.getElementById('pointHistoryTableBody');
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">⏳ Đang tải lịch sử...</td></tr>';
-      document.getElementById('pointHistoryModal').classList.add('open');
-
-      const res = await fetchCustomerPointHistoryFromCloud(id, phone);
-      const list = res.data || [];
-      tbody.innerHTML = '';
-      if (list.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">Chưa có giao dịch điểm nào</td></tr>';
-      } else {
-        list.forEach(tx => {
-          const isEarn = tx.points_change > 0;
-          const tr = document.createElement('tr');
-          tr.innerHTML = `
-            <td><span class="badge ${isEarn ? 'badge-success' : 'badge-warning'}">${isEarn ? 'Cộng điểm' : 'Đổi thưởng'}</span></td>
-            <td><strong style="color: ${isEarn ? '#2ECC71' : '#E74C3C'}; font-size: 14px;">${isEarn ? '+' : ''}${tx.points_change} đ</strong></td>
-            <td><strong style="color: #EDE5D8;">${tx.balance_after || '—'} đ</strong></td>
-            <td style="font-size: 13px;">${escapeHtml(tx.reason || '')}</td>
-            <td style="font-size: 12px; color: var(--text-muted);">${tx.created_at ? new Date(tx.created_at).toLocaleString('vi-VN') : 'Gần đây'}</td>
-          `;
-          tbody.appendChild(tr);
-        });
-      }
-    }
-
-    function closePointHistoryModal() {
-      document.getElementById('pointHistoryModal').classList.remove('open');
-    }
-
+    // Delete customer
     window.handleDeleteCustomer = async function(id) {
-      if (confirm('Xác nhận xóa khách hàng này khỏi hệ thống?')) {
-        await deleteCustomerFromCloud(id);
-        showToast('Đã xóa khách hàng thành công.');
+      if (confirm('Xác nhận xóa thành viên này khỏi hệ thống?')) {
+        await window.deleteCustomerFromCloud(id);
+        showToast('Đã xóa thành viên thành công.');
         loadCustomers();
       }
     };
 
-    document.getElementById('exportCustomerCsvBtn').addEventListener('click', () => {
-      if (cachedCustomers.length === 0) return alert('Chưa có danh sách khách hàng để xuất!');
-      let csv = 'Họ tên,Số điện thoại/Email,Điểm,Hạng thẻ,Nguồn,Ghi chú,Ngày\n';
+    // Export CSV
+    document.getElementById('exportCustomerCsvBtn')?.addEventListener('click', () => {
+      if (cachedCustomers.length === 0) return alert('Chưa có danh sách thành viên để xuất!');
+      let csv = 'Mã TV,Họ tên,Số điện thoại,Tem hiện tại,Tổng tem tích lũy,Ly free đã đổi,Điểm,Hạng thẻ,Nguồn,Ghi chú,Ngày\n';
       cachedCustomers.forEach(c => {
-        csv += `"${c.name || ''}","${c.contact || ''}","${c.points || 0}","${c.tier || ''}","${c.source || ''}","${(c.notes || '').replace(/"/g, '""')}","${c.date || ''}"\n`;
+        csv += `"${c.member_code || ''}","${c.name || ''}","${c.contact || ''}","${c.stamps_count || 0}","${c.total_stamps || 0}","${c.free_drinks_earned || 0}","${c.points || 0}","${c.tier || ''}","${c.source || ''}","${(c.notes || '').replace(/"/g, '""')}","${c.date || ''}"\n`;
       });
-      downloadCsv(csv, 'olion_customers.csv');
+      downloadCsv(csv, 'olion_members_loyalty.csv');
     });
 
     // =========================================================================
     // 4. FEEDBACKS, PROMOTIONS, MINIGAME & SUPABASE
     // =========================================================================
-    let cachedFeedbacks = [];
+        let cachedFeedbacks = [];
     let cachedSpins = [];
 
     async function loadFeedbacks() {

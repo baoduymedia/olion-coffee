@@ -353,9 +353,9 @@
           <span class="lang-pill" id="langPillEn">EN</span>
         </div>
 
-        <!-- Loyalty Points Lookup Button (Desktop) -->
-        <button type="button" class="btn btn-ghost loyalty-nav-btn desktop-only" onclick="openLoyaltyModal()" style="padding: 8px 12px; min-height: 44px; font-size: 12.5px; border: 1px solid rgba(229,154,85,0.3); color: var(--accent-gold);" aria-label="Thẻ tích điểm điện tử Olion">
-          <i data-lucide="award" style="width:16px;height:16px;margin-right:4px;"></i> <span>Tích điểm</span>
+        <!-- Loyalty Member & Stamp Card Button (Desktop) -->
+        <button type="button" class="btn btn-ghost loyalty-nav-btn desktop-only" onclick="openLoyaltyModal()" style="padding: 8px 14px; min-height: 44px; font-size: 12.5px; border: 1px solid rgba(229,154,85,0.4); color: var(--accent-gold); background: rgba(229,154,85,0.08); border-radius: 999px;" aria-label="Thẻ Thành Viên & Tích Điểm Olion">
+          <i data-lucide="award" style="width:16px;height:16px;margin-right:5px;color:var(--accent-gold);"></i> <span>Thẻ Thành Viên</span>
         </button>
 
         <a href="tel:0783657587" class="header-phone-pill" title="Gọi Hotline đặt bàn & tư vấn">
@@ -528,10 +528,10 @@
 
         <div class="drawer-nav-divider"></div>
 
-        <button type="button" class="drawer-link" onclick="openLoyaltyModal(); toggleDrawer(false);" style="color: #F2AC6D !important; background: none; border: 1px solid transparent; width: 100%; text-align: left; font: inherit; cursor: pointer;" aria-label="Thẻ Tích Điểm Điện Tử">
+        <button type="button" class="drawer-link" onclick="openLoyaltyModal(); toggleDrawer(false);" style="color: #F2AC6D !important; background: none; border: 1px solid transparent; width: 100%; text-align: left; font: inherit; cursor: pointer;" aria-label="Thẻ Thành Viên & Tích Điểm">
           <div class="drawer-link-left">
             <div class="drawer-link-icon" style="background: rgba(229,154,85,0.15); border-color: rgba(229,154,85,0.3);"><i data-lucide="award" style="width:16px;height:16px;"></i></div>
-            <span>Thẻ Tích Điểm Điện Tử</span>
+            <span>Thẻ Thành Viên & Tích Điểm</span>
           </div>
           <span class="drawer-link-arrow">›</span>
         </button>
@@ -1883,34 +1883,42 @@
     </span>
   </button>
 
-  <!-- ======== SMART WELCOME POPUP (POPUP CHÀO MỪNG THÔNG MINH) ======== -->
+  <!-- ======== SMART WELCOME POPUP (ĐĂNG KÝ THÀNH VIÊN OLION 1 CHẠM) ======== -->
   <div class="welcome-overlay" id="welcomeModal" aria-hidden="true" role="dialog" aria-labelledby="welcomeTitle">
     <div class="welcome-box" id="welcomeBox">
       <button type="button" class="welcome-close" onclick="closeWelcomeModal()" aria-label="Đóng popup"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
       
       <div class="welcome-badge-wrap">
         <span class="welcome-weather-pill" id="welcomeWeatherPill">
-          <span id="welcomeWeatherIcon"><i data-lucide="sun-medium" style="width:18px;height:18px;"></i></span>
-          <span id="welcomeWeatherText">TP.HCM 32°C • Đang tải...</span>
+          <span id="welcomeWeatherIcon"><i data-lucide="award" style="width:16px;height:16px;color:var(--accent-gold);"></i></span>
+          <span id="welcomeWeatherText">👑 ĐẶC QUYỀN THÀNH VIÊN OLION</span>
         </span>
       </div>
 
       <h3 class="welcome-title font-serif" id="welcomeTitle">
-        Chào mừng bạn đến với <span style="color: var(--accent-gold);">OLION</span>
+        Thẻ Thành Viên & Tặng 1 Tem Khởi Đầu ☕
       </h3>
 
       <p class="welcome-message" id="welcomeMessage">
-        Một ngày mới lại bắt đầu, cùng nạp năng lượng với một tách cà phê thơm nồng tại Olion nhé!
+        Đăng ký nhanh trong 5 giây. Tích đủ 8 tem cà phê để nhận ngay <strong>01 ly nước thủ công miễn phí</strong> tại quầy Olion!
       </p>
 
-      <!-- Khách mới: Form nhập Tên & SĐT -->
+      <!-- Khách mới: Form Đăng Ký Thành Viên 1 Chạm -->
       <div id="welcomeNewUserArea">
         <form id="welcomeForm" onsubmit="handleWelcomeSubmit(event)">
           <div class="welcome-field">
-            <input type="text" id="welcomeName" class="welcome-input" placeholder="Tên của bạn (ví dụ: Duy)" required autocomplete="name" />
+            <input type="text" id="welcomeName" class="welcome-input" placeholder="Họ và tên của bạn (ví dụ: Hoàng Nam)" required autocomplete="name" />
           </div>
           <div class="welcome-field">
-            <input type="tel" id="welcomePhone" class="welcome-input" placeholder="Số điện thoại (10 số để nhận quà tri ân)" required pattern="^(03|05|07|08|09)[0-9]{8}$" autocomplete="tel" />
+            <input type="tel" id="welcomePhone" class="welcome-input" placeholder="Số điện thoại (10 số để nhận Thẻ & Quà)" required pattern="^(03|05|07|08|09)[0-9]{8}$" autocomplete="tel" />
+          </div>
+
+          <!-- Tóm tắt quyền lợi thành viên trực quan -->
+          <div style="background: rgba(229,154,85,0.08); border: 1px dashed rgba(229,154,85,0.3); border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; text-align: left; font-size: 12px; color: var(--text-cream); line-height: 1.5;">
+            <div style="font-weight: 700; color: var(--accent-gold); margin-bottom: 4px;">🎁 Quyền lợi thành viên Olion:</div>
+            <div>☕ <strong>Tặng ngay 1 tem</strong> đầu tiên vào Thẻ tích điểm</div>
+            <div>🏆 <strong>Tích 8 tem = Tặng 1 ly nước</strong> tùy chọn miễn phí</div>
+            <div>🎂 Quà tặng sinh nhật & nhận thông báo món mới theo mùa</div>
           </div>
 
           <!-- Nút chọn nhận thông báo món mới & sự kiện (Pre-checked) -->
@@ -1921,32 +1929,32 @@
                 <i data-lucide="check" style="width:13px;height:13px;"></i>
               </span>
               <span class="welcome-notif-label-text">
-                <span class="notif-highlight">🔔 Nhận thông báo món mới & sự kiện</span>
-                <span class="notif-subtext">Cập nhật thức uống theo mùa, lịch mở cửa ngày lễ & tin tức Olion</span>
+                <span class="notif-highlight">🔔 Nhận thông báo tích tem & ưu đãi</span>
+                <span class="notif-subtext">Nhận thông báo khi được tích tem và các món mới của quán</span>
               </span>
             </label>
           </div>
 
           <button type="submit" class="welcome-btn" id="welcomeSubmitBtn">
-            <span>☕ Bắt đầu trải nghiệm</span>
+            <span>☕ Kích Hoạt Thẻ & Nhận 1 Tem Ngay</span>
           </button>
         </form>
       </div>
 
-      <!-- Khách quen: Lời chào thân thiết & Nút xem Menu / Bật Thông Báo / Cài App -->
+      <!-- Khách quen: Lời chào thân thiết & Nút xem Thẻ Thành Viên / Xem Menu / Cài App -->
       <div id="welcomeReturningUserArea" style="display: none;">
         <div class="welcome-returning-actions">
-          <button type="button" class="welcome-btn" onclick="welcomeExploreMenu()">
+          <button type="button" class="welcome-btn" onclick="closeWelcomeModal(); openLoyaltyModal();" style="background: linear-gradient(135deg, var(--accent-gold), #d86326);">
+            <i data-lucide="award" style="width:16px;height:16px;margin-right:6px;"></i>
+            <span>👑 Xem Thẻ Thành Viên & Số Tem Của Bạn</span>
+          </button>
+          <button type="button" class="welcome-btn-secondary" onclick="welcomeExploreMenu()">
             <i data-lucide="coffee" style="width:16px;height:16px;margin-right:6px;"></i>
             <span>Khám phá Thực Đơn ngay</span>
           </button>
-          <button type="button" class="welcome-btn-secondary" id="welcomeReturningNotifBtn" onclick="triggerWelcomePushOptIn()">
-            <i data-lucide="bell" style="width:16px;height:16px;margin-right:6px;color:var(--accent-gold);"></i>
-            <span>Bật Thông Báo Món Mới & Sự Kiện</span>
-          </button>
           <button type="button" class="welcome-btn-pwa" id="welcomeReturningPwaBtn" onclick="closeWelcomeModal(); triggerPwaInstall();">
             <i data-lucide="smartphone" style="width:16px;height:16px;margin-right:6px;color:#2ecc71;"></i>
-            <span>Cài App Olion (Mở Nhanh 1 Chạm)</span>
+            <span>📲 Cài App Olion (Lưu Thẻ Về Màn Hình)</span>
           </button>
         </div>
       </div>
@@ -2104,26 +2112,33 @@
     </div>
   </div>
 
-  <!-- ======== MODAL: THẺ TÍCH ĐIỂM & THÀNH VIÊN OLION ======== -->
+  <!-- ======== MODAL: THẺ THÀNH VIÊN & TÍCH ĐIỂM OLION ======== -->
   <div class="modal-overlay" id="loyaltyLookupModal" aria-hidden="true" role="dialog" aria-labelledby="loyaltyTitle">
-    <div class="modal-box" style="max-width: 500px; padding: 28px 22px;">
+    <div class="modal-box" style="max-width: 520px; padding: 26px 20px;">
       <button type="button" class="modal-close" onclick="closeLoyaltyModal()" aria-label="Đóng popup"><i data-lucide="x" style="width:16px;height:16px;"></i></button>
-      <div class="section-eyebrow" style="margin-bottom: 6px;"><i data-lucide="award" style="width:14px;height:14px;margin-right:4px;"></i> <span>Thành Viên Olion</span></div>
-      <h3 class="font-serif" id="loyaltyTitle" style="font-size: 22px; margin-bottom: 4px; color: var(--text-white);">Thẻ Tích Điểm Điện Tử 1 Chạm</h3>
-      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">Tích đủ 8 tem cà phê để nhận ngay <strong>01 ly nước miễn phí tùy chọn</strong> tại quầy Olion!</p>
+      <div class="section-eyebrow" style="margin-bottom: 6px;"><i data-lucide="award" style="width:14px;height:14px;margin-right:4px;"></i> <span>Thành Viên Thân Thiết</span></div>
+      <h3 class="font-serif" id="loyaltyTitle" style="font-size: 22px; margin-bottom: 4px; color: var(--text-white);">Thẻ Thành Viên & Tích Tem 1 Chạm</h3>
+      <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 14px;">Tích đủ 8 tem cà phê để nhận ngay <strong>01 ly nước thủ công miễn phí</strong> tại quầy Olion!</p>
 
-      <!-- 8-Stamp Digital Card -->
-      <div class="stamp-card-wrap">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-          <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-gold); font-weight: 700;">OLION DIGITAL CARD</span>
-          <span style="font-size: 11px; background: rgba(46,204,113,0.2); color: #2ecc71; padding: 2px 8px; border-radius: 999px; font-weight: 600;">Member</span>
+      <!-- Unified Digital Member Card -->
+      <div class="stamp-card-wrap" id="loyaltyDigitalCard">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <span style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent-gold); font-weight: 700;">OLION DIGITAL MEMBER CARD</span>
+          <span id="loyaltyCardTierBadge" style="font-size: 11px; background: rgba(46,204,113,0.2); color: #2ecc71; padding: 3px 10px; border-radius: 999px; font-weight: 700;">Thành viên</span>
         </div>
-        <div class="stamp-card-code" id="loyaltyMemberCode">OLION-8869</div>
-        <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Đưa mã này cho thu ngân khi thanh toán để tích tem</div>
 
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 4px;">
+          <div id="loyaltyCardHolderName" style="font-size: 18px; font-weight: 800; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.5);">Khách hàng thân thiết</div>
+          <div id="loyaltyCardPhone" style="font-size: 12.5px; color: var(--accent-gold-light); font-family: monospace;">0908 xxx xxx</div>
+        </div>
+
+        <div class="stamp-card-code" id="loyaltyMemberCode">OLION-8869</div>
+        <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Đưa mã này cho thu ngân khi order nước để tích tem ☕</div>
+
+        <!-- 8-Stamp Grid -->
         <div class="stamp-grid" id="stampGrid">
           <div class="stamp-slot stamped"><span class="stamp-icon">☕</span><span>Tem 1</span></div>
-          <div class="stamp-slot stamped"><span class="stamp-icon">☕</span><span>Tem 2</span></div>
+          <div class="stamp-slot"><span class="stamp-icon">☕</span><span>Tem 2</span></div>
           <div class="stamp-slot"><span class="stamp-icon">☕</span><span>Tem 3</span></div>
           <div class="stamp-slot"><span class="stamp-icon">☕</span><span>Tem 4</span></div>
           <div class="stamp-slot"><span class="stamp-icon">☕</span><span>Tem 5</span></div>
@@ -2132,18 +2147,25 @@
           <div class="stamp-slot reward"><span class="stamp-icon">🎁</span><span>Tặng 1 ly</span></div>
         </div>
 
-        <div style="font-size: 12.5px; color: var(--accent-gold-light); font-weight: 600;" id="stampStatusText">
-          Bạn đã tích được <span id="currentStampCount" style="color:#2ecc71; font-size:15px; font-weight:800;">2</span> / 8 tem!
+        <div style="font-size: 12.5px; color: var(--accent-gold-light); font-weight: 600; margin-bottom: 10px;" id="stampStatusText">
+          Bạn đã tích được <span id="currentStampCount" style="color:#2ecc71; font-size:15px; font-weight:800;">1</span> / 8 tem! (Còn 7 tem nữa để nhận quà 🎁)
         </div>
-      </div>
 
-      <div style="display: flex; gap: 8px; justify-content: center; margin-bottom: 14px;">
-        <button type="button" class="btn btn-secondary" onclick="simulateAddStamp()" style="font-size: 12px; padding: 7px 14px;">
-          ☕ Thử tích 1 tem
-        </button>
-        <button type="button" class="btn btn-ghost" onclick="resetLoyaltyStamps()" style="font-size: 12px; padding: 7px 14px;">
-          ↺ Đặt lại thẻ
-        </button>
+        <!-- Lifetime & Reward Statistics -->
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding-top: 10px; border-top: 1px dashed rgba(229,154,85,0.25); text-align: center; font-size: 11px; color: var(--text-muted);">
+          <div>
+            <div>Tem hiện có</div>
+            <div id="loyaltyStatCurrentStamps" style="font-size: 14px; font-weight: 800; color: #2ecc71; margin-top: 2px;">1/8</div>
+          </div>
+          <div>
+            <div>Tổng tem tích</div>
+            <div id="loyaltyStatTotalStamps" style="font-size: 14px; font-weight: 800; color: var(--accent-gold); margin-top: 2px;">1 tem</div>
+          </div>
+          <div>
+            <div>Ly free đã đổi</div>
+            <div id="loyaltyStatFreeDrinks" style="font-size: 14px; font-weight: 800; color: #ff7675; margin-top: 2px;">0 ly</div>
+          </div>
+        </div>
       </div>
 
       <!-- Quick Action: Save Card / PWA Install & Push Notifications -->
@@ -2161,25 +2183,15 @@
         </div>
       </div>
 
-      <!-- Share & Earn Bonus Callout (Default HIDDEN, shown ONLY when enabled in Admin) -->
-      <div id="loyaltyShareEarnBanner" style="display: none !important; background: rgba(229,154,85,0.12); border: 1px dashed var(--accent-gold); border-radius: 12px; padding: 12px 14px; margin-bottom: 16px; align-items: center; justify-content: space-between; gap: 10px;">
-        <div style="text-align: left;">
-          <div style="font-size: 12px; font-weight: 700; color: #fff;" id="loyaltyShareBannerTitle">🎁 Tặng +1 tem khi chia sẻ cho bạn bè</div>
-          <div style="font-size: 11px; color: var(--text-muted);" id="loyaltyShareBannerSub">Nhận thêm mã giảm 15% cho hóa đơn tiếp theo</div>
-        </div>
-        <button type="button" class="btn btn-primary" onclick="closeLoyaltyModal(); openShareEarnModal();" style="font-size: 11.5px; padding: 6px 12px; white-space: nowrap;">
-          Nhận ngay
-        </button>
-      </div>
-
-      <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; text-align: left;">
+      <!-- Tra Cứu Hoặc Đăng Ký Số Mới -->
+      <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 14px; text-align: left;">
         <div style="font-size: 12px; font-weight: 700; color: var(--text-cream); margin-bottom: 8px;">
-          🔍 Hoặc tra cứu lịch sử tích điểm theo số điện thoại:
+          🔍 Tra cứu theo số điện thoại (hoặc kiểm tra thẻ khác):
         </div>
         <form id="loyaltyLookupForm" onsubmit="handleLoyaltyLookup(event)">
           <div class="form-group" style="margin-bottom: 0;">
             <div style="display: flex; gap: 8px;">
-              <input type="tel" class="form-input" id="loyaltySearchPhone" placeholder="Ví dụ: 0908123456" required pattern="[0-9]{9,11}" />
+              <input type="tel" class="form-input" id="loyaltySearchPhone" placeholder="Nhập SĐT (Vd: 0908123456)" required pattern="^(03|05|07|08|09)[0-9]{8}$" />
               <button type="submit" class="btn btn-primary" id="loyaltySearchBtn" style="white-space: nowrap; padding: 0 16px; font-size: 13px;">
                 <span>Tra Cứu</span>
               </button>
@@ -2188,41 +2200,26 @@
         </form>
       </div>
 
-      <div id="loyaltyResultCard" style="display: none; margin-top: 18px; text-align: left;">
-        <div style="background: rgba(14, 22, 17, 0.9); border: 1px solid var(--border-gold); border-radius: var(--radius-md); padding: 18px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <div>
-              <h4 id="loyaltyResName" style="font-size: 17px; color: var(--text-white); font-weight: 700;">Nguyễn Minh Anh</h4>
-              <div id="loyaltyResPhone" style="font-size: 13px; color: var(--text-muted);">0908 123 456</div>
-            </div>
-            <div style="text-align: right;">
-              <div style="font-size: 11px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.06em;" data-i18n="loyalty_current_points">Điểm tích lũy</div>
-              <div id="loyaltyResPoints" style="font-size: 26px; font-weight: 800; color: var(--accent-gold); line-height: 1.1;">80 <span style="font-size: 13px; font-weight: 600;" data-i18n="loyalty_pts_unit">điểm</span></div>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 8px; margin-bottom: 14px; font-size: 12px;">
-            <span class="badge-best" id="loyaltyResTier" style="position: static; padding: 4px 10px;">Hạng Vàng</span>
-            <span style="background: rgba(255,255,255,0.06); color: var(--text-cream); padding: 4px 10px; border-radius: 6px;" id="loyaltyResVisits">Đã ghé: 5 lần</span>
-          </div>
-
-          <!-- Progress & Next Reward Box -->
-          <div class="loyalty-progress-box" id="loyaltyProgressBox">
-            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 6px;">
-              <span id="loyaltyRewardStatus" style="font-weight: 600; color: var(--accent-gold-light);">Đổi 1 ly Signature miễn phí</span>
-              <span id="loyaltyRewardTarget" style="color: var(--text-muted);">80 / 100 điểm</span>
-            </div>
-            <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 99px; overflow: hidden; margin-bottom: 10px;">
-              <div id="loyaltyProgressBar" style="height: 100%; width: 80%; background: linear-gradient(90deg, var(--accent-gold), var(--accent-rust)); border-radius: 99px; transition: width 0.4s ease;"></div>
-            </div>
-            <p id="loyaltyRewardNotice" style="font-size: 12.5px; color: var(--text-body); line-height: 1.5; margin: 0;">
-              Bạn cần thêm <strong>20 điểm</strong> nữa để nhận ngay 1 ly Signature miễn phí (Matcha Quế Hoa, Cacao Bạc Hà, Bạc Xỉu).
-            </p>
-          </div>
+      <!-- Form Đăng Ký Nhanh Khi Số Chưa Có Thẻ -->
+      <div id="loyaltyRegisterInlineArea" style="display: none; margin-top: 14px; padding: 14px; background: rgba(229,154,85,0.08); border: 1.5px dashed var(--accent-gold); border-radius: 12px; text-align: left;">
+        <div style="font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px;">
+          ✨ Số điện thoại này chưa đăng ký thành viên!
         </div>
+        <p style="font-size: 12px; color: var(--text-cream); margin-bottom: 10px; line-height: 1.4;">
+          Nhập họ tên để kích hoạt Thẻ Thành Viên ngay trong 5 giây và nhận ngay <strong>1 tem khởi đầu ☕</strong>:
+        </p>
+        <form id="loyaltyInlineRegisterForm" onsubmit="handleInlineLoyaltyRegister(event)">
+          <div style="display: flex; gap: 8px;">
+            <input type="text" class="form-input" id="loyaltyInlineName" placeholder="Họ và tên của bạn..." required style="flex: 1;" />
+            <button type="submit" class="btn btn-primary" id="loyaltyInlineRegisterBtn" style="white-space: nowrap; padding: 0 14px; font-size: 12.5px;">
+              <span>Kích Hoạt Ngay</span>
+            </button>
+          </div>
+        </form>
       </div>
 
-      <div id="loyaltyErrorCard" style="display: none; margin-top: 16px; padding: 14px; background: rgba(231, 76, 60, 0.1); border: 1px solid rgba(231, 76, 60, 0.3); border-radius: var(--radius-md); font-size: 13px; color: #FF9B90; text-align: center;">
+      <!-- Error Card -->
+      <div id="loyaltyErrorCard" style="display: none; margin-top: 14px; padding: 12px; background: rgba(231, 76, 60, 0.1); border: 1px solid rgba(231, 76, 60, 0.3); border-radius: var(--radius-md); font-size: 12.5px; color: #FF9B90; text-align: center;">
       </div>
     </div>
   </div>
@@ -2234,7 +2231,7 @@
       <div class="section-eyebrow" style="margin-bottom: 6px; justify-content: center;"><i data-lucide="gift" style="width:14px;height:14px;margin-right:4px;"></i> <span>Lan Tỏa Hương Vị</span></div>
       <h3 class="font-serif" id="shareEarnTitle" style="font-size: 24px; margin-bottom: 8px; color: var(--text-white);">Chia Sẻ Nhận Quà Kép</h3>
       <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px;">
-        Chỉ cần 1 chạm chia sẻ Olion Coffee cho bạn bè, bạn sẽ nhận ngay <strong>Mã Giảm 15%</strong> và được <strong>+1 Tem Thưởng</strong> vào Thẻ tích điểm 8 tem!
+        Chỉ cần 1 chạm chia sẻ Olion Coffee cho bạn bè, bạn sẽ nhận ngay <strong>Mã Ưu Đãi Đặc Biệt</strong> và được <strong>+1 Tem Thưởng</strong> vào Thẻ tích điểm 8 tem!
       </p>
 
       <!-- Reward Highlight Box -->
