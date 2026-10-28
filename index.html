@@ -270,6 +270,9 @@
           await OneSignal.init({
             appId: "09a8fa7b-6ea9-40b7-b5d5-25dd2ffed24b",
           });
+          try {
+            await OneSignal.Slidedown.promptPush();
+          } catch(e) {}
         });
       };
       document.head.appendChild(s);
@@ -550,7 +553,7 @@
           <span class="drawer-link-arrow">›</span>
         </button>
 
-        <button type="button" onclick="if(window.OneSignal) OneSignal.showSlidedownPrompt(); toggleDrawer(false);" class="drawer-link" style="color: #6FCF97 !important; background: none; border: 1px solid transparent; width: 100%; text-align: left; font: inherit; cursor: pointer;" aria-label="Bật Thông Báo Ưu Đãi">
+        <button type="button" onclick="if(window.OneSignal && window.OneSignal.Slidedown) { OneSignal.Slidedown.promptPush({ force: true }); } else if (window.OneSignalDeferred) { OneSignalDeferred.push(s => s.Slidedown.promptPush({ force: true })); } toggleDrawer(false);" class="drawer-link" style="color: #6FCF97 !important; background: none; border: 1px solid transparent; width: 100%; text-align: left; font: inherit; cursor: pointer;" aria-label="Bật Thông Báo Ưu Đãi">
           <div class="drawer-link-left">
             <div class="drawer-link-icon" style="background: rgba(76,175,80,0.12); border-color: rgba(76,175,80,0.25); color: #6FCF97;"><i data-lucide="bell-ring" style="width:16px;height:16px;"></i></div>
             <span>Bật Thông Báo Ưu Đãi</span>

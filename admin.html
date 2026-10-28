@@ -1717,6 +1717,47 @@
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <p style="color: var(--text-muted);">Soạn và gửi thông báo đẩy (Web Push) trực tiếp đến màn hình điện thoại/máy tính của tất cả khách hàng đã đăng ký.</p>
           </div>
+
+          <!-- ONESIGNAL CONFIG & STATUS CARD -->
+          <div class="card" style="max-width: 800px; margin: 0 auto 24px; border: 1px solid var(--border-gold);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+              <h3 style="color: var(--accent-gold); display: flex; align-items: center; gap: 8px; margin: 0; font-size: 17px;">
+                <span>🔔</span> Cấu Hình Đẩy Thông Báo (OneSignal)
+              </h3>
+              <span class="badge badge-warning" id="oneSignalStatusBadge">Đang kiểm tra...</span>
+            </div>
+            
+            <p style="color: var(--text-muted); font-size: 13px; margin-bottom: 15px; line-height: 1.5;">
+              Cấu hình được lưu vĩnh viễn trên <strong>Supabase Cloud</strong> để không bao giờ bị mất key khi bạn đổi thiết bị hay xóa lịch sử trình duyệt.
+            </p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+              <div>
+                <label style="display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 13px; font-weight: 600;">OneSignal App ID</label>
+                <input type="text" id="onesignalAppIdInput" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-dark); background: var(--bg-dark); color: white;" placeholder="09a8fa7b-6ea9-40b7-b5d5-25dd2ffed24b" value="09a8fa7b-6ea9-40b7-b5d5-25dd2ffed24b">
+              </div>
+              <div>
+                <label style="display: block; margin-bottom: 5px; color: var(--text-muted); font-size: 13px; font-weight: 600;">OneSignal REST API Key</label>
+                <div style="position: relative;">
+                  <input type="password" id="onesignalApiKey" style="width: 100%; padding: 10px 40px 10px 10px; border-radius: 8px; border: 1px solid var(--border-dark); background: var(--bg-dark); color: white;" placeholder="os_v2_app_... hoặc REST API Key">
+                  <button type="button" onclick="toggleOneSignalKeyVisibility()" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; font-size: 15px;" title="Hiện/ẩn Key">👁️</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="oneSignalLiveStats" style="display: none; padding: 12px 14px; border-radius: 8px; background: rgba(46, 204, 113, 0.1); border: 1px solid rgba(46, 204, 113, 0.3); margin-bottom: 15px; font-size: 13px; color: #2ecc71;">
+              <!-- Live stats content -->
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <button class="btn btn-secondary" type="button" id="btnTestOneSignal" onclick="testOneSignalConnection()">
+                <span>🔍</span> Kiểm Tra Kết Nối & Thống Kê
+              </button>
+              <button class="btn btn-primary" type="button" id="btnSaveOneSignal" onclick="saveOneSignalKey()">
+                <span>💾</span> Lưu Cấu Hình Lên Cloud
+              </button>
+            </div>
+          </div>
           
           <div class="card" style="max-width: 800px; margin: 0 auto;">
             <h3 style="margin-bottom: 20px; color: var(--accent-gold); display: flex; align-items: center; gap: 8px;">
@@ -2103,13 +2144,21 @@
         
           <!-- ONESIGNAL CONFIG -->
           <div class="card" style="margin-top: 20px;">
-            <h3 style="margin-bottom: 15px; color: var(--accent-gold);">🔔 Cấu hình Đẩy Thông Báo (OneSignal)</h3>
-            <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 15px;">Điền mã xác thực (REST API Key) để hệ thống có thể tự động gửi thông báo đến điện thoại khách hàng mỗi khi bạn đăng bài viết mới.</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+              <h3 style="color: var(--accent-gold); margin: 0;">🔔 Cấu hình Đẩy Thông Báo (OneSignal)</h3>
+              <button type="button" class="btn btn-secondary" onclick="switchTab('push')" style="font-size: 12px; padding: 6px 12px;">
+                🚀 Mở Bảng Điều Khiển Push
+              </button>
+            </div>
+            <p style="color: var(--text-muted); font-size: 13.5px; margin-bottom: 15px;">Điền mã xác thực (REST API Key) để hệ thống có thể tự động gửi thông báo đến điện thoại khách hàng. Bạn có thể kiểm tra kết nối chi tiết và soạn tin tại tab <strong>🚀 Gửi Thông Báo (Push)</strong>.</p>
             <div style="margin-bottom: 15px;">
               <label style="display: block; margin-bottom: 5px; color: var(--text-muted);">OneSignal REST API Key</label>
-              <input type="text" id="onesignalApiKey" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-dark); background: var(--bg-dark); color: white;" placeholder="os_v2_app_xxxxxxxxxxxxxxxxxxxxxxxxxxx">
+              <input type="password" id="onesignalApiKey2" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border-dark); background: var(--bg-dark); color: white;" placeholder="os_v2_app_xxxxxxxxxxxxxxxxxxxxxxxxxxx">
             </div>
-            <button class="btn btn-primary" onclick="saveOneSignalKey()">Lưu Cấu Hình</button>
+            <div style="display: flex; gap: 10px;">
+              <button class="btn btn-primary" onclick="saveOneSignalKeyFromCustomizer()">Lưu Cấu Hình</button>
+              <button class="btn btn-secondary" onclick="switchTab('push')">Kiểm Tra & Soạn Tin</button>
+            </div>
           </div>
 
         </section>
@@ -2532,7 +2581,7 @@
         if (tabKey === 'overview') updateCharts();
         if (tabKey === 'menu') loadMenu();
         if (tabKey === 'news') loadNewsFromCloud();
-        if (tabKey === 'customizer') loadOneSignalKey();
+        if (tabKey === 'push' || tabKey === 'customizer') loadOneSignalKey();
         if (tabKey === 'customers') loadCustomers();
         if (tabKey === 'bookings') loadBookings();
         if (tabKey === 'feedbacks') loadFeedbacks();
@@ -4475,23 +4524,230 @@
       }
     }
 
-    // --- ONESIGNAL PUSH NOTIFICATION ---
+    // --- ONESIGNAL PUSH NOTIFICATION (CLOUD-SYNCED & ROBUST) ---
+
+    let ONESIGNAL_APP_ID = "09a8fa7b-6ea9-40b7-b5d5-25dd2ffed24b";
+
+    function cleanOneSignalKey(raw) {
+      if (!raw) return '';
+      let clean = String(raw).trim();
+      while (/^(Basic|Key)\s+/i.test(clean)) {
+        clean = clean.replace(/^(Basic|Key)\s+/i, '').trim();
+      }
+      return clean;
+    }
+
+    async function loadOneSignalKey() {
+      const badge = document.getElementById('oneSignalStatusBadge');
+      let appId = localStorage.getItem('onesignal_app_id') || ONESIGNAL_APP_ID;
+      let apiKey = localStorage.getItem('onesignal_api_key') || '';
+
+      // 1. Try to load from Supabase Cloud site_settings
+      if (typeof fetchSiteSettingsFromCloud === 'function') {
+        try {
+          const { data } = await fetchSiteSettingsFromCloud();
+          if (data) {
+            if (data.onesignal_api_key) apiKey = data.onesignal_api_key;
+            if (data.onesignal_app_id) appId = data.onesignal_app_id;
+            if (data.share_earn_settings && data.share_earn_settings._onesignal_api_key) {
+              apiKey = apiKey || data.share_earn_settings._onesignal_api_key;
+            }
+          }
+        } catch (e) {
+          console.warn('Lỗi đọc OneSignal key từ Cloud:', e);
+        }
+      }
+
+      apiKey = cleanOneSignalKey(apiKey);
+      ONESIGNAL_APP_ID = appId;
+
+      // Update both inputs
+      const k1 = document.getElementById('onesignalApiKey');
+      const k2 = document.getElementById('onesignalApiKey2');
+      const appInp = document.getElementById('onesignalAppIdInput');
+
+      if (k1) k1.value = apiKey;
+      if (k2) k2.value = apiKey;
+      if (appInp) appInp.value = appId;
+
+      if (badge) {
+        if (apiKey) {
+          badge.className = 'badge badge-success';
+          badge.textContent = '🟢 Đã Cấu Hình Key';
+        } else {
+          badge.className = 'badge badge-warning';
+          badge.textContent = '🟠 Chưa Có Key';
+        }
+      }
+    }
+
+    async function saveOneSignalKey() {
+      const btn = document.getElementById('btnSaveOneSignal');
+      if (btn) btn.innerHTML = '<span>⏳</span> Đang lưu...';
+
+      const keyInput = document.getElementById('onesignalApiKey');
+      const appIdInput = document.getElementById('onesignalAppIdInput');
+      
+      let key = cleanOneSignalKey(keyInput ? keyInput.value : '');
+      let appId = (appIdInput ? appIdInput.value : '').trim() || ONESIGNAL_APP_ID;
+
+      if (!key) {
+        if (btn) btn.innerHTML = '<span>💾</span> Lưu Cấu Hình Lên Cloud';
+        return alert('Vui lòng nhập OneSignal REST API Key (bắt đầu bằng os_v2_app_... hoặc chuỗi API Key)!');
+      }
+
+      if (keyInput) keyInput.value = key;
+      const k2 = document.getElementById('onesignalApiKey2');
+      if (k2) k2.value = key;
+
+      // Always save locally
+      localStorage.setItem('onesignal_api_key', key);
+      localStorage.setItem('onesignal_app_id', appId);
+      ONESIGNAL_APP_ID = appId;
+
+      let cloudSaved = false;
+      // Try saving to Supabase site_settings
+      if (typeof updateSiteSettingsToCloud === 'function') {
+        try {
+          const res = await updateSiteSettingsToCloud({
+            onesignal_api_key: key,
+            onesignal_app_id: appId
+          });
+          if (!res.error) {
+            cloudSaved = true;
+          } else {
+            console.warn('Lỗi lưu trực tiếp vào cột onesignal_api_key:', res.error);
+          }
+        } catch (err) {
+          console.warn('Lỗi updateSiteSettingsToCloud:', err);
+        }
+      }
+
+      if (btn) btn.innerHTML = '<span>💾</span> Lưu Cấu Hình Lên Cloud';
+
+      const badge = document.getElementById('oneSignalStatusBadge');
+      if (badge) {
+        badge.className = 'badge badge-success';
+        badge.textContent = cloudSaved ? '🟢 Đã Lưu Supabase Cloud' : '🟡 Đã Lưu Cục Bộ Trình Duyệt';
+      }
+
+      showToast(cloudSaved ? '🎉 Đã lưu cấu hình OneSignal lên Supabase Cloud!' : 'Đã lưu cấu hình OneSignal thành công!');
+      
+      // Auto run test connection silently
+      testOneSignalConnection(true);
+    }
+
+    function saveOneSignalKeyFromCustomizer() {
+      const k2 = document.getElementById('onesignalApiKey2');
+      const k1 = document.getElementById('onesignalApiKey');
+      if (k2 && k1) k1.value = k2.value;
+      saveOneSignalKey();
+    }
+
+    function toggleOneSignalKeyVisibility() {
+      const input = document.getElementById('onesignalApiKey');
+      if (input) {
+        input.type = input.type === 'password' ? 'text' : 'password';
+      }
+    }
+
+    async function testOneSignalConnection(silent = false) {
+      const btn = document.getElementById('btnTestOneSignal');
+      const statsBox = document.getElementById('oneSignalLiveStats');
+      const badge = document.getElementById('oneSignalStatusBadge');
+
+      const keyInput = document.getElementById('onesignalApiKey');
+      const appIdInput = document.getElementById('onesignalAppIdInput');
+
+      let key = cleanOneSignalKey(keyInput ? keyInput.value : '') || localStorage.getItem('onesignal_api_key') || '';
+      let appId = (appIdInput ? appIdInput.value : '').trim() || ONESIGNAL_APP_ID;
+
+      if (!key) {
+        if (!silent) alert('Vui lòng nhập OneSignal REST API Key trước khi kiểm tra!');
+        return;
+      }
+
+      if (btn) btn.innerHTML = '<span>⏳</span> Đang kiểm tra...';
+
+      try {
+        const res = await fetch(`/api/push?action=test&app_id=${encodeURIComponent(appId)}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Basic ' + key
+          }
+        });
+
+        const data = await res.json();
+        if (btn) btn.innerHTML = '<span>🔍</span> Kiểm Tra Kết Nối & Thống Kê';
+
+        if (res.ok && data.success) {
+          if (badge) {
+            badge.className = 'badge badge-success';
+            badge.textContent = '🟢 Kết Nối Hoạt Động';
+          }
+          if (statsBox) {
+            statsBox.style.display = 'block';
+            statsBox.style.background = 'rgba(46, 204, 113, 0.12)';
+            statsBox.style.borderColor = 'rgba(46, 204, 113, 0.35)';
+            statsBox.style.color = '#2ecc71';
+            statsBox.innerHTML = `
+              <strong>✅ Kết nối OneSignal thành công!</strong><br>
+              • Ứng dụng: <strong>${data.app_name || 'Olion Coffee'}</strong><br>
+              • Tổng người đăng ký (All Players): <strong>${data.players || 0}</strong><br>
+              • Thiết bị sẵn sàng nhận thông báo (Active): <strong>${data.messageable_players || 0}</strong> thiết bị.
+            `;
+          }
+          if (!silent) {
+            alert(`🎉 Kết nối OneSignal THÀNH CÔNG!\n\n• Ứng dụng: ${data.app_name || 'Olion Coffee'}\n• Thiết bị sẵn sàng nhận tin: ${data.messageable_players || 0}\n\nBạn có thể yên tâm gửi thông báo đẩy đến khách hàng!`);
+          }
+        } else {
+          if (badge) {
+            badge.className = 'badge badge-danger';
+            badge.textContent = '🔴 Lỗi Xác Thực';
+          }
+          if (statsBox) {
+            statsBox.style.display = 'block';
+            statsBox.style.background = 'rgba(231, 76, 60, 0.12)';
+            statsBox.style.borderColor = 'rgba(231, 76, 60, 0.35)';
+            statsBox.style.color = '#e74c3c';
+            statsBox.innerHTML = `
+              <strong>❌ Xác thực OneSignal thất bại:</strong><br>
+              ${data.message || (data.errors && data.errors[0]) || 'REST API Key hoặc App ID không đúng.'}<br>
+              <small style="color: var(--text-muted); display: block; margin-top: 4px;">Kiểm tra lại tại OneSignal.com -> Settings -> Keys & IDs</small>
+            `;
+          }
+          if (!silent) {
+            alert(`❌ Xác thực OneSignal thất bại:\n\n${data.message || (data.errors && data.errors[0]) || 'Vui lòng kiểm tra lại REST API Key.'}`);
+          }
+        }
+      } catch (err) {
+        if (btn) btn.innerHTML = '<span>🔍</span> Kiểm Tra Kết Nối & Thống Kê';
+        if (!silent) alert('Lỗi mạng khi kiểm tra OneSignal: ' + err.message);
+      }
+    }
 
     async function sendCustomPushNotification() {
-      const apiKey = localStorage.getItem('onesignal_api_key');
-      if (!apiKey) return alert('Chưa cấu hình REST API Key ở tab Thiết kế & Cài đặt!');
+      let keyInput = document.getElementById('onesignalApiKey');
+      let appIdInput = document.getElementById('onesignalAppIdInput');
+
+      let apiKey = cleanOneSignalKey(keyInput ? keyInput.value : '') || localStorage.getItem('onesignal_api_key');
+      let appId = (appIdInput ? appIdInput.value : '').trim() || ONESIGNAL_APP_ID;
+
+      if (!apiKey) {
+        return alert('Chưa có OneSignal REST API Key! Vui lòng nhập Key ở bảng cấu hình bên trên và bấm "Lưu Cấu Hình Lên Cloud".');
+      }
       
       const title = document.getElementById('pushFormTitle').value.trim();
       const message = document.getElementById('pushFormMessage').value.trim();
       const url = document.getElementById('pushFormUrl').value.trim() || 'https://www.olioncoffee.app';
       const image = document.getElementById('pushFormImage').value.trim();
       
-      if (!title || !message) return alert('Vui lòng điền đủ Tiêu đề và Nội dung!');
+      if (!title || !message) return alert('Vui lòng điền đủ Tiêu đề và Nội dung thông báo!');
       
-      if (!confirm(`Bạn sắp gửi tin nhắn này đến TẤT CẢ khách hàng:\n\n[${title}]\n${message}\n\nTiếp tục?`)) return;
+      if (!confirm(`Bạn sắp gửi thông báo đẩy đến TẤT CẢ khách hàng đã đăng ký:\n\n[${title}]\n${message}\n\nTiếp tục gửi?`)) return;
       
       const payload = {
-        app_id: ONESIGNAL_APP_ID,
+        app_id: appId,
         included_segments: ['Subscribed Users'],
         headings: { "en": title, "vi": title },
         contents: { "en": message, "vi": message },
@@ -4499,9 +4755,15 @@
       };
       
       if (image) {
-        payload.big_picture = image; // Android/Windows
-        payload.chrome_web_image = image; // Chrome Web
-        payload.ios_attachments = { "id1": image }; // iOS
+        payload.big_picture = image;
+        payload.chrome_web_image = image;
+        payload.ios_attachments = { "id1": image };
+      }
+
+      const sendBtn = document.querySelector('#tab-push button[onclick="sendCustomPushNotification()"]');
+      if (sendBtn) {
+        sendBtn.disabled = true;
+        sendBtn.innerHTML = '<span>⏳</span> Đang gửi thông báo...';
       }
       
       try {
@@ -4514,39 +4776,39 @@
           body: JSON.stringify(payload)
         });
         
-        const resultText = await response.text();
-        if (!response.ok) throw new Error('API Error: ' + response.status + ' - ' + resultText);
+        const result = await response.json();
+        if (sendBtn) {
+          sendBtn.disabled = false;
+          sendBtn.innerHTML = '<span>⚡</span> Bắn Thông Báo Ngay';
+        }
+
+        if (!response.ok) {
+          throw new Error(result.message || ('Lỗi máy chủ (' + response.status + ')'));
+        }
         
-        document.getElementById('pushFormTitle').value = '';
-        document.getElementById('pushFormMessage').value = '';
-        document.getElementById('pushFormImage').value = '';
-        
-        alert('🎉 Bắn thông báo THÀNH CÔNG! Hàng ngàn khách hàng đã nhận được tin nhắn của bạn.');
+        if (result.warning === 'NO_SUBSCRIBERS') {
+          alert(`ℹ️ THÔNG BÁO TỪ ONESIGNAL:\n\nLệnh đẩy đã được máy chủ gửi đi thành công!\nTuy nhiên hiện tại chưa có thiết bị nào bấm "Cho phép" nhận thông báo trên website (0 Subscribed Users).\n\n💡 Cách khắc phục: Hãy mở website Olion Coffee trên điện thoại/máy tính của bạn, bấm vào chuông hoặc menu bên phải để "Cho phép" nhận thông báo.`);
+        } else {
+          document.getElementById('pushFormTitle').value = '';
+          document.getElementById('pushFormMessage').value = '';
+          document.getElementById('pushFormImage').value = '';
+          alert(`🎉 Bắn thông báo THÀNH CÔNG!\n\n${result.message || 'Khách hàng đã nhận được thông báo của bạn!'}`);
+        }
       } catch (e) {
+        if (sendBtn) {
+          sendBtn.disabled = false;
+          sendBtn.innerHTML = '<span>⚡</span> Bắn Thông Báo Ngay';
+        }
         alert('❌ Lỗi khi gửi thông báo: ' + e.message);
       }
     }
 
-    const ONESIGNAL_APP_ID = "09a8fa7b-6ea9-40b7-b5d5-25dd2ffed24b";
-    
-    function loadOneSignalKey() {
-      const key = localStorage.getItem('onesignal_api_key');
-      if (key && document.getElementById('onesignalApiKey')) {
-        document.getElementById('onesignalApiKey').value = key;
-      }
-    }
-
-    function saveOneSignalKey() {
-      const key = document.getElementById('onesignalApiKey').value.trim();
-      if (!key) return showToast('Vui lòng nhập REST API Key!');
-      localStorage.setItem('onesignal_api_key', key);
-      showToast('Đã lưu cấu hình OneSignal!');
-    }
-
     async function sendPushNotification(title, articleId) {
-      const apiKey = localStorage.getItem('onesignal_api_key');
+      let apiKey = cleanOneSignalKey(localStorage.getItem('onesignal_api_key'));
+      let appId = localStorage.getItem('onesignal_app_id') || ONESIGNAL_APP_ID;
+
       if (!apiKey) {
-        console.warn('Chưa cấu hình REST API Key, bỏ qua Push Notification.');
+        console.warn('Chưa cấu hình OneSignal REST API Key, bỏ qua tự động gửi Push Notification cho bài viết.');
         return;
       }
       try {
@@ -4557,19 +4819,19 @@
             'Authorization': 'Basic ' + apiKey
           },
           body: JSON.stringify({
-            app_id: ONESIGNAL_APP_ID,
+            app_id: appId,
             included_segments: ['Subscribed Users'],
-            headings: { "en": "Tin tức mới từ Olion!", "vi": "Tin tức mới từ Olion!" },
+            headings: { "en": "Tin tức mới từ Olion Coffee!", "vi": "Tin tức mới từ Olion Coffee!" },
             contents: { "en": title, "vi": title },
             url: "https://www.olioncoffee.app/news?article=" + articleId
           })
         });
-        const resultText = await response.text();
-        if (!response.ok) throw new Error('API Error: ' + response.status + ' - ' + resultText);
-        console.log('Push notification sent successfully.');
-        showToast('Đã gửi thông báo cho khách hàng!');
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.message || ('API Error: ' + response.status));
+        console.log('Push notification sent successfully:', result);
+        showToast('Đã tự động gửi thông báo bài viết mới đến khách hàng!');
       } catch (e) {
-        console.error('Lỗi khi gửi push notification:', e);
+        console.error('Lỗi khi gửi push notification cho tin tức:', e);
       }
     }
 
