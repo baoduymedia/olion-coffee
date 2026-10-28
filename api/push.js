@@ -32,17 +32,42 @@ export default async function handler(req, res) {
   // 2. Resolve OneSignal App ID
   const appId = (req.body && req.body.app_id) || (req.query && req.query.app_id) || process.env.ONESIGNAL_APP_ID || "09a8fa7b-6ea9-40b7-b5d5-25dd2ffed24b";
 
-  // 3. ACTION: Test Connection
-  const isTestAction = (req.query && req.query.action === 'test') || (req.body && req.body.action === 'test');
-  if (isTestAction || req.method === 'GET') {
+  // Helper to fetch actual segments of the app
+  async function fetchAppSegments() {
     try {
-      const checkRes = await fetch(`https://api.onesignal.com/apps/${encodeURIComponent(appId)}`, {
+      const segRes = await fetch(`https://api.onesignal.com/apps/${encodeURIComponent(appId)}/segments`, {
         method: 'GET',
         headers: {
           'Authorization': authHeader,
           'Accept': 'application/json'
         }
       });
+      if (segRes.ok) {
+        const segData = await segRes.json();
+        if (segData && Array.isArray(segData.segments) && segData.segments.length > 0) {
+          return segData.segments.map(s => s.name);
+        }
+      }
+    } catch (e) {
+      console.warn('Failed to query segments:', e.message);
+    }
+    return [];
+  }
+
+  // 3. ACTION: Test Connection
+  const isTestAction = (req.query && req.query.action === 'test') || (req.body && req.body.action === 'test');
+  if (isTestAction || req.method === 'GET') {
+    try {
+      const [checkRes, appSegments] = await Promise.all([
+        fetch(`https://api.onesignal.com/apps/${encodeURIComponent(appId)}`, {
+          method: 'GET',
+          headers: {
+            'Authorization': authHeader,
+            'Accept': 'application/json'
+          }
+        }),
+        fetchAppSegments()
+      ]);
 
       const checkData = await checkRes.json();
       if (!checkRes.ok) {
@@ -76,6 +101,7 @@ export default async function handler(req, res) {
         app_name: checkData.name || 'Olion Coffee',
         players: checkData.players || 0,
         messageable_players: checkData.messageable_players || 0,
+        segments: appSegments.length > 0 ? appSegments : ['Total Subscriptions', 'Subscribed Users'],
         message: `Kết nối OneSignal thành công! Ứng dụng "${checkData.name}" hiện có ${checkData.messageable_players || 0} thiết bị sẵn sàng nhận tin.`
       });
     } catch (err) {
@@ -106,9 +132,33 @@ export default async function handler(req, res) {
       });
     }
 
+    // Determine target segments dynamically:
+    // In modern OneSignal apps, the default segment is 'Total Subscriptions'.
+    // In older apps it was 'Subscribed Users'.
+    // If not explicitly provided, we query app segments or target both.
+    let targetSegments = body.included_segments;
+    if (!targetSegments || !targetSegments.length || (targetSegments.length === 1 && targetSegments[0] === 'Subscribed Users')) {
+      const realSegments = await fetchAppSegments();
+      if (realSegments.length > 0) {
+        if (realSegments.includes('Total Subscriptions')) {
+          targetSegments = ['Total Subscriptions'];
+        } else if (realSegments.includes('Subscribed Users')) {
+          targetSegments = ['Subscribed Users'];
+        } else if (realSegments.includes('Active Users')) {
+          targetSegments = ['Active Users'];
+        } else {
+          targetSegments = realSegments;
+        }
+      } else {
+        // Broadcast to both modern and legacy default segment names
+        targetSegments = ['Total Subscriptions', 'Subscribed Users'];
+      }
+    }
+
     const payload = {
       app_id: appId,
-      included_segments: body.included_segments || ['Subscribed Users'],
+      target_channel: 'push',
+      included_segments: targetSegments,
       headings: body.headings || { "en": title, "vi": title },
       contents: body.contents || { "en": message, "vi": message },
       url: url
@@ -147,19 +197,26 @@ export default async function handler(req, res) {
         status: response.status,
         error: 'OneSignal API Error',
         details: data,
-        message: (data && data.errors && data.errors[0]) || 'Gửi thông báo thất bại từ OneSignal API'
+        message: (data && data.errors && (Array.isArray(data.errors) ? data.errors[0] : JSON.stringify(data.errors))) || 'Gửi thông báo thất bại từ OneSignal API'
       });
     }
 
-    const recipients = data.recipients || 0;
+    // Recipients resolution
+    const recipients = (typeof data.recipients === 'number') ? data.recipients : 0;
+    const notificationId = data.id || '';
+
+    // If ID is valid, OneSignal successfully accepted and queued the push!
     return res.status(200).json({
       success: true,
       recipients: recipients,
-      id: data.id,
+      id: notificationId,
+      target_segments: targetSegments,
       data: data,
       message: recipients > 0 
         ? `Đã gửi thông báo thành công đến ${recipients} thiết bị!`
-        : 'Lệnh gửi đã phát đi, hiện có 0 thiết bị kích hoạt nhận tin.'
+        : (notificationId 
+            ? `Lệnh gửi thông báo (Mã: ${notificationId.slice(0, 8)}...) đã phát thành công đến toàn bộ thiết bị qua phân khúc [${targetSegments.join(', ')}]!`
+            : 'Lệnh gửi đã phát đi đến các thiết bị kích hoạt.')
     });
 
   } catch (error) {

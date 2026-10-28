@@ -4694,11 +4694,12 @@
               <strong>✅ Kết nối OneSignal thành công!</strong><br>
               • Ứng dụng: <strong>${data.app_name || 'Olion Coffee'}</strong><br>
               • Tổng người đăng ký (All Players): <strong>${data.players || 0}</strong><br>
-              • Thiết bị sẵn sàng nhận thông báo (Active): <strong>${data.messageable_players || 0}</strong> thiết bị.
+              • Thiết bị sẵn sàng nhận thông báo (Active): <strong>${data.messageable_players || 0}</strong> thiết bị.<br>
+              • Phân khúc mục tiêu: <strong>${data.segments ? data.segments.join(', ') : 'Total Subscriptions'}</strong>
             `;
           }
           if (!silent) {
-            alert(`🎉 Kết nối OneSignal THÀNH CÔNG!\n\n• Ứng dụng: ${data.app_name || 'Olion Coffee'}\n• Thiết bị sẵn sàng nhận tin: ${data.messageable_players || 0}\n\nBạn có thể yên tâm gửi thông báo đẩy đến khách hàng!`);
+            alert(`🎉 Kết nối OneSignal THÀNH CÔNG!\n\n• Ứng dụng: ${data.app_name || 'Olion Coffee'}\n• Thiết bị sẵn sàng nhận tin: ${data.messageable_players || 0}\n• Phân khúc: ${data.segments ? data.segments.join(', ') : 'Total Subscriptions'}\n\nBạn có thể yên tâm gửi thông báo đẩy đến khách hàng!`);
           }
         } else {
           if (badge) {
@@ -4748,7 +4749,7 @@
       
       const payload = {
         app_id: appId,
-        included_segments: ['Subscribed Users'],
+        included_segments: ['Total Subscriptions', 'Subscribed Users', 'Active Users'],
         headings: { "en": title, "vi": title },
         contents: { "en": message, "vi": message },
         url: url
@@ -4820,7 +4821,7 @@
           },
           body: JSON.stringify({
             app_id: appId,
-            included_segments: ['Subscribed Users'],
+            included_segments: ['Total Subscriptions', 'Subscribed Users', 'Active Users'],
             headings: { "en": "Tin tức mới từ Olion Coffee!", "vi": "Tin tức mới từ Olion Coffee!" },
             contents: { "en": title, "vi": title },
             url: "https://www.olioncoffee.app/news?article=" + articleId
