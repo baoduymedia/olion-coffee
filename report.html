@@ -165,8 +165,7 @@
       justify-content: space-between;
       height: 72px;
       gap: 16px;
-      max-width: 1360px !important;
-      padding: 0 20px;
+      max-width: 1440px !important; padding: 0 16px; gap: 10px;
       margin: 0 auto;
     }
     .header-brand {
@@ -212,45 +211,63 @@
     .header-menu-nav {
       display: none;
       align-items: center;
-      gap: 5px;
+      justify-content: center;
+      gap: 3px;
       background: rgba(22, 17, 13, 0.95);
-      border: 1px solid var(--border-brass);
-      padding: 4px 6px;
+      border: 1.5px solid var(--border-brass);
+      padding: 3px 6px;
       border-radius: var(--radius-full);
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
-      overflow-x: auto;
-      overflow-y: hidden;
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
+      overflow: visible !important;
       white-space: nowrap;
-      flex: 0 1 auto;
-      max-width: 100%;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
+      flex-shrink: 0;
     }
-    .header-menu-nav::-webkit-scrollbar {
-      display: none;
-    }
-    @media (min-width: 1120px) {
+    @media (min-width: 1024px) {
       .header-menu-nav {
         display: flex;
       }
     }
-    .menu-link { font-size: 13px;
+    .menu-link {
+      font-size: 12px;
       font-weight: 700;
       color: var(--crema);
-      padding: 5px 11px;
+      padding: 5px 8px;
       border-radius: var(--radius-full);
       display: inline-flex;
       align-items: center;
-      gap: 4px;
+      gap: 2px;
       transition: all 0.2s ease;
       white-space: nowrap;
       flex-shrink: 0;
     }
+    @media (min-width: 1200px) {
+      .menu-link {
+        font-size: 12.5px;
+        padding: 5px 9px;
+      }
+    }
+    @media (min-width: 1360px) {
+      .menu-link {
+        font-size: 13px;
+        padding: 6px 11px;
+      }
+    }
     .menu-link:hover, .menu-link.active {
       background: linear-gradient(135deg, var(--accent-gold), #B57432);
-      color: #120D09;
+      color: #120D09 !important;
       font-weight: 800;
       box-shadow: 0 2px 10px var(--accent-gold-glow);
+    }
+    @media (max-width: 1220px) {
+      .btn-home-link span {
+        display: none;
+      }
+      .btn-home-link {
+        padding: 8px 10px !important;
+      }
+      .header-brand-sub {
+        display: none;
+      }
     }
 
     .header-actions {
@@ -2368,7 +2385,7 @@
 
       <!-- Navigation Menu Strictly Follows Sections in PDF -->
       <nav class="header-menu-nav" aria-label="Menu điều hướng báo cáo">
-        <a href="#muc-1" class="menu-link active" title="1. Sản phẩm, Persona &amp; KPI">1. KPI &amp; Persona</a>
+        <a href="#muc-1" class="menu-link active" title="1. Sản phẩm, Persona &amp; KPI">1. Persona &amp; KPI</a>
         <a href="#muc-2" class="menu-link" title="2. Phiên bản quảng cáo &amp; Bộ Tứ Matcha">2. Quảng Cáo</a>
         <a href="#muc-3" class="menu-link" title="3. Vòng 0: Phương án gốc">3. Vòng 0</a>
         <a href="#muc-4" class="menu-link" title="4. Vòng 1: Mở rộng ĐH Văn Lang">4. Vòng 1</a>
@@ -4267,14 +4284,7 @@
           }
         });
 
-        // Ensure active pill is scrolled into view in menu bar
-        if (matchedActiveLink && navContainer) {
-          const navRect = navContainer.getBoundingClientRect();
-          const linkRect = matchedActiveLink.getBoundingClientRect();
-          if (linkRect.left < navRect.left || linkRect.right > navRect.right) {
-            matchedActiveLink.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-          }
-        }
+        // Menu is fully fixed without scroll
       }
 
       // Click listener for immediate response
