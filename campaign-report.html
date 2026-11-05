@@ -515,41 +515,161 @@
       font-size: 15px;
     }
 
-    /* Persona VIP Card */
+    /* Overview Cards Row */
+    .overview-cards-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 20px 0 25px;
+    }
+    @media (max-width: 768px) {
+      .overview-cards-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    .overview-card-item {
+      background: linear-gradient(145deg, rgba(28, 20, 15, 0.88) 0%, rgba(18, 13, 9, 0.95) 100%);
+      border: 1.5px solid rgba(240, 167, 101, 0.25);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    }
+    .overview-card-item:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-gold);
+      box-shadow: 0 8px 24px rgba(240, 167, 101, 0.18);
+    }
+    .overview-card-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+      opacity: 0.6;
+    }
+    .overview-card-label {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .overview-card-value {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.4;
+    }
+
+    /* Persona VIP Card Dossier Redesign */
     .persona-container {
-      background: linear-gradient(135deg, #1C140F 0%, #0F0A07 100%);
+      background: radial-gradient(circle at 20% 20%, rgba(46, 204, 113, 0.05) 0%, transparent 40%),
+                  radial-gradient(circle at 80% 80%, rgba(240, 167, 101, 0.08) 0%, transparent 45%),
+                  linear-gradient(145deg, #1C140F 0%, #0F0A07 100%);
       border: 2px solid var(--border-brass);
       border-radius: var(--radius-lg);
-      padding: 30px;
+      padding: 32px;
       margin-top: 25px;
-      box-shadow: var(--shadow-wood);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.08);
       position: relative;
+      overflow: hidden;
+    }
+    .persona-container::after {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 240px;
+      height: 240px;
+      background: radial-gradient(circle, rgba(240, 167, 101, 0.09) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .persona-top-ribbon {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 20px;
+      margin-bottom: 25px;
+      border-bottom: 1px solid rgba(240, 167, 101, 0.2);
+    }
+    .persona-dossier-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-gold-light);
+      background: rgba(240, 167, 101, 0.12);
+      border: 1px solid rgba(240, 167, 101, 0.35);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+    }
+    .live-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #4ade80;
+      background: rgba(34, 197, 94, 0.12);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+    }
+    .pulsing-green-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 10px #22c55e;
+      animation: pulseGreenBeacon 1.8s infinite;
+    }
+    @keyframes pulseGreenBeacon {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+      70% { transform: scale(1.15); box-shadow: 0 0 0 8px rgba(34, 197, 94, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
     }
     .persona-layout-grid {
       display: grid;
-      grid-template-columns: 290px 1fr;
-      gap: 30px;
-      align-items: start;
+      grid-template-columns: 310px 1fr;
+      gap: 32px;
+      align-items: stretch;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .persona-layout-grid {
         grid-template-columns: 1fr;
-        gap: 22px;
+        gap: 26px;
       }
     }
     .persona-photo-col {
       cursor: pointer;
       border-radius: var(--radius-md);
       overflow: hidden;
-      background: rgba(18, 14, 10, 0.9);
+      background: #000;
       border: 2px solid var(--border-brass);
-      box-shadow: 0 12px 32px rgba(0,0,0,0.7);
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.8);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      position: relative;
     }
     .persona-photo-col:hover {
-      transform: translateY(-5px);
+      transform: translateY(-6px);
       border-color: var(--accent-gold);
-      box-shadow: 0 18px 40px var(--accent-gold-glow);
+      box-shadow: 0 20px 50px rgba(240, 167, 101, 0.25);
     }
     .persona-photo-wrapper {
       position: relative;
@@ -563,101 +683,263 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.6s ease;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .persona-photo-col:hover .persona-photo-img {
       transform: scale(1.05);
     }
-    .persona-photo-overlay {
+    .persona-photo-live-badge {
       position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 55%, rgba(10, 7, 5, 0.9) 100%);
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding-bottom: 14px;
-      opacity: 0.95;
-    }
-    .persona-photo-badge {
+      top: 14px;
+      left: 14px;
+      z-index: 2;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      font-size: 11.5px;
-      font-weight: 700;
-      color: #fff;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(6px);
-      padding: 6px 12px;
-      border-radius: var(--radius-full);
-      border: 1px solid rgba(240, 167, 101, 0.4);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-    }
-    .persona-photo-caption {
-      padding: 14px 16px;
-      font-size: 13px;
-      line-height: 1.5;
-      color: var(--crema);
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(14, 10, 7, 0.98);
-    }
-    .persona-tag-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 10.5px;
+      font-size: 11px;
       font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--matcha-green);
-      background: rgba(46, 204, 113, 0.15);
-      border: 1px solid rgba(46, 204, 113, 0.35);
-      padding: 4px 11px;
+      letter-spacing: 0.06em;
+      color: #fff;
+      background: rgba(14, 10, 7, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(240, 167, 101, 0.5);
+      padding: 5px 12px;
       border-radius: var(--radius-full);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.6);
     }
-    .persona-header-row {
+    .persona-photo-zoom-btn {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 2;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+    }
+    .persona-photo-col:hover .persona-photo-zoom-btn {
+      background: var(--accent-gold);
+      color: #000;
+      border-color: var(--accent-gold);
+      transform: scale(1.1);
+    }
+    .persona-photo-plate {
+      padding: 16px 18px;
+      background: linear-gradient(180deg, rgba(20, 15, 11, 0.95) 0%, #0E0906 100%);
+      border-top: 1px solid rgba(240, 167, 101, 0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .persona-photo-name {
+      font-size: 16px;
+      font-weight: 800;
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      padding-bottom: 16px;
-      border-bottom: 1px dashed var(--border-brass);
-      margin-bottom: 18px;
     }
-    .persona-info-grid {
+    .persona-photo-role {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .persona-zoom-callout {
+      margin-top: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Right Column: Details & Traits */
+    .persona-details-col {
+      display: flex;
+      flex-direction: column;
+    }
+    .persona-name-banner {
+      margin-bottom: 16px;
+    }
+    .persona-hero-name {
+      font-family: var(--font-serif);
+      font-size: 36px;
+      line-height: 1.15;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #FFFFFF 0%, #FDE68A 45%, #F59E0B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0 0 10px 0;
+    }
+    .persona-quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .persona-chip {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--crema);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .persona-chip.highlight {
+      background: rgba(240, 167, 101, 0.15);
+      border-color: rgba(240, 167, 101, 0.4);
+      color: var(--accent-gold-light);
+    }
+
+    /* Executive Quote Box */
+    .persona-quote-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(240, 167, 101, 0.12) 0%, rgba(20, 15, 11, 0.7) 100%);
+      border-left: 4px solid var(--accent-gold);
+      border-top: 1px solid rgba(240, 167, 101, 0.25);
+      border-right: 1px solid rgba(240, 167, 101, 0.15);
+      border-bottom: 1px solid rgba(240, 167, 101, 0.15);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+      padding: 20px 24px 20px 28px;
+      margin-bottom: 22px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
+    .persona-quote-mark {
+      position: absolute;
+      right: 20px;
+      bottom: 10px;
+      font-family: serif;
+      font-size: 72px;
+      line-height: 0.8;
+      color: rgba(240, 167, 101, 0.15);
+      pointer-events: none;
+      user-select: none;
+    }
+    .persona-quote-text {
+      font-family: var(--font-serif);
+      font-size: 18.5px;
+      font-style: italic;
+      color: #FFF3E6;
+      line-height: 1.55;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 1;
+    }
+    .persona-quote-source {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 5 Traits Grid */
+    .persona-traits-grid {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
       gap: 14px;
     }
-    @media (min-width: 768px) {
-      .persona-info-grid {
-        grid-template-columns: 1fr 1fr;
+    @media (max-width: 680px) {
+      .persona-traits-grid {
+        grid-template-columns: 1fr;
       }
     }
-    .persona-info-item {
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+    .persona-trait-card {
+      background: linear-gradient(145deg, rgba(24, 18, 13, 0.8) 0%, rgba(14, 10, 7, 0.9) 100%);
+      border: 1.5px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-sm);
-      padding: 14px 18px;
+      padding: 16px 18px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      position: relative;
+      overflow: hidden;
     }
-    .persona-item-label {
+    .persona-trait-card:hover {
+      transform: translateY(-3px);
+      background: linear-gradient(145deg, rgba(32, 24, 18, 0.9) 0%, rgba(18, 13, 9, 0.95) 100%);
+      border-color: rgba(240, 167, 101, 0.45);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.5), 0 0 16px rgba(240, 167, 101, 0.12);
+    }
+    .persona-trait-card.full-width {
+      grid-column: 1 / -1;
+      background: linear-gradient(145deg, rgba(34, 197, 94, 0.08) 0%, rgba(14, 10, 7, 0.95) 100%);
+      border-color: rgba(34, 197, 94, 0.3);
+    }
+    .persona-trait-card.full-width:hover {
+      border-color: #4ade80;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.5), 0 0 20px rgba(34, 197, 94, 0.2);
+    }
+    .trait-icon-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .trait-icon-box.green {
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    .trait-icon-box.gold {
+      background: rgba(240, 167, 101, 0.15);
+      color: var(--accent-gold);
+      border: 1px solid rgba(240, 167, 101, 0.3);
+    }
+    .trait-icon-box.red {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+    .trait-icon-box.amber {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    .trait-icon-box.emerald {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+    }
+    .trait-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .trait-header-title {
       font-size: 11.5px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--accent-gold);
+      letter-spacing: 0.1em;
       margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .persona-quote-banner {
-      background: linear-gradient(135deg, rgba(240, 167, 101, 0.14), rgba(0, 0, 0, 0.3));
-      border-left: 4px solid var(--accent-gold);
-      padding: 18px 24px;
-      font-family: var(--font-serif);
-      font-size: 19px;
-      font-style: italic;
-      color: var(--accent-gold-light);
-      margin-top: 22px;
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    .trait-body-text {
+      font-size: 13.5px;
+      color: var(--crema);
+      line-height: 1.55;
     }
 
     /* KPI Navigation Tabs */
@@ -1772,93 +2054,167 @@
       <h2 class="section-main-heading">1. Sản phẩm, Persona &amp; Bảng Chỉ Số KPI</h2>
 
       <!-- 3 Thông tin cốt lõi -->
-      <div style="display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;margin:20px 0;">
-        <div style="background:rgba(22, 17, 12, 0.85);border:1.5px solid var(--border-brass);border-radius:var(--radius-md);padding:20px;">
-          <div style="font-size:11.5px;font-weight:800;text-transform:uppercase;color:var(--accent-gold);margin-bottom:6px;">Sản phẩm:</div>
-          <div style="font-size:15px;color:#fff;font-weight:700;">Cà phê, Trà, Sữa chua, Matcha, Cacao</div>
+      <div class="overview-cards-row">
+        <div class="overview-card-item">
+          <div class="overview-card-label">
+            <i data-lucide="coffee" style="width:16px;height:16px;color:var(--accent-gold);"></i> Sản phẩm:
+          </div>
+          <div class="overview-card-value">Cà phê, Trà, Sữa chua, Matcha, Cacao</div>
         </div>
-        <div style="background:rgba(22, 17, 12, 0.85);border:1.5px solid var(--border-brass);border-radius:var(--radius-md);padding:20px;">
-          <div style="font-size:11.5px;font-weight:800;text-transform:uppercase;color:var(--accent-gold);margin-bottom:6px;">Dịch vụ:</div>
-          <div style="font-size:15px;color:#fff;font-weight:700;">Quán cà phê máy lạnh dành cho sinh viên</div>
+        <div class="overview-card-item">
+          <div class="overview-card-label">
+            <i data-lucide="sparkles" style="width:16px;height:16px;color:var(--matcha-green);"></i> Dịch vụ:
+          </div>
+          <div class="overview-card-value">Quán cà phê máy lạnh dành cho sinh viên</div>
         </div>
-        <div style="background:rgba(22, 17, 12, 0.85);border:1.5px solid var(--border-brass);border-radius:var(--radius-md);padding:20px;">
-          <div style="font-size:11.5px;font-weight:800;text-transform:uppercase;color:var(--accent-gold);margin-bottom:6px;">Mô hình:</div>
-          <div style="font-size:15px;color:#fff;font-weight:700;">Thoải mái, ngon, giá vừa túi tiền</div>
+        <div class="overview-card-item">
+          <div class="overview-card-label">
+            <i data-lucide="heart" style="width:16px;height:16px;color:var(--accent-gold-light);"></i> Mô hình:
+          </div>
+          <div class="overview-card-value">Thoải mái, ngon, giá vừa túi tiền</div>
         </div>
       </div>
 
-      <!-- Persona Đoàn Minh Trang -->
+      <!-- Persona Đoàn Minh Trang - VIP Dossier Redesign -->
       <div class="persona-container">
+        <!-- Top Ribbon Header -->
+        <div class="persona-top-ribbon">
+          <div class="persona-dossier-tag">
+            <i data-lucide="id-card" style="width:14px;height:14px;"></i> HỒ SƠ KHÁCH HÀNG MỤC TIÊU &bull; NGUYÊN BẢN PDF TRANG 1
+          </div>
+          <div class="live-status-pill">
+            <span class="pulsing-green-dot"></span> ĐỐI TƯỢNG GEN Z THỰC TẾ TẠI QUÁN
+          </div>
+        </div>
+
         <div class="persona-layout-grid">
-          <!-- Cột Trái: Ảnh Chân Dung Persona Thực Tế Tại Quán -->
-          <div class="persona-photo-col" onclick="openLightbox('assets/persona-doan-minh-trang.jpg', 'Persona: Đoàn Minh Trang (Sinh viên năm 3)', 'Đoàn Minh Trang học bài & thưởng thức Matcha Dâu tại không gian quán Olion Coffee')">
+          <!-- Cột Trái: Chân Dung VIP Frame -->
+          <div class="persona-photo-col" onclick="openLightbox('assets/persona-doan-minh-trang-v2.jpg?v=20261105', 'Persona: Đoàn Minh Trang (Sinh viên năm 3)', 'Đoàn Minh Trang học bài &amp; thưởng thức ly Matcha Dâu tại không gian quán Olion Coffee')">
             <div class="persona-photo-wrapper">
-              <img src="assets/persona-doan-minh-trang.jpg" alt="Đoàn Minh Trang - Sinh viên năm 3 tại quán Olion Coffee" class="persona-photo-img" />
-              <div class="persona-photo-overlay">
-                <span class="persona-photo-badge">
-                  <i data-lucide="zoom-in" style="width:14px;height:14px;"></i> Phóng to ảnh
-                </span>
+              <div class="persona-photo-live-badge">
+                <i data-lucide="star" style="width:12px;height:12px;color:var(--accent-gold);fill:var(--accent-gold);"></i> KHÁCH QUEN OLION
               </div>
+              <div class="persona-photo-zoom-btn" title="Phóng to ảnh nét cao">
+                <i data-lucide="maximize-2" style="width:14px;height:14px;"></i>
+              </div>
+              <img src="assets/persona-doan-minh-trang-v2.jpg?v=20261105" alt="Đoàn Minh Trang - Sinh viên năm 3 thưởng thức Matcha Dâu tại quán Olion Coffee" class="persona-photo-img" />
             </div>
-            <div class="persona-photo-caption">
-              <div style="font-weight:700;color:#fff;margin-bottom:2px;">Đoàn Minh Trang &bull; 21 tuổi</div>
-              <span style="font-size:12px;color:var(--text-muted);">Sinh viên năm 3 khu vực Gò Vấp &bull; Khách quen chạy deadline &amp; thưởng thức Matcha Dâu tại Olion Coffee</span>
+            <div class="persona-photo-plate">
+              <div class="persona-photo-name">
+                <span>Đoàn Minh Trang</span>
+                <span style="font-size:13px;color:var(--accent-gold);font-weight:700;">21 tuổi</span>
+              </div>
+              <div class="persona-photo-role">
+                Sinh viên năm 3 khu vực Gò Vấp &bull; Khách quen chạy deadline &amp; thưởng thức Matcha Dâu tại Olion Coffee
+              </div>
+              <div class="persona-zoom-callout">
+                <i data-lucide="zoom-in" style="width:13px;height:13px;"></i> Bấm trực tiếp vào ảnh để phóng to
+              </div>
             </div>
           </div>
 
-          <!-- Cột Phải: Thông tin chi tiết & Bảng thuộc tính từ PDF -->
+          <!-- Cột Phải: Thông Tin Chi Tiết & Bảng Thuộc Tính Từ PDF -->
           <div class="persona-details-col">
-            <div class="persona-header-row">
-              <div>
-                <span class="persona-tag-pill">
-                  <i data-lucide="user-check" style="width:13px;height:13px;"></i> TARGET PERSONA CỐT LÕI
+            <div class="persona-name-banner">
+              <h3 class="persona-hero-name">Đoàn Minh Trang</h3>
+              <div class="persona-quick-chips">
+                <span class="persona-chip highlight">
+                  <i data-lucide="graduation-cap" style="width:13px;height:13px;"></i> Sinh viên năm 3 (21 tuổi)
                 </span>
-                <h3 style="font-family:var(--font-serif);font-size:30px;color:#fff;font-weight:700;margin-top:6px;letter-spacing:-0.02em;">Đoàn Minh Trang</h3>
-                <div style="font-size:13.5px;color:var(--accent-gold-light);font-weight:700;">Sinh viên năm 3 &bull; Khách hàng mục tiêu chiến dịch Matcha Series</div>
-              </div>
-              <div style="text-align:right;display:none;sm-display:block;">
-                <span style="font-size:11px;font-weight:800;color:var(--matcha-green);background:rgba(46,204,113,0.12);padding:4px 10px;border-radius:var(--radius-full);border:1px solid rgba(46,204,113,0.3);">PDF TRANG 1</span>
+                <span class="persona-chip">
+                  <i data-lucide="map-pin" style="width:13px;height:13px;color:var(--matcha-green);"></i> Khu vực Gò Vấp (ĐH Văn Lang &amp; lân cận)
+                </span>
+                <span class="persona-chip">
+                  <i data-lucide="laptop" style="width:13px;height:13px;color:var(--accent-gold);"></i> Thói quen: Laptop, Sổ tay &amp; Deadline
+                </span>
+                <span class="persona-chip highlight">
+                  <i data-lucide="cup-soda" style="width:13px;height:13px;color:#f87171;"></i> Món yêu thích: Matcha Dâu Olion
+                </span>
               </div>
             </div>
 
-            <div class="persona-quote-banner" style="margin: 0 0 18px 0;">
-              “Giá có thể cao một chút nhưng phải ngon, có chỗ ngồi thoải mái để nghỉ ngơi, làm bài, nói chuyện với bạn khi rảnh”
+            <!-- Executive Signature Quote Card -->
+            <div class="persona-quote-card">
+              <div class="persona-quote-mark">&ldquo;</div>
+              <div class="persona-quote-text">
+                &ldquo;Giá có thể cao một chút nhưng phải ngon, có chỗ ngồi thoải mái để nghỉ ngơi, làm bài, nói chuyện với bạn khi rảnh&rdquo;
+              </div>
+              <div class="persona-quote-source">
+                <i data-lucide="quote" style="width:12px;height:12px;"></i> Lời phát biểu trong khảo sát hành vi khách hàng &bull; PDF Trang 1
+              </div>
             </div>
 
-            <div class="persona-info-grid">
-              <div class="persona-info-item">
-                <div class="persona-item-label">
-                  <i data-lucide="smartphone" style="width:14px;height:14px;color:var(--matcha-green);"></i> Hành vi số:
+            <!-- 5 Thuộc Tính Chuẩn Xác Nguyên Bản Từ PDF -->
+            <div class="persona-traits-grid">
+              <div class="persona-trait-card">
+                <div class="trait-icon-box green">
+                  <i data-lucide="smartphone" style="width:18px;height:18px;"></i>
                 </div>
-                <div style="font-size:13.5px;color:var(--crema);line-height:1.55;">Lướt TikTok xem review đồ uống hot trend, tìm quán thông qua giới thiệu của bạn bè.</div>
+                <div class="trait-content">
+                  <div class="trait-header-title" style="color:#4ade80;">
+                    HÀNH VI SỐ
+                  </div>
+                  <div class="trait-body-text">
+                    Lướt TikTok xem review đồ uống hot trend, tìm quán thông qua giới thiệu của bạn bè.
+                  </div>
+                </div>
               </div>
 
-              <div class="persona-info-item">
-                <div class="persona-item-label">
-                  <i data-lucide="target" style="width:14px;height:14px;color:var(--accent-gold);"></i> Mục tiêu:
+              <div class="persona-trait-card">
+                <div class="trait-icon-box gold">
+                  <i data-lucide="target" style="width:18px;height:18px;"></i>
                 </div>
-                <div style="font-size:13.5px;color:var(--crema);line-height:1.55;">Mua đi nhanh gọn, có không gian để trò chuyện với bạn bè và thỉnh thoảng chạy deadline.</div>
+                <div class="trait-content">
+                  <div class="trait-header-title" style="color:var(--accent-gold);">
+                    MỤC TIÊU
+                  </div>
+                  <div class="trait-body-text">
+                    Mua đi nhanh gọn, có không gian để trò chuyện với bạn bè và thỉnh thoảng chạy deadline.
+                  </div>
+                </div>
               </div>
 
-              <div class="persona-info-item">
-                <div class="persona-item-label">
-                  <i data-lucide="alert-triangle" style="width:14px;height:14px;color:#F87171;"></i> Nỗi đau:
+              <div class="persona-trait-card">
+                <div class="trait-icon-box red">
+                  <i data-lucide="alert-triangle" style="width:18px;height:18px;"></i>
                 </div>
-                <div style="font-size:13.5px;color:var(--crema);line-height:1.55;">Menu quán quanh trường đại trà, chưa có sự đột phá.</div>
+                <div class="trait-content">
+                  <div class="trait-header-title" style="color:#f87171;">
+                    NỖI ĐAU
+                  </div>
+                  <div class="trait-body-text">
+                    Menu quán quanh trường đại trà, chưa có sự đột phá.
+                  </div>
+                </div>
               </div>
 
-              <div class="persona-info-item">
-                <div class="persona-item-label">
-                  <i data-lucide="shield-alert" style="width:14px;height:14px;color:#FBBF24;"></i> Rào cản:
+              <div class="persona-trait-card">
+                <div class="trait-icon-box amber">
+                  <i data-lucide="shield-alert" style="width:18px;height:18px;"></i>
                 </div>
-                <div style="font-size:13.5px;color:var(--crema);line-height:1.55;">Sợ nước uống không hợp khẩu vị mà giá lại đắt.</div>
+                <div class="trait-content">
+                  <div class="trait-header-title" style="color:#fbbf24;">
+                    RÀO CẢN
+                  </div>
+                  <div class="trait-body-text">
+                    Sợ nước uống không hợp khẩu vị mà giá lại đắt.
+                  </div>
+                </div>
               </div>
 
-              <div class="persona-info-item" style="grid-column: 1 / -1;">
-                <div class="persona-item-label">
-                  <i data-lucide="heart-handshake" style="width:14px;height:14px;color:var(--matcha-green);"></i> Tin vào:
+              <div class="persona-trait-card full-width">
+                <div class="trait-icon-box emerald">
+                  <i data-lucide="heart-handshake" style="width:18px;height:18px;"></i>
                 </div>
-                <div style="font-size:13.5px;color:var(--crema);line-height:1.55;">Lời giới thiệu của bạn bè.</div>
+                <div class="trait-content">
+                  <div class="trait-header-title" style="color:#34d399;">
+                    YẾU TỐ QUYẾT ĐỊNH &bull; TIN VÀO
+                  </div>
+                  <div class="trait-body-text" style="font-weight:600;font-size:14px;color:#fff;">
+                    Lời giới thiệu của bạn bè.
+                    <span style="display:inline-block;margin-left:8px;font-size:12px;font-weight:500;color:#86efac;background:rgba(34,197,94,0.15);padding:2px 8px;border-radius:var(--radius-full);border:1px solid rgba(34,197,94,0.3);">Kênh Word-of-Mouth (WOM) cốt lõi</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
