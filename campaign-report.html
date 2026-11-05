@@ -153,23 +153,29 @@
       position: sticky;
       top: 0;
       z-index: 10000;
-      background: rgba(11, 8, 5, 0.95);
+      background: rgba(11, 8, 5, 0.96);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       border-bottom: 1.5px solid var(--border-brass);
       box-shadow: 0 10px 35px rgba(0, 0, 0, 0.8);
+      width: 100%;
     }
     .header-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
       height: 72px;
-      gap: 15px;
+      gap: 16px;
+      max-width: 1360px !important;
+      padding: 0 20px;
+      margin: 0 auto;
     }
     .header-brand {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
+      flex-shrink: 0;
+      min-width: max-content;
     }
     .header-brand img {
       height: 38px;
@@ -181,49 +187,68 @@
       width: 1px;
       height: 28px;
       background: var(--border-brass);
+      flex-shrink: 0;
     }
     .header-badge-hub {
       display: flex;
       flex-direction: column;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
     .badge-hub-title {
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 800;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--accent-gold-light);
+      white-space: nowrap;
+      line-height: 1.25;
     }
     .badge-hub-sub {
       font-size: 11px;
       color: var(--text-muted);
+      white-space: nowrap;
+      line-height: 1.25;
+      margin-top: 2px;
     }
 
     .header-menu-nav {
       display: none;
       align-items: center;
-      gap: 6px;
-      background: rgba(22, 17, 13, 0.9);
+      gap: 5px;
+      background: rgba(22, 17, 13, 0.95);
       border: 1px solid var(--border-brass);
-      padding: 5px 8px;
+      padding: 4px 6px;
       border-radius: var(--radius-full);
       box-shadow: inset 0 2px 6px rgba(0,0,0,0.5);
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+      flex: 0 1 auto;
+      max-width: 100%;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
-    @media (min-width: 1024px) {
+    .header-menu-nav::-webkit-scrollbar {
+      display: none;
+    }
+    @media (min-width: 1120px) {
       .header-menu-nav {
         display: flex;
       }
     }
     .menu-link {
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 11.5px;
+      font-weight: 700;
       color: var(--crema);
-      padding: 6px 13px;
+      padding: 5px 11px;
       border-radius: var(--radius-full);
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      transition: all 0.25s ease;
+      gap: 4px;
+      transition: all 0.2s ease;
       white-space: nowrap;
+      flex-shrink: 0;
     }
     .menu-link:hover, .menu-link.active {
       background: linear-gradient(135deg, var(--accent-gold), #B57432);
@@ -236,6 +261,8 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-shrink: 0;
+      min-width: max-content;
     }
     .action-btn-icon {
       width: 38px;
@@ -1663,16 +1690,16 @@
       </div>
 
       <!-- Navigation Menu Strictly Follows Sections in PDF -->
-      <nav class="header-menu-nav">
-        <a href="#muc-1" class="menu-link active">1. Persona &amp; KPI</a>
-        <a href="#muc-2" class="menu-link">2. Bản Quảng Cáo</a>
-        <a href="#muc-3" class="menu-link">3. Vòng 0 (Gốc)</a>
-        <a href="#muc-4" class="menu-link">4. Vòng 1</a>
-        <a href="#muc-5" class="menu-link">5. Vòng 2 (A/B)</a>
-        <a href="#muc-6" class="menu-link">6. Vòng 3</a>
-        <a href="#muc-7" class="menu-link">7. Tổng Hợp &amp; Bài Học</a>
-        <a href="#muc-8" class="menu-link">8. Kế Hoạch Thật</a>
-        <a href="#muc-9" class="menu-link">9. Quản Trị &amp; Đo Lường</a>
+      <nav class="header-menu-nav" aria-label="Menu điều hướng báo cáo">
+        <a href="#muc-1" class="menu-link active" title="1. Sản phẩm, Persona &amp; KPI">1. KPI &amp; Persona</a>
+        <a href="#muc-2" class="menu-link" title="2. Phiên bản quảng cáo &amp; Bộ Tứ Matcha">2. Quảng Cáo</a>
+        <a href="#muc-3" class="menu-link" title="3. Vòng 0: Phương án gốc">3. Vòng 0</a>
+        <a href="#muc-4" class="menu-link" title="4. Vòng 1: Mở rộng ĐH Văn Lang">4. Vòng 1</a>
+        <a href="#muc-5" class="menu-link" title="5. Vòng 2: A/B Testing Caption">5. Vòng 2</a>
+        <a href="#muc-6" class="menu-link" title="6. Vòng 3: Tối ưu ngân sách">6. Vòng 3</a>
+        <a href="#muc-7" class="menu-link" title="7. Bảng tổng hợp &amp; Bài học rút ra">7. Tổng Hợp</a>
+        <a href="#muc-8" class="menu-link" title="8. Kế hoạch chạy thật">8. Kế Hoạch</a>
+        <a href="#muc-9" class="menu-link" title="9. Quản trị và đo lường">9. Quản Trị</a>
       </nav>
 
       <div class="header-actions">
