@@ -498,29 +498,103 @@
       box-shadow: var(--shadow-wood);
       position: relative;
     }
+    .persona-layout-grid {
+      display: grid;
+      grid-template-columns: 290px 1fr;
+      gap: 30px;
+      align-items: start;
+    }
+    @media (max-width: 900px) {
+      .persona-layout-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+    }
+    .persona-photo-col {
+      cursor: pointer;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: rgba(18, 14, 10, 0.9);
+      border: 2px solid var(--border-brass);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.7);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .persona-photo-col:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-gold);
+      box-shadow: 0 18px 40px var(--accent-gold-glow);
+    }
+    .persona-photo-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #000;
+    }
+    .persona-photo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .persona-photo-col:hover .persona-photo-img {
+      transform: scale(1.05);
+    }
+    .persona-photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 55%, rgba(10, 7, 5, 0.9) 100%);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 14px;
+      opacity: 0.95;
+    }
+    .persona-photo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(6px);
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(240, 167, 101, 0.4);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    .persona-photo-caption {
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--crema);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(14, 10, 7, 0.98);
+    }
+    .persona-tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--matcha-green);
+      background: rgba(46, 204, 113, 0.15);
+      border: 1px solid rgba(46, 204, 113, 0.35);
+      padding: 4px 11px;
+      border-radius: var(--radius-full);
+    }
     .persona-header-row {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 18px;
-      padding-bottom: 20px;
+      padding-bottom: 16px;
       border-bottom: 1px dashed var(--border-brass);
-      margin-bottom: 22px;
-    }
-    .persona-avatar {
-      width: 68px;
-      height: 68px;
-      border-radius: 50%;
-      background: #2D2016;
-      border: 2.5px solid var(--accent-gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-serif);
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--accent-gold-light);
-      flex-shrink: 0;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      margin-bottom: 18px;
     }
     .persona-info-grid {
       display: grid;
@@ -1044,43 +1118,79 @@
 
       <!-- Persona Đoàn Minh Trang -->
       <div class="persona-container">
-        <div class="persona-header-row">
-          <div class="persona-avatar">MT</div>
-          <div>
-            <h3 style="font-family:var(--font-serif);font-size:24px;color:#fff;font-weight:700;">Đoàn Minh Trang</h3>
-            <div style="font-size:13px;color:var(--accent-gold-light);font-weight:700;">Sinh viên năm 3</div>
-          </div>
-        </div>
-
-        <div class="persona-info-grid">
-          <div class="persona-info-item">
-            <div class="persona-item-label">Hành vi số:</div>
-            <div style="font-size:13.5px;color:var(--crema);">Lướt TikTok xem review đồ uống hot trend, tìm quán thông qua giới thiệu của bạn bè.</div>
-          </div>
-
-          <div class="persona-info-item">
-            <div class="persona-item-label">Mục tiêu:</div>
-            <div style="font-size:13.5px;color:var(--crema);">Mua đi nhanh gọn, có không gian để trò chuyện với bạn bè và thỉnh thoảng chạy deadline.</div>
+        <div class="persona-layout-grid">
+          <!-- Cột Trái: Ảnh Chân Dung Persona Thực Tế Tại Quán -->
+          <div class="persona-photo-col" onclick="openLightbox('assets/persona-doan-minh-trang.jpg', 'Persona: Đoàn Minh Trang (Sinh viên năm 3)', 'Đoàn Minh Trang học bài & thưởng thức Matcha Dâu tại không gian quán Olion Coffee')">
+            <div class="persona-photo-wrapper">
+              <img src="assets/persona-doan-minh-trang.jpg" alt="Đoàn Minh Trang - Sinh viên năm 3 tại quán Olion Coffee" class="persona-photo-img" />
+              <div class="persona-photo-overlay">
+                <span class="persona-photo-badge">
+                  <i data-lucide="zoom-in" style="width:14px;height:14px;"></i> Phóng to ảnh
+                </span>
+              </div>
+            </div>
+            <div class="persona-photo-caption">
+              <div style="font-weight:700;color:#fff;margin-bottom:2px;">Đoàn Minh Trang &bull; 21 tuổi</div>
+              <span style="font-size:12px;color:var(--text-muted);">Sinh viên năm 3 khu vực Gò Vấp &bull; Khách quen chạy deadline &amp; thưởng thức Matcha Dâu tại Olion Coffee</span>
+            </div>
           </div>
 
-          <div class="persona-info-item">
-            <div class="persona-item-label">Nỗi đau:</div>
-            <div style="font-size:13.5px;color:var(--crema);">Menu quán quanh trường đại trà, chưa có sự đột phá.</div>
-          </div>
+          <!-- Cột Phải: Thông tin chi tiết & Bảng thuộc tính từ PDF -->
+          <div class="persona-details-col">
+            <div class="persona-header-row">
+              <div>
+                <span class="persona-tag-pill">
+                  <i data-lucide="user-check" style="width:13px;height:13px;"></i> TARGET PERSONA CỐT LÕI
+                </span>
+                <h3 style="font-family:var(--font-serif);font-size:30px;color:#fff;font-weight:700;margin-top:6px;letter-spacing:-0.02em;">Đoàn Minh Trang</h3>
+                <div style="font-size:13.5px;color:var(--accent-gold-light);font-weight:700;">Sinh viên năm 3 &bull; Khách hàng mục tiêu chiến dịch Matcha Series</div>
+              </div>
+              <div style="text-align:right;display:none;sm-display:block;">
+                <span style="font-size:11px;font-weight:800;color:var(--matcha-green);background:rgba(46,204,113,0.12);padding:4px 10px;border-radius:var(--radius-full);border:1px solid rgba(46,204,113,0.3);">PDF TRANG 1</span>
+              </div>
+            </div>
 
-          <div class="persona-info-item">
-            <div class="persona-item-label">Rào cản:</div>
-            <div style="font-size:13.5px;color:var(--crema);">Sợ nước uống không hợp khẩu vị mà giá lại đắt.</div>
-          </div>
+            <div class="persona-quote-banner" style="margin: 0 0 18px 0;">
+              “Giá có thể cao một chút nhưng phải ngon, có chỗ ngồi thoải mái để nghỉ ngơi, làm bài, nói chuyện với bạn khi rảnh”
+            </div>
 
-          <div class="persona-info-item" style="grid-column: 1 / -1;">
-            <div class="persona-item-label">Tin vào:</div>
-            <div style="font-size:13.5px;color:var(--crema);">Lời giới thiệu của bạn bè.</div>
-          </div>
-        </div>
+            <div class="persona-info-grid">
+              <div class="persona-info-item">
+                <div class="persona-item-label">
+                  <i data-lucide="smartphone" style="width:14px;height:14px;color:var(--matcha-green);"></i> Hành vi số:
+                </div>
+                <div style="font-size:13.5px;color:var(--crema);line-height:1.55;">Lướt TikTok xem review đồ uống hot trend, tìm quán thông qua giới thiệu của bạn bè.</div>
+              </div>
 
-        <div class="persona-quote-banner">
-          “Giá có thể cao một chút nhưng phải ngon, có chỗ ngồi thoải mái để nghỉ ngơi, làm bài, nói chuyện với bạn khi rảnh”
+              <div class="persona-info-item">
+                <div class="persona-item-label">
+                  <i data-lucide="target" style="width:14px;height:14px;color:var(--accent-gold);"></i> Mục tiêu:
+                </div>
+                <div style="font-size:13.5px;color:var(--crema);line-height:1.55;">Mua đi nhanh gọn, có không gian để trò chuyện với bạn bè và thỉnh thoảng chạy deadline.</div>
+              </div>
+
+              <div class="persona-info-item">
+                <div class="persona-item-label">
+                  <i data-lucide="alert-triangle" style="width:14px;height:14px;color:#F87171;"></i> Nỗi đau:
+                </div>
+                <div style="font-size:13.5px;color:var(--crema);line-height:1.55;">Menu quán quanh trường đại trà, chưa có sự đột phá.</div>
+              </div>
+
+              <div class="persona-info-item">
+                <div class="persona-item-label">
+                  <i data-lucide="shield-alert" style="width:14px;height:14px;color:#FBBF24;"></i> Rào cản:
+                </div>
+                <div style="font-size:13.5px;color:var(--crema);line-height:1.55;">Sợ nước uống không hợp khẩu vị mà giá lại đắt.</div>
+              </div>
+
+              <div class="persona-info-item" style="grid-column: 1 / -1;">
+                <div class="persona-item-label">
+                  <i data-lucide="heart-handshake" style="width:14px;height:14px;color:var(--matcha-green);"></i> Tin vào:
+                </div>
+                <div style="font-size:13.5px;color:var(--crema);line-height:1.55;">Lời giới thiệu của bạn bè.</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
