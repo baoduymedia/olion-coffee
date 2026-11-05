@@ -2049,6 +2049,150 @@
       border-color: var(--matcha-green);
     }
 
+  
+    /* ========================================================
+       RESPONSIVE MATRIX TABLE (ZERO HORIZONTAL SCROLL)
+       ======================================================== */
+    .matrix-table-wrap {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      border: 1.5px solid var(--border-brass);
+      background: linear-gradient(145deg, #16110D 0%, #0E0A07 100%);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+    .matrix-responsive-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      white-space: normal;
+      text-align: left;
+    }
+    .matrix-responsive-table th {
+      background: rgba(240, 167, 101, 0.16);
+      color: var(--accent-gold-light);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 0.06em;
+      padding: 14px 16px;
+      border-bottom: 1.5px solid var(--border-brass);
+      vertical-align: middle;
+    }
+    .matrix-responsive-table td {
+      padding: 16px 16px;
+      font-size: 14.5px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      vertical-align: middle;
+      color: var(--crema);
+      word-wrap: break-word;
+    }
+    .matrix-responsive-table tr.round-main-row:hover td {
+      background: rgba(240, 167, 101, 0.05);
+    }
+    .matrix-round-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #251B12;
+      border: 1.5px solid var(--accent-gold);
+      color: var(--accent-gold-light);
+      font-weight: 800;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+    .matrix-round-badge.winner {
+      background: rgba(46, 204, 113, 0.2);
+      border-color: var(--matcha-green);
+      color: var(--matcha-bright);
+      box-shadow: 0 0 12px rgba(46, 204, 113, 0.4);
+    }
+    .matrix-change-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+    .matrix-change-meta {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .matrix-duration-pill {
+      display: inline-block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--accent-gold-light);
+      background: rgba(240, 167, 101, 0.15);
+      border: 1px solid rgba(240, 167, 101, 0.3);
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+    }
+    .matrix-duration-pill.winner {
+      color: var(--matcha-bright);
+      background: rgba(46, 204, 113, 0.15);
+      border-color: rgba(46, 204, 113, 0.35);
+    }
+    .matrix-val {
+      font-size: 15.5px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .matrix-val.highlight {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--matcha-bright);
+    }
+    .matrix-diff-sub {
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 2px;
+      display: block;
+    }
+    .matrix-conclusion-row td {
+      padding: 12px 18px 18px 18px;
+      background: rgba(14, 10, 7, 0.65);
+      border-bottom: 2px solid rgba(240, 167, 101, 0.2);
+    }
+    .matrix-conclusion-content {
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid var(--accent-gold);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 12px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--crema);
+      line-height: 1.6;
+    }
+    .matrix-conclusion-content strong {
+      color: var(--accent-gold-light);
+    }
+    tr.round-winner-row td {
+      background: rgba(46, 204, 113, 0.08) !important;
+      border-top: 1.5px solid rgba(46, 204, 113, 0.4);
+    }
+    tr.round-winner-conclusion td {
+      background: rgba(10, 24, 16, 0.75) !important;
+      border-bottom: 2px solid var(--matcha-green);
+    }
+    tr.round-winner-conclusion .matrix-conclusion-content {
+      background: rgba(46, 204, 113, 0.08);
+      border-left-color: var(--matcha-green);
+    }
+    tr.round-winner-conclusion .matrix-conclusion-content strong {
+      color: var(--matcha-bright);
+    }
+
   </style>
 </head>
 <body>
@@ -3209,7 +3353,7 @@
           </button>
         </div>
         <div style="font-size:13.5px;color:var(--text-muted);font-weight:600;">
-          💡 Bấm chuyển đổi để xem tóm tắt dạng thẻ hoặc bảng chi tiết 9 cột
+          💡 Bấm chuyển đổi để xem tóm tắt dạng thẻ hành trình hoặc bảng ma trận đối chiếu (toàn màn hình, không cần kéo ngang)
         </div>
       </div>
 
@@ -3398,67 +3542,193 @@
         </div>
       </div>
 
-      <!-- CHẾ ĐỘ 2: DẠNG BẢNG MA TRẬN ĐẦY ĐỦ 9 CỘT (ẨN MẶC ĐỊNH, HIỆN KHI BẤM NÚT) -->
+      <!-- CHẾ ĐỘ 2: DẠNG BẢNG MA TRẬN ĐỐI CHIẾU (TOÀN MÀN HÌNH - KHÔNG KÉO NGANG) -->
       <div id="summaryTableView" style="display:none;margin-bottom:30px;">
-        <div class="table-container">
-          <table class="pdf-table">
+        <div class="matrix-table-wrap">
+          <table class="matrix-responsive-table">
+            <colgroup>
+              <col style="width: 8%;">
+              <col style="width: 28%;">
+              <col style="width: 13%;">
+              <col style="width: 10%;">
+              <col style="width: 12%;">
+              <col style="width: 13%;">
+              <col style="width: 16%;">
+            </colgroup>
             <thead>
               <tr>
-                <th style="min-width:65px;">Vòng</th>
-                <th style="min-width:180px;">Thay đổi</th>
+                <th style="text-align:center;">Vòng</th>
+                <th>Chiến Lược &amp; Thời Gian</th>
                 <th>CPM</th>
                 <th>CTR</th>
                 <th>CPC</th>
-                <th style="min-width:120px;">Lượt theo dõi</th>
-                <th style="min-width:130px;">CPA</th>
-                <th>Tần suất</th>
-                <th style="min-width:280px;">Kết luận chiến lược</th>
+                <th>Lượt Theo Dõi</th>
+                <th>CPA (Chi Phí / Follow)</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td><strong style="font-size:16px;">0</strong></td>
-                <td><strong>Phương án gốc</strong><br /><span style="font-size:13px;color:var(--text-muted);">Ngân sách 1.000.000đ</span></td>
-                <td>26.036đ</td>
-                <td>1,31%</td>
-                <td>1.986đ</td>
-                <td>90</td>
-                <td>11.183đ</td>
-                <td>5 ngày</td>
-                <td>Là cột mốc cơ sở để đo lường. Các chỉ số ở mức ổn định (CPA: 11.183đ và tổng 90 lượt theo dõi trang.) Cần tiếp tục tối ưu hóa tệp đối tượng và nội dung ở các vòng sau.</td>
+              <!-- Vòng 0 -->
+              <tr class="round-main-row">
+                <td style="text-align:center;">
+                  <div class="matrix-round-badge">0</div>
+                </td>
+                <td>
+                  <div class="matrix-change-title">Phương án gốc (Baseline)</div>
+                  <div class="matrix-change-meta">
+                    <span class="matrix-duration-pill">5 ngày</span>
+                    <span>Ngân sách: 1.000.000đ</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="matrix-val">26.036đ</div>
+                </td>
+                <td>
+                  <div class="matrix-val">1,31%</div>
+                </td>
+                <td>
+                  <div class="matrix-val">1.986đ</div>
+                </td>
+                <td>
+                  <div class="matrix-val">90 lượt</div>
+                  <span class="matrix-diff-sub text-dim">Mốc chuẩn</span>
+                </td>
+                <td>
+                  <div class="matrix-val text-gold">11.183đ</div>
+                  <span class="matrix-diff-sub text-dim">Mốc xuất phát</span>
+                </td>
               </tr>
-              <tr>
-                <td><strong style="font-size:16px;">1</strong></td>
-                <td><strong>Thêm nhân viên văn phòng</strong><br /><span style="font-size:13px;color:var(--text-muted);">Mở rộng ĐH Văn Lang</span></td>
-                <td>25.526đ</td>
-                <td>1,28%</td>
-                <td>1.996đ</td>
-                <td>90</td>
-                <td>11.126đ <span style="font-size:13px;color:var(--matcha-green);font-weight:600;">(-57đ)</span></td>
-                <td>5 ngày</td>
-                <td>Việc mở rộng tệp đối tượng sang nhân viên văn phòng tối ưu hóa tốt chi phí hiển thị và cải thiện CPA mà vẫn giữ nguyên số lượng theo dõi. Đánh giá: Hiệu quả, tệp đối tượng mới tiềm năng, nên được giữ lại.</td>
+              <tr class="matrix-conclusion-row">
+                <td colspan="7">
+                  <div class="matrix-conclusion-content">
+                    <i data-lucide="info" style="width:16px;height:16px;color:var(--accent-gold);flex-shrink:0;margin-top:2px;"></i>
+                    <div>
+                      <strong>Đánh giá Vòng 0:</strong> Là cột mốc cơ sở để đo lường. Các chỉ số ở mức ổn định (CPA: 11.183đ và tổng 90 lượt theo dõi trang). Cần tiếp tục tối ưu hóa tệp đối tượng và nội dung ở các vòng sau.
+                    </div>
+                  </div>
+                </td>
               </tr>
-              <tr>
-                <td><strong style="font-size:16px;">2</strong></td>
-                <td><strong>Caption 2 phiên bản khác nhau</strong><br /><span style="font-size:13px;color:var(--text-muted);">A/B Testing Chơi Chữ</span></td>
-                <td>25.097đ</td>
-                <td>1,28%</td>
-                <td>1.960đ</td>
-                <td>91 <span style="font-size:13px;color:var(--accent-gold);font-weight:600;">(+1)</span></td>
-                <td>11.021đ <span style="font-size:13px;color:var(--matcha-green);font-weight:600;">(-105đ)</span></td>
-                <td>5 ngày</td>
-                <td>Caption bắt tai, chơi chữ giúp tối ưu tốt các chỉ số (CPM giảm còn 25.097đ, CPC giảm còn 1.960đ và CPA tối ưu ở mức 11.021đ). Lượt theo dõi nhỉnh hơn. Đánh giá: Caption sáng tạo mang lại hiệu quả chuyển đổi tốt hơn, nên áp dụng cho các chiến dịch tiếp theo.</td>
+
+              <!-- Vòng 1 -->
+              <tr class="round-main-row">
+                <td style="text-align:center;">
+                  <div class="matrix-round-badge">1</div>
+                </td>
+                <td>
+                  <div class="matrix-change-title">Thêm nhân viên văn phòng (ĐH Văn Lang)</div>
+                  <div class="matrix-change-meta">
+                    <span class="matrix-duration-pill">5 ngày</span>
+                    <span>Ngân sách: 1.000.000đ</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="matrix-val">25.526đ</div>
+                </td>
+                <td>
+                  <div class="matrix-val">1,28%</div>
+                </td>
+                <td>
+                  <div class="matrix-val">1.996đ</div>
+                </td>
+                <td>
+                  <div class="matrix-val">90 lượt</div>
+                  <span class="matrix-diff-sub text-dim">Giữ nguyên</span>
+                </td>
+                <td>
+                  <div class="matrix-val text-gold">11.126đ</div>
+                  <span class="matrix-diff-sub text-matcha">📉 Giảm -57đ</span>
+                </td>
               </tr>
-              <tr style="background:rgba(46,204,113,0.12);border-top:2px solid var(--matcha-green);border-bottom:2px solid var(--matcha-green);">
-                <td><strong style="color:var(--matcha-bright);font-size:18px;">3 🏆</strong></td>
-                <td><strong style="color:var(--matcha-bright);font-size:14px;">Ngân sách tăng lên 1.750.000đ và chạy 7 ngày</strong><br /><span style="font-size:13px;color:var(--matcha-bright);font-weight:600;">Scale quy mô 250k/ngày</span></td>
-                <td>25.245đ</td>
-                <td>1,30%</td>
-                <td>1.946đ</td>
-                <td class="highlight-cell" style="font-size:17px;color:var(--matcha-bright);">162 <span style="font-size:13px;display:block;">(+80% 🚀)</span></td>
-                <td class="highlight-cell" style="font-size:17px;color:var(--matcha-bright);">10.833đ <span style="font-size:13px;display:block;">(Kỷ lục 🏆)</span></td>
-                <td><strong>7 ngày</strong></td>
-                <td><strong style="color:var(--matcha-bright);">Tăng ngân sách và thời gian chạy đã phát huy tối đa hiệu quả:</strong> lượt theo dõi trang tăng lên 162 lượt, giảm mạnh chi phí trên mỗi lượt theo dõi (CPA) xuống mức thấp nhất là 10.833đ. Đánh giá: Chiến dịch mở rộng ngân sách thành công, tối ưu hóa hiệu quả chi phí chuyển đổi.</td>
+              <tr class="matrix-conclusion-row">
+                <td colspan="7">
+                  <div class="matrix-conclusion-content">
+                    <i data-lucide="check-circle-2" style="width:16px;height:16px;color:var(--accent-gold);flex-shrink:0;margin-top:2px;"></i>
+                    <div>
+                      <strong>Đánh giá Vòng 1:</strong> Việc mở rộng tệp đối tượng sang nhân viên văn phòng tối ưu hóa tốt chi phí hiển thị và cải thiện CPA mà vẫn giữ nguyên số lượng theo dõi. <em>Đánh giá: Hiệu quả, tệp đối tượng mới tiềm năng, nên được giữ lại.</em>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Vòng 2 -->
+              <tr class="round-main-row">
+                <td style="text-align:center;">
+                  <div class="matrix-round-badge">2</div>
+                </td>
+                <td>
+                  <div class="matrix-change-title">Caption 2 phiên bản (A/B Test “Mát Cha”)</div>
+                  <div class="matrix-change-meta">
+                    <span class="matrix-duration-pill">5 ngày</span>
+                    <span>Ngân sách: 1.000.000đ</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="matrix-val">25.097đ</div>
+                </td>
+                <td>
+                  <div class="matrix-val">1,28%</div>
+                </td>
+                <td>
+                  <div class="matrix-val">1.960đ</div>
+                </td>
+                <td>
+                  <div class="matrix-val text-gold">91 lượt</div>
+                  <span class="matrix-diff-sub text-gold">Nhỉnh hơn (+1)</span>
+                </td>
+                <td>
+                  <div class="matrix-val text-gold">11.021đ</div>
+                  <span class="matrix-diff-sub text-matcha">📉 Giảm -105đ</span>
+                </td>
+              </tr>
+              <tr class="matrix-conclusion-row">
+                <td colspan="7">
+                  <div class="matrix-conclusion-content">
+                    <i data-lucide="sparkles" style="width:16px;height:16px;color:var(--accent-gold);flex-shrink:0;margin-top:2px;"></i>
+                    <div>
+                      <strong>Đánh giá Vòng 2:</strong> Caption bắt tai, chơi chữ giúp tối ưu tốt các chỉ số (CPM giảm còn 25.097đ, CPC giảm còn 1.960đ và CPA tối ưu ở mức 11.021đ). Lượt theo dõi nhỉnh hơn. <em>Đánh giá: Caption sáng tạo mang lại hiệu quả chuyển đổi tốt hơn, nên áp dụng cho các chiến dịch tiếp theo.</em>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Vòng 3 (Winner) -->
+              <tr class="round-main-row round-winner-row">
+                <td style="text-align:center;">
+                  <div class="matrix-round-badge winner">3 🏆</div>
+                </td>
+                <td>
+                  <div class="matrix-change-title" style="color:var(--matcha-bright);">Ngân sách 1.750.000đ &amp; Chạy 7 ngày</div>
+                  <div class="matrix-change-meta">
+                    <span class="matrix-duration-pill winner">7 ngày</span>
+                    <span style="color:var(--matcha-bright);font-weight:700;">Scale quy mô 250k/ngày</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="matrix-val" style="color:#fff;">25.245đ</div>
+                </td>
+                <td>
+                  <div class="matrix-val" style="color:#fff;">1,30%</div>
+                </td>
+                <td>
+                  <div class="matrix-val" style="color:#fff;">1.946đ</div>
+                </td>
+                <td>
+                  <div class="matrix-val highlight">162 lượt</div>
+                  <span class="matrix-diff-sub text-matcha">🚀 Tăng +80% Follows</span>
+                </td>
+                <td>
+                  <div class="matrix-val highlight">10.833đ 🏆</div>
+                  <span class="matrix-diff-sub text-matcha">Kỷ lục thấp nhất</span>
+                </td>
+              </tr>
+              <tr class="matrix-conclusion-row round-winner-conclusion">
+                <td colspan="7">
+                  <div class="matrix-conclusion-content" style="background:rgba(46,204,113,0.1);border-left-color:var(--matcha-green);">
+                    <i data-lucide="trophy" style="width:16px;height:16px;color:var(--matcha-green);flex-shrink:0;margin-top:2px;"></i>
+                    <div>
+                      <strong style="color:var(--matcha-bright);">Kết luận đột phá Vòng 3:</strong> Tăng ngân sách và thời gian chạy đã phát huy tối đa hiệu quả: lượt theo dõi trang tăng lên 162 lượt, giảm mạnh chi phí trên mỗi lượt theo dõi (CPA) xuống mức thấp nhất là 10.833đ. <em>Đánh giá: Chiến dịch mở rộng ngân sách thành công xuất sắc, tối ưu hóa toàn diện hiệu quả chi phí chuyển đổi.</em>
+                    </div>
+                  </div>
+                </td>
               </tr>
             </tbody>
           </table>
