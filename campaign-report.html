@@ -856,6 +856,339 @@
       line-height: 1.65;
     }
 
+    /* Vòng 2 Visual A/B Comparison Cards */
+    .vong2-ad-comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 22px;
+      margin: 24px 0 32px;
+    }
+    @media (min-width: 860px) {
+      .vong2-ad-comparison-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    .vong2-ad-card {
+      background: linear-gradient(145deg, #18130E, #0E0A07);
+      border: 1.8px solid var(--border-brass);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-wood);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .vong2-ad-card.winner-card {
+      border: 2px solid var(--matcha-green);
+      box-shadow: 0 16px 40px rgba(10, 35, 20, 0.7), 0 0 25px rgba(46, 204, 113, 0.2);
+    }
+    .vong2-ad-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 14px;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .vong2-badge {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .vong2-badge.a-badge {
+      color: var(--accent-gold-light);
+      background: rgba(240, 167, 101, 0.15);
+      border: 1px solid rgba(240, 167, 101, 0.35);
+    }
+    .vong2-badge.b-badge {
+      color: #fff;
+      background: linear-gradient(135deg, #2ECC71, #1A7F46);
+      box-shadow: 0 2px 10px rgba(46, 204, 113, 0.35);
+    }
+    .vong2-budget-chip {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .vong2-winner-pill {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--matcha-bright);
+      background: rgba(46, 204, 113, 0.15);
+      border: 1px solid rgba(46, 204, 113, 0.4);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .vong2-feed-mockup {
+      background: rgba(10, 8, 5, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 16px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .feed-brand-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .feed-logo-mini {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #1C140F;
+      border: 1px solid var(--border-brass);
+      padding: 3px;
+      object-fit: contain;
+    }
+    .feed-brand-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .feed-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .feed-post-copy {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--crema);
+      margin-bottom: 14px;
+    }
+    .feed-post-copy p {
+      margin-bottom: 8px;
+    }
+    .feed-address-box {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      border-top: 1px dashed rgba(255, 255, 255, 0.12);
+      padding-top: 8px;
+      margin-top: 8px;
+      line-height: 1.45;
+    }
+    .feed-media-wrap {
+      position: relative;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: auto;
+    }
+    .feed-media-img {
+      width: 100%;
+      height: 165px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .feed-media-wrap:hover .feed-media-img {
+      transform: scale(1.03);
+    }
+    .feed-media-zoom-overlay {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      padding: 4px 8px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .vong2-stats-summary {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      background: rgba(22, 16, 11, 0.85);
+      border: 1px solid var(--border-brass);
+      border-radius: var(--radius-md);
+      padding: 12px;
+    }
+    .vong2-stats-summary.winner-stats {
+      border-color: rgba(46, 204, 113, 0.4);
+      background: rgba(14, 28, 19, 0.7);
+    }
+    .vong2-stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .vong2-stat-lbl {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .vong2-stat-val {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      margin: 2px 0;
+    }
+    .vong2-stat-note {
+      font-size: 10.5px;
+      color: var(--text-dim);
+    }
+
+    /* Section 9: Governance & Measurement Cockpit */
+    .governance-cockpit {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 25px;
+    }
+    @media (min-width: 900px) {
+      .governance-cockpit {
+        grid-template-columns: 1.05fr 0.95fr;
+      }
+    }
+    .gov-card {
+      background: linear-gradient(145deg, #1C1510, #100C08);
+      border: 2px solid var(--border-brass);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: var(--shadow-wood);
+      position: relative;
+    }
+    .gov-card.monitoring-card {
+      border-color: var(--accent-gold);
+      box-shadow: 0 16px 45px rgba(0,0,0,0.7), 0 0 20px rgba(240, 167, 101, 0.15);
+    }
+    .gov-card.contingency-card {
+      border-color: #EF4444;
+      box-shadow: 0 16px 45px rgba(0,0,0,0.7), 0 0 20px rgba(239, 68, 68, 0.15);
+    }
+    .gov-card-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      margin-bottom: 14px;
+    }
+    .gov-card-badge.gold {
+      color: var(--accent-gold-light);
+      background: rgba(240, 167, 101, 0.15);
+      border: 1px solid rgba(240, 167, 101, 0.35);
+    }
+    .gov-card-badge.alert {
+      color: #FCA5A5;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+    .gov-card-title {
+      font-family: var(--font-serif);
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .gov-card-desc {
+      font-size: 14px;
+      color: var(--crema);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .gov-metrics-panel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 15px;
+    }
+    @media (max-width: 600px) {
+      .gov-metrics-panel {
+        grid-template-columns: 1fr;
+      }
+    }
+    .gov-metric-box {
+      background: rgba(10, 8, 5, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+    }
+    .gov-metric-name {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent-gold);
+      letter-spacing: 0.05em;
+    }
+    .gov-metric-target {
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+      margin: 4px 0 2px;
+    }
+    .gov-metric-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .playbook-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 16px;
+    }
+    .playbook-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: rgba(10, 8, 5, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 14px;
+    }
+    .playbook-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid #EF4444;
+      color: #FCA5A5;
+      font-size: 12px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .playbook-text {
+      font-size: 13.5px;
+      color: var(--crema);
+      line-height: 1.55;
+    }
+    .playbook-text strong {
+      color: #fff;
+    }
+
     /* Lightbox Modal */
     .photo-lightbox {
       position: fixed;
@@ -1020,7 +1353,7 @@
         </div>
       </div>
 
-      <!-- Navigation Menu Strictly Follows 8 Sections in PDF -->
+      <!-- Navigation Menu Strictly Follows Sections in PDF -->
       <nav class="header-menu-nav">
         <a href="#muc-1" class="menu-link active">1. Persona &amp; KPI</a>
         <a href="#muc-2" class="menu-link">2. Bản Quảng Cáo</a>
@@ -1030,6 +1363,7 @@
         <a href="#muc-6" class="menu-link">6. Vòng 3</a>
         <a href="#muc-7" class="menu-link">7. Tổng Hợp &amp; Bài Học</a>
         <a href="#muc-8" class="menu-link">8. Kế Hoạch Thật</a>
+        <a href="#muc-9" class="menu-link">9. Quản Trị &amp; Đo Lường</a>
       </nav>
 
       <div class="header-actions">
@@ -1060,6 +1394,7 @@
     <a href="#muc-6" class="mobile-nav-link" onclick="toggleDrawer()"><span>6. Vòng 3: Thay đổi ngân sách</span><i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
     <a href="#muc-7" class="mobile-nav-link" onclick="toggleDrawer()"><span>7. Bảng tổng hợp &amp; Bài học rút ra</span><i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
     <a href="#muc-8" class="mobile-nav-link" onclick="toggleDrawer()"><span>8. Kế hoạch chạy thật</span><i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
+    <a href="#muc-9" class="mobile-nav-link" onclick="toggleDrawer()"><span>9. Quản trị và Đo lường</span><i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
   </div>
 
   <!-- ========================================================
@@ -1507,7 +1842,126 @@
     <div class="shell">
       <div class="section-chapter-tag">5. VÒNG 2: THAY ĐỔI A/B TEST</div>
       <h2 class="section-main-heading">5. Vòng 2: Thay Đổi A/B Test (Caption)</h2>
-      <p style="color:var(--text-muted);margin-bottom:16px;">Thay đổi: Thay đổi caption (Quảng cáo A vs Quảng cáo B)</p>
+      <p style="color:var(--text-muted);margin-bottom:18px;"><strong>Thay đổi cấu hình thử nghiệm:</strong> Thay đổi caption (Quảng cáo A mở đầu trực diện vs Quảng cáo B chơi chữ bắt trend).</p>
+
+      <!-- Trực Quan 2 Mẫu Quảng Cáo A/B Testing Đối Đầu -->
+      <div class="vong2-ad-comparison-grid">
+        <!-- Mẫu Quảng Cáo A -->
+        <div class="vong2-ad-card">
+          <div class="vong2-ad-header">
+            <div class="vong2-badge a-badge">MẪU QUẢNG CÁO A &bull; PHƯƠNG ÁN TRỰC DIỆN</div>
+            <span class="vong2-budget-chip">Ngân sách: 500.000đ / lần</span>
+          </div>
+          
+          <div class="vong2-feed-mockup">
+            <div class="feed-brand-bar">
+              <img src="assets/logo-white.webp" alt="Olion Coffee" class="feed-logo-mini" />
+              <div>
+                <div class="feed-brand-name">Olion Coffee</div>
+                <div class="feed-sub">Được tài trợ &bull; <i data-lucide="globe" style="width:11px;height:11px;display:inline;"></i></div>
+              </div>
+            </div>
+            
+            <div class="feed-post-copy">
+              <p><strong>Bộ tứ Matcha thơm mát cho ngày thêm tươi mới.</strong></p>
+              <p>Olion bật mí cho bạn Matcha Series với 4 hương vị, mỗi vị một nét riêng, chiều lòng mọi gu thưởng thức. Từ Matcha Bạc Hà the mát, Matcha Dừa thơm béo, Matcha Dâu ngọt ngào đến Matcha Espresso Latte đậm vị cà phê🤎</p>
+              <p style="color:var(--accent-gold-light);">✨ Ghé Olion, chọn một ly “Mát Cha” hợp gu bạn nhé!</p>
+              <div class="feed-address-box">
+                Olion Coffee - Elegance in Every Sip<br />
+                📍 80/64a, Dương Quảng Hàm, An Nhơn, TP. Hồ Chí Minh<br />
+                ⏰ 8:00 - 20:00 (thứ hai - chủ nhật) &bull; 📞 hotline: 0783 657 587
+              </div>
+            </div>
+            
+            <div class="feed-media-wrap" onclick="openLightbox('assets/matcha-series-banner.jpg', 'Mẫu Quảng Cáo A: Bộ tứ Matcha thơm mát', 'Caption mở đầu trực diện giới thiệu sản phẩm & chuỗi 4 vị Matcha Series')">
+              <img src="assets/matcha-series-banner.jpg" alt="Quảng cáo A Olion Matcha Series" class="feed-media-img" />
+              <div class="feed-media-zoom-overlay"><i data-lucide="zoom-in" style="width:13px;height:13px;"></i> Phóng to ảnh</div>
+            </div>
+          </div>
+          
+          <div class="vong2-stats-summary">
+            <div class="vong2-stat-item">
+              <div class="vong2-stat-lbl">Tỷ lệ nhấp (CTR)</div>
+              <div class="vong2-stat-val text-gold">1,29%</div>
+              <span class="vong2-stat-note">Thắng giai đoạn Click</span>
+            </div>
+            <div class="vong2-stat-item">
+              <div class="vong2-stat-lbl">Chi phí / nhấp (CPC)</div>
+              <div class="vong2-stat-val text-gold">1.946đ</div>
+              <span class="vong2-stat-note">Click rẻ hơn -29đ</span>
+            </div>
+            <div class="vong2-stat-item">
+              <div class="vong2-stat-lbl">Lượt theo dõi (Follows)</div>
+              <div class="vong2-stat-val">45 lượt</div>
+              <span class="vong2-stat-note">Trung bình 3 lần</span>
+            </div>
+            <div class="vong2-stat-item">
+              <div class="vong2-stat-lbl">Chi phí / follow (CPA)</div>
+              <div class="vong2-stat-val">11.131đ</div>
+              <span class="vong2-stat-note">Mức chi phí theo dõi</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mẫu Quảng Cáo B (Chiến Thắng) -->
+        <div class="vong2-ad-card winner-card">
+          <div class="vong2-ad-header">
+            <div class="vong2-badge b-badge">
+              <i data-lucide="trophy" style="width:13px;height:13px;"></i> MẪU QUẢNG CÁO B &bull; CHƠI CHỮ BẮT TREND
+            </div>
+            <span class="vong2-winner-pill">CHIẾN THẮNG CHUYỂN ĐỔI 🏆</span>
+          </div>
+          
+          <div class="vong2-feed-mockup">
+            <div class="feed-brand-bar">
+              <img src="assets/logo-white.webp" alt="Olion Coffee" class="feed-logo-mini" />
+              <div>
+                <div class="feed-brand-name">Olion Coffee</div>
+                <div class="feed-sub">Được tài trợ &bull; <i data-lucide="globe" style="width:11px;height:11px;display:inline;"></i></div>
+              </div>
+            </div>
+            
+            <div class="feed-post-copy">
+              <p><strong style="color:var(--matcha-bright);font-size:14px;">A LITTLE MATCHA, A LITTLE “MÁT CHA” 🍵</strong></p>
+              <p>Olion bật mí cho bạn Matcha Series với 4 hương vị, mỗi vị một nét riêng, chiều lòng mọi gu thưởng thức. Từ Matcha Bạc Hà the mát, Matcha Dừa thơm béo, Matcha Dâu ngọt ngào đến Matcha Espresso Latte đậm vị cà phê🤎</p>
+              <p style="color:var(--accent-gold-light);">✨ Ghé Olion, chọn một ly “Mát Cha” hợp gu bạn nhé!</p>
+              <div class="feed-address-box">
+                Olion Coffee - Elegance in Every Sip<br />
+                📍 80/64a, Dương Quảng Hàm, An Nhơn, TP. Hồ Chí Minh<br />
+                ⏰ 8:00 - 20:00 (thứ hai - chủ nhật) &bull; 📞 hotline: 0783 657 587
+              </div>
+            </div>
+            
+            <div class="feed-media-wrap" onclick="openLightbox('assets/matcha-series-banner.jpg', 'Mẫu Quảng Cáo B: A Little Matcha, A Little Mát Cha', 'Tiêu đề chơi chữ gieo vần, tạo tò mò và kích thích theo dõi trang vượt trội')">
+              <img src="assets/matcha-series-banner.jpg" alt="Quảng cáo B Olion Matcha Series" class="feed-media-img" />
+              <div class="feed-media-zoom-overlay"><i data-lucide="zoom-in" style="width:13px;height:13px;"></i> Phóng to ảnh</div>
+            </div>
+          </div>
+          
+          <div class="vong2-stats-summary winner-stats">
+            <div class="vong2-stat-item">
+              <div class="vong2-stat-lbl">Tỷ lệ nhấp (CTR)</div>
+              <div class="vong2-stat-val">1,27%</div>
+              <span class="vong2-stat-note">Chênh lệch nhẹ -0,02%</span>
+            </div>
+            <div class="vong2-stat-item">
+              <div class="vong2-stat-lbl">Chi phí / nhấp (CPC)</div>
+              <div class="vong2-stat-val">1.975đ</div>
+              <span class="vong2-stat-note">Mức giá click hợp lý</span>
+            </div>
+            <div class="vong2-stat-item">
+              <div class="vong2-stat-lbl">Lượt theo dõi (Follows)</div>
+              <div class="vong2-stat-val text-matcha">46 lượt 🏆</div>
+              <span class="vong2-stat-note text-matcha">Nhiều followers hơn!</span>
+            </div>
+            <div class="vong2-stat-item">
+              <div class="vong2-stat-lbl">Chi phí / follow (CPA)</div>
+              <div class="vong2-stat-val text-matcha">10.919đ 🏆</div>
+              <span class="vong2-stat-note text-matcha">Tiết kiệm hơn (-212đ)</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- Bảng Tổng Thể Vòng 2 -->
       <h3 style="font-family:var(--font-serif);font-size:20px;color:#fff;margin:20px 0 10px;">Bảng số liệu tổng hợp Vòng 2:</h3>
@@ -1803,35 +2257,126 @@
   <section class="report-section" id="muc-8">
     <div class="shell">
       <div class="section-chapter-tag matcha">8. KẾ HOẠCH CHẠY THẬT</div>
-      <h2 class="section-main-heading">Kế Hoạch Chạy Thật &amp; Quản Trị Đo Lường</h2>
+      <h2 class="section-main-heading">8. Kế Hoạch Triển Khai Chạy Thật</h2>
+      <p style="color:var(--text-muted);margin-bottom:20px;font-size:14.5px;">
+        Đúc kết cấu hình chiến dịch tối ưu nhất từ 4 vòng thử nghiệm giả lập để triển khai thực tế tại quán Olion Coffee.
+      </p>
 
-      <div class="action-grid">
+      <div class="action-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
         <!-- 1. Cấu hình -->
         <div class="action-card">
-          <h4>Thiết lập cấu hình chiến dịch chính thức</h4>
-          <p>&bull; <strong>Ngân sách tối ưu:</strong> Duy trì mức ngân sách từ 250.000đ/ngày (tương đương 1.750.000đ/7 ngày) như Vòng 3 để tận dụng hiệu quả phân phối sâu của hệ thống, giúp kéo giảm chi phí chuyển đổi (CPA) xuống mức tối ưu nhất.</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <i data-lucide="sliders" style="width:18px;height:18px;color:var(--accent-gold);"></i>
+            <h4 style="margin-bottom:0;">Thiết lập cấu hình chiến dịch chính thức</h4>
+          </div>
+          <p>&bull; <strong>Ngân sách tối ưu:</strong> Duy trì mức ngân sách từ <strong>250.000đ/ngày</strong> (tương đương <strong>1.750.000đ / 7 ngày</strong>) như Vòng 3 để tận dụng hiệu quả phân phối sâu của hệ thống, giúp kéo giảm chi phí chuyển đổi (CPA) xuống mức tối ưu nhất.</p>
         </div>
 
         <!-- 2. Targeting -->
         <div class="action-card">
-          <h4>Tệp đối tượng mục tiêu (Targeting)</h4>
-          <p>&bull; <strong>Địa điểm:</strong> TP. Hồ Chí Minh (tập trung bán kính xung quanh quán).</p>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <i data-lucide="map-pin" style="width:18px;height:18px;color:var(--matcha-green);"></i>
+            <h4 style="margin-bottom:0;">Tệp đối tượng mục tiêu (Targeting)</h4>
+          </div>
+          <p>&bull; <strong>Địa điểm:</strong> TP. Hồ Chí Minh (tập trung bán kính xung quanh quán tại Gò Vấp).</p>
           <p>&bull; <strong>Độ tuổi:</strong> 18 – 35 tuổi.</p>
-          <p>&bull; <strong>Sở thích kết hợp:</strong> bao gồm sinh viên, học sinh, và mở rộng sang tệp nhân viên văn phòng, giảng viên đại học.</p>
+          <p>&bull; <strong>Sở thích kết hợp:</strong> bao gồm sinh viên, học sinh, và mở rộng sang tệp nhân viên văn phòng, giảng viên đại học (đặc biệt ĐH Văn Lang lân cận).</p>
         </div>
 
         <!-- 3. Nội dung -->
-        <div class="action-card">
-          <h4>Lựa chọn thông điệp &amp; Nội dung sáng tạo</h4>
-          <p>&bull; <strong>Sử dụng dạng Caption có kết quả tốt nhất:</strong> như phiên bản quảng cáo B "A LITTLE MATCHA, A LITTLE “MÁT CHA” 🍵" vì đã minh chứng qua số liệu A/B testing là đem lại lượng chuyển đổi theo dõi trang tốt hơn và chi phí CPA tiết kiệm hơn so với cách viết trực diện.</p>
+        <div class="action-card" style="grid-column: 1 / -1;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+            <i data-lucide="sparkles" style="width:18px;height:18px;color:var(--matcha-bright);"></i>
+            <h4 style="margin-bottom:0;">Lựa chọn thông điệp &amp; Nội dung sáng tạo</h4>
+          </div>
+          <p>&bull; <strong>Sử dụng dạng Caption có kết quả tốt nhất:</strong> như phiên bản quảng cáo B <em>"A LITTLE MATCHA, A LITTLE “MÁT CHA” 🍵"</em> vì đã minh chứng qua số liệu A/B testing là đem lại lượng chuyển đổi theo dõi trang tốt hơn (46 vs 45 lượt) và chi phí CPA tiết kiệm hơn (10.919đ vs 11.131đ) so với cách viết trực diện.</p>
           <p>&bull; <strong>Hình ảnh/Video:</strong> hình ảnh trực quan, màu sắc tươi mát để kích thích thị giác ngay từ cái nhìn đầu tiên.</p>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- 4. Quản trị -->
-        <div class="action-card">
-          <h4>3. Quản trị và Đo lường</h4>
-          <p>&bull; <strong>Theo dõi định kỳ 3 ngày/lần:</strong> Kiểm tra liên tục các chỉ số cốt lõi gồm CPM, CTR và đặc biệt là CPA để đảm bảo không vượt quá ngưỡng cho phép.</p>
-          <p>&bull; <strong>Phương án dự phòng:</strong> Nếu sau 7-10 ngày chỉ số bắt đầu chững lại (hiện tượng bão hòa tệp), phải có phương án làm mới hình ảnh hoặc thay đổi góc quay video ngắn để duy trì độ tươi mới cho chiến dịch thu hút khách hàng ghé quán trải nghiệm trực tiếp.</p>
+  <!-- ========================================================
+       MỤC 9: QUẢN TRỊ & ĐO LƯỜNG (PDF TRANG 12 - MỤC RIÊNG BIỆT)
+       ======================================================== -->
+  <section class="report-section" id="muc-9">
+    <div class="shell">
+      <div class="section-chapter-tag gold">9. QUẢN TRỊ &amp; ĐO LƯỜNG CHIẾN DỊCH</div>
+      <h2 class="section-main-heading">9. Quản Trị Vận Hành &amp; Quy Trình Đo Lường</h2>
+      <p style="color:var(--text-muted);margin-bottom:24px;font-size:14.5px;">
+        Quy trình kiểm soát số liệu định kỳ và phương án kích hoạt phản ứng nhanh nhằm bảo toàn tỷ lệ chuyển đổi cho quán Olion Coffee.
+      </p>
+
+      <div class="governance-cockpit">
+        <!-- Khối 1: Theo dõi định kỳ 3 ngày/lần -->
+        <div class="gov-card monitoring-card">
+          <div class="gov-card-badge gold">
+            <span style="width:8px;height:8px;border-radius:50%;background:var(--accent-gold);box-shadow:0 0 8px var(--accent-gold);display:inline-block;"></span>
+            GIÁM SÁT ĐỊNH KỲ &bull; 3 NGÀY / LẦN
+          </div>
+          
+          <h3 class="gov-card-title">Theo Dõi Định Kỳ 3 Ngày / Lần</h3>
+          
+          <p class="gov-card-desc">
+            Kiểm tra liên tục các chỉ số cốt lõi gồm <strong>CPM</strong>, <strong>CTR</strong> và đặc biệt là <strong>CPA</strong> để đảm bảo không vượt quá ngưỡng cho phép.
+          </p>
+
+          <div class="gov-metrics-panel">
+            <div class="gov-metric-box">
+              <span class="gov-metric-name">CHỈ SỐ CPM</span>
+              <span class="gov-metric-target text-gold">~25.245đ</span>
+              <span class="gov-metric-sub">Kiểm soát chi phí / 1.000 hiển thị, ngăn chặn hiện tượng đẩy giá thầu ngoài ý muốn.</span>
+            </div>
+
+            <div class="gov-metric-box">
+              <span class="gov-metric-name">CHỈ SỐ CTR</span>
+              <span class="gov-metric-target text-gold">&ge; 1,30%</span>
+              <span class="gov-metric-sub">Bảo chứng tỷ lệ nhấp chuột ổn định, nội dung tiếp tục giữ được sự hấp dẫn với khách hàng.</span>
+            </div>
+
+            <div class="gov-metric-box" style="border-color:rgba(46,204,113,0.45);background:rgba(14,28,19,0.85);">
+              <span class="gov-metric-name" style="color:var(--matcha-green);">CHỈ SỐ CPA (TRẦN)</span>
+              <span class="gov-metric-target text-matcha">&le; 10.833đ</span>
+              <span class="gov-metric-sub">Chỉ số tối thượng: Đảm bảo chi phí / lượt theo dõi trang không bị trượt giá.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Khối 2: Phương án dự phòng -->
+        <div class="gov-card contingency-card">
+          <div class="gov-card-badge alert">
+            <i data-lucide="alert-triangle" style="width:13px;height:13px;"></i>
+            KỊCH BẢN DỰ PHÒNG &bull; SAU 7 - 10 NGÀY
+          </div>
+          
+          <h3 class="gov-card-title">Phương Án Dự Phòng Chống Bão Hòa Tệp</h3>
+          
+          <p class="gov-card-desc">
+            Nếu sau 7-10 ngày chỉ số bắt đầu chững lại (hiện tượng bão hòa tệp), phải có phương án làm mới hình ảnh hoặc thay đổi góc quay video ngắn để duy trì độ tươi mới cho chiến dịch thu hút khách hàng ghé quán trải nghiệm trực tiếp.
+          </p>
+
+          <div class="playbook-list">
+            <div class="playbook-item">
+              <div class="playbook-num">1</div>
+              <div class="playbook-text">
+                <strong>Làm mới hình ảnh trực quan:</strong> Chụp thêm các góc cận cảnh màu sắc tươi mát của Bộ Tứ Matcha Series (Matcha Bạc Hà the mát, Matcha Dừa béo ngậy, Matcha Dâu chua ngọt, Matcha Espresso Latte đậm đà).
+              </div>
+            </div>
+
+            <div class="playbook-item">
+              <div class="playbook-num">2</div>
+              <div class="playbook-text">
+                <strong>Thay đổi góc quay video ngắn:</strong> Đổi sang video ngắn TikTok/Reels bắt trend quay cảnh barista đánh chasen matcha, tiếng rót đá sảng khoái và không gian học nhóm mát lạnh tại quán.
+              </div>
+            </div>
+
+            <div class="playbook-item">
+              <div class="playbook-num">3</div>
+              <div class="playbook-text">
+                <strong>Kích thích ghé quán trải nghiệm trực tiếp:</strong> Duy trì độ tươi mới cho chiến dịch thu hút sinh viên và giới trẻ đến tận quán tại 80/64a Dương Quảng Hàm để thưởng thức ly “Mát Cha” hợp gu.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
