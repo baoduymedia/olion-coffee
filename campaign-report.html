@@ -649,6 +649,148 @@
       box-shadow: 0 0 20px rgba(46, 204, 113, 0.2);
     }
 
+    /* 4 Ly Matcha Series Gallery Grid */
+    .drinks-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin: 25px 0 35px;
+    }
+    @media (min-width: 900px) {
+      .drinks-gallery-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+    }
+    .drink-card-item {
+      background: linear-gradient(145deg, #18120D 0%, #100C08 100%);
+      border: 1.8px solid var(--border-brass);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-wood);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    .drink-card-item:hover {
+      transform: translateY(-5px);
+      border-color: var(--matcha-green);
+      box-shadow: 0 16px 35px rgba(0,0,0,0.8), 0 0 16px var(--matcha-glow);
+    }
+    .drink-img-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      position: relative;
+      background: #000;
+      cursor: pointer;
+    }
+    .drink-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .drink-card-item:hover .drink-card-img {
+      transform: scale(1.06);
+    }
+    .drink-zoom-badge {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      pointer-events: none;
+    }
+    .drink-card-desc {
+      padding: 14px 16px;
+      text-align: center;
+      border-top: 1px solid var(--border-brass);
+      background: rgba(14, 10, 7, 0.95);
+    }
+    .drink-card-title {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .drink-card-flavor {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--matcha-green);
+    }
+
+    /* Lightbox Modal */
+    .photo-lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(8px);
+      z-index: 1000000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .photo-lightbox.open {
+      display: flex;
+    }
+    .photo-lightbox-inner {
+      max-width: 580px;
+      width: 100%;
+      position: relative;
+      background: #110C08;
+      border: 2px solid var(--border-brass);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+      animation: zoomIn 0.25s ease;
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    .lightbox-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .lightbox-foot {
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #18120D;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent-gold-light);
+    }
+    .lightbox-close-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
     /* 4-Step Action Grid */
     .action-grid {
       display: grid;
@@ -997,8 +1139,60 @@
   <section class="report-section" id="muc-2">
     <div class="shell">
       <div class="section-chapter-tag matcha">2. PHIÊN BẢN QUẢNG CÁO</div>
-      <h2 class="section-main-heading">2. Phiên Bản Quảng Cáo &amp; Hình Ảnh Thực Tế</h2>
+      <h2 class="section-main-heading">2. Phiên Bản Quảng Cáo &amp; Bộ Ảnh 4 Món Matcha Series</h2>
+      <p style="font-size:15px;color:var(--crema);max-width:850px;line-height:1.7;margin-bottom:20px;">
+        Bộ tứ Matcha thơm mát cho ngày thêm tươi mới. Olion bật mí cho bạn <strong>Matcha Series với 4 hương vị</strong>, mỗi vị một nét riêng, chiều lòng mọi gu thưởng thức: Từ <em>Matcha Bạc Hà the mát</em>, <em>Matcha Dừa thơm béo</em>, <em>Matcha Dâu ngọt ngào</em> đến <em>Matcha Espresso Latte đậm vị cà phê🤎</em>.
+      </p>
 
+      <!-- 4 Hình Ảnh Món Đơn Từng Ly (Matcha Series Studio Posters) -->
+      <div class="drinks-gallery-grid">
+        <div class="drink-card-item" onclick="openLightbox('assets/matcha-bac-ha-card.jpg', 'Matcha Bạc Hà — The Mát')">
+          <div class="drink-img-wrap">
+            <img src="assets/matcha-bac-ha-card.jpg" alt="Matcha Bạc Hà - Olion Coffee" class="drink-card-img" />
+            <div class="drink-zoom-badge"><i data-lucide="zoom-in" style="width:12px;height:12px;"></i> Phóng to</div>
+          </div>
+          <div class="drink-card-desc">
+            <h4 class="drink-card-title">Matcha Bạc Hà</h4>
+            <div class="drink-card-flavor">🌿 The mát sảng khoái</div>
+          </div>
+        </div>
+
+        <div class="drink-card-item" onclick="openLightbox('assets/matcha-dua-card.jpg', 'Matcha Dừa — Thơm Béo')">
+          <div class="drink-img-wrap">
+            <img src="assets/matcha-dua-card.jpg" alt="Matcha Dừa - Olion Coffee" class="drink-card-img" />
+            <div class="drink-zoom-badge"><i data-lucide="zoom-in" style="width:12px;height:12px;"></i> Phóng to</div>
+          </div>
+          <div class="drink-card-desc">
+            <h4 class="drink-card-title">Matcha Dừa</h4>
+            <div class="drink-card-flavor">🥥 Thơm béo ngọt thanh</div>
+          </div>
+        </div>
+
+        <div class="drink-card-item" onclick="openLightbox('assets/matcha-dau-card.jpg', 'Matcha Dâu — Ngọt Ngào')">
+          <div class="drink-img-wrap">
+            <img src="assets/matcha-dau-card.jpg" alt="Matcha Dâu - Olion Coffee" class="drink-card-img" />
+            <div class="drink-zoom-badge"><i data-lucide="zoom-in" style="width:12px;height:12px;"></i> Phóng to</div>
+          </div>
+          <div class="drink-card-desc">
+            <h4 class="drink-card-title">Matcha Dâu</h4>
+            <div class="drink-card-flavor">🍓 Ngọt ngào tươi mới</div>
+          </div>
+        </div>
+
+        <div class="drink-card-item" onclick="openLightbox('assets/matcha-espresso-latte-card.jpg', 'Matcha Espresso Latte — Đậm Vị Cà Phê')">
+          <div class="drink-img-wrap">
+            <img src="assets/matcha-espresso-latte-card.jpg" alt="Matcha Espresso Latte - Olion Coffee" class="drink-card-img" />
+            <div class="drink-zoom-badge"><i data-lucide="zoom-in" style="width:12px;height:12px;"></i> Phóng to</div>
+          </div>
+          <div class="drink-card-desc">
+            <h4 class="drink-card-title">Matcha Espresso</h4>
+            <div class="drink-card-flavor">☕ Đậm vị cà phê fine dining</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2 Phiên Bản Nội Dung Quảng Cáo -->
+      <h3 style="font-family:var(--font-serif);font-size:22px;color:#fff;margin:25px 0 12px;">Nội dung 2 Phiên bản quảng cáo chạy thử nghiệm:</h3>
       <div class="compare-grid">
         <!-- Phiên bản 1 -->
         <div class="ad-card-preview">
@@ -1494,6 +1688,20 @@
     </div>
   </footer>
 
+  <!-- Photo Lightbox Modal -->
+  <div class="photo-lightbox" id="photoLightbox" onclick="closeLightbox()">
+    <div class="photo-lightbox-inner" onclick="event.stopPropagation()">
+      <button type="button" class="lightbox-close-btn" onclick="closeLightbox()" aria-label="Đóng ảnh">
+        <i data-lucide="x" style="width:18px;height:18px;"></i>
+      </button>
+      <img src="" alt="Olion Drink" id="lightboxImg" class="lightbox-img" />
+      <div class="lightbox-foot">
+        <span id="lightboxCaption">Matcha Series</span>
+        <span style="font-size:12px;color:var(--text-muted);">Olion Coffee</span>
+      </div>
+    </div>
+  </div>
+
   <!-- ========================================================
        SCRIPTS: CON CHUỘT LÁ TRÀ, CHARTS & TƯƠNG TÁC
        ======================================================== -->
@@ -1501,6 +1709,24 @@
     // Lucide Icons Init
     if (window.lucide && typeof window.lucide.createIcons === 'function') {
       window.lucide.createIcons();
+    }
+
+    // Lightbox Modal functions
+    function openLightbox(src, title) {
+      const box = document.getElementById('photoLightbox');
+      const img = document.getElementById('lightboxImg');
+      const cap = document.getElementById('lightboxCaption');
+      if (box && img && cap) {
+        img.src = src;
+        cap.innerText = title;
+        box.classList.add('open');
+        if (window.lucide) window.lucide.createIcons();
+      }
+    }
+
+    function closeLightbox() {
+      const box = document.getElementById('photoLightbox');
+      if (box) box.classList.remove('open');
     }
 
     // Trailing Matcha Leaf Cursor
