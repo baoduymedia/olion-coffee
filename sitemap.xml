@@ -96,4 +96,16 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
+
+  <!-- Trang Báo Cáo Chiến Dịch & Tối Ưu Tăng Trưởng (Matcha Series Case Study) -->
+  <url>
+    <loc>https://www.olioncoffee.app/campaign-report.html</loc>
+    <lastmod>2026-11-05T20:00:00+07:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.olioncoffee.app/assets/menu/matcha_bac_ha.webp</image:loc>
+      <image:title>Báo Cáo Chiến Dịch Bộ Tứ Matcha Series Olion Coffee</image:title>
+    </image:image>
+  </url>
 </urlset>
