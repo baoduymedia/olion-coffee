@@ -322,6 +322,11 @@
     .mobile-nav-drawer.open {
       display: flex;
     }
+        .mobile-nav-link.active {
+      background: linear-gradient(135deg, var(--accent-gold), #B57432);
+      color: #120D09;
+      font-weight: 800;
+    }
     .mobile-nav-link {
       padding: 10px 14px;
       border-radius: var(--radius-md);
@@ -434,6 +439,7 @@
       padding: 75px 0;
       position: relative;
       border-bottom: 1px solid var(--border-subtle);
+      scroll-margin-top: 80px;
     }
     .section-chapter-tag {
       display: inline-flex;
@@ -4210,6 +4216,117 @@
         });
       }
     });
+  
+    // ========================================================
+    // DYNAMIC ACTIVE MENU & SCROLLSPY (DESKTOP & MOBILE)
+    // ========================================================
+    (function initMenuScrollSpy() {
+      const desktopLinks = document.querySelectorAll(".header-menu-nav .menu-link");
+      const mobileLinks = document.querySelectorAll(".mobile-nav-drawer .mobile-nav-link");
+      const sections = document.querySelectorAll("section.report-section[id]");
+      const navContainer = document.querySelector(".header-menu-nav");
+
+      function setActiveLink(id) {
+        if (!id) return;
+        let matchedActiveLink = null;
+
+        desktopLinks.forEach(link => {
+          const href = link.getAttribute("href");
+          if (href === "#" + id) {
+            link.classList.add("active");
+            matchedActiveLink = link;
+          } else {
+            link.classList.remove("active");
+          }
+        });
+
+        mobileLinks.forEach(link => {
+          const href = link.getAttribute("href");
+          if (href === "#" + id) {
+            link.classList.add("active");
+          } else {
+            link.classList.remove("active");
+          }
+        });
+
+        // Ensure active pill is scrolled into view in menu bar
+        if (matchedActiveLink && navContainer) {
+          const navRect = navContainer.getBoundingClientRect();
+          const linkRect = matchedActiveLink.getBoundingClientRect();
+          if (linkRect.left < navRect.left || linkRect.right > navRect.right) {
+            matchedActiveLink.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+          }
+        }
+      }
+
+      // Click listener for immediate response
+      document.querySelectorAll(".menu-link, .mobile-nav-link").forEach(link => {
+        link.addEventListener("click", function(e) {
+          const href = this.getAttribute("href");
+          if (href && href.startsWith("#")) {
+            const targetId = href.substring(1);
+            setActiveLink(targetId);
+          }
+        });
+      });
+
+      // ScrollSpy handler
+      function onScroll() {
+        const scrollPos = window.scrollY + 140; // Header offset
+        let currentSectionId = null;
+
+        sections.forEach(section => {
+          const top = section.offsetTop;
+          const height = section.offsetHeight;
+          if (scrollPos >= top && scrollPos < top + height) {
+            currentSectionId = section.getAttribute("id");
+          }
+        });
+
+        // Handle edge cases (very top or very bottom of page)
+        if (!currentSectionId && window.scrollY < 200) {
+          currentSectionId = "muc-1";
+        } else if (!currentSectionId && (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 80) {
+          currentSectionId = "muc-9";
+        }
+
+        if (currentSectionId) {
+          setActiveLink(currentSectionId);
+        }
+      }
+
+      let isThrottled = false;
+      window.addEventListener("scroll", () => {
+        if (!isThrottled) {
+          window.requestAnimationFrame(() => {
+            onScroll();
+            isThrottled = false;
+          });
+          isThrottled = true;
+        }
+      }, { passive: true });
+
+      // Trigger on page load with hash support
+      function checkInitialHash() {
+        if (window.location.hash) {
+          const hashId = window.location.hash.substring(1);
+          const target = document.getElementById(hashId);
+          if (target) {
+            setActiveLink(hashId);
+            return;
+          }
+        }
+        onScroll();
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", checkInitialHash);
+      } else {
+        checkInitialHash();
+      }
+      window.addEventListener("hashchange", checkInitialHash);
+    })();
+
   </script>
 </body>
 </html>
