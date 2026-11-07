@@ -13,6 +13,10 @@ Allow: /assets/
 # Block Admin Portal & internal dashboard from indexing to conserve crawl budget
 Disallow: /admin.html
 Disallow: /admin
+Disallow: /campaign-report
+Disallow: /campaign-report.html
+Disallow: /report
+Disallow: /report.html
 Disallow: /api/
 Disallow: /*?preview=*
 
