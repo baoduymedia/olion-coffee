@@ -1727,7 +1727,7 @@ __CSS__
           </div>
           <div class="hero-stat-num text-matcha">11 Bạn</div>
           <div class="hero-stat-lbl">Nhóm 7 (Gỗ Xà Cừ)</div>
-          <div class="hero-stat-sub">ĐH Văn Lang &bull; K28</div>
+          <div class="hero-stat-sub">ĐH Văn Lang &bull; K30</div>
         </div>
       </div>
     </div>

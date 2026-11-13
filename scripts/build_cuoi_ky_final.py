@@ -2187,19 +2187,34 @@ def run():
 
     /* Family Tree Avatar Enlargements */
     .org-avatar-box {
-      width: 96px !important;
-      height: 96px !important;
+      width: 120px !important;
+      height: 120px !important;
       flex-shrink: 0 !important;
       position: relative !important;
     }
     .org-avatar-img {
-      width: 96px !important;
-      height: 96px !important;
+      width: 120px !important;
+      height: 120px !important;
       border-radius: 50% !important;
       object-fit: cover !important;
-      border: 3px solid #B8A58B !important;
-      box-shadow: 0 6px 18px rgba(44, 33, 27, 0.15) !important;
+      border: 3.5px solid #B8A58B !important;
+      box-shadow: 0 8px 24px rgba(44, 33, 27, 0.18) !important;
       display: block !important;
+    }
+    .org-crown-badge {
+      position: absolute !important;
+      top: -12px !important;
+      right: -8px !important;
+      width: 36px !important;
+      height: 36px !important;
+      font-size: 20px !important;
+      background: #B8A58B !important;
+      color: #2C211B !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25) !important;
     }
     .org-crown-badge {
       position: absolute !important;
@@ -2279,30 +2294,41 @@ def run():
     .org-tree-branches-bar::after { right: 0 !important; }
 
     .org-mini-avatar-box {
-      width: 72px !important;
-      height: 72px !important;
+      width: 96px !important;
+      height: 96px !important;
       flex-shrink: 0 !important;
     }
     .org-mini-avatar {
-      width: 72px !important;
-      height: 72px !important;
+      width: 96px !important;
+      height: 96px !important;
       border-radius: 50% !important;
       object-fit: cover !important;
-      border: 2.5px solid #B8A58B !important;
-      box-shadow: 0 4px 12px rgba(44, 33, 27, 0.12) !important;
+      border: 3px solid #B8A58B !important;
+      box-shadow: 0 6px 16px rgba(44, 33, 27, 0.14) !important;
       display: block !important;
+    }
+    @media (max-width: 600px) {
+      .org-avatar-box, .org-avatar-img {
+        width: 104px !important;
+        height: 104px !important;
+      }
+      .org-mini-avatar-box, .org-mini-avatar {
+        width: 84px !important;
+        height: 84px !important;
+      }
     }
     .org-member-mini-card {
       background: #FAF7F2 !important;
-      border: 1.5px solid rgba(184, 165, 139, 0.4) !important;
-      border-radius: 16px !important;
-      padding: 14px 12px !important;
+      border: 1.5px solid rgba(184, 165, 139, 0.45) !important;
+      border-radius: 18px !important;
+      padding: 16px 16px !important;
       display: flex !important;
       align-items: center !important;
-      gap: 14px !important;
-      margin-bottom: 12px !important;
+      gap: 18px !important;
+      margin-bottom: 14px !important;
       transition: all 0.25s ease !important;
       cursor: pointer !important;
+      box-shadow: 0 4px 14px rgba(44, 33, 27, 0.04) !important;
     }
     .org-member-mini-card:hover {
       transform: translateY(-3px) !important;
@@ -2360,6 +2386,9 @@ def run():
     m1 = re.search(r'<section class="report-section" id="muc-1">', src)
     html_start = src.find('html = """') + 10
     head_hero = src[html_start:m1.start()]
+    head_hero = head_hero.replace('ĐH Văn Lang &bull; K28', 'ĐH Văn Lang &bull; K30')
+    head_hero = head_hero.replace('ĐH Văn Lang • K28', 'ĐH Văn Lang • K30')
+    head_hero = head_hero.replace('K28', 'K30')
 
     new_header_nav = """<nav class="header-menu-nav" aria-label="Menu điều hướng báo cáo cuối kỳ">
           <a href="#muc-1" class="menu-link active">1. Tổng Quan</a>
@@ -2473,8 +2502,8 @@ def run():
               <i data-lucide="facebook" style="width:13px;height:13px;"></i>
               <span>Facebook Fanpage</span>
             </div>
-            <div class="channel-qr-img-box" onclick="openLightbox('assets/qr-fb.png', 'Mã QR Facebook Fanpage Olion Coffee', 'Quét để truy cập trang Facebook chính thức của Olion Coffee')">
-              <img src="assets/qr-fb.png" alt="QR Facebook Olion Coffee" class="channel-qr-img" />
+            <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-facebook.png', 'Mã QR Facebook Fanpage Olion Coffee', 'Quét để truy cập trang Facebook chính thức của Olion Coffee')">
+              <img src="assets/cuoi-ky/qr-facebook.png" alt="QR Facebook Olion Coffee" class="channel-qr-img" />
               <div class="channel-qr-scan-hint"><i data-lucide="maximize-2" style="width:13px;height:13px;"></i> Phóng to</div>
             </div>
             <div class="channel-qr-name">Facebook Fanpage</div>
@@ -2492,8 +2521,8 @@ def run():
               <i data-lucide="video" style="width:13px;height:13px;"></i>
               <span>TikTok Channel 🏆</span>
             </div>
-            <div class="channel-qr-img-box" onclick="openLightbox('assets/qr-tiktok.png', 'Mã QR TikTok Olion Coffee', 'Quét để theo dõi kênh TikTok triệu view của Olion Coffee')">
-              <img src="assets/qr-tiktok.png" alt="QR TikTok Olion Coffee" class="channel-qr-img" />
+            <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-tiktok.png', 'Mã QR TikTok Olion Coffee', 'Quét để theo dõi kênh TikTok triệu view của Olion Coffee')">
+              <img src="assets/cuoi-ky/qr-tiktok.png" alt="QR TikTok Olion Coffee" class="channel-qr-img" />
               <div class="channel-qr-scan-hint"><i data-lucide="maximize-2" style="width:13px;height:13px;"></i> Phóng to</div>
             </div>
             <div class="channel-qr-name">TikTok Channel</div>
@@ -2511,8 +2540,8 @@ def run():
               <i data-lucide="instagram" style="width:13px;height:13px;"></i>
               <span>Instagram Art</span>
             </div>
-            <div class="channel-qr-img-box" onclick="openLightbox('assets/qr-ig.png', 'Mã QR Instagram Olion Coffee', 'Quét để xem thư viện ảnh thẩm mỹ cao trên Instagram Olion Coffee')">
-              <img src="assets/qr-ig.png" alt="QR Instagram Olion Coffee" class="channel-qr-img" />
+            <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-instagram.png', 'Mã QR Instagram Olion Coffee', 'Quét để xem thư viện ảnh thẩm mỹ cao trên Instagram Olion Coffee')">
+              <img src="assets/cuoi-ky/qr-instagram.png" alt="QR Instagram Olion Coffee" class="channel-qr-img" />
               <div class="channel-qr-scan-hint"><i data-lucide="maximize-2" style="width:13px;height:13px;"></i> Phóng to</div>
             </div>
             <div class="channel-qr-name">Instagram Profile</div>
@@ -2530,8 +2559,8 @@ def run():
               <i data-lucide="globe" style="width:13px;height:13px;"></i>
               <span>Landing Page</span>
             </div>
-            <div class="channel-qr-img-box" onclick="openLightbox('assets/qr-landing-page.png', 'Mã QR Landing Page Olion Coffee', 'Quét để trải nghiệm trang đích giới thiệu không gian & menu Olion')">
-              <img src="assets/qr-landing-page.png" alt="QR Landing Page Olion Coffee" class="channel-qr-img" />
+            <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-landingpage.png', 'Mã QR Landing Page Olion Coffee', 'Quét để trải nghiệm trang đích giới thiệu không gian & menu Olion')">
+              <img src="assets/cuoi-ky/qr-landingpage.png" alt="QR Landing Page Olion Coffee" class="channel-qr-img" />
               <div class="channel-qr-scan-hint"><i data-lucide="maximize-2" style="width:13px;height:13px;"></i> Phóng to</div>
             </div>
             <div class="channel-qr-name">Landing Page Web</div>
