@@ -1784,7 +1784,7 @@ __CSS__
       </div>
 
       <!-- Khung Định Vị Chiến Lược 4 Khối (Positioning Matrix Grid) -->
-      <h3 style="font-family:var(--font-serif);font-size:24px;color:#fff;margin:32px 0 16px;display:flex;align-items:center;gap:10px;">
+      <h3 style="font-family:var(--font-serif);font-size:24px;color:#2C211B;margin:32px 0 16px;display:flex;align-items:center;gap:10px;">
         <span style="color:var(--accent-gold);">❖</span> Ma Trận Định Vị &amp; Giá Trị Cốt Lõi Cho Sinh Viên VLU
       </h3>
 
@@ -1905,7 +1905,7 @@ __CSS__
 
         <div class="persona-layout-grid">
           <!-- Cột Trái: Chân Dung VIP Frame -->
-          <div class="persona-photo-col" onclick="openLightbox('assets/cuoi-ky/persona-doan-minh-trang.webp?v=20261113c', 'Persona: Đoàn Minh Trang (Sinh viên năm 3 ĐH Văn Lang)', 'Đoàn Minh Trang học bài &amp; thưởng thức ly Matcha Dâu tại không gian quán Olion Coffee')">
+          <div class="persona-photo-col" onclick="openLightbox('assets/cuoi-ky/persona-doan-minh-trang.webp?v=20261113_final', 'Persona: Đoàn Minh Trang (Sinh viên năm 3 ĐH Văn Lang)', 'Đoàn Minh Trang học bài &amp; thưởng thức ly Matcha Dâu tại không gian quán Olion Coffee')">
             <div class="persona-photo-wrapper">
               <div class="persona-photo-live-badge">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--accent-gold)" stroke="var(--accent-gold)" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -1914,7 +1914,7 @@ __CSS__
               <div class="persona-photo-zoom-btn" title="Phóng to ảnh nét cao">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
               </div>
-              <img src="assets/cuoi-ky/persona-doan-minh-trang.webp?v=20261113c" alt="Đoàn Minh Trang - Sinh viên năm 3 thưởng thức Matcha Dâu tại quán Olion Coffee" class="persona-photo-img" />
+              <img src="assets/cuoi-ky/persona-doan-minh-trang.webp?v=20261113_final" alt="Đoàn Minh Trang - Sinh viên năm 3 thưởng thức Matcha Dâu tại quán Olion Coffee" class="persona-photo-img" />
             </div>
             <div class="persona-photo-plate">
               <div class="persona-photo-name">
