@@ -44,14 +44,14 @@ def run():
       --text-muted: #5C4D44 !important;
       --text-dim: #78685E !important;
       
-      --accent-gold: #B8A58B !important;
-      --accent-gold-light: #DDD4C7 !important;
+      --accent-gold: #7C5A32 !important;
+      --accent-gold-light: #5C4328 !important;
       --accent-gold-glow: rgba(184, 165, 139, 0.35) !important;
       --border-brass: rgba(184, 165, 139, 0.45) !important;
       --border-subtle: rgba(44, 33, 27, 0.12) !important;
       
       --matcha: #7C8268 !important;
-      --matcha-green: #7C8268 !important;
+      --matcha-green: #2E7D32 !important;
       --matcha-bright: #8F957B !important;
       --matcha-dark: #464C37 !important;
       --matcha-glow: rgba(124, 130, 104, 0.3) !important;
@@ -982,7 +982,12 @@ def run():
       transition: all 0.25s ease !important;
       box-shadow: 0 4px 12px rgba(44, 33, 27, 0.15) !important;
     }
-    .channel-qr-btn.fb { background: #1877F2 !important; }
+    
+    .channel-qr-btn.tt, .channel-qr-btn.tiktok { background: #111111 !important; color: #FFFFFF !important; }
+    .channel-qr-btn.fb { background: #1877F2 !important; color: #FFFFFF !important; }
+    .channel-qr-btn.ig { background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF) !important; color: #FFFFFF !important; }
+    .channel-qr-btn.web { background: #5A6B47 !important; color: #FFFFFF !important; }
+
     .channel-qr-btn.tiktok { background: #2C211B !important; }
     .channel-qr-btn.ig { background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF) !important; }
     .channel-qr-btn.web { background: #7C8268 !important; }
@@ -2073,7 +2078,260 @@ def run():
       color: #5C4D44 !important;
       font-size: 14px !important;
     }
-    """
+    
+    /* ========================================================
+       ADDITIONAL PC OVERFLOW CONSTRAINTS & HIGH CONTRAST TYPOGRAPHY
+       ======================================================== */
+    .shell {
+      max-width: 1180px !important;
+      width: 100% !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      padding-left: 24px !important;
+      padding-right: 24px !important;
+      box-sizing: border-box !important;
+    }
+
+    .hero-banner-image-box {
+      max-width: 960px !important;
+      width: 100% !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      margin-top: 20px !important;
+      margin-bottom: 28px !important;
+      border-radius: 18px !important;
+      border: 2px solid rgba(184, 165, 139, 0.45) !important;
+      background: #FFFFFF !important;
+      box-shadow: 0 10px 30px rgba(44, 33, 27, 0.08) !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+    }
+    .hero-banner-image {
+      width: 100% !important;
+      height: auto !important;
+      display: block !important;
+    }
+    .hero-banner-caption {
+      background: #FAF7F2 !important;
+      border-top: 1.5px solid rgba(184, 165, 139, 0.35) !important;
+      padding: 12px 18px !important;
+      font-size: 13.5px !important;
+      color: #2C211B !important;
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+    }
+    .hero-banner-caption strong,
+    .hero-banner-caption span {
+      color: #2C211B !important;
+    }
+
+    .persona-container {
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    .channel-qr-grid {
+      display: grid !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 20px !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      margin-top: 20px !important;
+    }
+    @media (max-width: 992px) {
+      .channel-qr-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+    @media (max-width: 540px) {
+      .channel-qr-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* Universal Anti-White / High Contrast Overrides */
+    .auto-note-box {
+      background: #FAF7F2 !important;
+      border: 1.5px solid rgba(124, 130, 104, 0.45) !important;
+      border-radius: 16px !important;
+      padding: 18px 22px !important;
+      margin: 20px 0 !important;
+      color: #2C211B !important;
+      font-size: 14px !important;
+      line-height: 1.65 !important;
+      box-shadow: 0 4px 16px rgba(44, 33, 27, 0.04) !important;
+    }
+    .auto-note-box strong,
+    .auto-note-box b,
+    .auto-note-box span {
+      color: #2C211B !important;
+    }
+
+    .text-gold {
+      color: #7C5A32 !important;
+      text-shadow: none !important;
+    }
+    .text-matcha {
+      color: #2E7D32 !important;
+      text-shadow: none !important;
+    }
+    .hero-title .text-gold {
+      color: #7C5A32 !important;
+    }
+    .hero-title .text-matcha {
+      color: #2E7D32 !important;
+    }
+
+    /* Family Tree Avatar Enlargements */
+    .org-avatar-box {
+      width: 96px !important;
+      height: 96px !important;
+      flex-shrink: 0 !important;
+      position: relative !important;
+    }
+    .org-avatar-img {
+      width: 96px !important;
+      height: 96px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      border: 3px solid #B8A58B !important;
+      box-shadow: 0 6px 18px rgba(44, 33, 27, 0.15) !important;
+      display: block !important;
+    }
+    .org-crown-badge {
+      position: absolute !important;
+      top: -10px !important;
+      right: -6px !important;
+      width: 32px !important;
+      height: 32px !important;
+      font-size: 18px !important;
+      background: #B8A58B !important;
+      color: #2C211B !important;
+      border-radius: 50% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2) !important;
+    }
+    .org-leader-card {
+      background: #FFFFFF !important;
+      border: 2.5px solid #B8A58B !important;
+      border-radius: 20px !important;
+      padding: 24px 32px !important;
+      box-shadow: 0 16px 40px rgba(44, 33, 27, 0.09) !important;
+      max-width: 580px !important;
+      margin: 0 auto !important;
+      text-align: left !important;
+      position: relative !important;
+      transition: all 0.3s ease !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 22px !important;
+      cursor: pointer !important;
+    }
+    .org-leader-name {
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-size: 26px !important;
+      font-weight: 700 !important;
+      color: #2C211B !important;
+      margin-bottom: 3px !important;
+    }
+    .org-leader-role {
+      font-size: 14px !important;
+      color: #5C4328 !important;
+      font-weight: 700 !important;
+      margin-bottom: 6px !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.05em !important;
+    }
+    .org-leader-desc {
+      font-size: 13.5px !important;
+      color: #4A3B32 !important;
+      line-height: 1.5 !important;
+    }
+
+    .org-tree-stem {
+      width: 3px !important;
+      height: 36px !important;
+      background: #B8A58B !important;
+      margin: 0 auto !important;
+    }
+    .org-tree-branches-bar {
+      height: 3px !important;
+      background: #B8A58B !important;
+      width: 84% !important;
+      margin: 0 auto 30px !important;
+      position: relative !important;
+    }
+    .org-tree-branches-bar::before,
+    .org-tree-branches-bar::after {
+      content: '' !important;
+      position: absolute !important;
+      top: 0 !important;
+      width: 3px !important;
+      height: 18px !important;
+      background: #B8A58B !important;
+    }
+    .org-tree-branches-bar::before { left: 0 !important; }
+    .org-tree-branches-bar::after { right: 0 !important; }
+
+    .org-mini-avatar-box {
+      width: 72px !important;
+      height: 72px !important;
+      flex-shrink: 0 !important;
+    }
+    .org-mini-avatar {
+      width: 72px !important;
+      height: 72px !important;
+      border-radius: 50% !important;
+      object-fit: cover !important;
+      border: 2.5px solid #B8A58B !important;
+      box-shadow: 0 4px 12px rgba(44, 33, 27, 0.12) !important;
+      display: block !important;
+    }
+    .org-member-mini-card {
+      background: #FAF7F2 !important;
+      border: 1.5px solid rgba(184, 165, 139, 0.4) !important;
+      border-radius: 16px !important;
+      padding: 14px 12px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 14px !important;
+      margin-bottom: 12px !important;
+      transition: all 0.25s ease !important;
+      cursor: pointer !important;
+    }
+    .org-member-mini-card:hover {
+      transform: translateY(-3px) !important;
+      box-shadow: 0 10px 24px rgba(44, 33, 27, 0.1) !important;
+      border-color: #7C8268 !important;
+      background: #FFFFFF !important;
+    }
+    .org-mini-name {
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-size: 19px !important;
+      font-weight: 700 !important;
+      color: #2C211B !important;
+      line-height: 1.25 !important;
+      margin-bottom: 2px !important;
+    }
+    .org-mini-role {
+      font-size: 11px !important;
+      color: #5C4328 !important;
+      font-weight: 700 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.05em !important;
+      margin-bottom: 4px !important;
+    }
+    .org-mini-desc {
+      font-size: 12px !important;
+      color: #4A3B32 !important;
+      line-height: 1.4 !important;
+    }
+"""
 
     full_css = base_css + "\n" + extra_css + "\n" + canva_palette_css
 
@@ -2082,6 +2340,11 @@ def run():
         p = rf'(<section class="report-section" id="{sid}">[\s\S]*?</section>)'
         m = re.search(p, src)
         return m.group(1) if m else ""
+
+    def extract_inner_shell(section_html):
+        s = re.sub(r'^\s*<section[^>]*>\s*<div class="shell"[^>]*>', '', section_html.strip(), flags=re.IGNORECASE)
+        s = re.sub(r'</div>\s*</section>\s*$', '', s.strip(), flags=re.IGNORECASE)
+        return s.strip()
 
     sec1_raw = get_sec('muc-1')
     sec2_raw = get_sec('muc-2')
@@ -2098,19 +2361,15 @@ def run():
     html_start = src.find('html = """') + 10
     head_hero = src[html_start:m1.start()]
 
-    # Replace Nav in Header with 8 Clear Sections
     new_header_nav = """<nav class="header-menu-nav" aria-label="Menu điều hướng báo cáo cuối kỳ">
           <a href="#muc-1" class="menu-link active">1. Tổng Quan</a>
-          <a href="#muc-2" class="menu-link">2. KPI</a>
-          <a href="#muc-3" class="menu-link">3. Demo</a>
+          <a href="#muc-2" class="menu-link">2. Kết Quả KPI</a>
+          <a href="#muc-3" class="menu-link">3. Sản Phẩm Demo</a>
           <a href="#muc-4" class="menu-link">4. Phân Tích</a>
           <a href="#muc-5" class="menu-link">5. Pháp Lý</a>
-          <a href="#muc-6" class="menu-link">6. Khởi Nghiệp</a>
-          <a href="#muc-7" class="menu-link">7. Số Liệu</a>
-          <a href="#muc-8" class="menu-link">8. Thành Viên</a>
+          <a href="#muc-6" class="menu-link">6. Sáng Tạo &amp; Thành Viên</a>
+          <a href="#muc-7" class="menu-link">7. Tổng Kết Số Liệu</a>
         </nav>"""
-    head_hero = re.sub(r'<nav class="header-menu-nav"[^>]*>[\s\S]*?</nav>', new_header_nav.strip(), head_hero)
-    head_hero = re.sub(r'<nav class="cafe-nav-menu"[^>]*>[\s\S]*?</nav>', new_header_nav.strip(), head_hero)
 
     drawer_html = """
     <div class="mobile-nav-drawer" id="mobileDrawer">
@@ -2126,43 +2385,53 @@ def run():
         <a href="#muc-3" class="mobile-nav-link" onclick="toggleDrawer()"><span>3. Sản phẩm truyền thông nổi bật &amp; Demo</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
         <a href="#muc-4" class="mobile-nav-link" onclick="toggleDrawer()"><span>4. Phân tích tổng quan &amp; Điều chỉnh</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
         <a href="#muc-5" class="mobile-nav-link" onclick="toggleDrawer()"><span>5. Tuân thủ pháp lý (12 tiêu chí)</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
-        <a href="#muc-6" class="mobile-nav-link" onclick="toggleDrawer()"><span>6. Sáng tạo nội dung &amp; Khởi nghiệp</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
+        <a href="#muc-6" class="mobile-nav-link" onclick="toggleDrawer()"><span>6. Sáng tạo nội dung &amp; Bảng gia phả thành viên</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
         <a href="#muc-7" class="mobile-nav-link" onclick="toggleDrawer()"><span>7. Tổng kết ảnh số liệu (Proposal Poster)</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
-        <a href="#muc-8" class="mobile-nav-link" onclick="toggleDrawer()"><span>8. Phân vai thành viên Nhóm 7 (Gia phả)</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
       </div>
     </div>
     """
+
+
+    head_hero = re.sub(r'<nav class="header-menu-nav"[^>]*>[\s\S]*?</nav>', new_header_nav.strip(), head_hero)
+    head_hero = re.sub(r'<nav class="cafe-nav-menu"[^>]*>[\s\S]*?</nav>', new_header_nav.strip(), head_hero)
     head_hero = re.sub(r'<div class="mobile-nav-drawer" id="mobileDrawer">[\s\S]*?</div>(?=\s*<!--|\s*<section class="hero-section")', drawer_html.strip(), head_hero)
 
-    # 1. Section 1: muc-1 + Persona
-    s1_clean = sec1_raw.rstrip()
-    if s1_clean.endswith('</section>'):
-        s1_clean = s1_clean[:-10]
-    s2_inner = re.sub(r'^<section class="report-section" id="muc-2">\s*<div class="shell">', '', sec2_raw.strip())
-    s2_inner = re.sub(r'</div>\s*</section>$', '', s2_inner.strip())
+    # ========================================================
+    # 1. SECTION 1: Tổng Quan Dự Án & Persona Đoàn Minh Trang
+    # ========================================================
+    s1_inner = extract_inner_shell(sec1_raw)
+    s2_inner = extract_inner_shell(sec2_raw)
+
     s2_inner = re.sub(r'<div class="section-chapter-tag[^"]*">2\.[^<]+</div>',
                       '<div class="section-chapter-tag matcha" style="margin-bottom:12px;"><i data-lucide="sparkles" style="width:12px;height:12px;display:inline-block;vertical-align:middle;margin-right:4px;"></i>CHÂN DUNG KHÁCH HÀNG MỤC TIÊU (PERSONA)</div>',
                       s2_inner)
     s2_inner = s2_inner.replace('<h2 class="section-main-heading">2. Chân Dung Khách Hàng Mục Tiêu: Đoàn Minh Trang</h2>',
                                 '<h3 class="section-main-heading" style="font-size:28px;margin-bottom:14px;color:#2C211B;">Chân Dung Khách Hàng Mục Tiêu: Đoàn Minh Trang</h3>')
 
-    sec1_final = f"""{s1_clean}
+    sec1_final = f"""
+  <!-- ========================================================
+       MỤC 1: TỔNG QUAN DỰ ÁN & CHÂN DUNG KHÁCH HÀNG (PERSONA)
+       ======================================================== -->
+  <section class="report-section" id="muc-1">
+    <div class="shell">
+      {s1_inner}
       <div class="section-divider" style="margin: 48px 0 36px; border-top: 1.5px dashed rgba(184, 165, 139, 0.4);"></div>
       {s2_inner}
     </div>
-  </section>"""
+  </section>
+"""
 
-    # 2. Section 2: muc-3 + 4 QR Codes + Charts
-    s3_clean = sec3_raw.rstrip()
-    if s3_clean.endswith('</section>'):
-        s3_clean = s3_clean[:-10]
-    s3_clean = s3_clean.replace('id="muc-3"', 'id="muc-2"')
-    s3_clean = s3_clean.replace('<div class="section-chapter-tag">3. KPI DỰ ÁN &amp; KẾT QUẢ ĐẠT ĐƯỢC</div>',
+    # ========================================================
+    # 2. SECTION 2: Kết Quả So Với KPI, 4 Kênh QR & Biểu Đồ 6 Tuần
+    # ========================================================
+    s3_inner = extract_inner_shell(sec3_raw)
+    s4_inner = extract_inner_shell(sec4_raw)
+
+    s3_inner = s3_inner.replace('<div class="section-chapter-tag">3. KPI DỰ ÁN &amp; KẾT QUẢ ĐẠT ĐƯỢC</div>',
                                 '<div class="section-chapter-tag">2. KẾT QUẢ SO VỚI KPI &amp; TĂNG TRƯỞNG</div>')
-    s3_clean = s3_clean.replace('<h2 class="section-main-heading">3. Mục Tiêu KPI Kế Hoạch &amp; Kết Quả Thực Tế Từng Kênh</h2>',
+    s3_inner = s3_inner.replace('<h2 class="section-main-heading">3. Mục Tiêu KPI Kế Hoạch &amp; Kết Quả Thực Tế Từng Kênh</h2>',
                                 '<h2 class="section-main-heading">2. Kết Quả So Với KPI Kế Hoạch &amp; Tăng Trưởng Thực Tế</h2>')
 
-    # Replace dark evaluation criteria box with luxury light cream box
     dark_eval_box = """<div style="background:rgba(20,15,10,0.85);border:1px solid rgba(240,167,101,0.3);border-radius:var(--radius-sm);padding:14px 20px;margin-bottom:28px;display:flex;align-items:center;gap:12px;">
         <i data-lucide="check-circle" style="width:20px;height:20px;color:var(--matcha-green);flex-shrink:0;"></i>
         <div style="font-size:13.5px;color:var(--crema);line-height:1.5;">
@@ -2172,12 +2441,13 @@ def run():
     light_eval_box = """<div style="background:#FAF7F2;border:1.5px solid rgba(184,165,139,0.5);border-radius:14px;padding:16px 22px;margin-bottom:28px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 16px rgba(44,33,27,0.04);">
         <i data-lucide="check-circle" style="width:22px;height:22px;color:#7C8268;flex-shrink:0;"></i>
         <div style="font-size:14px;color:#2C211B;line-height:1.6;">
-          <strong style="color:#2C211B;font-weight:700;">Tiêu chuẩn đánh giá thực tế:</strong> Không chỉ dừng lại ở việc đếm lượt thích (like), nhóm tập trung đo lường <strong style="color:#7C8268;">tương tác sâu</strong> (bình luận, chia sẻ) và <strong style="color:#D32F2F;">chuyển đổi thực tế</strong> (lượt nhấp vào Landing Page để xem menu).
+          <strong style="color:#2C211B;">Tiêu chuẩn đánh giá thực tế:</strong> Không chỉ dừng lại ở việc đếm lượt thích (like), nhóm tập trung đo lường <strong style="color:#2C211B;">tương tác sâu</strong> (bình luận, chia sẻ) và <strong style="color:#2C211B;">chuyển đổi thực tế</strong> (lượt nhấp vào Landing Page để xem menu).
         </div>
       </div>"""
-    s3_clean = s3_clean.replace(dark_eval_box, light_eval_box)
-    s3_clean = s3_clean.replace('<div class="table-container">', '''<div class="table-scroll-hint mobile-only"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> <span>Vuốt ngang bảng để xem đầy đủ KPI Kế hoạch, Thực tế &amp; Tỷ lệ đạt (5 cột)</span></div>''' + '\n      <div class="table-container">', 1)
+    s3_inner = s3_inner.replace(dark_eval_box, light_eval_box)
+    s3_inner = re.sub(r'<div style="background:rgba\(20,15,10,0\.85\);border:1px solid rgba\(240,167,101,0\.3\);[\s\S]*?</div>\s*</div>', light_eval_box, s3_inner)
 
+    # 4 Channel Cards & QR Codes
     channel_qr_html = """
       <!-- CỔNG KẾT NỐI 4 NỀN TẢNG SỐ & 4 MÃ QR CODE CHÍNH THỨC -->
       <div style="margin-top: 36px; margin-bottom: 12px;">
@@ -2191,178 +2461,250 @@ def run():
             </h3>
           </div>
           <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);">
-            <span class="live-pulse-dot"></span>
-            <span>Link chính thức đã xác thực &bull; Nhấp mã QR để phóng to quét bằng điện thoại</span>
+            <i data-lucide="scan" style="width:15px;height:15px;color:var(--matcha-green);"></i>
+            <span>Quét bằng camera điện thoại hoặc bấm nút để mở kênh</span>
           </div>
         </div>
-      </div>
 
-      <div class="channel-qr-grid">
-        <!-- 1. Facebook Fanpage -->
-        <div class="channel-qr-card">
-          <div class="channel-qr-badge fb">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            Facebook Fanpage
-          </div>
-          <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-facebook.png', 'Mã QR Kênh Facebook Fanpage Olion Coffee (Link chính thức: https://www.facebook.com/share/19kbsppy1a/)')" title="Nhấp để phóng to QR">
-            <img src="assets/cuoi-ky/qr-facebook.png" alt="QR Code Facebook Fanpage Olion Coffee" class="channel-qr-img" />
-            <div class="channel-qr-scan-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> Phóng to quét mã</div>
-          </div>
-          <div class="channel-qr-name">Facebook Fanpage</div>
-          <div class="channel-qr-handle">@olioncoffee.vlu &bull; CS3 Gò Vấp</div>
-          <div class="channel-qr-desc">
-            Cổng thông tin &amp; kết nối chính thức, tương tác thực tế đạt <strong>665 lượt (110,8% KPI)</strong>.
-          </div>
-          <div class="channel-qr-btn-group">
+        <div class="channel-qr-grid">
+          <!-- 1. FACEBOOK -->
+          <div class="channel-qr-card fb">
+            <div class="channel-qr-badge fb">
+              <i data-lucide="facebook" style="width:13px;height:13px;"></i>
+              <span>Facebook Fanpage</span>
+            </div>
+            <div class="channel-qr-img-box" onclick="openLightbox('assets/qr-fb.png', 'Mã QR Facebook Fanpage Olion Coffee', 'Quét để truy cập trang Facebook chính thức của Olion Coffee')">
+              <img src="assets/qr-fb.png" alt="QR Facebook Olion Coffee" class="channel-qr-img" />
+              <div class="channel-qr-scan-hint"><i data-lucide="maximize-2" style="width:13px;height:13px;"></i> Phóng to</div>
+            </div>
+            <div class="channel-qr-name">Facebook Fanpage</div>
+            <div class="channel-qr-desc">
+              Cổng thông tin &amp; kết nối chính thức, tương tác đạt <strong>665 lượt</strong> (110,8% KPI).
+            </div>
             <a href="https://www.facebook.com/share/19kbsppy1a/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="channel-qr-btn fb">
-              <span>Mở Kênh ↗</span>
+              <span>Mở Trang Facebook</span> <i data-lucide="arrow-up-right" style="width:14px;height:14px;"></i>
             </a>
-            <button type="button" class="channel-qr-copy-btn" onclick="copyChannelLink('https://www.facebook.com/share/19kbsppy1a/?mibextid=wwXIfr', 'Facebook Fanpage')" title="Sao chép link Facebook">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              <span>Copy</span>
-            </button>
           </div>
-        </div>
 
-        <!-- 2. TikTok Channel -->
-        <div class="channel-qr-card">
-          <div class="channel-qr-badge tiktok">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-            TikTok Channel 🏆
-          </div>
-          <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-tiktok.png', 'Mã QR Kênh TikTok Olion Coffee (Link chính thức: https://www.tiktok.com/@olion.coffee)')" title="Nhấp để phóng to QR">
-            <img src="assets/cuoi-ky/qr-tiktok.png" alt="QR Code TikTok Olion Coffee" class="channel-qr-img" />
-            <div class="channel-qr-scan-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> Phóng to quét mã</div>
-          </div>
-          <div class="channel-qr-name">TikTok Channel</div>
-          <div class="channel-qr-handle">@olion.coffee &bull; Kênh Mũi Nhọn</div>
-          <div class="channel-qr-desc">
-            Kênh viral tiếp cận sinh viên VLU, đạt <strong>14.617 views</strong>, like 115,1%, share 110,6% và bứt phá <strong>282 followers</strong>.
-          </div>
-          <div class="channel-qr-btn-group">
-            <a href="https://www.tiktok.com/@olion.coffee?_r=1&_t=ZS-99wZ7guuZeC" target="_blank" rel="noopener noreferrer" class="channel-qr-btn tiktok">
-              <span>Mở Kênh ↗</span>
+          <!-- 2. TIKTOK -->
+          <div class="channel-qr-card tt">
+            <div class="channel-qr-badge tt">
+              <i data-lucide="video" style="width:13px;height:13px;"></i>
+              <span>TikTok Channel 🏆</span>
+            </div>
+            <div class="channel-qr-img-box" onclick="openLightbox('assets/qr-tiktok.png', 'Mã QR TikTok Olion Coffee', 'Quét để theo dõi kênh TikTok triệu view của Olion Coffee')">
+              <img src="assets/qr-tiktok.png" alt="QR TikTok Olion Coffee" class="channel-qr-img" />
+              <div class="channel-qr-scan-hint"><i data-lucide="maximize-2" style="width:13px;height:13px;"></i> Phóng to</div>
+            </div>
+            <div class="channel-qr-name">TikTok Channel</div>
+            <div class="channel-qr-desc">
+              Kênh viral tiếp cận sinh viên VLU, đạt <strong>14.617 views</strong> và bứt phá 282 followers.
+            </div>
+            <a href="https://www.tiktok.com/@olion.coffee?_r=1&_d=e1mfaaj8dihc4d&sec_uid=MS4wLjABAAAAmR8D8Qd7n74zY2aF9kH76T0c5c4A3QGZ087B-P30C95Gg&share_author_id=7445747444356498439" target="_blank" rel="noopener noreferrer" class="channel-qr-btn tt">
+              <span>Mở Kênh TikTok</span> <i data-lucide="arrow-up-right" style="width:14px;height:14px;"></i>
             </a>
-            <button type="button" class="channel-qr-copy-btn" onclick="copyChannelLink('https://www.tiktok.com/@olion.coffee?_r=1&_t=ZS-99wZ7guuZeC', 'TikTok Channel')" title="Sao chép link TikTok">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              <span>Copy</span>
-            </button>
           </div>
-        </div>
 
-        <!-- 3. Instagram Profile -->
-        <div class="channel-qr-card">
-          <div class="channel-qr-badge ig">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-            Instagram Art
-          </div>
-          <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-instagram.png', 'Mã QR Kênh Instagram Olion Coffee (Link chính thức: https://www.instagram.com/olion.coffee/)')" title="Nhấp để phóng to QR">
-            <img src="assets/cuoi-ky/qr-instagram.png" alt="QR Code Instagram Olion Coffee" class="channel-qr-img" />
-            <div class="channel-qr-scan-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> Phóng to quét mã</div>
-          </div>
-          <div class="channel-qr-name">Instagram Profile</div>
-          <div class="channel-qr-handle">@olion.coffee &bull; Visual Nghệ Thuật</div>
-          <div class="channel-qr-desc">
-            Không gian nghệ thuật thẩm mỹ cao, thu hút <strong>1.186 tương tác</strong> &amp; <strong>142 followers</strong> với các thước phim Reels.
-          </div>
-          <div class="channel-qr-btn-group">
-            <a href="https://www.instagram.com/olion.coffee?stkn=dWlxejYzeHEzNTY1" target="_blank" rel="noopener noreferrer" class="channel-qr-btn ig">
-              <span>Mở Kênh ↗</span>
+          <!-- 3. INSTAGRAM -->
+          <div class="channel-qr-card ig">
+            <div class="channel-qr-badge ig">
+              <i data-lucide="instagram" style="width:13px;height:13px;"></i>
+              <span>Instagram Art</span>
+            </div>
+            <div class="channel-qr-img-box" onclick="openLightbox('assets/qr-ig.png', 'Mã QR Instagram Olion Coffee', 'Quét để xem thư viện ảnh thẩm mỹ cao trên Instagram Olion Coffee')">
+              <img src="assets/qr-ig.png" alt="QR Instagram Olion Coffee" class="channel-qr-img" />
+              <div class="channel-qr-scan-hint"><i data-lucide="maximize-2" style="width:13px;height:13px;"></i> Phóng to</div>
+            </div>
+            <div class="channel-qr-name">Instagram Profile</div>
+            <div class="channel-qr-desc">
+              Không gian nghệ thuật thẩm mỹ cao, thu hút <strong>1.186 tương tác</strong> &amp; 142 followers.
+            </div>
+            <a href="https://www.instagram.com/olion.coffee" target="_blank" rel="noopener noreferrer" class="channel-qr-btn ig">
+              <span>Mở Trang Instagram</span> <i data-lucide="arrow-up-right" style="width:14px;height:14px;"></i>
             </a>
-            <button type="button" class="channel-qr-copy-btn" onclick="copyChannelLink('https://www.instagram.com/olion.coffee?stkn=dWlxejYzeHEzNTY1', 'Instagram Profile')" title="Sao chép link Instagram">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              <span>Copy</span>
-            </button>
           </div>
-        </div>
 
-        <!-- 4. Landing Page Web -->
-        <div class="channel-qr-card">
-          <div class="channel-qr-badge web">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            Landing Page
-          </div>
-          <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-landingpage.png', 'Mã QR Landing Page Olion Coffee (Link chính thức: https://www.olioncoffee.app/)')" title="Nhấp để phóng to QR">
-            <img src="assets/cuoi-ky/qr-landingpage.png" alt="QR Code Landing Page Olion Coffee" class="channel-qr-img" />
-            <div class="channel-qr-scan-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> Phóng to quét mã</div>
-          </div>
-          <div class="channel-qr-name">Landing Page Web</div>
-          <div class="channel-qr-handle">olioncoffee.app &bull; Web App Trực Tuyến</div>
-          <div class="channel-qr-desc">
-            Trang đích tích hợp menu điện tử, bùng nổ <strong>280 visits ở tuần 4</strong> (tổng đạt 381 visits).
-          </div>
-          <div class="channel-qr-btn-group">
-            <a href="https://www.olioncoffee.app/" target="_blank" rel="noopener noreferrer" class="channel-qr-btn web">
-              <span>Mở Web ↗</span>
+          <!-- 4. LANDING PAGE -->
+          <div class="channel-qr-card web">
+            <div class="channel-qr-badge web">
+              <i data-lucide="globe" style="width:13px;height:13px;"></i>
+              <span>Landing Page</span>
+            </div>
+            <div class="channel-qr-img-box" onclick="openLightbox('assets/qr-landing-page.png', 'Mã QR Landing Page Olion Coffee', 'Quét để trải nghiệm trang đích giới thiệu không gian & menu Olion')">
+              <img src="assets/qr-landing-page.png" alt="QR Landing Page Olion Coffee" class="channel-qr-img" />
+              <div class="channel-qr-scan-hint"><i data-lucide="maximize-2" style="width:13px;height:13px;"></i> Phóng to</div>
+            </div>
+            <div class="channel-qr-name">Landing Page Web</div>
+            <div class="channel-qr-desc">
+              Trang đích tích hợp menu điện tử, bùng nổ <strong>280 visits</strong> ở tuần 4 (tổng 381 visits).
+            </div>
+            <a href="https://www.olioncoffee.app" target="_blank" rel="noopener noreferrer" class="channel-qr-btn web">
+              <span>Mở Trang Web</span> <i data-lucide="arrow-up-right" style="width:14px;height:14px;"></i>
             </a>
-            <button type="button" class="channel-qr-copy-btn" onclick="copyChannelLink('https://www.olioncoffee.app/', 'Landing Page Web App')" title="Sao chép link Web">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-              <span>Copy</span>
-            </button>
           </div>
         </div>
       </div>
-"""
+    """
 
-    s4_inner = re.sub(r'^<section class="report-section" id="muc-4">\s*<div class="shell">', '', sec4_raw.strip())
-    s4_inner = re.sub(r'</div>\s*</section>$', '', s4_inner.strip())
     s4_inner = re.sub(r'<div class="section-chapter-tag[^"]*">4\.[^<]+</div>',
-                      '<div class="section-chapter-tag matcha" style="margin-bottom:12px;">THEO DÕI TĂNG TRƯỞNG THỰC TẾ QUA 6 TUẦN</div>', s4_inner)
-    s4_inner = re.sub(r'<h2 class="section-main-heading">4\.[^<]+</h2>',
-                      '<h3 class="section-main-heading" style="font-size:26px;margin-bottom:14px;color:#2C211B;">Biểu Đồ Theo Dõi Tăng Trưởng Số Liệu 6 Tuần Thực Chiến</h3>', s4_inner)
+                      '<div class="section-chapter-tag matcha" style="margin-bottom:12px;"><i data-lucide="trending-up" style="width:12px;height:12px;display:inline-block;vertical-align:middle;margin-right:4px;"></i>TĂNG TRƯỞNG QUA 6 TUẦN</div>',
+                      s4_inner)
+    s4_inner = s4_inner.replace('<h2 class="section-main-heading">4. Theo Dõi &amp; Đánh Giá Tăng Trưởng Qua 6 Tuần</h2>',
+                                '<h3 class="section-main-heading" style="font-size:26px;color:#2C211B;margin-bottom:12px;">Theo Dõi &amp; Đánh Giá Tăng Trưởng Qua 6 Tuần</h3>')
+    s4_inner = s4_inner.replace('<div class="table-container">',
+                                """<div class="table-swipe-hint" style="display:none;margin-bottom:8px;font-size:12.5px;color:#7C8268;align-items:center;gap:6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> <span>Vuốt ngang bảng để xem chi tiết 4 kênh theo từng tuần</span></div>
+      <div class="table-container">""", 1)
 
-    dark_chart_box = '<div style="background:rgba(22,17,12,0.92);border:1.5px solid var(--border-brass);border-radius:var(--radius-md);padding:26px;margin:28px 0;box-shadow:var(--shadow-wood);">'
-    light_chart_box = '<div style="background:#FFFFFF;border:1.5px solid rgba(184,165,139,0.45);border-radius:18px;padding:26px;margin:28px 0;box-shadow:0 8px 24px rgba(44,33,27,0.06);">'
-    s4_inner = s4_inner.replace(dark_chart_box, light_chart_box)
-    s4_inner = s4_inner.replace('color:var(--accent-gold);margin-bottom:6px;">📈 Biểu đồ trực quan', 'color:#2C211B;font-weight:700;margin-bottom:6px;">📈 Biểu đồ trực quan')
-    s4_inner = s4_inner.replace('<div style="font-size:12.5px;color:var(--text-muted);margin-bottom:16px;">', '<div style="font-size:13px;color:#5C4D44;margin-bottom:16px;">')
-    s4_inner = s4_inner.replace('<h3 style="font-family:var(--font-serif);font-size:20px;color:var(--accent-gold);margin:24px 0 12px;">Bảng số liệu người theo dõi &amp; lượt truy cập theo tuần:</h3>',
-                                '<h3 style="font-family:var(--font-serif);font-size:21px;font-weight:700;color:#2C211B;margin:24px 0 12px;">Bảng số liệu người theo dõi &amp; lượt truy cập theo tuần:</h3>')
-    s4_inner = s4_inner.replace('<div class="table-container">', '''<div class="table-scroll-hint mobile-only"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> <span>Vuốt ngang bảng để xem chi tiết 4 kênh theo từng tuần</span></div>''' + '\n      <div class="table-container">', 1)
-
-    sec2_final = f"""{s3_clean}
+    sec2_final = f"""
+  <!-- ========================================================
+       MỤC 2: KẾT QUẢ SO VỚI KPI, 4 KÊNH QR & BIỂU ĐỒ 6 TUẦN
+       ======================================================== -->
+  <section class="report-section" id="muc-2">
+    <div class="shell">
+      {s3_inner}
       {channel_qr_html}
       <div class="section-divider" style="margin: 48px 0 36px; border-top: 1.5px dashed rgba(184, 165, 139, 0.4);"></div>
       {s4_inner}
     </div>
-  </section>"""
+  </section>
+"""
 
-    # 3. Section 3: muc-5 (Sản phẩm truyền thông nổi bật & demo)
-    sec3_final = sec5_raw.replace('id="muc-5"', 'id="muc-3"')
-    sec3_final = re.sub(r'<div class="section-chapter-tag[^"]*">5\.[^<]+</div>', '<div class="section-chapter-tag matcha">3. SẢN PHẨM TRUYỀN THÔNG NỔI BẬT &amp; DEMO</div>', sec3_final)
-    sec3_final = sec3_final.replace('<h2 class="section-main-heading">5. Sản Phẩm Truyền Thông Nổi Bật &amp; Minh Chứng Thực Tế</h2>',
-                                    '<h2 class="section-main-heading">3. Sản Phẩm Truyền Thông Nổi Bật &amp; Minh Chứng Thực Tế</h2>')
-    sec3_final = sec3_final.replace('background:#000;', 'background:#FAF7F2;')
+    # ========================================================
+    # 3. SECTION 3: Sản Phẩm Truyền Thông Nổi Bật & Demo Thực Tế
+    # ========================================================
+    s5_inner = extract_inner_shell(sec5_raw)
+    s5_inner = re.sub(r'<div class="section-chapter-tag[^"]*">5\.[^<]+</div>', '<div class="section-chapter-tag matcha">3. SẢN PHẨM TRUYỀN THÔNG NỔI BẬT &amp; DEMO</div>', s5_inner)
+    s5_inner = s5_inner.replace('<h2 class="section-main-heading">5. Sản Phẩm Truyền Thông Nổi Bật &amp; Minh Chứng Thực Tế</h2>',
+                                '<h2 class="section-main-heading">3. Sản Phẩm Truyền Thông Nổi Bật &amp; Minh Chứng Thực Tế</h2>')
+    s5_inner = s5_inner.replace('background:#000;', 'background:#FAF7F2;')
 
-    # 4. Section 4: muc-6 (Đánh giá tổng quan & Bài học chiến lược)
-    sec4_final = sec6_raw.replace('id="muc-6"', 'id="muc-4"')
-    sec4_final = re.sub(r'<div class="section-chapter-tag[^"]*">6\.[^<]+</div>', '<div class="section-chapter-tag matcha">4. PHÂN TÍCH TỔNG QUAN &amp; ĐIỀU CHỈNH CHIẾN LƯỢC</div>', sec4_final)
-    sec4_final = sec4_final.replace('<h2 class="section-main-heading">6. Đánh Giá Tổng Quan 4 Kênh &amp; Bài Học Chiến Lược</h2>',
-                                    '<h2 class="section-main-heading">4. Phân Tích Tổng Quan 4 Kênh &amp; Điều Chỉnh Chiến Lược</h2>')
+    sec3_final = f"""
+  <!-- ========================================================
+       MỤC 3: SẢN PHẨM TRUYỀN THÔNG NỔI BẬT & DEMO THỰC TẾ
+       ======================================================== -->
+  <section class="report-section" id="muc-3">
+    <div class="shell">
+      {s5_inner}
+    </div>
+  </section>
+"""
 
-    # 5. Section 5: muc-7 (Tuân thủ pháp lý)
-    sec5_final = sec7_raw.replace('id="muc-7"', 'id="muc-5"')
-    sec5_final = re.sub(r'<div class="section-chapter-tag[^"]*">7\.[^<]+</div>', '<div class="section-chapter-tag matcha">5. TUÂN THỦ PHÁP LÝ &amp; CHUẨN MỰC QUẢNG CÁO</div>', sec5_final)
-    sec5_final = re.sub(r'<h2 class="section-main-heading">7\.[^<]+</h2>',
-                        '<h2 class="section-main-heading">5. Danh Mục 12 Tiêu Chí Tuân Thủ Pháp Lý &amp; Chuẩn Mực Quảng Cáo</h2>',
-                        sec5_final)
-
-    # 6. Section 6: muc-8 ONLY (Sáng tạo nội dung & Định hướng khởi nghiệp thực tế)
-    sec6_final = sec8_raw.replace('id="muc-8"', 'id="muc-6"')
-    sec6_final = re.sub(r'<div class="section-chapter-tag[^"]*">8\.[^<]+</div>', '<div class="section-chapter-tag matcha">6. SÁNG TẠO NỘI DUNG &amp; ĐỊNH HƯỚNG KHỞI NGHIỆP</div>', sec6_final)
-    sec6_final = sec6_final.replace('<h2 class="section-main-heading">8. Định Hướng Duy Trì Kênh &amp; Mục Tiêu Phát Triển 3 Tháng Tới</h2>',
-                                    '<h2 class="section-main-heading">6. Sáng Tạo Nội Dung &amp; Định Hướng Khởi Nghiệp Thực Tế</h2>')
-    
-    sec6_eval_pattern = r'<div style="background:rgba\(20,15,10,0\.85\);border:1px solid rgba\(240,167,101,0\.3\);border-radius:var\(--radius-sm\);padding:14px 20px;margin-bottom:28px;display:flex;align-items:center;gap:12px;">[\s\S]*?</div>\s*</div>'
+    # ========================================================
+    # 4. SECTION 4: Phân Tích Tổng Quan 4 Kênh & Điều Chỉnh
+    # ========================================================
+    s6_inner = extract_inner_shell(sec6_raw)
+    s6_inner = re.sub(r'<div class="section-chapter-tag[^"]*">6\.[^<]+</div>', '<div class="section-chapter-tag matcha">4. PHÂN TÍCH TỔNG QUAN &amp; ĐIỀU CHỈNH CHIẾN LƯỢC</div>', s6_inner)
+    s6_inner = s6_inner.replace('<h2 class="section-main-heading">6. Đánh Giá Tổng Quan 4 Kênh &amp; Bài Học Chiến Lược</h2>',
+                                '<h2 class="section-main-heading">4. Phân Tích Tổng Quan 4 Kênh &amp; Điều Chỉnh Chiến Lược</h2>')
     light_eval_box_sec6 = """<div style="background:#FAF7F2;border:1.5px solid rgba(184,165,139,0.5);border-radius:14px;padding:16px 22px;margin-bottom:28px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 16px rgba(44,33,27,0.04);">
-        <i data-lucide="check-circle" style="width:22px;height:22px;color:#7C8268;flex-shrink:0;"></i>
+        <i data-lucide="lightbulb" style="width:22px;height:22px;color:#7C8268;flex-shrink:0;"></i>
         <div style="font-size:14px;color:#2C211B;line-height:1.6;">
-          <strong style="color:#2C211B;font-weight:700;">Tiêu chuẩn đánh giá thực tế:</strong> Không chỉ dừng lại ở việc đếm lượt thích (like), nhóm tập trung đo lường số tin nhắn hỏi thông tin đồ uống, tỷ lệ người dùng tương tác và lượng khách sinh viên thực tế đến trải nghiệm quán tại Cơ sở 3 Gò Vấp.
+          <strong style="color:#2C211B;">Đúc kết giá trị cốt lõi:</strong> Kênh mạng xã hội phát huy tối đa vai trò tạo nhận diện (Awareness) và tương tác cảm xúc, trong khi Landing Page đóng vai trò neo giữ thông tin và điểm chạm ra quyết định (Action).
         </div>
       </div>"""
-    sec6_final = re.sub(sec6_eval_pattern, light_eval_box_sec6, sec6_final)
+    s6_inner = re.sub(r'<div style="background:rgba\(20,15,10,0\.85\);border:1px solid rgba\(240,167,101,0\.3\);padding:14px 20px;[\s\S]*?</div>\s*</div>', light_eval_box_sec6, s6_inner)
 
-    # 7. Section 7: Proposal Poster + 3 Weekly Data Tables
+    sec4_final = f"""
+  <!-- ========================================================
+       MỤC 4: PHÂN TÍCH TỔNG QUAN 4 KÊNH & ĐIỀU CHỈNH CHIẾN LƯỢC
+       ======================================================== -->
+  <section class="report-section" id="muc-4">
+    <div class="shell">
+      {s6_inner}
+    </div>
+  </section>
+"""
+
+    # ========================================================
+    # 5. SECTION 5: Tuân Thủ Pháp Lý (12 Tiêu Chí)
+    # ========================================================
+    s7_inner = extract_inner_shell(sec7_raw)
+    s7_inner = re.sub(r'<div class="section-chapter-tag[^"]*">7\.[^<]+</div>', '<div class="section-chapter-tag matcha">5. TUÂN THỦ PHÁP LÝ (12 TIÊU CHÍ)</div>', s7_inner)
+    s7_inner = s7_inner.replace('<h2 class="section-main-heading">7. Tuân Thủ Pháp Lý &amp; Đạo Đức Truyền Thông</h2>',
+                                '<h2 class="section-main-heading">5. Tuân Thủ Pháp Lý (12 Tiêu Chí) &amp; Đạo Đức Truyền Thông</h2>')
+
+    sec5_final = f"""
+  <!-- ========================================================
+       MỤC 5: TUÂN THỦ PHÁP LÝ (12 TIÊU CHÍ) & ĐẠO ĐỨC TRUYỀN THÔNG
+       ======================================================== -->
+  <section class="report-section" id="muc-5">
+    <div class="shell">
+      {s7_inner}
+    </div>
+  </section>
+"""
+
+    # ========================================================
+    # 6. SECTION 6: Sáng Tạo Nội Dung, Khởi Nghiệp & Bảng Gia Phả
+    # ========================================================
+    s8_inner = extract_inner_shell(sec8_raw)
+    s8_inner = re.sub(r'<div class="section-chapter-tag[^"]*">8\.[^<]+</div>', '<div class="section-chapter-tag matcha">6. SÁNG TẠO NỘI DUNG, ĐỊNH HƯỚNG KHỞI NGHIỆP &amp; PHÂN VAI THÀNH VIÊN</div>', s8_inner)
+    s8_inner = s8_inner.replace('<h2 class="section-main-heading">8. Định Hướng Duy Trì Kênh &amp; Mục Tiêu Phát Triển 3 Tháng Tới</h2>',
+                                '<h2 class="section-main-heading">6. Sáng Tạo Nội Dung, Định Hướng Khởi Nghiệp &amp; Phân Vai Thành Viên</h2>')
+
+    sec6_eval_pattern = r'<div style="background:rgba\(20,15,10,0\.85\);border:1px solid rgba\(240,167,101,0\.3\);border-radius:var\(--radius-sm\);padding:14px 20px;margin-bottom:28px;display:flex;align-items:center;gap:12px;">[\s\S]*?</div>\s*</div>'
+    light_eval_box_sec8 = """<div style="background:#FAF7F2;border:1.5px solid rgba(184,165,139,0.5);border-radius:14px;padding:16px 22px;margin-bottom:28px;display:flex;align-items:center;gap:14px;box-shadow:0 4px 16px rgba(44,33,27,0.04);">
+        <i data-lucide="compass" style="width:22px;height:22px;color:#7C8268;flex-shrink:0;"></i>
+        <div style="font-size:14px;color:#2C211B;line-height:1.6;">
+          <strong style="color:#2C211B;">Tầm nhìn khởi nghiệp bền vững:</strong> Chuyển hóa dự án học phần thành mô hình kinh doanh thực chiến, tận dụng tài sản số đã xây dựng để tiếp tục nuôi dưỡng tệp khách hàng trung thành tại cơ sở Gò Vấp.
+        </div>
+      </div>"""
+    s8_inner = re.sub(sec6_eval_pattern, light_eval_box_sec8, s8_inner)
+
+    # Process Team Members (s9_inner) into the Family Tree part of Section 6
+    s9_inner = extract_inner_shell(sec9_raw)
+    s9_inner = re.sub(r'<div class="section-chapter-tag[^"]*">9\.[^<]+</div>', '', s9_inner)
+    s9_inner = re.sub(r'<h2 class="section-main-heading">9\.[^<]+</h2>', '', s9_inner)
+    s9_inner = re.sub(r'<p style="color:var\(--text-muted\);margin-bottom:30px;font-size:15px;">[\s\S]*?</p>', '', s9_inner)
+
+    dark_team_box = """<div style="background:rgba(20,15,10,0.85);border:1px solid rgba(240,167,101,0.3);border-radius:var(--radius-md);padding:18px 24px;margin-top:28px;text-align:center;box-shadow:var(--shadow-wood);">
+          <div style="font-family:var(--font-serif);font-size:18px;color:var(--accent-gold);margin-bottom:6px;">
+            🤝 Tinh Thần Đồng Đội &amp; Hợp Tác Nhóm 7 (Gỗ Xà Cừ)
+          </div>
+          <p style="font-size:13.5px;color:var(--crema);margin:0;line-height:1.6;max-width:860px;display:inline-block;">
+            11 thành viên đã cùng nhau làm việc gắn kết như một gia đình, chủ động hỗ trợ lẫn nhau giữa các ban từ khâu ý tưởng, quay chụp, sản xuất video, đăng bài đến phân tích số liệu để hoàn thành xuất sắc chiến dịch truyền thông Olion Coffee.
+          </p>
+        </div>"""
+    light_team_box = """<div style="background:#FAF7F2;border:1.5px solid rgba(184,165,139,0.5);border-radius:18px;padding:22px 28px;margin-top:28px;text-align:center;box-shadow:0 8px 24px rgba(44,33,27,0.04);">
+          <div style="font-family:var(--font-serif);font-size:20px;font-weight:700;color:#2C211B;margin-bottom:8px;">
+            🤝 Tinh Thần Đồng Đội &amp; Hợp Tác Gia Đình Gỗ Xà Cừ
+          </div>
+          <p style="font-size:14px;color:#5C4D44;margin:0;line-height:1.65;max-width:860px;display:inline-block;">
+            11 thành viên đã cùng nhau làm việc gắn kết như một gia đình, chủ động hỗ trợ lẫn nhau giữa 4 ban từ khâu khảo sát insight, quay chụp sản phẩm, dựng clip viral, xuất bản đa kênh đến phân tích số liệu hàng tuần để hoàn thành xuất sắc chiến dịch truyền thông Olion Coffee.
+          </p>
+        </div>"""
+    s9_inner = s9_inner.replace(dark_team_box, light_team_box)
+
+    family_tree_header = """
+      <div class="section-chapter-tag matcha" style="margin-bottom:12px;">
+        <i data-lucide="users" style="width:12px;height:12px;display:inline-block;vertical-align:middle;margin-right:4px;"></i>
+        BẢNG GIA PHẢ THÀNH VIÊN NHÓM 7 (GỖ XÀ CỪ)
+      </div>
+      <h3 class="section-main-heading" style="font-size:26px;color:#2C211B;margin-bottom:8px;">
+        Phân Vai Chuyên Môn &amp; Đóng Góp 11 Thành Viên
+      </h3>
+      <p style="color:#5C4D44;margin-bottom:28px;font-size:15px;line-height:1.6;">
+        Đội ngũ 11 thành viên được tổ chức theo sơ đồ gia phả gồm Trưởng Nhóm điều phối chung và 4 ban chuyên môn, gắn kết chặt chẽ như một gia đình trong suốt 6 tuần thực hiện chiến dịch.
+      </p>
+    """
+
+    sec6_final = f"""
+  <!-- ========================================================
+       MỤC 6: SÁNG TẠO NỘI DUNG, ĐỊNH HƯỚNG KHỞI NGHIỆP & BẢNG GIA PHẢ THÀNH VIÊN
+       ======================================================== -->
+  <section class="report-section" id="muc-6">
+    <div class="shell">
+      {s8_inner}
+      <div class="section-divider" style="margin: 48px 0 36px; border-top: 1.5px dashed rgba(184, 165, 139, 0.4);"></div>
+      {family_tree_header}
+      {s9_inner}
+    </div>
+  </section>
+"""
+
+    # ========================================================
+    # 7. SECTION 7: Proposal Poster + 3 Bảng Số Liệu 6 Tuần (Phần Cuối)
+    # ========================================================
     sec7_final = """
   <!-- ========================================================
        MỤC 7: TỔNG KẾT ẢNH SỐ LIỆU & PROPOSAL DỰ ÁN 6 TUẦN
@@ -2561,51 +2903,7 @@ def run():
   </section>
 """
 
-    # 8. Assemble Section 8: FINAL TEAM MEMBERS (ĐƯA XUỐNG CUỐI CÙNG THEO YÊU CẦU CỦA USER)
-    sec8_final = sec9_raw.replace('id="muc-9"', 'id="muc-8"')
-    sec8_final = re.sub(r'<div class="section-chapter-tag[^"]*">9\.[^<]+</div>', '<div class="section-chapter-tag matcha">8. PHÂN VAI &amp; ĐÓNG GÓP CỦA CÁC THÀNH VIÊN NHÓM 7</div>', sec8_final)
-    sec8_final = sec8_final.replace('<h2 class="section-main-heading">9. Phân Vai &amp; Đóng Góp Của Các Thành Viên Nhóm 7</h2>',
-                                    '<h2 class="section-main-heading">8. Phân Vai &amp; Đóng Góp Của Các Thành Viên Nhóm 7</h2>')
-
-    # Replace dark team spirit box with high-contrast luxury light cream box
-    dark_team_box = """<div style="background:rgba(20,15,10,0.85);border:1px solid rgba(240,167,101,0.3);border-radius:var(--radius-md);padding:18px 24px;margin-top:28px;text-align:center;box-shadow:var(--shadow-wood);">
-          <div style="font-family:var(--font-serif);font-size:18px;color:var(--accent-gold);margin-bottom:6px;">
-            🤝 Tinh Thần Đồng Đội &amp; Hợp Tác Nhóm 7 (Gỗ Xà Cừ)
-          </div>
-          <p style="font-size:13.5px;color:var(--crema);margin:0;line-height:1.6;max-width:860px;display:inline-block;">
-            11 thành viên đã cùng nhau làm việc gắn kết như một gia đình, chủ động hỗ trợ lẫn nhau giữa các ban từ khâu ý tưởng, quay chụp, sản xuất video, đăng bài đến phân tích số liệu để hoàn thành xuất sắc chiến dịch truyền thông Olion Coffee.
-          </p>
-        </div>"""
-    light_team_box = """<div style="background:#FAF7F2;border:1.5px solid rgba(184,165,139,0.5);border-radius:18px;padding:22px 28px;margin-top:28px;text-align:center;box-shadow:0 6px 20px rgba(44,33,27,0.05);">
-          <div style="font-family:var(--font-serif);font-size:20px;font-weight:700;color:#2C211B;margin-bottom:8px;">
-            🤝 Tinh Thần Đồng Đội &amp; Hợp Tác Nhóm 7 (Gỗ Xà Cừ)
-          </div>
-          <p style="font-size:14px;color:#5C4D44;margin:0;line-height:1.65;max-width:860px;display:inline-block;">
-            11 thành viên đã cùng nhau làm việc gắn kết như một gia đình, chủ động hỗ trợ lẫn nhau giữa các ban từ khâu ý tưởng, quay chụp, sản xuất video, đăng bài đến phân tích số liệu để hoàn thành xuất sắc chiến dịch truyền thông Olion Coffee.
-          </p>
-        </div>"""
-    sec8_final = sec8_final.replace(dark_team_box, light_team_box)
-
-    # Add Closing Thank You Box at the very end of Section 8
-    closing_box = """
-      <!-- HỘP TRI ÂN & BẾ MẠC DỰ ÁN CUỐI CÙNG -->
-      <div style="background:#FAF7F2;border:2px solid rgba(184,165,139,0.45);border-radius:18px;padding:26px 30px;margin-top:36px;text-align:center;">
-        <div style="font-size:28px;margin-bottom:8px;">☕ 🎓</div>
-        <h3 style="font-family:var(--font-serif);font-size:22px;font-weight:700;color:#2C211B;margin-bottom:8px;">
-          Lời Cảm Ơn Từ Nhóm 7 — Gỗ Xà Cừ (Học Phần Truyền Thông Số IMC)
-        </h3>
-        <p style="font-size:14.5px;line-height:1.65;color:#4A3B32;max-width:860px;margin:0 auto 14px;font-style:italic;">
-          &ldquo;Dự án truyền thông số cho quán cà phê Olion không chỉ là bài tập thực hành trên giảng đường mà đã trở thành cầu nối thương hiệu vững chắc giữa quán và cộng đồng sinh viên Đại học Văn Lang. Nhóm 7 xin trân trọng cảm ơn Thầy Jon Lâm đã tận tình định hướng, phản biện và đồng hành cùng nhóm trong suốt học kỳ 261 vừa qua!&rdquo;
-        </p>
-        <div style="font-size:13px;font-weight:700;color:#7C8268;">
-          ĐẠI HỌC VĂN LANG &bull; KHOA QUAN HỆ CÔNG CHÚNG &amp; TRUYỀN THÔNG &bull; HỌC KỲ 261
-        </div>
-      </div>
-    """
-    sec8_final = sec8_final.replace('</div>\n  </section>', closing_box + '\n    </div>\n  </section>')
-
-    # 9. Tail part: Footer & Scripts
-    m9_end = src.find('</section>', src.find('id="muc-9"')) + 10
+    m9_end = src.find("</section>", src.find('id="muc-9"')) + 10
     raw_tail = src[m9_end:]
 
     py_marker = raw_tail.find('html = html.replace("__CSS__", full_css)')
@@ -2615,7 +2913,7 @@ def run():
             raw_tail = raw_tail[:html_end + 7]
 
     raw_tail = raw_tail.replace('background:#070503;', 'background:#FAF6F0;color:#5C4D44;')
-    raw_tail = raw_tail.replace('currentSectionId = "muc-9";', 'currentSectionId = "muc-8";')
+    raw_tail = raw_tail.replace('currentSectionId = "muc-7";', 'currentSectionId = "muc-7";')
 
     raw_tail = raw_tail.replace("color: '#FAF5EE',", "color: '#2C211B',")
     raw_tail = raw_tail.replace("color: 'rgba(255, 255, 255, 0.06)'", "color: 'rgba(184, 165, 139, 0.22)'")
@@ -2672,16 +2970,17 @@ def run():
 
 
     # Assemble Document
-    final_doc = head_hero.strip() + "\n\n" + \
-                sec1_final.strip() + "\n\n" + \
-                sec2_final.strip() + "\n\n" + \
-                sec3_final.strip() + "\n\n" + \
-                sec4_final.strip() + "\n\n" + \
-                sec5_final.strip() + "\n\n" + \
-                sec6_final.strip() + "\n\n" + \
-                sec7_final.strip() + "\n\n" + \
-                sec8_final.strip() + "\n\n" + \
-                raw_tail.strip()
+    final_doc = "\n\n".join([
+        head_hero.strip(),
+        sec1_final.strip(),
+        sec2_final.strip(),
+        sec3_final.strip(),
+        sec4_final.strip(),
+        sec5_final.strip(),
+        sec6_final.strip(),
+        sec7_final.strip(),
+        raw_tail.strip()
+    ])
 
     final_doc = final_doc.replace('__CSS__', full_css)
 
