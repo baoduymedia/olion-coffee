@@ -983,50 +983,88 @@ def run():
     .channel-qr-btn.web { background: #7C8268 !important; }
     .channel-qr-btn:hover { transform: translateY(-2px) !important; filter: brightness(1.1) !important; color: #FFFFFF !important; }
 
-    /* Tables & Wrapped Content */
+    /* ========================================================
+       CHỐNG KHUẤT CHỮ TRÊN PC & MOBILE - BẢNG ĐA CỘT VUỐT MƯỢT
+       ======================================================== */
+    .table-scroll-hint {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .table-scroll-hint.mobile-only {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        background: rgba(124, 130, 104, 0.15) !important;
+        border: 1px solid rgba(124, 130, 104, 0.4) !important;
+        color: #3E4330 !important;
+        padding: 6px 12px !important;
+        border-radius: 20px !important;
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+        margin-bottom: 10px !important;
+      }
+    }
+
     .report-table-card, .table-container {
       background: #FFFFFF !important;
-      border: 2px solid rgba(184, 165, 139, 0.45) !important;
+      border: 1.5px solid rgba(184, 165, 139, 0.45) !important;
       border-radius: 18px !important;
-      overflow: hidden !important;
-      box-shadow: 0 10px 30px rgba(44, 33, 27, 0.06) !important;
+      overflow-x: auto !important; /* Cho phép cuộn ngang mượt mà trên mobile, không bao giờ bị cắt chữ */
+      overflow-y: hidden !important;
+      -webkit-overflow-scrolling: touch !important;
+      box-shadow: 0 8px 24px rgba(44, 33, 27, 0.05) !important;
       width: 100% !important;
+      margin: 20px 0 !important;
     }
     .table-scroll-wrap {
       overflow-x: auto !important;
       -webkit-overflow-scrolling: touch !important;
       width: 100% !important;
     }
-    table.report-table, table.wrap-content-table {
+    table.pdf-table, table.report-table, table.wrap-content-table {
       width: 100% !important;
+      min-width: 660px !important; /* Đảm bảo đủ chiều rộng hiển thị 5 cột số liệu rõ ràng */
       border-collapse: collapse !important;
       background: #FFFFFF !important;
     }
-    table.report-table th, table.wrap-content-table th {
-      background: #FAF7F2 !important;
-      color: #2C211B !important;
-      font-size: 13px !important;
+    table.pdf-table th, table.report-table th, table.wrap-content-table th {
+      background: #2C211B !important; /* Nền Espresso đậm tương phản cao */
+      color: #F6F1E7 !important; /* Chữ kem sáng rõ nét, không bao giờ chìm */
+      font-size: 12.5px !important;
       font-weight: 800 !important;
       text-transform: uppercase !important;
       letter-spacing: 0.05em !important;
-      padding: 14px 16px !important;
-      border-bottom: 2px solid rgba(184, 165, 139, 0.4) !important;
+      padding: 13px 16px !important;
+      border-bottom: 2px solid #B8A58B !important;
+      white-space: nowrap !important;
     }
-    table.report-table td, table.wrap-content-table td {
+    table.pdf-table td, table.report-table td, table.wrap-content-table td {
       color: #4A3B32 !important;
       font-size: 13.5px !important;
-      padding: 14px 16px !important;
+      padding: 13px 16px !important;
       border-bottom: 1px solid rgba(184, 165, 139, 0.25) !important;
       line-height: 1.55 !important;
       white-space: normal !important;
       word-wrap: break-word !important;
     }
-    table.report-table tr:hover td, table.wrap-content-table tr:hover td {
-      background: #FAF9F5 !important;
+    table.pdf-table tr:nth-child(even) td,
+    table.report-table tr:nth-child(even) td,
+    table.wrap-content-table tr:nth-child(even) td {
+      background: #FAF7F2 !important;
     }
-    table.report-table tr.table-row-highlight td {
-      background: rgba(124, 130, 104, 0.08) !important;
-      font-weight: 600 !important;
+    table.pdf-table tr:hover td,
+    table.report-table tr:hover td,
+    table.wrap-content-table tr:hover td {
+      background: rgba(184, 165, 139, 0.12) !important;
+    }
+    table.pdf-table td.avg-cell {
+      background: rgba(184, 165, 139, 0.15) !important;
+      color: #2C211B !important;
+      font-weight: 800 !important;
+    }
+    table.pdf-table td.highlight-cell {
+      color: #2E7D32 !important;
+      font-weight: 800 !important;
     }
     .badge-kpi-pass {
       background: #7C8268 !important;
@@ -1038,6 +1076,530 @@ def run():
       display: inline-flex !important;
       align-items: center !important;
       gap: 4px !important;
+    }
+
+    /* ========================================================
+       MỤC 2: METRIC STRIP & CHỨNG TỪ BIỂU ĐỒ SÁNG RÕ NÉT
+       ======================================================== */
+    .round-metric-strip {
+      display: grid !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 16px !important;
+      margin: 24px 0 !important;
+    }
+    @media (max-width: 900px) {
+      .round-metric-strip {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+    @media (max-width: 540px) {
+      .round-metric-strip {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    .metric-strip-card {
+      background: #FFFFFF !important;
+      border: 1.5px solid rgba(184, 165, 139, 0.45) !important;
+      border-radius: 16px !important;
+      padding: 18px 20px !important;
+      box-shadow: 0 6px 20px rgba(44, 33, 27, 0.05) !important;
+      transition: all 0.25s ease !important;
+    }
+    .metric-strip-card:hover {
+      transform: translateY(-3px) !important;
+      border-color: #B8A58B !important;
+      box-shadow: 0 12px 28px rgba(44, 33, 27, 0.1) !important;
+    }
+    .metric-strip-card.highlight {
+      border-color: #7C8268 !important;
+      background: #FAF7F2 !important;
+    }
+    .metric-strip-lbl {
+      color: #7C8268 !important;
+      font-size: 11.5px !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.06em !important;
+      text-transform: uppercase !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 6px !important;
+    }
+    .metric-strip-val {
+      color: #2C211B !important;
+      font-size: 24px !important;
+      font-weight: 800 !important;
+      margin: 6px 0 !important;
+    }
+    .metric-strip-val.text-matcha {
+      color: #2E7D32 !important;
+    }
+    .metric-strip-sub {
+      color: #5C4D44 !important;
+      font-size: 12.5px !important;
+      font-weight: 600 !important;
+    }
+    .metric-strip-sub.text-matcha {
+      color: #2E7D32 !important;
+    }
+
+    .proof-showcase-box {
+      background: #FAF7F2 !important;
+      border: 1.5px solid rgba(184, 165, 139, 0.45) !important;
+      border-radius: 18px !important;
+      padding: 24px 26px !important;
+      margin: 26px 0 !important;
+      box-shadow: 0 8px 24px rgba(44, 33, 27, 0.05) !important;
+    }
+    .proof-showcase-box.matcha-theme {
+      border-color: rgba(124, 130, 104, 0.45) !important;
+    }
+    .proof-showcase-header {
+      border-bottom: 1.5px solid rgba(184, 165, 139, 0.35) !important;
+      padding-bottom: 16px !important;
+      margin-bottom: 22px !important;
+    }
+    .proof-header-badge {
+      background: rgba(184, 165, 139, 0.2) !important;
+      color: #2C211B !important;
+      border: 1px solid rgba(184, 165, 139, 0.45) !important;
+      padding: 4px 10px !important;
+      border-radius: 20px !important;
+      font-size: 11.5px !important;
+      font-weight: 800 !important;
+    }
+    .proof-header-badge.matcha {
+      background: rgba(124, 130, 104, 0.18) !important;
+      color: #3E4330 !important;
+      border-color: rgba(124, 130, 104, 0.45) !important;
+    }
+    .proof-header-title {
+      color: #2C211B !important;
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-size: 22px !important;
+      font-weight: 700 !important;
+      margin-top: 4px !important;
+    }
+    .proof-header-hint {
+      color: #7C8268 !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+    }
+
+    .chart-evidence-card {
+      background: #FFFFFF !important;
+      border: 1.5px solid rgba(184, 165, 139, 0.45) !important;
+      border-radius: 16px !important;
+      overflow: hidden !important;
+      box-shadow: 0 8px 24px rgba(44, 33, 27, 0.06) !important;
+      cursor: zoom-in !important;
+      transition: all 0.3s ease !important;
+      width: 100% !important;
+    }
+    .chart-evidence-card:hover {
+      transform: translateY(-4px) !important;
+      border-color: #B8A58B !important;
+      box-shadow: 0 16px 36px rgba(44, 33, 27, 0.12) !important;
+    }
+    .chart-evidence-media {
+      background: #FAF7F2 !important;
+      border-bottom: 1.5px solid rgba(184, 165, 139, 0.3) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 16px !important;
+      min-height: 240px !important;
+    }
+    .chart-evidence-img {
+      max-height: 520px !important;
+      object-fit: contain !important;
+      width: 100% !important;
+      height: auto !important;
+      border-radius: 6px !important;
+    }
+    .proof-card-zoom-badge {
+      background: #2C211B !important;
+      color: #F6F1E7 !important;
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      border-radius: 20px !important;
+      padding: 5px 12px !important;
+      box-shadow: 0 4px 12px rgba(44, 33, 27, 0.2) !important;
+    }
+    .chart-evidence-info {
+      padding: 18px 22px !important;
+      background: #FFFFFF !important;
+    }
+    .chart-evidence-title {
+      color: #2C211B !important;
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-size: 20px !important;
+      font-weight: 700 !important;
+      margin-bottom: 8px !important;
+    }
+    .chart-evidence-note {
+      color: #4A3B32 !important;
+      font-size: 13.5px !important;
+      line-height: 1.6 !important;
+    }
+
+    /* ========================================================
+       MỤC 3: THẺ BÀI ĐĂNG SOCIAL MEDIA SÁNG TRẮNG SANG TRỌNG
+       ======================================================== */
+    .social-post-card, .social-post-card.featured-horizontal {
+      background: #FFFFFF !important;
+      border: 1.5px solid rgba(184, 165, 139, 0.45) !important;
+      border-radius: 18px !important;
+      overflow: hidden !important;
+      box-shadow: 0 8px 24px rgba(44, 33, 27, 0.06) !important;
+      cursor: zoom-in !important;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    .social-post-card.featured-horizontal {
+      display: grid !important;
+      grid-template-columns: 1.35fr 1fr !important;
+      margin-bottom: 24px !important;
+    }
+    @media (max-width: 900px) {
+      .social-post-card.featured-horizontal {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    .social-post-card:hover, .social-post-card.featured-horizontal:hover {
+      transform: translateY(-5px) !important;
+      border-color: #B8A58B !important;
+      box-shadow: 0 16px 36px rgba(44, 33, 27, 0.12) !important;
+    }
+    .social-post-media {
+      background: #FAF7F2 !important;
+      border-bottom: 1.5px solid rgba(184, 165, 139, 0.3) !important;
+    }
+    .social-post-card.featured-horizontal .social-post-media {
+      border-bottom: none !important;
+      border-right: 1.5px solid rgba(184, 165, 139, 0.3) !important;
+    }
+    @media (max-width: 900px) {
+      .social-post-card.featured-horizontal .social-post-media {
+        border-right: none !important;
+        border-bottom: 1.5px solid rgba(184, 165, 139, 0.3) !important;
+      }
+    }
+    .social-card-body {
+      padding: 20px 22px !important;
+      background: #FFFFFF !important;
+    }
+    .social-card-title {
+      color: #2C211B !important;
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-size: 20px !important;
+      font-weight: 700 !important;
+      margin: 6px 0 8px !important;
+      line-height: 1.3 !important;
+    }
+    .social-card-desc {
+      color: #4A3B32 !important;
+      font-size: 13.5px !important;
+      line-height: 1.6 !important;
+      margin-bottom: 14px !important;
+    }
+    .stat-chip {
+      background: #FAF7F2 !important;
+      border: 1px solid rgba(184, 165, 139, 0.45) !important;
+      color: #2C211B !important;
+      font-size: 12px !important;
+      font-weight: 700 !important;
+      padding: 4px 10px !important;
+      border-radius: 6px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 5px !important;
+    }
+    .stat-chip.matcha {
+      background: rgba(124, 130, 104, 0.15) !important;
+      border-color: rgba(124, 130, 104, 0.45) !important;
+      color: #3E4330 !important;
+    }
+    .stat-chip.highlight {
+      background: #7C8268 !important;
+      border-color: #7C8268 !important;
+      color: #FFFFFF !important;
+    }
+
+    /* ========================================================
+       MỤC 6: CHIẾN LƯỢC 4 KÊNH & MỤC TIÊU SỐ LIỆU TƯƠNG PHẢN CAO
+       ======================================================== */
+    .sec8-strategy-grid {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 20px !important;
+      margin: 20px 0 32px !important;
+    }
+    @media (max-width: 800px) {
+      .sec8-strategy-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    .sec8-channel-card {
+      background: #FFFFFF !important;
+      border: 1.5px solid rgba(184, 165, 139, 0.45) !important;
+      border-radius: 18px !important;
+      padding: 22px 24px !important;
+      box-shadow: 0 8px 24px rgba(44, 33, 27, 0.05) !important;
+      transition: all 0.3s ease !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+    .sec8-channel-card:hover {
+      transform: translateY(-4px) !important;
+      border-color: #B8A58B !important;
+      box-shadow: 0 16px 36px rgba(44, 33, 27, 0.12) !important;
+    }
+    .sec8-card-header {
+      border-bottom: 1.5px dashed rgba(184, 165, 139, 0.35) !important;
+      padding-bottom: 12px !important;
+      margin-bottom: 14px !important;
+    }
+    .sec8-card-name {
+      color: #2C211B !important;
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-size: 21px !important;
+      font-weight: 700 !important;
+    }
+    .sec8-card-badge {
+      font-size: 11px !important;
+      font-weight: 800 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.06em !important;
+      padding: 3px 10px !important;
+      border-radius: 999px !important;
+    }
+    .sec8-card-badge.gold {
+      background: rgba(184, 165, 139, 0.2) !important;
+      color: #2C211B !important;
+      border: 1px solid rgba(184, 165, 139, 0.45) !important;
+    }
+    .sec8-card-badge.matcha {
+      background: rgba(124, 130, 104, 0.18) !important;
+      color: #3E4330 !important;
+      border: 1px solid rgba(124, 130, 104, 0.45) !important;
+    }
+    .sec8-kpi-pill {
+      background: #FAF7F2 !important;
+      border: 1px solid rgba(184, 165, 139, 0.45) !important;
+      color: #2C211B !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      padding: 7px 14px !important;
+      border-radius: 10px !important;
+      margin-bottom: 12px !important;
+    }
+    .sec8-card-desc {
+      color: #4A3B32 !important;
+      font-size: 13.5px !important;
+      line-height: 1.6 !important;
+    }
+    .sec8-card-desc strong {
+      color: #2C211B !important;
+      font-weight: 700 !important;
+    }
+
+    .sec8-targets-grid {
+      display: grid !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 16px !important;
+      margin: 20px 0 28px !important;
+    }
+    @media (max-width: 900px) {
+      .sec8-targets-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+    @media (max-width: 480px) {
+      .sec8-targets-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+    .sec8-target-item {
+      background: #FFFFFF !important;
+      border: 1.5px solid rgba(184, 165, 139, 0.45) !important;
+      border-radius: 16px !important;
+      padding: 22px 18px !important;
+      text-align: center !important;
+      box-shadow: 0 6px 20px rgba(44, 33, 27, 0.05) !important;
+      transition: all 0.3s ease !important;
+    }
+    .sec8-target-item:hover {
+      transform: translateY(-4px) !important;
+      border-color: #B8A58B !important;
+      box-shadow: 0 14px 32px rgba(44, 33, 27, 0.12) !important;
+    }
+    .sec8-target-num {
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-size: 36px !important;
+      font-weight: 800 !important;
+      color: #2C211B !important;
+      margin-bottom: 4px !important;
+      line-height: 1.1 !important;
+    }
+    .sec8-target-num.text-matcha {
+      color: #2E7D32 !important;
+    }
+    .sec8-target-num.text-gold {
+      color: #B8A58B !important;
+    }
+    .sec8-target-lbl {
+      color: #7C8268 !important;
+      font-size: 12px !important;
+      font-weight: 800 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.06em !important;
+      margin-top: 4px !important;
+    }
+    .sec8-target-cadence {
+      color: #5C4D44 !important;
+      font-size: 12px !important;
+      margin-top: 4px !important;
+    }
+
+    .pos-stmt-banner {
+      background: #FFFFFF !important;
+      border: 2px solid rgba(184, 165, 139, 0.45) !important;
+      border-radius: 18px !important;
+      padding: 26px 30px !important;
+      box-shadow: 0 8px 24px rgba(44, 33, 27, 0.06) !important;
+      margin: 28px 0 !important;
+    }
+    .pos-stmt-badge {
+      background: rgba(124, 130, 104, 0.15) !important;
+      border: 1px solid rgba(124, 130, 104, 0.4) !important;
+      color: #3E4330 !important;
+      font-size: 11.5px !important;
+      font-weight: 800 !important;
+      padding: 4px 12px !important;
+      border-radius: 20px !important;
+      margin-bottom: 12px !important;
+    }
+    .pos-stmt-lead {
+      color: #4A3B32 !important;
+      font-size: 15px !important;
+      line-height: 1.7 !important;
+    }
+    .pos-stmt-tagline {
+      border-top: 1px solid rgba(184, 165, 139, 0.3) !important;
+      padding-top: 14px !important;
+    }
+    .tagline-quote {
+      color: #2C211B !important;
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-size: 22px !important;
+      font-weight: 700 !important;
+      font-style: italic !important;
+    }
+    .tagline-sub {
+      color: #7C8268 !important;
+      font-size: 13px !important;
+      font-weight: 600 !important;
+    }
+
+    
+    /* Hộp nhận xét tự động & Đánh giá thực tế */
+    .auto-note-box {
+      background: #FAF7F2 !important;
+      border: 1.5px solid rgba(124, 130, 104, 0.45) !important;
+      border-radius: 16px !important;
+      padding: 18px 22px !important;
+      margin: 20px 0 !important;
+      color: #2C211B !important;
+      font-size: 14px !important;
+      line-height: 1.65 !important;
+      box-shadow: 0 4px 16px rgba(44, 33, 27, 0.04) !important;
+    }
+    .auto-note-box strong {
+      color: #2C211B !important;
+      font-weight: 700 !important;
+    }
+
+    /* Subheadings trên toàn trang chuẩn màu Espresso & Serif sang trọng */
+    .report-section h3,
+    .section-subheading {
+      color: #2C211B !important;
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-weight: 700 !important;
+    }
+
+    /* Reflection box ở Mục 4 */
+    div[style*="background:rgba(240,167,101,0.08)"],
+    div[style*="background: rgba(240,167,101,0.08)"] {
+      background: #FAF7F2 !important;
+      border-left: 4px solid #B8A58B !important;
+      border-top: 1px solid rgba(184, 165, 139, 0.35) !important;
+      border-right: 1px solid rgba(184, 165, 139, 0.35) !important;
+      border-bottom: 1px solid rgba(184, 165, 139, 0.35) !important;
+      border-radius: 14px !important;
+      padding: 18px 22px !important;
+      color: #2C211B !important;
+      box-shadow: 0 4px 16px rgba(44, 33, 27, 0.04) !important;
+      margin: 18px 0 !important;
+    }
+    div[style*="background:rgba(240,167,101,0.08)"] strong,
+    div[style*="background: rgba(240,167,101,0.08)"] strong {
+      color: #2C211B !important;
+      font-weight: 700 !important;
+    }
+    div[style*="background:rgba(240,167,101,0.08)"] p,
+    div[style*="background: rgba(240,167,101,0.08)"] p,
+    div[style*="background:rgba(240,167,101,0.08)"] div,
+    div[style*="background: rgba(240,167,101,0.08)"] div {
+      color: #4A3B32 !important;
+      line-height: 1.65 !important;
+    }
+
+    /* Chi tiết thẻ bài đăng Mục 3 */
+    .social-card-body {
+      background: #FFFFFF !important;
+      padding: 18px 20px !important;
+    }
+    .social-card-title {
+      color: #2C211B !important;
+      font-family: 'Cormorant Garamond', Georgia, serif !important;
+      font-size: 19px !important;
+      font-weight: 700 !important;
+      margin-bottom: 6px !important;
+    }
+    .social-card-desc {
+      color: #4A3B32 !important;
+      font-size: 13px !important;
+      line-height: 1.6 !important;
+    }
+    .social-post-card .badge,
+    .social-post-card span[style*="border-radius:999px"],
+    .social-post-card span[style*="border-radius: 999px"],
+    .social-post-card span[style*="border-radius:20px"],
+    .social-post-card span[style*="border-radius: 20px"] {
+      background: #FAF7F2 !important;
+      color: #4A3B32 !important;
+      border: 1px solid rgba(184, 165, 139, 0.45) !important;
+    }
+
+    @media (max-width: 768px) {
+      table.pdf-table, table.report-table, table.wrap-content-table {
+        min-width: 500px !important;
+      }
+      table.pdf-table th, table.report-table th, table.wrap-content-table th {
+        font-size: 11px !important;
+        padding: 10px 8px !important;
+        letter-spacing: 0.02em !important;
+      }
+      table.pdf-table td, table.report-table td, table.wrap-content-table td {
+        font-size: 11.5px !important;
+        padding: 9px 8px !important;
+        line-height: 1.4 !important;
+      }
+      table.pdf-table td:first-child, table.report-table td:first-child {
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+      }
     }
 
     /* Section 7: Proposal Poster Luxury Frame */
@@ -1400,8 +1962,9 @@ def run():
         s1_clean = s1_clean[:-10]
     s2_inner = re.sub(r'^<section class="report-section" id="muc-2">\s*<div class="shell">', '', sec2_raw.strip())
     s2_inner = re.sub(r'</div>\s*</section>$', '', s2_inner.strip())
-    s2_inner = s2_inner.replace('<div class="section-chapter-tag">2. CHÂN DUNG KHÁCH HÀNG (PERSONA)</div>',
-                                '<div class="section-chapter-tag matcha" style="margin-bottom:12px;"><i data-lucide="sparkles" style="width:12px;height:12px;display:inline-block;vertical-align:middle;margin-right:4px;"></i>CHÂN DUNG KHÁCH HÀNG MỤC TIÊU (PERSONA)</div>')
+    s2_inner = re.sub(r'<div class="section-chapter-tag[^"]*">2\.[^<]+</div>',
+                      '<div class="section-chapter-tag matcha" style="margin-bottom:12px;"><i data-lucide="sparkles" style="width:12px;height:12px;display:inline-block;vertical-align:middle;margin-right:4px;"></i>CHÂN DUNG KHÁCH HÀNG MỤC TIÊU (PERSONA)</div>',
+                      s2_inner)
     s2_inner = s2_inner.replace('<h2 class="section-main-heading">2. Chân Dung Khách Hàng Mục Tiêu: Đoàn Minh Trang</h2>',
                                 '<h3 class="section-main-heading" style="font-size:28px;margin-bottom:14px;color:#2C211B;">Chân Dung Khách Hàng Mục Tiêu: Đoàn Minh Trang</h3>')
 
@@ -1435,6 +1998,7 @@ def run():
         </div>
       </div>"""
     s3_clean = s3_clean.replace(dark_eval_box, light_eval_box)
+    s3_clean = s3_clean.replace('<div class="table-container">', '''<div class="table-scroll-hint mobile-only"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> <span>Vuốt ngang bảng để xem đầy đủ KPI Kế hoạch, Thực tế &amp; Tỷ lệ đạt (5 cột)</span></div>''' + '\n      <div class="table-container">', 1)
 
     channel_qr_html = """
       <!-- CỔNG KẾT NỐI 4 NỀN TẢNG SỐ & 4 MÃ QR CODE -->
@@ -1536,10 +2100,19 @@ def run():
 
     s4_inner = re.sub(r'^<section class="report-section" id="muc-4">\s*<div class="shell">', '', sec4_raw.strip())
     s4_inner = re.sub(r'</div>\s*</section>$', '', s4_inner.strip())
-    s4_inner = s4_inner.replace('<div class="section-chapter-tag">4. TĂNG TRƯỞNG QUA 6 TUẦN</div>',
-                                '<div class="section-chapter-tag matcha" style="margin-bottom:12px;">2.2. THEO DÕI TĂNG TRƯỞNG THỰC TẾ QUA 6 TUẦN</div>')
-    s4_inner = s4_inner.replace('<h2 class="section-main-heading">4. Theo Dõi &amp; Đánh Giá Tăng Trưởng Qua 6 Tuần</h2>',
-                                '<h3 class="section-main-heading" style="font-size:26px;margin-bottom:14px;color:#2C211B;">Biểu Đồ Theo Dõi Tăng Trưởng Số Liệu 6 Tuần Thực Chiến</h3>')
+    s4_inner = re.sub(r'<div class="section-chapter-tag[^"]*">4\.[^<]+</div>',
+                      '<div class="section-chapter-tag matcha" style="margin-bottom:12px;">THEO DÕI TĂNG TRƯỞNG THỰC TẾ QUA 6 TUẦN</div>', s4_inner)
+    s4_inner = re.sub(r'<h2 class="section-main-heading">4\.[^<]+</h2>',
+                      '<h3 class="section-main-heading" style="font-size:26px;margin-bottom:14px;color:#2C211B;">Biểu Đồ Theo Dõi Tăng Trưởng Số Liệu 6 Tuần Thực Chiến</h3>', s4_inner)
+
+    dark_chart_box = '<div style="background:rgba(22,17,12,0.92);border:1.5px solid var(--border-brass);border-radius:var(--radius-md);padding:26px;margin:28px 0;box-shadow:var(--shadow-wood);">'
+    light_chart_box = '<div style="background:#FFFFFF;border:1.5px solid rgba(184,165,139,0.45);border-radius:18px;padding:26px;margin:28px 0;box-shadow:0 8px 24px rgba(44,33,27,0.06);">'
+    s4_inner = s4_inner.replace(dark_chart_box, light_chart_box)
+    s4_inner = s4_inner.replace('color:var(--accent-gold);margin-bottom:6px;">📈 Biểu đồ trực quan', 'color:#2C211B;font-weight:700;margin-bottom:6px;">📈 Biểu đồ trực quan')
+    s4_inner = s4_inner.replace('<div style="font-size:12.5px;color:var(--text-muted);margin-bottom:16px;">', '<div style="font-size:13px;color:#5C4D44;margin-bottom:16px;">')
+    s4_inner = s4_inner.replace('<h3 style="font-family:var(--font-serif);font-size:20px;color:var(--accent-gold);margin:24px 0 12px;">Bảng số liệu người theo dõi &amp; lượt truy cập theo tuần:</h3>',
+                                '<h3 style="font-family:var(--font-serif);font-size:21px;font-weight:700;color:#2C211B;margin:24px 0 12px;">Bảng số liệu người theo dõi &amp; lượt truy cập theo tuần:</h3>')
+    s4_inner = s4_inner.replace('<div class="table-container">', '''<div class="table-scroll-hint mobile-only"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> <span>Vuốt ngang bảng để xem chi tiết 4 kênh theo từng tuần</span></div>''' + '\n      <div class="table-container">', 1)
 
     sec2_final = f"""{s3_clean}
       {channel_qr_html}
@@ -1550,30 +2123,26 @@ def run():
 
     # 3. Section 3: muc-5 (Sản phẩm truyền thông nổi bật & demo)
     sec3_final = sec5_raw.replace('id="muc-5"', 'id="muc-3"')
-    sec3_final = sec3_final.replace('<div class="section-chapter-tag">5. SẢN PHẨM TRUYỀN THÔNG &amp; MINH CHỨNG</div>',
-                                    '<div class="section-chapter-tag">3. SẢN PHẨM TRUYỀN THÔNG NỔI BẬT &amp; DEMO</div>')
+    sec3_final = re.sub(r'<div class="section-chapter-tag[^"]*">5\.[^<]+</div>', '<div class="section-chapter-tag matcha">3. SẢN PHẨM TRUYỀN THÔNG NỔI BẬT &amp; DEMO</div>', sec3_final)
     sec3_final = sec3_final.replace('<h2 class="section-main-heading">5. Sản Phẩm Truyền Thông Nổi Bật &amp; Minh Chứng Thực Tế</h2>',
                                     '<h2 class="section-main-heading">3. Sản Phẩm Truyền Thông Nổi Bật &amp; Minh Chứng Thực Tế</h2>')
 
     # 4. Section 4: muc-6 (Đánh giá tổng quan & Bài học chiến lược)
     sec4_final = sec6_raw.replace('id="muc-6"', 'id="muc-4"')
-    sec4_final = sec4_final.replace('<div class="section-chapter-tag">6. ĐÁNH GIÁ &amp; BÀI HỌC KINH NGHIỆM</div>',
-                                    '<div class="section-chapter-tag">4. PHÂN TÍCH TỔNG QUAN &amp; ĐIỀU CHỈNH</div>')
+    sec4_final = re.sub(r'<div class="section-chapter-tag[^"]*">6\.[^<]+</div>', '<div class="section-chapter-tag matcha">4. PHÂN TÍCH TỔNG QUAN &amp; ĐIỀU CHỈNH CHIẾN LƯỢC</div>', sec4_final)
     sec4_final = sec4_final.replace('<h2 class="section-main-heading">6. Đánh Giá Tổng Quan 4 Kênh &amp; Bài Học Chiến Lược</h2>',
                                     '<h2 class="section-main-heading">4. Phân Tích Tổng Quan 4 Kênh &amp; Điều Chỉnh Chiến Lược</h2>')
 
     # 5. Section 5: muc-7 (Tuân thủ pháp lý)
     sec5_final = sec7_raw.replace('id="muc-7"', 'id="muc-5"')
-    sec5_final = sec5_final.replace('<div class="section-chapter-tag">7. TUÂN THỦ PHÁP LÝ &amp; CHUẨN MỰC QUẢNG CÁO</div>',
-                                    '<div class="section-chapter-tag">5. TUÂN THỦ PHÁP LÝ &amp; CHUẨN MỰC</div>')
+    sec5_final = re.sub(r'<div class="section-chapter-tag[^"]*">7\.[^<]+</div>', '<div class="section-chapter-tag matcha">5. TUÂN THỦ PHÁP LÝ &amp; CHUẨN MỰC QUẢNG CÁO</div>', sec5_final)
     sec5_final = re.sub(r'<h2 class="section-main-heading">7\.[^<]+</h2>',
                         '<h2 class="section-main-heading">5. Danh Mục 12 Tiêu Chí Tuân Thủ Pháp Lý &amp; Chuẩn Mực Quảng Cáo</h2>',
                         sec5_final)
 
     # 6. Section 6: muc-8 ONLY (Sáng tạo nội dung & Định hướng khởi nghiệp thực tế)
     sec6_final = sec8_raw.replace('id="muc-8"', 'id="muc-6"')
-    sec6_final = sec6_final.replace('<div class="section-chapter-tag">8. KẾ HOẠCH PHÁT TRIỂN 3 THÁNG</div>',
-                                    '<div class="section-chapter-tag">6. SÁNG TẠO NỘI DUNG &amp; ĐỊNH HƯỚNG KHỞI NGHIỆP</div>')
+    sec6_final = re.sub(r'<div class="section-chapter-tag[^"]*">8\.[^<]+</div>', '<div class="section-chapter-tag matcha">6. SÁNG TẠO NỘI DUNG &amp; ĐỊNH HƯỚNG KHỞI NGHIỆP</div>', sec6_final)
     sec6_final = sec6_final.replace('<h2 class="section-main-heading">8. Định Hướng Duy Trì Kênh &amp; Mục Tiêu Phát Triển 3 Tháng Tới</h2>',
                                     '<h2 class="section-main-heading">6. Sáng Tạo Nội Dung &amp; Định Hướng Khởi Nghiệp Thực Tế</h2>')
     
@@ -1593,7 +2162,7 @@ def run():
        ======================================================== -->
   <section class="report-section" id="muc-7">
     <div class="shell">
-      <div class="section-chapter-tag">7. TỔNG KẾT ẢNH SỐ LIỆU</div>
+      <div class="section-chapter-tag matcha">7. TỔNG KẾT ẢNH SỐ LIỆU &amp; PROPOSAL DỰ ÁN 6 TUẦN</div>
       <h2 class="section-main-heading">7. Tổng Kết Ảnh Số Liệu &amp; Proposal Dự Án 6 Tuần</h2>
       <p style="color:var(--text-muted);margin-bottom:28px;font-size:15px;line-height:1.6;">
         Bảng tổng kết Proposal Dự án Truyền thông số học kỳ 261 (GV: Jon Lâm), tổng hợp toàn bộ các chỉ số đo lường thực tế định kỳ 6 tuần trên 4 nền tảng số (Instagram, Facebook, TikTok và Landing Page), kèm mã QR tra cứu trực tiếp.
@@ -1767,8 +2336,7 @@ def run():
 
     # 8. Assemble Section 8: FINAL TEAM MEMBERS (ĐƯA XUỐNG CUỐI CÙNG THEO YÊU CẦU CỦA USER)
     sec8_final = sec9_raw.replace('id="muc-9"', 'id="muc-8"')
-    sec8_final = sec8_final.replace('<div class="section-chapter-tag">9. THÀNH VIÊN NHÓM 7 — GỖ XÀ CỪ</div>',
-                                    '<div class="section-chapter-tag matcha">8. PHÂN VAI &amp; ĐÓNG GÓP CỦA CÁC THÀNH VIÊN NHÓM 7</div>')
+    sec8_final = re.sub(r'<div class="section-chapter-tag[^"]*">9\.[^<]+</div>', '<div class="section-chapter-tag matcha">8. PHÂN VAI &amp; ĐÓNG GÓP CỦA CÁC THÀNH VIÊN NHÓM 7</div>', sec8_final)
     sec8_final = sec8_final.replace('<h2 class="section-main-heading">9. Phân Vai &amp; Đóng Góp Của Các Thành Viên Nhóm 7</h2>',
                                     '<h2 class="section-main-heading">8. Phân Vai &amp; Đóng Góp Của Các Thành Viên Nhóm 7</h2>')
 
@@ -1821,6 +2389,14 @@ def run():
 
     raw_tail = raw_tail.replace('background:#070503;', 'background:#FAF6F0;color:#5C4D44;')
     raw_tail = raw_tail.replace('currentSectionId = "muc-9";', 'currentSectionId = "muc-8";')
+
+    raw_tail = raw_tail.replace("color: '#FAF5EE',", "color: '#2C211B',")
+    raw_tail = raw_tail.replace("color: 'rgba(255, 255, 255, 0.06)'", "color: 'rgba(184, 165, 139, 0.22)'")
+    raw_tail = raw_tail.replace("color: '#A8A096',", "color: '#2C211B',")
+    raw_tail = raw_tail.replace("backgroundColor: 'rgba(17, 13, 9, 0.95)',", "backgroundColor: '#2C211B',")
+    raw_tail = raw_tail.replace("titleColor: '#F0A765',", "titleColor: '#F6F1E7',")
+    raw_tail = raw_tail.replace("bodyColor: '#FAF5EE',", "bodyColor: '#F6F1E7',")
+
 
     # Assemble Document
     final_doc = head_hero.strip() + "\n\n" + \
