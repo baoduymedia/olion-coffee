@@ -17,6 +17,12 @@ Disallow: /campaign-report
 Disallow: /campaign-report.html
 Disallow: /report
 Disallow: /report.html
+Disallow: /cuoi-ky
+Disallow: /cuoi-ky.html
+Disallow: /bao-cao-cuoi-ky
+Disallow: /bao-cao-cuoi-ky.html
+Disallow: /final-report
+Disallow: /final-report.html
 Disallow: /api/
 Disallow: /*?preview=*
 

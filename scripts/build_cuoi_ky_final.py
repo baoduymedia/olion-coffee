@@ -363,6 +363,7 @@ def build_cuoi_ky_report():
   <meta property="og:title" content="Báo Cáo Cuối Kỳ: Chiến Dịch Truyền Thông Số | Olion Coffee" />
   <meta property="og:description" content="Báo cáo cuối kỳ Nhóm 7 — Gỗ Xà Cừ: Đánh giá hiệu quả 6 tuần truyền thông số cho quán cà phê Olion Coffee." />
   <meta property="og:image" content="https://www.olioncoffee.app/assets/cuoi-ky/chart-followers-6tuan.webp" />
+  <link rel="canonical" href="https://www.olioncoffee.app/cuoi-ky" />
   <link rel="icon" href="assets/logo-transparent.webp" type="image/webp" />
 
   <!-- Google Fonts: Cormorant Garamond, Plus Jakarta Sans, Playfair Display -->
@@ -1948,7 +1949,9 @@ __CSS__
     html = html.replace("__CSS__", full_css)
     with open('cuoi-ky.html', 'w', encoding='utf-8') as f:
         f.write(html)
-    print("cuoi-ky.html generated successfully!")
+    with open('bao-cao-cuoi-ky.html', 'w', encoding='utf-8') as f:
+        f.write(html)
+    print("cuoi-ky.html and bao-cao-cuoi-ky.html generated successfully!")
 
 if __name__ == '__main__':
     build_cuoi_ky_report()
