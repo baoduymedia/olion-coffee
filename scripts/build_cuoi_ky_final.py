@@ -313,11 +313,16 @@ def run():
     .report-section {
       border-top: 1.5px solid rgba(184, 165, 139, 0.35) !important;
       padding: 50px 0 !important;
+      background: #F6F1E7 !important;
+      color: #2C211B !important;
     }
 
     /* Hero Section */
     .hero-section {
+      background: linear-gradient(180deg, #FAF6F0 0%, #F6F1E7 100%) !important;
+      border-bottom: 2px solid rgba(184, 165, 139, 0.4) !important;
       padding: 45px 0 25px !important;
+      color: #2C211B !important;
     }
     .hero-eyebrow {
       background: rgba(184, 165, 139, 0.22) !important;
@@ -1021,13 +1026,49 @@ def run():
       -webkit-overflow-scrolling: touch !important;
       width: 100% !important;
     }
-    table.pdf-table, table.report-table, table.wrap-content-table {
+    table.pdf-table, table.report-table {
       width: 100% !important;
       min-width: 660px !important; /* Đảm bảo đủ chiều rộng hiển thị 5 cột số liệu rõ ràng */
       border-collapse: collapse !important;
       background: #FFFFFF !important;
     }
-    table.pdf-table th, table.report-table th, table.wrap-content-table th {
+    table.wrap-content-table {
+      width: 100% !important;
+      min-width: 0 !important;
+      table-layout: auto !important;
+      border-collapse: collapse !important;
+      background: #FFFFFF !important;
+    }
+    @media (min-width: 992px) {
+      table.wrap-content-table {
+        table-layout: fixed !important;
+        width: 100% !important;
+      }
+      table.wrap-content-table th {
+        white-space: normal !important;
+      }
+      table.wrap-content-table th:nth-child(1),
+      table.wrap-content-table td:nth-child(1) {
+        width: 16% !important;
+      }
+      table.wrap-content-table th:nth-child(2),
+      table.wrap-content-table td:nth-child(2) {
+        width: 28% !important;
+      }
+      table.wrap-content-table th:nth-child(3),
+      table.wrap-content-table td:nth-child(3) {
+        width: 28% !important;
+      }
+      table.wrap-content-table th:nth-child(4),
+      table.wrap-content-table td:nth-child(4) {
+        width: 28% !important;
+      }
+      #muc-4 .table-container,
+      #muc-6 .table-container {
+        overflow-x: visible !important;
+      }
+    }
+    table.pdf-table th, table.report-table th {
       background: #2C211B !important; /* Nền Espresso đậm tương phản cao */
       color: #F6F1E7 !important; /* Chữ kem sáng rõ nét, không bao giờ chìm */
       font-size: 12.5px !important;
@@ -1037,6 +1078,17 @@ def run():
       padding: 13px 16px !important;
       border-bottom: 2px solid #B8A58B !important;
       white-space: nowrap !important;
+    }
+    table.wrap-content-table th {
+      background: #2C211B !important;
+      color: #F6F1E7 !important;
+      font-size: 13px !important;
+      font-weight: 800 !important;
+      text-transform: uppercase !important;
+      letter-spacing: 0.05em !important;
+      padding: 13px 16px !important;
+      border-bottom: 2px solid #B8A58B !important;
+      white-space: normal !important;
     }
     table.pdf-table td, table.report-table td, table.wrap-content-table td {
       color: #4A3B32 !important;
@@ -1602,6 +1654,132 @@ def run():
       }
     }
 
+    
+    /* Modern Channel QR Cards & Buttons */
+    .live-pulse-dot {
+      width: 8px !important;
+      height: 8px !important;
+      background: #2E7D32 !important;
+      border-radius: 50% !important;
+      display: inline-block !important;
+      box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.7) !important;
+      animation: pulseBeacon 1.8s infinite !important;
+    }
+
+    .channel-qr-scan-tag {
+      position: absolute !important;
+      bottom: 6px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      background: rgba(44, 33, 27, 0.88) !important;
+      color: #F6F1E7 !important;
+      font-size: 10.5px !important;
+      font-weight: 700 !important;
+      padding: 3px 8px !important;
+      border-radius: 12px !important;
+      white-space: nowrap !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      backdrop-filter: blur(4px) !important;
+      transition: all 0.2s ease !important;
+      pointer-events: none !important;
+    }
+    .channel-qr-img-box:hover .channel-qr-scan-tag {
+      background: #2C211B !important;
+      color: #FFFFFF !important;
+      transform: translateX(-50%) scale(1.05) !important;
+    }
+    .channel-qr-img-box {
+      position: relative !important;
+    }
+
+    .channel-qr-btn-group {
+      display: flex !important;
+      gap: 8px !important;
+      width: 100% !important;
+      margin-top: auto !important;
+    }
+    .channel-qr-btn-group .channel-qr-btn {
+      flex: 1 !important;
+      padding: 9px 10px !important;
+      font-size: 12px !important;
+    }
+    .channel-qr-copy-btn {
+      background: #FAF7F2 !important;
+      border: 1.5px solid rgba(184, 165, 139, 0.45) !important;
+      color: #4A3B32 !important;
+      padding: 9px 10px !important;
+      border-radius: 12px !important;
+      font-size: 11.5px !important;
+      font-weight: 700 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 4px !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+      white-space: nowrap !important;
+    }
+    .channel-qr-copy-btn:hover {
+      background: #2C211B !important;
+      color: #F6F1E7 !important;
+      border-color: #2C211B !important;
+      transform: translateY(-2px) !important;
+    }
+
+    .channel-quick-pill {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 7px !important;
+      padding: 8px 18px !important;
+      border-radius: 30px !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      text-decoration: none !important;
+      background: #FFFFFF !important;
+      border: 1.5px solid rgba(184, 165, 139, 0.45) !important;
+      color: #2C211B !important;
+      box-shadow: 0 4px 14px rgba(44, 33, 27, 0.05) !important;
+      transition: all 0.25s ease !important;
+    }
+    .channel-quick-pill:hover {
+      transform: translateY(-2px) !important;
+      box-shadow: 0 8px 20px rgba(44, 33, 27, 0.1) !important;
+    }
+    .channel-quick-pill.fb:hover { border-color: #1877F2 !important; color: #1877F2 !important; }
+    .channel-quick-pill.tiktok:hover { border-color: #000000 !important; color: #000000 !important; }
+    .channel-quick-pill.ig:hover { border-color: #E1306C !important; color: #E1306C !important; }
+    .channel-quick-pill.web:hover { border-color: #7C8268 !important; color: #7C8268 !important; }
+
+    /* Toast Notification */
+    .toast-notification {
+      position: fixed !important;
+      bottom: 28px !important;
+      right: 28px !important;
+      background: #2C211B !important;
+      color: #F6F1E7 !important;
+      padding: 12px 20px !important;
+      border-radius: 30px !important;
+      display: flex !important;
+      align-items: center !important;
+      gap: 10px !important;
+      font-size: 13.5px !important;
+      font-weight: 700 !important;
+      box-shadow: 0 12px 32px rgba(44, 33, 27, 0.35) !important;
+      border: 1.5px solid #B8A58B !important;
+      z-index: 999999 !important;
+      opacity: 0 !important;
+      transform: translateY(20px) !important;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      pointer-events: none !important;
+    }
+    .toast-notification.show {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      pointer-events: auto !important;
+    }
+
     /* Section 7: Proposal Poster Luxury Frame */
     .proposal-poster-card {
       background: #FFFFFF !important;
@@ -1954,7 +2132,7 @@ def run():
       </div>
     </div>
     """
-    head_hero = re.sub(r'<div class="mobile-nav-drawer" id="mobileDrawer">[\s\S]*?</div>\s*</div>', drawer_html.strip(), head_hero)
+    head_hero = re.sub(r'<div class="mobile-nav-drawer" id="mobileDrawer">[\s\S]*?</div>(?=\s*<!--|\s*<section class="hero-section")', drawer_html.strip(), head_hero)
 
     # 1. Section 1: muc-1 + Persona
     s1_clean = sec1_raw.rstrip()
@@ -2001,102 +2179,130 @@ def run():
     s3_clean = s3_clean.replace('<div class="table-container">', '''<div class="table-scroll-hint mobile-only"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 17 18 12 13 7"></polyline><polyline points="6 17 11 12 6 7"></polyline></svg> <span>Vuốt ngang bảng để xem đầy đủ KPI Kế hoạch, Thực tế &amp; Tỷ lệ đạt (5 cột)</span></div>''' + '\n      <div class="table-container">', 1)
 
     channel_qr_html = """
-      <!-- CỔNG KẾT NỐI 4 NỀN TẢNG SỐ & 4 MÃ QR CODE -->
-      <div style="margin-top: 28px; margin-bottom: 8px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+      <!-- CỔNG KẾT NỐI 4 NỀN TẢNG SỐ & 4 MÃ QR CODE CHÍNH THỨC -->
+      <div style="margin-top: 36px; margin-bottom: 12px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;">
           <div>
             <span style="font-size:12px;font-weight:700;color:var(--matcha-green);text-transform:uppercase;letter-spacing:0.08em;display:flex;align-items:center;gap:6px;">
-              <i data-lucide="qr-code" style="width:14px;height:14px;"></i> Hệ Thống Đa Nền Tảng Số
+              <i data-lucide="qr-code" style="width:14px;height:14px;"></i> Hệ Thống Đa Nền Tảng Số Chính Thức
             </span>
-            <h3 style="font-family:var(--font-serif);font-size:24px;font-weight:700;color:var(--crema);margin:4px 0 0 0;">
+            <h3 style="font-family:var(--font-serif);font-size:25px;font-weight:700;color:var(--crema);margin:4px 0 0 0;">
               Truy Cập Trực Tiếp &amp; Quét Mã QR 4 Kênh Truyền Thông
             </h3>
           </div>
-          <span style="font-size:13px;color:var(--text-muted);">
-            <i data-lucide="info" style="width:14px;height:14px;display:inline-block;vertical-align:middle;margin-right:4px;"></i>
-            Quét bằng camera điện thoại hoặc bấm nút để mở kênh
-          </span>
+          <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);">
+            <span class="live-pulse-dot"></span>
+            <span>Link chính thức đã xác thực &bull; Nhấp mã QR để phóng to quét bằng điện thoại</span>
+          </div>
         </div>
       </div>
 
       <div class="channel-qr-grid">
-        <!-- Facebook Fanpage -->
+        <!-- 1. Facebook Fanpage -->
         <div class="channel-qr-card">
           <div class="channel-qr-badge fb">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             Facebook Fanpage
           </div>
-          <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-facebook.png', 'Mã QR Kênh Facebook Fanpage Olion Coffee (Quét để truy cập)')" title="Nhấp để phóng to QR">
+          <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-facebook.png', 'Mã QR Kênh Facebook Fanpage Olion Coffee (Link chính thức: https://www.facebook.com/share/19kbsppy1a/)')" title="Nhấp để phóng to QR">
             <img src="assets/cuoi-ky/qr-facebook.png" alt="QR Code Facebook Fanpage Olion Coffee" class="channel-qr-img" />
+            <div class="channel-qr-scan-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> Phóng to quét mã</div>
           </div>
           <div class="channel-qr-name">Facebook Fanpage</div>
           <div class="channel-qr-handle">@olioncoffee.vlu &bull; CS3 Gò Vấp</div>
           <div class="channel-qr-desc">
-            Cổng thông tin &amp; kết nối chính thức, tương tác đạt <strong>665 lượt (110,8% KPI)</strong>.
+            Cổng thông tin &amp; kết nối chính thức, tương tác thực tế đạt <strong>665 lượt (110,8% KPI)</strong>.
           </div>
-          <a href="https://www.facebook.com/profile.php?id=61594159312837" target="_blank" rel="noopener noreferrer" class="channel-qr-btn fb">
-            <span>Mở Trang Facebook</span> <i data-lucide="external-link" style="width:13px;height:13px;"></i>
-          </a>
+          <div class="channel-qr-btn-group">
+            <a href="https://www.facebook.com/share/19kbsppy1a/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="channel-qr-btn fb">
+              <span>Mở Kênh ↗</span>
+            </a>
+            <button type="button" class="channel-qr-copy-btn" onclick="copyChannelLink('https://www.facebook.com/share/19kbsppy1a/?mibextid=wwXIfr', 'Facebook Fanpage')" title="Sao chép link Facebook">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Copy</span>
+            </button>
+          </div>
         </div>
 
-        <!-- TikTok Channel -->
+        <!-- 2. TikTok Channel -->
         <div class="channel-qr-card">
           <div class="channel-qr-badge tiktok">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
             TikTok Channel 🏆
           </div>
-          <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-tiktok.png', 'Mã QR Kênh TikTok Olion Coffee (Quét để truy cập)')" title="Nhấp để phóng to QR">
+          <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-tiktok.png', 'Mã QR Kênh TikTok Olion Coffee (Link chính thức: https://www.tiktok.com/@olion.coffee)')" title="Nhấp để phóng to QR">
             <img src="assets/cuoi-ky/qr-tiktok.png" alt="QR Code TikTok Olion Coffee" class="channel-qr-img" />
+            <div class="channel-qr-scan-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> Phóng to quét mã</div>
           </div>
           <div class="channel-qr-name">TikTok Channel</div>
-          <div class="channel-qr-handle">@olioncoffee &bull; Kênh Mũi Nhọn</div>
+          <div class="channel-qr-handle">@olion.coffee &bull; Kênh Mũi Nhọn</div>
           <div class="channel-qr-desc">
-            Kênh viral tiếp cận sinh viên VLU, đạt <strong>14.617 views</strong> và bứt phá <strong>282 followers</strong>.
+            Kênh viral tiếp cận sinh viên VLU, đạt <strong>14.617 views</strong>, like 115,1%, share 110,6% và bứt phá <strong>282 followers</strong>.
           </div>
-          <a href="https://www.tiktok.com/@olioncoffee" target="_blank" rel="noopener noreferrer" class="channel-qr-btn tiktok">
-            <span>Mở Kênh TikTok</span> <i data-lucide="external-link" style="width:13px;height:13px;"></i>
-          </a>
+          <div class="channel-qr-btn-group">
+            <a href="https://www.tiktok.com/@olion.coffee?_r=1&_t=ZS-99wZ7guuZeC" target="_blank" rel="noopener noreferrer" class="channel-qr-btn tiktok">
+              <span>Mở Kênh ↗</span>
+            </a>
+            <button type="button" class="channel-qr-copy-btn" onclick="copyChannelLink('https://www.tiktok.com/@olion.coffee?_r=1&_t=ZS-99wZ7guuZeC', 'TikTok Channel')" title="Sao chép link TikTok">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Copy</span>
+            </button>
+          </div>
         </div>
 
-        <!-- Instagram Profile -->
+        <!-- 3. Instagram Profile -->
         <div class="channel-qr-card">
           <div class="channel-qr-badge ig">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
             Instagram Art
           </div>
-          <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-instagram.png', 'Mã QR Kênh Instagram Olion Coffee (Quét để truy cập)')" title="Nhấp để phóng to QR">
+          <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-instagram.png', 'Mã QR Kênh Instagram Olion Coffee (Link chính thức: https://www.instagram.com/olion.coffee/)')" title="Nhấp để phóng to QR">
             <img src="assets/cuoi-ky/qr-instagram.png" alt="QR Code Instagram Olion Coffee" class="channel-qr-img" />
+            <div class="channel-qr-scan-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> Phóng to quét mã</div>
           </div>
           <div class="channel-qr-name">Instagram Profile</div>
-          <div class="channel-qr-handle">@olioncoffee.saigon</div>
+          <div class="channel-qr-handle">@olion.coffee &bull; Visual Nghệ Thuật</div>
           <div class="channel-qr-desc">
-            Không gian nghệ thuật thẩm mỹ cao, thu hút <strong>1.186 tương tác</strong> &amp; <strong>142 followers</strong>.
+            Không gian nghệ thuật thẩm mỹ cao, thu hút <strong>1.186 tương tác</strong> &amp; <strong>142 followers</strong> với các thước phim Reels.
           </div>
-          <a href="https://www.instagram.com/olioncoffee.saigon" target="_blank" rel="noopener noreferrer" class="channel-qr-btn ig">
-            <span>Mở Trang Instagram</span> <i data-lucide="external-link" style="width:13px;height:13px;"></i>
-          </a>
+          <div class="channel-qr-btn-group">
+            <a href="https://www.instagram.com/olion.coffee?stkn=dWlxejYzeHEzNTY1" target="_blank" rel="noopener noreferrer" class="channel-qr-btn ig">
+              <span>Mở Kênh ↗</span>
+            </a>
+            <button type="button" class="channel-qr-copy-btn" onclick="copyChannelLink('https://www.instagram.com/olion.coffee?stkn=dWlxejYzeHEzNTY1', 'Instagram Profile')" title="Sao chép link Instagram">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Copy</span>
+            </button>
+          </div>
         </div>
 
-        <!-- Landing Page Web -->
+        <!-- 4. Landing Page Web -->
         <div class="channel-qr-card">
           <div class="channel-qr-badge web">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
             Landing Page
           </div>
-          <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-landingpage.png', 'Mã QR Landing Page Olion Coffee (Quét để truy cập)')" title="Nhấp để phóng to QR">
+          <div class="channel-qr-img-box" onclick="openLightbox('assets/cuoi-ky/qr-landingpage.png', 'Mã QR Landing Page Olion Coffee (Link chính thức: https://www.olioncoffee.app/)')" title="Nhấp để phóng to QR">
             <img src="assets/cuoi-ky/qr-landingpage.png" alt="QR Code Landing Page Olion Coffee" class="channel-qr-img" />
+            <div class="channel-qr-scan-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg> Phóng to quét mã</div>
           </div>
           <div class="channel-qr-name">Landing Page Web</div>
-          <div class="channel-qr-handle">olioncoffee.app &bull; Web App</div>
+          <div class="channel-qr-handle">olioncoffee.app &bull; Web App Trực Tuyến</div>
           <div class="channel-qr-desc">
-            Trang đích tích hợp menu điện tử, bùng nổ <strong>280 visits ở tuần 4</strong> (tổng 381 visits).
+            Trang đích tích hợp menu điện tử, bùng nổ <strong>280 visits ở tuần 4</strong> (tổng đạt 381 visits).
           </div>
-          <a href="https://www.olioncoffee.app/" target="_blank" rel="noopener noreferrer" class="channel-qr-btn web">
-            <span>Mở Trang Web</span> <i data-lucide="external-link" style="width:13px;height:13px;"></i>
-          </a>
+          <div class="channel-qr-btn-group">
+            <a href="https://www.olioncoffee.app/" target="_blank" rel="noopener noreferrer" class="channel-qr-btn web">
+              <span>Mở Web ↗</span>
+            </a>
+            <button type="button" class="channel-qr-copy-btn" onclick="copyChannelLink('https://www.olioncoffee.app/', 'Landing Page Web App')" title="Sao chép link Web">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Copy</span>
+            </button>
+          </div>
         </div>
       </div>
-    """
+"""
 
     s4_inner = re.sub(r'^<section class="report-section" id="muc-4">\s*<div class="shell">', '', sec4_raw.strip())
     s4_inner = re.sub(r'</div>\s*</section>$', '', s4_inner.strip())
@@ -2126,6 +2332,7 @@ def run():
     sec3_final = re.sub(r'<div class="section-chapter-tag[^"]*">5\.[^<]+</div>', '<div class="section-chapter-tag matcha">3. SẢN PHẨM TRUYỀN THÔNG NỔI BẬT &amp; DEMO</div>', sec3_final)
     sec3_final = sec3_final.replace('<h2 class="section-main-heading">5. Sản Phẩm Truyền Thông Nổi Bật &amp; Minh Chứng Thực Tế</h2>',
                                     '<h2 class="section-main-heading">3. Sản Phẩm Truyền Thông Nổi Bật &amp; Minh Chứng Thực Tế</h2>')
+    sec3_final = sec3_final.replace('background:#000;', 'background:#FAF7F2;')
 
     # 4. Section 4: muc-6 (Đánh giá tổng quan & Bài học chiến lược)
     sec4_final = sec6_raw.replace('id="muc-6"', 'id="muc-4"')
@@ -2188,6 +2395,26 @@ def run():
         <div class="proposal-poster-media" onclick="openLightbox('assets/cuoi-ky/proposal-du-an-truyen-thong-so.jpg?v=proposal2026', 'Bảng Tổng Hợp Proposal Dự Án Truyền Thông Số (Học kỳ 261 • GV: Jon Lâm)')">
           <img src="assets/cuoi-ky/proposal-du-an-truyen-thong-so.jpg?v=proposal2026" alt="Proposal Dự Án Truyền Thông Số Olion Coffee - Nhóm 7 Gỗ Xà Cừ" class="proposal-poster-img" loading="lazy" />
         </div>
+      </div>
+
+      <!-- Quick Access Channel Pills in Section 7 -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:24px 0 32px;">
+        <a href="https://www.facebook.com/share/19kbsppy1a/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" class="channel-quick-pill fb">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          <span>Facebook Fanpage ↗</span>
+        </a>
+        <a href="https://www.tiktok.com/@olion.coffee?_r=1&_t=ZS-99wZ7guuZeC" target="_blank" rel="noopener noreferrer" class="channel-quick-pill tiktok">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.24 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          <span>TikTok Channel ↗</span>
+        </a>
+        <a href="https://www.instagram.com/olion.coffee?stkn=dWlxejYzeHEzNTY1" target="_blank" rel="noopener noreferrer" class="channel-quick-pill ig">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          <span>Instagram Profile ↗</span>
+        </a>
+        <a href="https://www.olioncoffee.app/" target="_blank" rel="noopener noreferrer" class="channel-quick-pill web">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span>Landing Page Web ↗</span>
+        </a>
       </div>
 
       <!-- 3 Tables trích xuất số liệu 6 tuần chi tiết từ poster -->
@@ -2396,6 +2623,52 @@ def run():
     raw_tail = raw_tail.replace("backgroundColor: 'rgba(17, 13, 9, 0.95)',", "backgroundColor: '#2C211B',")
     raw_tail = raw_tail.replace("titleColor: '#F0A765',", "titleColor: '#F6F1E7',")
     raw_tail = raw_tail.replace("bodyColor: '#FAF5EE',", "bodyColor: '#F6F1E7',")
+
+    toast_html_and_js = """
+  <!-- Toast Notification System -->
+  <div id="toastNotification" class="toast-notification">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7C8268" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+    <span id="toastMessage">Đã sao chép liên kết thành công!</span>
+  </div>
+
+  <script>
+    function copyChannelLink(url, channelName) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function() {
+          showToast('Đã sao chép link ' + channelName + '!');
+        }).catch(function() {
+          fallbackCopy(url, channelName);
+        });
+      } else {
+        fallbackCopy(url, channelName);
+      }
+    }
+    function fallbackCopy(url, channelName) {
+      const el = document.createElement('textarea');
+      el.value = url;
+      el.style.position = 'fixed';
+      el.style.opacity = '0';
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+      showToast('Đã sao chép link ' + channelName + '!');
+    }
+    function showToast(msg) {
+      const toast = document.getElementById('toastNotification');
+      const toastMsg = document.getElementById('toastMessage');
+      if (toast && toastMsg) {
+        toastMsg.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(window._toastTimer);
+        window._toastTimer = setTimeout(function() {
+          toast.classList.remove('show');
+        }, 2600);
+      }
+    }
+  </script>
+"""
+    raw_tail = raw_tail.replace("</html>", toast_html_and_js + "\\n</html>")
 
 
     # Assemble Document
