@@ -1,8 +1,11 @@
 import re
 import os
 
-def build_cuoi_ky_7parts():
-    # 1. Read base css from campaign-report.html
+def build():
+    with open('scripts/clean_source_build.py', 'r', encoding='utf-8') as f:
+        src = f.read()
+
+    # 1. Base CSS and Extra CSS
     with open('campaign-report.html', 'r', encoding='utf-8') as f:
         src_html = f.read()
 
@@ -10,34 +13,11 @@ def build_cuoi_ky_7parts():
     style_end = src_html.find('</style>')
     base_css = src_html[style_start+7:style_end]
 
-    # 2. Read previous script to extract raw sections & components
-    with open('scripts/build_cuoi_ky_final.py', 'r', encoding='utf-8') as f:
-        src_script = f.read()
+    start_extra = src.find('extra_css = """')
+    end_extra = src.find('"""', start_extra + 16)
+    extra_css = src[start_extra+15:end_extra]
 
-    start_extra = src_script.find('extra_css = """')
-    end_extra = src_script.find('"""', start_extra + 16)
-    extra_css = src_script[start_extra+15:end_extra]
-
-    def get_section(sid):
-        pattern = rf'(<section class="report-section" id="{sid}">[\s\S]*?</section>)'
-        m = re.search(pattern, src_script)
-        return m.group(1) if m else ""
-
-    sec1_raw = get_section('muc-1')
-    sec2_raw = get_section('muc-2')
-    sec3_raw = get_section('muc-3')
-    sec4_raw = get_section('muc-4')
-    sec5_raw = get_section('muc-5')
-    sec6_raw = get_section('muc-6')
-    sec7_raw = get_section('muc-7')
-    sec8_raw = get_section('muc-8')
-    sec9_raw = get_section('muc-9')
-
-    # ========================================================
-    # NEW COMPREHENSIVE CSS OVERRIDE: CANVA BRAND COLOR PALETTE
-    # Warm Ivory (#F6F1E7), Espresso Brown (#2C211B),
-    # Warm Taupe (#B8A58B), Muted Sage (#7C8268), Scarlet Red (#D32F2F)
-    # ========================================================
+    # Canva Palette CSS
     canva_palette_css = """
     /* ========================================================
        CANVA BRAND COLOR PALETTE — OLION COFFEE
@@ -327,9 +307,7 @@ def build_cuoi_ky_7parts():
       color: #FFFFFF !important;
     }
 
-    /* ========================================================
-       CHANNEL QR & DIRECT LINKS GRID (SECTION 2)
-       ======================================================== */
+    /* Channel QR Grid */
     .channel-qr-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -396,7 +374,6 @@ def build_cuoi_ky_7parts():
       color: #585D48;
       border: 1px solid rgba(124, 130, 104, 0.3);
     }
-
     .channel-qr-img-box {
       width: 154px;
       height: 154px;
@@ -461,14 +438,8 @@ def build_cuoi_ky_7parts():
     .channel-qr-btn.web {
       background: #7C8268;
     }
-    .channel-qr-btn:hover {
-      opacity: 0.9;
-      transform: translateY(-1px);
-    }
 
-    /* ========================================================
-       SECTION 7: TỔNG KẾT ẢNH SỐ LIỆU (PROPOSAL POSTER)
-       ======================================================== */
+    /* Proposal Poster Card */
     .proposal-poster-card {
       background: #FFFFFF;
       border: 1.5px solid rgba(184, 165, 139, 0.45);
@@ -517,59 +488,103 @@ def build_cuoi_ky_7parts():
     }
 
     /* Footer */
-    .report-footer {
+    footer.custom-cafe-footer {
       background: #FAF6F0 !important;
       border-top: 1.5px solid rgba(184, 165, 139, 0.35) !important;
+      padding: 45px 0 35px !important;
+      margin-top: 50px !important;
       color: #5C4D44 !important;
-    }
-    .footer-brand-tagline {
-      color: #7C8268 !important;
+      font-size: 13.5px !important;
     }
     """
 
     full_css = base_css + "\n" + extra_css + "\n" + canva_palette_css
 
-    # Assemble Section 1: Combine muc-1 and muc-2 (Persona)
-    # Strip </section> from sec1_raw
-    sec1_clean = sec1_raw.rstrip()
-    if sec1_clean.endswith('</section>'):
-        sec1_clean = sec1_clean[:-10]
-    
-    # Strip outer section and shell from sec2_raw
-    sec2_body = sec2_raw
-    sec2_body = re.sub(r'<section class="report-section" id="muc-2">\s*<div class="shell">', '', sec2_body)
-    sec2_body = re.sub(r'</div>\s*</section>$', '', sec2_body.strip())
-    # Adjust headings in sec2_body
-    sec2_body = sec2_body.replace('<div class="section-chapter-tag">2. CHÂN DUNG KHÁCH HÀNG (PERSONA)</div>', 
-                                  '<div class="section-chapter-tag matcha" style="margin-bottom:12px;">1.2. CHÂN DUNG KHÁCH HÀNG MỤC TIÊU (PERSONA)</div>')
-    sec2_body = sec2_body.replace('<h2 class="section-main-heading">2. Chân Dung Khách Hàng Mục Tiêu: Đoàn Minh Trang</h2>',
-                                  '<h3 class="section-main-heading" style="font-size:28px;margin-bottom:14px;">Chân Dung Khách Hàng Mục Tiêu: Đoàn Minh Trang</h3>')
+    # 2. Extract sections helper
+    def get_sec(sid):
+        p = rf'(<section class="report-section" id="{sid}">[\s\S]*?</section>)'
+        m = re.search(p, src)
+        return m.group(1) if m else ""
 
-    sec1_combined = f"""{sec1_clean}
-      <!-- Divider between 1.1 and 1.2 -->
+    sec1_raw = get_sec('muc-1')
+    sec2_raw = get_sec('muc-2')
+    sec3_raw = get_sec('muc-3')
+    sec4_raw = get_sec('muc-4')
+    sec5_raw = get_sec('muc-5')
+    sec6_raw = get_sec('muc-6')
+    sec7_raw = get_sec('muc-7')
+    sec8_raw = get_sec('muc-8')
+    sec9_raw = get_sec('muc-9')
+
+    # Head & Hero part (up to muc-1)
+    m1 = re.search(r'<section class="report-section" id="muc-1">', src)
+    html_start = src.find('html = """') + 10
+    head_hero = src[html_start:m1.start()]
+
+    # Replace Nav in Header
+    nav_html = """
+        <nav class="cafe-nav-menu">
+          <a href="#muc-1" class="cafe-nav-link active">1. Tổng Quan</a>
+          <a href="#muc-2" class="cafe-nav-link">2. Kết Quả KPI</a>
+          <a href="#muc-3" class="cafe-nav-link">3. Sản Phẩm Demo</a>
+          <a href="#muc-4" class="cafe-nav-link">4. Phân Tích</a>
+          <a href="#muc-5" class="cafe-nav-link">5. Pháp Lý</a>
+          <a href="#muc-6" class="cafe-nav-link">6. Sáng Tạo &amp; Khởi Nghiệp</a>
+          <a href="#muc-7" class="cafe-nav-link">7. Tổng Kết Số Liệu</a>
+        </nav>
+    """
+    head_hero = re.sub(r'<nav class="cafe-nav-menu">[\s\S]*?</nav>', nav_html.strip(), head_hero)
+
+    drawer_html = """
+    <div class="mobile-nav-drawer" id="mobileDrawer">
+      <div class="mobile-drawer-header">
+        <span style="font-weight:700;font-family:var(--font-serif);color:var(--crema);font-size:18px;">MỤC LỤC BÁO CÁO</span>
+        <button type="button" class="lightbox-close-btn" onclick="toggleDrawer()" style="position:static;">
+          <i data-lucide="x" style="width:18px;height:18px;"></i>
+        </button>
+      </div>
+      <div class="mobile-nav-links">
+        <a href="#muc-1" class="mobile-nav-link active" onclick="toggleDrawer()"><span>1. Tổng quan dự án &amp; Persona</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
+        <a href="#muc-2" class="mobile-nav-link" onclick="toggleDrawer()"><span>2. Kết quả so với KPI &amp; 4 Mã QR</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
+        <a href="#muc-3" class="mobile-nav-link" onclick="toggleDrawer()"><span>3. Sản phẩm truyền thông nổi bật &amp; Demo</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
+        <a href="#muc-4" class="mobile-nav-link" onclick="toggleDrawer()"><span>4. Phân tích tổng quan &amp; Điều chỉnh</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
+        <a href="#muc-5" class="mobile-nav-link" onclick="toggleDrawer()"><span>5. Tuân thủ pháp lý (12 tiêu chí)</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
+        <a href="#muc-6" class="mobile-nav-link" onclick="toggleDrawer()"><span>6. Sáng tạo &amp; Khởi nghiệp (Gia phả)</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
+        <a href="#muc-7" class="mobile-nav-link" onclick="toggleDrawer()"><span>7. Tổng kết ảnh số liệu (Proposal Poster)</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
+      </div>
+    </div>
+    """
+    head_hero = re.sub(r'<div class="mobile-nav-drawer" id="mobileDrawer">[\s\S]*?</div>\s*</div>', drawer_html.strip(), head_hero)
+
+    # 3. Assemble Section 1: muc-1 + Persona
+    s1_clean = sec1_raw.rstrip()
+    if s1_clean.endswith('</section>'):
+        s1_clean = s1_clean[:-10]
+    s2_inner = re.sub(r'^<section class="report-section" id="muc-2">\s*<div class="shell">', '', sec2_raw.strip())
+    s2_inner = re.sub(r'</div>\s*</section>$', '', s2_inner.strip())
+    s2_inner = s2_inner.replace('<div class="section-chapter-tag">2. CHÂN DUNG KHÁCH HÀNG (PERSONA)</div>',
+                                '<div class="section-chapter-tag matcha" style="margin-bottom:12px;">1.2. CHÂN DUNG KHÁCH HÀNG MỤC TIÊU (PERSONA)</div>')
+    s2_inner = s2_inner.replace('<h2 class="section-main-heading">2. Chân Dung Khách Hàng Mục Tiêu: Đoàn Minh Trang</h2>',
+                                '<h3 class="section-main-heading" style="font-size:28px;margin-bottom:14px;">Chân Dung Khách Hàng Mục Tiêu: Đoàn Minh Trang</h3>')
+
+    sec1_final = f"""{s1_clean}
       <div class="section-divider" style="margin: 48px 0 36px; border-top: 1.5px dashed rgba(184, 165, 139, 0.4);"></div>
-      {sec2_body}
+      {s2_inner}
     </div>
   </section>"""
 
-    # Assemble Section 2: Combine muc-3 and muc-4 (Growth Charts) + 4 QR Codes
-    # Strip </section> from sec3_raw
-    sec3_clean = sec3_raw.rstrip()
-    if sec3_clean.endswith('</section>'):
-        sec3_clean = sec3_clean[:-10]
+    # 4. Assemble Section 2: muc-3 + 4 QR Codes + Charts
+    s3_clean = sec3_raw.rstrip()
+    if s3_clean.endswith('</section>'):
+        s3_clean = s3_clean[:-10]
+    s3_clean = s3_clean.replace('id="muc-3"', 'id="muc-2"')
+    s3_clean = s3_clean.replace('<div class="section-chapter-tag">3. KPI DỰ ÁN &amp; KẾT QUẢ ĐẠT ĐƯỢC</div>',
+                                '<div class="section-chapter-tag">2. KẾT QUẢ SO VỚI KPI &amp; TĂNG TRƯỞNG</div>')
+    s3_clean = s3_clean.replace('<h2 class="section-main-heading">3. Mục Tiêu KPI Kế Hoạch &amp; Kết Quả Thực Tế Từng Kênh</h2>',
+                                '<h2 class="section-main-heading">2. Kết Quả So Với KPI Kế Hoạch &amp; Tăng Trưởng Thực Tế</h2>')
 
-    # Adjust sec3 headers
-    sec3_clean = sec3_clean.replace('id="muc-3"', 'id="muc-2"')
-    sec3_clean = sec3_clean.replace('<div class="section-chapter-tag">3. KPI DỰ ÁN &amp; KẾT QUẢ ĐẠT ĐƯỢC</div>',
-                                    '<div class="section-chapter-tag">2. KẾT QUẢ SO VỚI KPI &amp; TĂNG TRƯỞNG</div>')
-    sec3_clean = sec3_clean.replace('<h2 class="section-main-heading">3. Mục Tiêu KPI Kế Hoạch &amp; Kết Quả Thực Tế Từng Kênh</h2>',
-                                    '<h2 class="section-main-heading">2. Kết Quả So Với KPI Kế Hoạch &amp; Tăng Trưởng Thực Tế</h2>')
-
-    # Channel QR codes HTML block
     channel_qr_html = """
-      <!-- ========================================================
-           CỔNG KẾT NỐI 4 NỀN TẢNG SỐ & 4 MÃ QR CODE
-           ======================================================== -->
+      <!-- CỔNG KẾT NỐI 4 NỀN TẢNG SỐ & 4 MÃ QR CODE -->
       <div style="margin-top: 28px; margin-bottom: 8px;">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
           <div>
@@ -662,81 +677,75 @@ def build_cuoi_ky_7parts():
       </div>
     """
 
-    # Inject channel_qr_html right before the KPI table
     table_marker = '<div class="report-table-card" style="margin-top:28px;">'
-    if table_marker in sec3_clean:
-        sec3_clean = sec3_clean.replace(table_marker, channel_qr_html + '\n' + table_marker)
+    if table_marker in s3_clean:
+        s3_clean = s3_clean.replace(table_marker, channel_qr_html + '\n' + table_marker)
     else:
-        sec3_clean += channel_qr_html
+        s3_clean += channel_qr_html
 
-    # Strip outer section and shell from sec4_raw (growth charts)
-    sec4_body = sec4_raw
-    sec4_body = re.sub(r'<section class="report-section" id="muc-4">\s*<div class="shell">', '', sec4_body)
-    sec4_body = re.sub(r'</div>\s*</section>$', '', sec4_body.strip())
-    sec4_body = sec4_body.replace('<div class="section-chapter-tag">4. TĂNG TRƯỞNG QUA 6 TUẦN</div>',
-                                  '<div class="section-chapter-tag matcha" style="margin-bottom:12px;">2.2. THEO DÕI TĂNG TRƯỞNG QUA 6 TUẦN</div>')
-    sec4_body = sec4_body.replace('<h2 class="section-main-heading">4. Theo Dõi &amp; Đánh Giá Tăng Trưởng Qua 6 Tuần</h2>',
-                                  '<h3 class="section-main-heading" style="font-size:28px;margin-bottom:14px;">Biểu Đồ Theo Dõi &amp; Đánh Giá Tăng Trưởng Qua 6 Tuần</h3>')
+    s4_inner = re.sub(r'^<section class="report-section" id="muc-4">\s*<div class="shell">', '', sec4_raw.strip())
+    s4_inner = re.sub(r'</div>\s*</section>$', '', s4_inner.strip())
+    s4_inner = s4_inner.replace('<div class="section-chapter-tag">4. TĂNG TRƯỞNG QUA 6 TUẦN</div>',
+                                '<div class="section-chapter-tag matcha" style="margin-bottom:12px;">2.2. THEO DÕI TĂNG TRƯỞNG QUA 6 TUẦN</div>')
+    s4_inner = s4_inner.replace('<h2 class="section-main-heading">4. Theo Dõi &amp; Đánh Giá Tăng Trưởng Qua 6 Tuần</h2>',
+                                '<h3 class="section-main-heading" style="font-size:28px;margin-bottom:14px;">Biểu Đồ Theo Dõi &amp; Đánh Giá Tăng Trưởng Qua 6 Tuần</h3>')
 
-    sec2_combined = f"""{sec3_clean}
-      <!-- Divider between 2.1 and 2.2 -->
+    sec2_final = f"""{s3_clean}
       <div class="section-divider" style="margin: 48px 0 36px; border-top: 1.5px dashed rgba(184, 165, 139, 0.4);"></div>
-      {sec4_body}
+      {s4_inner}
     </div>
   </section>"""
 
-    # Assemble Section 3: Sản phẩm truyền thông nổi bật và demo (was muc-5)
-    sec3_combined = sec5_raw
-    sec3_combined = sec3_combined.replace('id="muc-5"', 'id="muc-3"')
-    sec3_combined = sec3_combined.replace('<div class="section-chapter-tag">5. SẢN PHẨM TRUYỀN THÔNG TIÊU BIỂU</div>',
-                                          '<div class="section-chapter-tag">3. SẢN PHẨM TRUYỀN THÔNG &amp; DEMO</div>')
-    sec3_combined = sec3_combined.replace('<h2 class="section-main-heading">5. Sản Phẩm Truyền Thông Nổi Bật &amp; Minh Chứng Thực Tế</h2>',
-                                          '<h2 class="section-main-heading">3. Sản Phẩm Truyền Thông Nổi Bật &amp; Minh Chứng Thực Tế</h2>')
+    # 5. Assemble Section 3: muc-5 (Top Content & Demo)
+    sec3_final = sec5_raw
+    sec3_final = sec3_final.replace('id="muc-5"', 'id="muc-3"')
+    sec3_final = sec3_final.replace('<div class="section-chapter-tag">5. SẢN PHẨM TRUYỀN THÔNG TIÊU BIỂU</div>',
+                                    '<div class="section-chapter-tag">3. SẢN PHẨM TRUYỀN THÔNG &amp; DEMO</div>')
+    sec3_final = sec3_final.replace('<h2 class="section-main-heading">5. Sản Phẩm Truyền Thông Nổi Bật &amp; Minh Chứng Thực Tế</h2>',
+                                    '<h2 class="section-main-heading">3. Sản Phẩm Truyền Thông Nổi Bật &amp; Minh Chứng Thực Tế</h2>')
 
-    # Assemble Section 4: Phân tích và điều chỉnh (was muc-6 + kế hoạch đẩy số)
-    sec4_combined = sec6_raw
-    sec4_combined = sec4_combined.replace('id="muc-6"', 'id="muc-4"')
-    sec4_combined = sec4_combined.replace('<div class="section-chapter-tag">6. ĐÁNH GIÁ &amp; BÀI HỌC KINH NGHIỆM</div>',
-                                          '<div class="section-chapter-tag">4. PHÂN TÍCH &amp; ĐIỀU CHỈNH CHIẾN LƯỢC</div>')
-    sec4_combined = sec4_combined.replace('<h2 class="section-main-heading">6. Đánh Giá Tổng Quan 4 Kênh &amp; Bài Học Chiến Lược</h2>',
-                                          '<h2 class="section-main-heading">4. Phân Tích Tổng Quan 4 Kênh &amp; Điều Chỉnh Chiến Lược</h2>')
+    # 6. Assemble Section 4: muc-6 (Phân tích & điều chỉnh)
+    sec4_final = sec6_raw
+    sec4_final = sec4_final.replace('id="muc-6"', 'id="muc-4"')
+    sec4_final = sec4_final.replace('<div class="section-chapter-tag">6. ĐÁNH GIÁ &amp; BÀI HỌC KINH NGHIỆM</div>',
+                                    '<div class="section-chapter-tag">4. PHÂN TÍCH &amp; ĐIỀU CHỈNH CHIẾN LƯỢC</div>')
+    sec4_final = sec4_final.replace('<h2 class="section-main-heading">6. Đánh Giá Tổng Quan 4 Kênh &amp; Bài Học Chiến Lược</h2>',
+                                    '<h2 class="section-main-heading">4. Phân Tích Tổng Quan 4 Kênh &amp; Điều Chỉnh Chiến Lược</h2>')
 
-    # Assemble Section 5: Tuân thủ pháp lý (was muc-7)
-    sec5_combined = sec7_raw
-    sec5_combined = sec5_combined.replace('id="muc-7"', 'id="muc-5"')
-    sec5_combined = sec5_combined.replace('<div class="section-chapter-tag">7. TUÂN THỦ PHÁP LÝ &amp; ĐẠO ĐỨC</div>',
-                                          '<div class="section-chapter-tag">5. TUÂN THỦ PHÁP LÝ &amp; ĐẠO ĐỨC</div>')
-    sec5_combined = sec5_combined.replace('<h2 class="section-main-heading">7. Danh Mục 12 Tiêu Chí Tuân Thủ Pháp Lý &amp; Quảng Cáo</h2>',
-                                          '<h2 class="section-main-heading">5. Danh Mục 12 Tiêu Chí Tuân Thủ Pháp Lý &amp; Chuẩn Mực Quảng Cáo</h2>')
+    # 7. Assemble Section 5: muc-7 (Tuân thủ pháp lý)
+    sec5_final = sec7_raw
+    sec5_final = sec5_final.replace('id="muc-7"', 'id="muc-5"')
+    sec5_final = sec5_final.replace('<div class="section-chapter-tag">7. TUÂN THỦ PHÁP LÝ &amp; ĐẠO ĐỨC</div>',
+                                    '<div class="section-chapter-tag">5. TUÂN THỦ PHÁP LÝ &amp; ĐẠO ĐỨC</div>')
+    sec5_final = sec5_final.replace('<h2 class="section-main-heading">7. Danh Mục 12 Tiêu Chí Tuân Thủ Pháp Lý &amp; Quảng Cáo</h2>',
+                                    '<h2 class="section-main-heading">5. Danh Mục 12 Tiêu Chí Tuân Thủ Pháp Lý &amp; Chuẩn Mực Quảng Cáo</h2>')
 
-    # Assemble Section 6: Sáng tạo và định hướng khởi nghiệp (was muc-8 + muc-9 Gia Phả)
-    sec8_clean = sec8_raw.rstrip()
-    if sec8_clean.endswith('</section>'):
-        sec8_clean = sec8_clean[:-10]
-    sec8_clean = sec8_clean.replace('id="muc-8"', 'id="muc-6"')
-    sec8_clean = sec8_clean.replace('<div class="section-chapter-tag">8. KẾ HOẠCH PHÁT TRIỂN 3 THÁNG</div>',
-                                    '<div class="section-chapter-tag">6. SÁNG TẠO &amp; ĐỊNH HƯỚNG KHỞI NGHIỆP</div>')
-    sec8_clean = sec8_clean.replace('<h2 class="section-main-heading">8. Định Hướng Duy Trì Kênh &amp; Mục Tiêu Phát Triển 3 Tháng Tới</h2>',
-                                    '<h2 class="section-main-heading">6. Sáng Tạo Nội Dung &amp; Định Hướng Khởi Nghiệp Thực Tế</h2>')
+    # 8. Assemble Section 6: muc-8 + muc-9 (Sáng tạo & Khởi nghiệp + Gia phả)
+    s8_clean = sec8_raw.rstrip()
+    if s8_clean.endswith('</section>'):
+        s8_clean = s8_clean[:-10]
+    s8_clean = s8_clean.replace('id="muc-8"', 'id="muc-6"')
+    s8_clean = s8_clean.replace('<div class="section-chapter-tag">8. KẾ HOẠCH PHÁT TRIỂN 3 THÁNG</div>',
+                                '<div class="section-chapter-tag">6. SÁNG TẠO &amp; ĐỊNH HƯỚNG KHỞI NGHIỆP</div>')
+    s8_clean = s8_clean.replace('<h2 class="section-main-heading">8. Định Hướng Duy Trì Kênh &amp; Mục Tiêu Phát Triển 3 Tháng Tới</h2>',
+                                '<h2 class="section-main-heading">6. Sáng Tạo Nội Dung &amp; Định Hướng Khởi Nghiệp Thực Tế</h2>')
 
-    # Strip outer section and shell from sec9_raw (Gia phả)
-    sec9_body = sec9_raw
-    sec9_body = re.sub(r'<section class="report-section" id="muc-9">\s*<div class="shell">', '', sec9_body)
-    sec9_body = re.sub(r'</div>\s*</section>$', '', sec9_body.strip())
-    sec9_body = sec9_body.replace('<div class="section-chapter-tag">9. ĐỘI NGŨ THỰC HIỆN DỰ ÁN</div>',
-                                  '<div class="section-chapter-tag matcha" style="margin-bottom:12px;">6.4. ĐỘI NGŨ THỰC HIỆN DỰ ÁN (BẢNG GIA PHẢ)</div>')
-    sec9_body = sec9_body.replace('<h2 class="section-main-heading">9. Phân Vai &amp; Đóng Góp Của Các Thành Viên Nhóm 7 (Gỗ Xà Cừ)</h2>',
-                                  '<h3 class="section-main-heading" style="font-size:28px;margin-bottom:14px;">Cơ Cấu Tổ Chức &amp; Phân Vai Thành Viên Nhóm 7 (Gỗ Xà Cừ)</h3>')
+    s9_inner = re.sub(r'^<section class="report-section" id="muc-9">\s*<div class="shell">', '', sec9_raw.strip())
+    s9_inner = re.sub(r'</div>\s*</section>$', '', s9_inner.strip())
+    s9_inner = s9_inner.replace('<div class="section-chapter-tag">9. ĐỘI NGŨ THỰC HIỆN DỰ ÁN</div>',
+                                '<div class="section-chapter-tag matcha" style="margin-bottom:12px;">6.4. ĐỘI NGŨ THỰC HIỆN DỰ ÁN (BẢNG GIA PHẢ)</div>')
+    s9_inner = re.sub(r'<h2 class="section-main-heading">9\.[^<]+</h2>',
+                                '<h3 class="section-main-heading" style="font-size:28px;margin-bottom:14px;">Cơ Cấu Tổ Chức &amp; Phân Vai Thành Viên Nhóm 7 (Gỗ Xà Cừ)</h3>',
+                                s9_inner)
 
-    sec6_combined = f"""{sec8_clean}
-      <!-- Divider between 6.1-6.3 and 6.4 (Gia Phả) -->
+    sec6_final = f"""{s8_clean}
       <div class="section-divider" style="margin: 48px 0 36px; border-top: 1.5px dashed rgba(184, 165, 139, 0.4);"></div>
-      {sec9_body}
+      {s9_inner}
     </div>
   </section>"""
 
-    # Assemble Section 7: BRAND NEW SECTION FOR THE USER'S COMPLETED POSTER
-    sec7_combined = """
+    # 9. Assemble Section 7: Proposal Poster
+    sec7_final = """
   <!-- ========================================================
        MỤC 7: TỔNG KẾT ẢNH SỐ LIỆU (PROPOSAL DỰ ÁN TRUYỀN THÔNG SỐ)
        ======================================================== -->
@@ -917,79 +926,41 @@ def build_cuoi_ky_7parts():
   </section>
 """
 
-    # Assemble the full HTML document
-    # Header navigation menu with EXACT 7 ITEMS:
-    nav_menu_html = """
-        <nav class="cafe-nav-menu">
-          <a href="#muc-1" class="cafe-nav-link active">1. Tổng Quan</a>
-          <a href="#muc-2" class="cafe-nav-link">2. Kết Quả KPI</a>
-          <a href="#muc-3" class="cafe-nav-link">3. Sản Phẩm Demo</a>
-          <a href="#muc-4" class="cafe-nav-link">4. Phân Tích</a>
-          <a href="#muc-5" class="cafe-nav-link">5. Pháp Lý</a>
-          <a href="#muc-6" class="cafe-nav-link">6. Sáng Tạo &amp; Khởi Nghiệp</a>
-          <a href="#muc-7" class="cafe-nav-link">7. Tổng Kết Số Liệu</a>
-        </nav>
-    """
+    # 10. Tail part: Footer & Scripts
+    m9_end = src.find('</section>', src.find('id="muc-9"')) + 10
+    raw_tail = src[m9_end:]
 
-    mobile_drawer_html = """
-    <div class="mobile-nav-drawer" id="mobileDrawer">
-      <div class="mobile-drawer-header">
-        <span style="font-weight:700;font-family:var(--font-serif);color:var(--crema);font-size:18px;">MỤC LỤC BÁO CÁO</span>
-        <button type="button" class="lightbox-close-btn" onclick="toggleDrawer()" style="position:static;">
-          <i data-lucide="x" style="width:18px;height:18px;"></i>
-        </button>
-      </div>
-      <div class="mobile-nav-links">
-        <a href="#muc-1" class="mobile-nav-link active" onclick="toggleDrawer()"><span>1. Tổng quan dự án &amp; Persona</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
-        <a href="#muc-2" class="mobile-nav-link" onclick="toggleDrawer()"><span>2. Kết quả so với KPI &amp; 4 Mã QR</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
-        <a href="#muc-3" class="mobile-nav-link" onclick="toggleDrawer()"><span>3. Sản phẩm truyền thông nổi bật &amp; Demo</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
-        <a href="#muc-4" class="mobile-nav-link" onclick="toggleDrawer()"><span>4. Phân tích tổng quan &amp; Điều chỉnh</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
-        <a href="#muc-5" class="mobile-nav-link" onclick="toggleDrawer()"><span>5. Tuân thủ pháp lý (12 tiêu chí)</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
-        <a href="#muc-6" class="mobile-nav-link" onclick="toggleDrawer()"><span>6. Sáng tạo &amp; Khởi nghiệp (Gia phả)</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
-        <a href="#muc-7" class="mobile-nav-link" onclick="toggleDrawer()"><span>7. Tổng kết ảnh số liệu (Proposal Poster)</span> <i data-lucide="chevron-right" style="width:14px;height:14px;"></i></a>
-      </div>
-    </div>
-    """
+    # Remove the python script wrapping at the end of raw_tail
+    py_marker = raw_tail.find('html = html.replace("__CSS__", full_css)')
+    if py_marker != -1:
+        # Trace back to </html>
+        html_end = raw_tail.rfind('</html>', 0, py_marker)
+        if html_end != -1:
+            raw_tail = raw_tail[:html_end + 7]
 
-    # Extract HTML head and hero up to muc-1
-    head_hero_part = src_script[src_script.find('html = """') + 10 : src_script.find('<section class="report-section" id="muc-1">')]
+    # Adjust raw_tail footer background to Warm Ivory
+    raw_tail = raw_tail.replace('background:#070503;', 'background:#FAF6F0;color:#5C4D44;')
+    raw_tail = raw_tail.replace('currentSectionId = "muc-9";', 'currentSectionId = "muc-7";')
 
-    # Replace navigation in head_hero_part
-    old_nav_pattern = r'<nav class="cafe-nav-menu">[\s\S]*?</nav>'
-    head_hero_part = re.sub(old_nav_pattern, nav_menu_html.strip(), head_hero_part)
+    # Assemble Document
+    final_doc = head_hero.strip() + "\n\n" + \
+                sec1_final.strip() + "\n\n" + \
+                sec2_final.strip() + "\n\n" + \
+                sec3_final.strip() + "\n\n" + \
+                sec4_final.strip() + "\n\n" + \
+                sec5_final.strip() + "\n\n" + \
+                sec6_final.strip() + "\n\n" + \
+                sec7_final.strip() + "\n\n" + \
+                raw_tail.strip()
 
-    old_drawer_pattern = r'<div class="mobile-nav-drawer" id="mobileDrawer">[\s\S]*?</div>\s*</div>'
-    head_hero_part = re.sub(old_drawer_pattern, mobile_drawer_html.strip(), head_hero_part)
+    final_doc = final_doc.replace('__CSS__', full_css)
 
-    # Extract footer and script tail after muc-9
-    tail_part = src_script[src_script.find('</section>\n\n  <!-- ========================================================\n       FOOTER') :]
-    tail_part = tail_part[:tail_part.find('html = html.replace("__CSS__", full_css)')]
-
-    # Combine all parts
-    assembled_html = head_hero_part + "\n" + \
-                     sec1_combined + "\n\n" + \
-                     sec2_combined + "\n\n" + \
-                     sec3_combined + "\n\n" + \
-                     sec4_combined + "\n\n" + \
-                     sec5_combined + "\n\n" + \
-                     sec6_combined + "\n\n" + \
-                     sec7_combined + "\n\n" + \
-                     tail_part
-
-    # Replace CSS placeholder
-    assembled_html = assembled_html.replace('__CSS__', full_css)
-
-    # Clean any dangling references
-    assembled_html = assembled_html.replace('<!-- Slogan Ribbon Banner -->', '<!-- Slogan Ribbon Banner -->')
-
-    # Save to cuoi-ky.html and bao-cao-cuoi-ky.html
     with open('cuoi-ky.html', 'w', encoding='utf-8') as f:
-        f.write(assembled_html)
-
+        f.write(final_doc)
     with open('bao-cao-cuoi-ky.html', 'w', encoding='utf-8') as f:
-        f.write(assembled_html)
+        f.write(final_doc)
 
-    print("Successfully built cuoi-ky.html and bao-cao-cuoi-ky.html with 7 sections & Canva Palette!")
+    print("CLEAN BUILD SUCCESS: Generated cuoi-ky.html & bao-cao-cuoi-ky.html!")
 
 if __name__ == '__main__':
-    build_cuoi_ky_7parts()
+    build()
