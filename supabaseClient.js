@@ -540,4 +540,139 @@ async function redeemLoyaltyMemberPoints(phone,pointsDelta,reason="Đổi quà")
 async function fetchLoyaltyMembersFromCloud(){
   return fetchCustomersFromCloud();
 }
-async function fetchSiteSettingsFromCloud(){const e=supabaseClient||initSupabase();if(!e)return{error:"No client"};try{const{data:t,error:a}=await e.from("site_settings").select("*").eq("id",1).single();return a?{error:a}:{data:t}}catch(e){return{error:e}}}async function updateSiteSettingsToCloud(e){const t=supabaseClient||initSupabase();if(!t)return{error:"No client"};try{const{data:a,error:n}=await t.from("site_settings").update(e).eq("id",1).select();return n?{error:n}:{data:a}}catch(e){return{error:e}}}async function markSpinAsUsed(e){const t=supabaseClient||initSupabase();if(!t)return{error:"No client"};try{const{data:a,error:n}=await t.from("lucky_spins").update({status:"used"}).eq("id",e).select();return n?{error:n}:{data:a}}catch(e){return{error:e}}}async function getSpinDetails(e){const t=supabaseClient||initSupabase();if(!t)return{error:"No client"};try{const{data:a,error:n}=await t.from("lucky_spins").select("*").eq("id",e).single();return n?{error:n}:{data:a}}catch(e){return{error:e}}}async function saveBookingToStorage(e){const t="bk_"+Date.now()+"_"+Math.random().toString(36).substring(2,7),a={id:e.id||t,customer_name:(e.customer_name||e.name||"Khách hàng").trim(),phone:(e.phone||"").trim(),booking_type:e.booking_type||"table",guests_count:parseInt(e.guests_count||e.guests,10)||1,booking_date:e.booking_date||e.date||"",booking_time:e.booking_time||e.time||"",notes:(e.notes||e.note||"").trim(),status:e.status||"pending",created_at:e.created_at||(new Date).toISOString()};try{const e=JSON.parse(localStorage.getItem("olion_bookings")||"[]");e.some(e=>e.id===a.id)||(e.unshift(a),localStorage.setItem("olion_bookings",JSON.stringify(e)))}catch(e){console.warn("⚠️ Lỗi lưu booking vào LocalStorage:",e)}const n=supabaseClient||initSupabase();if(n)try{const e={customer_name:a.customer_name,phone:a.phone,booking_type:a.booking_type,guests_count:a.guests_count,booking_date:a.booking_date,booking_time:a.booking_time,notes:a.notes,status:a.status,created_at:a.created_at},{data:t,error:s}=await n.from("bookings").insert([e]).select();if(!s&&t&&t.length>0){try{await n.from("customers").upsert([{name:a.customer_name,contact:a.phone,source:"space"===a.booking_type?"Thuê không gian":"Đặt bàn trước",notes:`Đặt lúc ${(new Date).toLocaleString("vi-VN")} - Ngày ${a.booking_date} (${a.booking_time}), ${a.guests_count} khách.`}],{onConflict:"contact"})}catch(e){console.warn("⚠️ [CRM Sync] Lỗi upsert customer:",e)}try{const e=JSON.parse(localStorage.getItem("olion_bookings")||"[]"),n=e.findIndex(e=>e.id===a.id);if(-1!==n)return e[n]={...e[n],...t[0]},localStorage.setItem("olion_bookings",JSON.stringify(e)),{success:!0,source:"supabase",data:e[n]}}catch(e){}return{success:!0,source:"supabase",data:t[0]}}s&&console.warn("⚠️ [Supabase Bookings] Lỗi insert:",s.message)}catch(e){console.warn("⚠️ [Supabase Bookings] Exception insert:",e.message)}return{success:!0,source:"local",data:a}}async function fetchBookingsFromStorage(){const e=supabaseClient||initSupabase();if(e)try{const{data:t,error:a}=await e.from("bookings").select("*").order("created_at",{ascending:!1});if(!a&&t)try{const e=JSON.parse(localStorage.getItem("olion_bookings")||"[]"),a=new Set(t.map(e=>String(e.id))),n=[...e.filter(e=>!a.has(String(e.id))),...t];return localStorage.setItem("olion_bookings",JSON.stringify(n)),{source:"supabase",data:n}}catch(e){return localStorage.setItem("olion_bookings",JSON.stringify(t)),{source:"supabase",data:t}}}catch(e){console.warn("⚠️ [Supabase Bookings] Lỗi tải từ cloud:",e.message)}try{return{source:"local",data:JSON.parse(localStorage.getItem("olion_bookings")||"[]")}}catch(e){return{source:"local",data:[]}}}async function updateBookingStatusInStorage(e,t){try{let a=JSON.parse(localStorage.getItem("olion_bookings")||"[]");a=a.map(a=>String(a.id)===String(e)?{...a,status:t}:a),localStorage.setItem("olion_bookings",JSON.stringify(a))}catch(e){}const a=supabaseClient||initSupabase();if(a)try{const{error:n}=await a.from("bookings").update({status:t}).eq("id",e);if(!n)return{success:!0,source:"supabase"}}catch(e){console.warn("⚠️ [Supabase Bookings] Lỗi update trạng thái:",e.message)}return{success:!0,source:"local"}}async function deleteBookingFromStorage(e){try{let t=JSON.parse(localStorage.getItem("olion_bookings")||"[]");t=t.filter(t=>String(t.id)!==String(e)),localStorage.setItem("olion_bookings",JSON.stringify(t))}catch(e){}const t=supabaseClient||initSupabase();if(t)try{const{error:a}=await t.from("bookings").delete().eq("id",e);if(!a)return{success:!0,source:"supabase"}}catch(e){console.warn("⚠️ [Supabase Bookings] Lỗi xóa booking:",e.message)}return{success:!0,source:"local"}}function setupAdminRealtime(){const e=supabaseClient||initSupabase();e&&e.channel("admin-channel").on("postgres_changes",{event:"INSERT",schema:"public",table:"feedbacks"},e=>{console.log("New feedback:",e.new),"function"==typeof playNotificationSound&&playNotificationSound(),"function"==typeof showToast&&showToast("🔔 Có góp ý mới từ khách hàng!"),"function"==typeof loadFeedbacks&&loadFeedbacks()}).on("postgres_changes",{event:"INSERT",schema:"public",table:"lucky_spins"},e=>{console.log("New lucky spin:",e.new),"function"==typeof playNotificationSound&&playNotificationSound(),"function"==typeof showToast&&showToast("🎁 Khách hàng vừa quay trúng thưởng!"),"function"==typeof loadMinigame&&loadMinigame()}).on("postgres_changes",{event:"*",schema:"public",table:"bookings"},e=>{if(console.log("Bookings update:",e),"INSERT"===e.eventType){"function"==typeof playNotificationSound&&playNotificationSound();const t=e.new?.customer_name||"Khách hàng";"function"==typeof showToast&&showToast(`🔔 Đơn đặt bàn mới từ ${t}!`)}else"function"==typeof showToast&&showToast("📅 Cập nhật thông tin đơn đặt chỗ");"function"==typeof loadBookings&&loadBookings()}).subscribe()}window.generateMemberCode=generateMemberCode,window.calculateCustomerTier=calculateCustomerTier,window.addCustomerStampInCloud=addCustomerStampInCloud,window.redeemCustomerDrinkInCloud=redeemCustomerDrinkInCloud,window.fetchCustomersFromCloud=fetchCustomersFromCloud,window.saveCustomerToCloud=saveCustomerToCloud,window.deleteCustomerFromCloud=deleteCustomerFromCloud,window.adjustCustomerPointsInCloud=adjustCustomerPointsInCloud,window.fetchCustomerPointHistoryFromCloud=fetchCustomerPointHistoryFromCloud,window.lookupLoyaltyMember=lookupLoyaltyMember,window.addLoyaltyMemberPoints=addLoyaltyMemberPoints,window.redeemLoyaltyMemberPoints=redeemLoyaltyMemberPoints,window.fetchLoyaltyMembersFromCloud=fetchLoyaltyMembersFromCloud,window.saveBookingToStorage=saveBookingToStorage,window.fetchBookingsFromStorage=fetchBookingsFromStorage,window.updateBookingStatusInStorage=updateBookingStatusInStorage,window.deleteBookingFromStorage=deleteBookingFromStorage;
+async function fetchSiteSettingsFromCloud(){const e=supabaseClient||initSupabase();if(!e)return{error:"No client"};try{const{data:t,error:a}=await e.from("site_settings").select("*").eq("id",1).single();return a?{error:a}:{data:t}}catch(e){return{error:e}}}async function updateSiteSettingsToCloud(e){const t=supabaseClient||initSupabase();if(!t)return{error:"No client"};try{const{data:a,error:n}=await t.from("site_settings").update(e).eq("id",1).select();return n?{error:n}:{data:a}}catch(e){return{error:e}}}async function markSpinAsUsed(e){const t=supabaseClient||initSupabase();if(!t)return{error:"No client"};try{const{data:a,error:n}=await t.from("lucky_spins").update({status:"used"}).eq("id",e).select();return n?{error:n}:{data:a}}catch(e){return{error:e}}}async function getSpinDetails(e){const t=supabaseClient||initSupabase();if(!t)return{error:"No client"};try{const{data:a,error:n}=await t.from("lucky_spins").select("*").eq("id",e).single();return n?{error:n}:{data:a}}catch(e){return{error:e}}}async function saveBookingToStorage(e){const t="bk_"+Date.now()+"_"+Math.random().toString(36).substring(2,7),a={id:e.id||t,customer_name:(e.customer_name||e.name||"Khách hàng").trim(),phone:(e.phone||"").trim(),booking_type:e.booking_type||"table",guests_count:parseInt(e.guests_count||e.guests,10)||1,booking_date:e.booking_date||e.date||"",booking_time:e.booking_time||e.time||"",notes:(e.notes||e.note||"").trim(),status:e.status||"pending",created_at:e.created_at||(new Date).toISOString()};try{const e=JSON.parse(localStorage.getItem("olion_bookings")||"[]");e.some(e=>e.id===a.id)||(e.unshift(a),localStorage.setItem("olion_bookings",JSON.stringify(e)))}catch(e){console.warn("⚠️ Lỗi lưu booking vào LocalStorage:",e)}const n=supabaseClient||initSupabase();if(n)try{const e={customer_name:a.customer_name,phone:a.phone,booking_type:a.booking_type,guests_count:a.guests_count,booking_date:a.booking_date,booking_time:a.booking_time,notes:a.notes,status:a.status,created_at:a.created_at},{data:t,error:s}=await n.from("bookings").insert([e]).select();if(!s&&t&&t.length>0){try{await n.from("customers").upsert([{name:a.customer_name,contact:a.phone,source:"space"===a.booking_type?"Thuê không gian":"Đặt bàn trước",notes:`Đặt lúc ${(new Date).toLocaleString("vi-VN")} - Ngày ${a.booking_date} (${a.booking_time}), ${a.guests_count} khách.`}],{onConflict:"contact"})}catch(e){console.warn("⚠️ [CRM Sync] Lỗi upsert customer:",e)}try{const e=JSON.parse(localStorage.getItem("olion_bookings")||"[]"),n=e.findIndex(e=>e.id===a.id);if(-1!==n)return e[n]={...e[n],...t[0]},localStorage.setItem("olion_bookings",JSON.stringify(e)),{success:!0,source:"supabase",data:e[n]}}catch(e){}return{success:!0,source:"supabase",data:t[0]}}s&&console.warn("⚠️ [Supabase Bookings] Lỗi insert:",s.message)}catch(e){console.warn("⚠️ [Supabase Bookings] Exception insert:",e.message)}return{success:!0,source:"local",data:a}}async function fetchBookingsFromStorage(){const e=supabaseClient||initSupabase();if(e)try{const{data:t,error:a}=await e.from("bookings").select("*").order("created_at",{ascending:!1});if(!a&&t)try{const e=JSON.parse(localStorage.getItem("olion_bookings")||"[]"),a=new Set(t.map(e=>String(e.id))),n=[...e.filter(e=>!a.has(String(e.id))),...t];return localStorage.setItem("olion_bookings",JSON.stringify(n)),{source:"supabase",data:n}}catch(e){return localStorage.setItem("olion_bookings",JSON.stringify(t)),{source:"supabase",data:t}}}catch(e){console.warn("⚠️ [Supabase Bookings] Lỗi tải từ cloud:",e.message)}try{return{source:"local",data:JSON.parse(localStorage.getItem("olion_bookings")||"[]")}}catch(e){return{source:"local",data:[]}}}async function updateBookingStatusInStorage(e,t){try{let a=JSON.parse(localStorage.getItem("olion_bookings")||"[]");a=a.map(a=>String(a.id)===String(e)?{...a,status:t}:a),localStorage.setItem("olion_bookings",JSON.stringify(a))}catch(e){}const a=supabaseClient||initSupabase();if(a)try{const{error:n}=await a.from("bookings").update({status:t}).eq("id",e);if(!n)return{success:!0,source:"supabase"}}catch(e){console.warn("⚠️ [Supabase Bookings] Lỗi update trạng thái:",e.message)}return{success:!0,source:"local"}}async function deleteBookingFromStorage(e){try{let t=JSON.parse(localStorage.getItem("olion_bookings")||"[]");t=t.filter(t=>String(t.id)!==String(e)),localStorage.setItem("olion_bookings",JSON.stringify(t))}catch(e){}const t=supabaseClient||initSupabase();if(t)try{const{error:a}=await t.from("bookings").delete().eq("id",e);if(!a)return{success:!0,source:"supabase"}}catch(e){console.warn("⚠️ [Supabase Bookings] Lỗi xóa booking:",e.message)}return{success:!0,source:"local"}}function setupAdminRealtime(){const e=supabaseClient||initSupabase();e&&e.channel("admin-channel").on("postgres_changes",{event:"INSERT",schema:"public",table:"feedbacks"},e=>{console.log("New feedback:",e.new),"function"==typeof playNotificationSound&&playNotificationSound(),"function"==typeof showToast&&showToast("🔔 Có góp ý mới từ khách hàng!"),"function"==typeof loadFeedbacks&&loadFeedbacks()}).on("postgres_changes",{event:"INSERT",schema:"public",table:"lucky_spins"},e=>{console.log("New lucky spin:",e.new),"function"==typeof playNotificationSound&&playNotificationSound(),"function"==typeof showToast&&showToast("🎁 Khách hàng vừa quay trúng thưởng!"),"function"==typeof loadMinigame&&loadMinigame()}).on("postgres_changes",{event:"*",schema:"public",table:"bookings"},e=>{if(console.log("Bookings update:",e),"INSERT"===e.eventType){"function"==typeof playNotificationSound&&playNotificationSound();const t=e.new?.customer_name||"Khách hàng";"function"==typeof showToast&&showToast(`🔔 Đơn đặt bàn mới từ ${t}!`)}else"function"==typeof showToast&&showToast("📅 Cập nhật thông tin đơn đặt chỗ");"function"==typeof loadBookings&&loadBookings()}).on("postgres_changes",{event:"*",schema:"public",table:"site_settings"},e=>{console.log("Site settings update:",e);"function"==typeof loadSiteStatus&&loadSiteStatus()}).subscribe()}window.generateMemberCode=generateMemberCode,window.calculateCustomerTier=calculateCustomerTier,window.addCustomerStampInCloud=addCustomerStampInCloud,window.redeemCustomerDrinkInCloud=redeemCustomerDrinkInCloud,window.fetchCustomersFromCloud=fetchCustomersFromCloud,window.saveCustomerToCloud=saveCustomerToCloud,window.deleteCustomerFromCloud=deleteCustomerFromCloud,window.adjustCustomerPointsInCloud=adjustCustomerPointsInCloud,window.fetchCustomerPointHistoryFromCloud=fetchCustomerPointHistoryFromCloud,window.lookupLoyaltyMember=lookupLoyaltyMember,window.addLoyaltyMemberPoints=addLoyaltyMemberPoints,window.redeemLoyaltyMemberPoints=redeemLoyaltyMemberPoints,window.fetchLoyaltyMembersFromCloud=fetchLoyaltyMembersFromCloud,window.saveBookingToStorage=saveBookingToStorage,window.fetchBookingsFromStorage=fetchBookingsFromStorage,window.updateBookingStatusInStorage=updateBookingStatusInStorage,window.deleteBookingFromStorage=deleteBookingFromStorage;
+
+// ==============================================================================
+// OLION COFFEE - WEBSITE STATUS & MAINTENANCE (KILL-SWITCH API)
+// ==============================================================================
+async function fetchSiteStatusFromCloud() {
+  const DEFAULT_STATUS = {
+    is_site_online: true,
+    maintenance_title: 'Olion Coffee Tạm Đóng Cửa Để Nâng Cấp Dịch Vụ',
+    maintenance_message: 'Hệ thống website đang tạm ngưng phục vụ để bảo trì & nâng cấp trải nghiệm tốt nhất cho quý khách. Rất mong quý khách thông cảm và hẹn sớm gặp lại!',
+    maintenance_expected_time: 'Dự kiến mở lại: Sớm nhất',
+    maintenance_hotline: '0783 657 587'
+  };
+
+  const client = supabaseClient || initSupabase();
+  let status = { ...DEFAULT_STATUS };
+
+  try {
+    const localOnline = localStorage.getItem('olion_site_online');
+    if (localOnline !== null) status.is_site_online = localOnline !== 'false';
+    const localInfo = JSON.parse(localStorage.getItem('olion_maintenance_info') || '{}');
+    if (localInfo.title) status.maintenance_title = localInfo.title;
+    if (localInfo.message) status.maintenance_message = localInfo.message;
+    if (localInfo.expected_time) status.maintenance_expected_time = localInfo.expected_time;
+    if (localInfo.hotline) status.maintenance_hotline = localInfo.hotline;
+  } catch (e) {}
+
+  if (client) {
+    try {
+      const { data, error } = await client.from('site_settings').select('*').eq('id', 1).single();
+      if (!error && data) {
+        if (typeof data.is_site_online === 'boolean') {
+          status.is_site_online = data.is_site_online;
+        } else if (typeof data.is_site_online === 'string') {
+          status.is_site_online = data.is_site_online === 'true';
+        }
+
+        if (data.notification_text && typeof data.notification_text === 'string') {
+          const m = data.notification_text.match(/<!--SITE_STATUS:(\{[\s\S]*?\})-->/);
+          if (m && m[1]) {
+            try {
+              const parsed = JSON.parse(m[1]);
+              if (typeof parsed.online === 'boolean') status.is_site_online = parsed.online;
+              if (parsed.title) status.maintenance_title = parsed.title;
+              if (parsed.message) status.maintenance_message = parsed.message;
+              if (parsed.expected_time) status.maintenance_expected_time = parsed.expected_time;
+              if (parsed.hotline) status.maintenance_hotline = parsed.hotline;
+            } catch (e) {}
+          }
+        }
+
+        if (data.maintenance_title) status.maintenance_title = data.maintenance_title;
+        if (data.maintenance_message) status.maintenance_message = data.maintenance_message;
+        if (data.maintenance_expected_time) status.maintenance_expected_time = data.maintenance_expected_time;
+        if (data.maintenance_hotline) status.maintenance_hotline = data.maintenance_hotline;
+
+        localStorage.setItem('olion_site_online', status.is_site_online ? 'true' : 'false');
+        localStorage.setItem('olion_maintenance_info', JSON.stringify({
+          title: status.maintenance_title,
+          message: status.maintenance_message,
+          expected_time: status.maintenance_expected_time,
+          hotline: status.maintenance_hotline
+        }));
+      }
+    } catch (err) {
+      console.warn('⚠️ Lỗi fetchSiteStatusFromCloud:', err);
+    }
+  }
+
+  return status;
+}
+
+async function updateSiteStatusToCloud(statusObj) {
+  const isOnline = Boolean(statusObj.is_site_online);
+  const title = statusObj.maintenance_title || 'Olion Coffee Tạm Đóng Cửa Để Nâng Cấp Dịch Vụ';
+  const message = statusObj.maintenance_message || 'Hệ thống website đang tạm ngưng phục vụ để bảo trì & nâng cấp trải nghiệm tốt nhất cho quý khách. Rất mong quý khách thông cảm và hẹn sớm gặp lại!';
+  const expectedTime = statusObj.maintenance_expected_time || 'Dự kiến mở lại: Sớm nhất';
+  const hotline = statusObj.maintenance_hotline || '0783 657 587';
+
+  localStorage.setItem('olion_site_online', isOnline ? 'true' : 'false');
+  localStorage.setItem('olion_maintenance_info', JSON.stringify({
+    title, message, expected_time: expectedTime, hotline
+  }));
+
+  const client = supabaseClient || initSupabase();
+  if (!client) {
+    return { success: true, source: 'local', is_site_online: isOnline };
+  }
+
+  // 1. Thử cập nhật cột trực tiếp
+  try {
+    const payload = {
+      is_site_online: isOnline,
+      maintenance_title: title,
+      maintenance_message: message,
+      maintenance_expected_time: expectedTime,
+      maintenance_hotline: hotline,
+      updated_at: new Date().toISOString()
+    };
+    const { data, error } = await client.from('site_settings').update(payload).eq('id', 1).select();
+    if (!error && data && data.length > 0) {
+      return { success: true, source: 'supabase', is_site_online: isOnline, data };
+    }
+  } catch (err) {}
+
+  // 2. Fallback: Lưu vào notification_text
+  try {
+    const { data: current } = await client.from('site_settings').select('notification_text').eq('id', 1).single();
+    let currentText = (current && current.notification_text) || '';
+    currentText = currentText.replace(/<!--SITE_STATUS:[\s\S]*?-->/g, '').trim();
+    const statusTag = `<!--SITE_STATUS:${JSON.stringify({
+      online: isOnline,
+      title,
+      message,
+      expected_time: expectedTime,
+      hotline
+    })}-->`;
+    const newText = `${statusTag} ${currentText}`.trim();
+
+    const { data, error } = await client.from('site_settings').update({
+      notification_text: newText,
+      updated_at: new Date().toISOString()
+    }).eq('id', 1).select();
+
+    if (!error) {
+      return { success: true, source: 'supabase_fallback', is_site_online: isOnline, data };
+    }
+  } catch (err) {
+    console.warn('⚠️ Lỗi fallback updateSiteStatusToCloud:', err);
+  }
+
+  return { success: true, source: 'local', is_site_online: isOnline };
+}
+
+window.fetchSiteStatusFromCloud = fetchSiteStatusFromCloud;
+window.updateSiteStatusToCloud = updateSiteStatusToCloud;
