@@ -1,5 +1,5 @@
 /**
- * TEST SUITE: WEBSITE STATUS & MAINTENANCE (KILL-SWITCH)
+ * TEST SUITE: WEBSITE STATUS & MAINTENANCE (KILL-SWITCH) - ENHANCED
  * Kiểm thử tính năng Bật/Tắt Website trên toàn bộ hệ thống Olion Coffee
  */
 
@@ -48,12 +48,20 @@ async function runTests() {
     }
   });
 
-  // TEST 2: Kiểm tra trang Admin KHÔNG nhúng Gatekeeper (để không bao giờ bị khóa)
-  console.log('\n--- TEST 2: Đảm bảo trang Admin (admin.html) tuyệt đối không bị khóa ---');
+  // TEST 2: Kiểm tra trang Admin (admin.html)
+  console.log('\n--- TEST 2: Kiểm tra cấu trúc Admin (admin.html) ---');
   const adminHtml = fs.readFileSync(path.join(__dirname, 'admin.html'), 'utf-8');
   assert(
     !adminHtml.includes('<script src="assets/site-gatekeeper.js"></script>'),
     'admin.html không bị Gatekeeper chặn'
+  );
+  assert(
+    adminHtml.includes('id="heroSiteStatusCard"'),
+    'admin.html có HERO CONTROL CARD to rõ ràng ngay đầu Tab Tổng Quan (Overview)'
+  );
+  assert(
+    adminHtml.includes('id="heroToggleActionBtn"'),
+    'Hero Card có nút bấm to 1 chạm [TẮT WEBSITE NGAY] / [BẬT WEBSITE NGAY]'
   );
   assert(
     adminHtml.includes('id="siteStatusPill"'),
@@ -76,7 +84,7 @@ async function runTests() {
     'admin.html có Modal xác nhận an toàn trước khi tắt website'
   );
 
-  // TEST 3: Giả lập môi trường JSDOM khi Website Đang BẬT (Online)
+  // TEST 3: Giả lập Client khi Website Đang BẬT (Online = true)
   console.log('\n--- TEST 3: Giả lập Client khi Website Đang BẬT (Online = true) ---');
   {
     const indexHtml = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf-8');
@@ -87,7 +95,6 @@ async function runTests() {
     const { window } = dom;
     window.localStorage.setItem('olion_site_online', 'true');
 
-    // Chạy gatekeeper script
     const gatekeeperCode = fs.readFileSync(path.join(__dirname, 'assets/site-gatekeeper.js'), 'utf-8');
     window.eval(gatekeeperCode);
 
@@ -118,7 +125,6 @@ async function runTests() {
       hotline: '0783 657 587'
     }));
 
-    // Chạy gatekeeper script
     const gatekeeperCode = fs.readFileSync(path.join(__dirname, 'assets/site-gatekeeper.js'), 'utf-8');
     window.eval(gatekeeperCode);
 
@@ -151,8 +157,52 @@ async function runTests() {
     }
   }
 
-  // TEST 5: Kiểm tra các hàm API trong supabaseClient.js
-  console.log('\n--- TEST 5: Kiểm tra các hàm API trong supabaseClient.js ---');
+  // TEST 5: Kiểm tra Modal Confirm hoạt động đúng (thêm class .open)
+  console.log('\n--- TEST 5: Kiểm tra Modal Xác Nhận & Logic Mở/Đóng trong Admin ---');
+  {
+    const dom = new JSDOM(adminHtml, {
+      url: 'https://www.olioncoffee.app/admin.html',
+      runScripts: 'outside-only'
+    });
+    const { window } = dom;
+
+    // Load supabaseClient.js code first
+    const supabaseClientCode = fs.readFileSync(path.join(__dirname, 'supabaseClient.js'), 'utf-8');
+    window.eval(supabaseClientCode);
+
+    // Mock global showToast & Chart
+    window.showToast = () => {};
+    window.Chart = function() { return { destroy: () => {}, update: () => {} }; };
+
+    // Eval admin scripts safely
+    const scripts = adminHtml.match(/<script(?:\s+[^>]*)?>([\s\S]*?)<\/script>/gi) || [];
+    scripts.forEach(s => {
+      const code = s.replace(/<\/?script(?:\s+[^>]*)?>/gi, "");
+      if (code.includes("openSiteConfirmModal")) {
+        try { window.eval(code); } catch(e) {}
+      }
+    });
+
+    const modal = window.document.getElementById('siteStatusConfirmModal');
+    assert(Boolean(modal), 'Tìm thấy #siteStatusConfirmModal trong DOM');
+
+    // Gọi hàm mở modal
+    window.openSiteConfirmModal(false);
+    assert(
+      modal.classList.contains('open') || modal.style.display === 'flex',
+      'Modal được hiển thị (display: flex / class open) khi gọi openSiteConfirmModal(false)'
+    );
+
+    // Gọi hàm đóng modal
+    window.closeSiteConfirmModal();
+    assert(
+      !modal.classList.contains('open'),
+      'Modal được gỡ bỏ class open khi gọi closeSiteConfirmModal()'
+    );
+  }
+
+  // TEST 6: Kiểm tra các hàm API trong supabaseClient.js
+  console.log('\n--- TEST 6: Kiểm tra các hàm API trong supabaseClient.js ---');
   const supabaseCode = fs.readFileSync(path.join(__dirname, 'supabaseClient.js'), 'utf-8');
   assert(
     supabaseCode.includes('fetchSiteStatusFromCloud'),
@@ -175,9 +225,7 @@ async function runTests() {
   console.log(`TỔNG KẾT KIỂM THỬ: ${passed} PASS, ${failed} FAIL`);
   console.log(`========================================\n`);
 
-  if (failed > 0) {
-    process.exit(1);
-  }
+  process.exit(failed > 0 ? 1 : 0);
 }
 
 runTests().catch(err => {

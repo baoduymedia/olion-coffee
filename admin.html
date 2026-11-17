@@ -1396,6 +1396,34 @@
 
         <!-- ======== TAB 1: OVERVIEW ======== -->
         <section class="tab-content active" id="tab-overview">
+
+          <!-- ======== HERO WEBSITE STATUS & KILL-SWITCH CONTROL CARD ======== -->
+          <div class="card" id="heroSiteStatusCard" style="border: 2px solid rgba(46,204,113,0.45); background: linear-gradient(135deg, rgba(46,204,113,0.08) 0%, rgba(26,14,8,0.96) 100%); margin-bottom: 24px; padding: 22px 24px; border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 18px;">
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <div id="heroStatusIconBox" style="width: 56px; height: 56px; border-radius: 16px; background: rgba(46,204,113,0.18); border: 2px solid #2ecc71; display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0;">
+                🟢
+              </div>
+              <div>
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                  <h3 id="heroSiteStatusTitle" style="font-size: 20px; font-weight: 800; color: #ffffff; margin: 0;">Website Đang Hoạt Động (Online)</h3>
+                  <span id="heroSiteStatusBadge" style="background: rgba(46,204,113,0.2); color: #2ecc71; font-size: 11px; padding: 3px 12px; border-radius: 999px; font-weight: 800; border: 1px solid rgba(46,204,113,0.4);">MỞ CỬA</span>
+                </div>
+                <p id="heroSiteStatusDesc" style="font-size: 13px; color: var(--text-muted); margin: 5px 0 0 0;">Khách hàng đang truy cập bình thường trên toàn bộ đường link (Menu, Đặt bàn, Tích điểm, Tin tức).</p>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+              <button type="button" id="heroToggleActionBtn" onclick="toggleSiteStatusQuick()" class="btn-primary" style="background: #e74c3c; color: #fff; font-weight: 800; font-size: 14px; padding: 12px 24px; border-radius: 10px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(231,76,60,0.35); transition: transform 0.2s;">
+                <span>🔒</span> <span id="heroToggleActionText">TẮT WEBSITE NGAY</span>
+              </button>
+              <button type="button" onclick="previewMaintenanceScreen()" class="btn-secondary" style="padding: 11px 16px; font-size: 13px; border-radius: 10px;">
+                <span>👁️</span> Xem Màn Hình Khóa
+              </button>
+              <button type="button" onclick="switchTab('customizer')" class="btn-secondary" style="padding: 11px 16px; font-size: 13px; border-radius: 10px;">
+                <span>⚙️</span> Cài Đặt Lời Nhắn
+              </button>
+            </div>
+          </div>
+
           <div class="stats-grid">
             <div class="stat-card" onclick="switchTab('menu')" style="cursor: pointer;">
               <div class="stat-icon-wrap">☕</div>
@@ -4805,6 +4833,365 @@
     }
 
     // Initial Data Load (Safe & Isolated)
+    // ==============================================================================
+    // OLION COFFEE - WEBSITE STATUS & KILL-SWITCH LOGIC (ENHANCED & REALTIME)
+    // ==============================================================================
+    var cachedSiteStatus = {
+      is_site_online: true,
+      maintenance_title: 'Olion Coffee Tạm Đóng Cửa Để Nâng Cấp Dịch Vụ',
+      maintenance_message: 'Hệ thống website đang tạm ngưng phục vụ để bảo trì & nâng cấp trải nghiệm tốt nhất cho quý khách. Rất mong quý khách thông cảm và hẹn sớm gặp lại!',
+      maintenance_expected_time: 'Dự kiến mở lại: Sớm nhất',
+      maintenance_hotline: '0783 657 587'
+    };
+    var pendingToggleState = null;
+
+    async function loadSiteStatus() {
+      if (typeof fetchSiteStatusFromCloud === 'function') {
+        try {
+          const status = await fetchSiteStatusFromCloud();
+          if (status) {
+            cachedSiteStatus = status;
+          }
+        } catch (e) {
+          console.warn('Lỗi fetchSiteStatusFromCloud:', e);
+        }
+      } else {
+        const localOnline = localStorage.getItem('olion_site_online');
+        if (localOnline !== null) cachedSiteStatus.is_site_online = localOnline !== 'false';
+      }
+      updateSiteStatusUI(cachedSiteStatus);
+    }
+
+    function updateSiteStatusUI(status) {
+      const current = status || cachedSiteStatus || { is_site_online: true };
+      const isOnline = Boolean(current.is_site_online);
+
+      // 1. HERO CARD (OVERVIEW DASHBOARD)
+      const heroCard = document.getElementById('heroSiteStatusCard');
+      const heroIconBox = document.getElementById('heroStatusIconBox');
+      const heroTitle = document.getElementById('heroSiteStatusTitle');
+      const heroBadge = document.getElementById('heroSiteStatusBadge');
+      const heroDesc = document.getElementById('heroSiteStatusDesc');
+      const heroBtn = document.getElementById('heroToggleActionBtn');
+      const heroBtnText = document.getElementById('heroToggleActionText');
+
+      if (heroCard) {
+        if (isOnline) {
+          heroCard.style.borderColor = 'rgba(46,204,113,0.45)';
+          heroCard.style.background = 'linear-gradient(135deg, rgba(46,204,113,0.08) 0%, rgba(26,14,8,0.96) 100%)';
+          heroCard.style.boxShadow = '0 10px 30px rgba(0,0,0,0.4)';
+          if (heroIconBox) {
+            heroIconBox.innerHTML = '🟢';
+            heroIconBox.style.background = 'rgba(46,204,113,0.18)';
+            heroIconBox.style.borderColor = '#2ecc71';
+          }
+          if (heroTitle) {
+            heroTitle.textContent = 'Website Đang Hoạt Động (Online)';
+            heroTitle.style.color = '#ffffff';
+          }
+          if (heroBadge) {
+            heroBadge.textContent = 'MỞ CỬA';
+            heroBadge.style.background = 'rgba(46,204,113,0.2)';
+            heroBadge.style.color = '#2ecc71';
+            heroBadge.style.borderColor = 'rgba(46,204,113,0.4)';
+          }
+          if (heroDesc) {
+            heroDesc.textContent = 'Khách hàng đang truy cập bình thường trên toàn bộ đường link (Menu, Đặt bàn, Tích điểm, Tin tức).';
+          }
+          if (heroBtn) {
+            heroBtn.style.background = '#e74c3c';
+            heroBtn.style.boxShadow = '0 4px 15px rgba(231,76,60,0.35)';
+          }
+          if (heroBtnText) heroBtnText.textContent = 'TẮT WEBSITE NGAY';
+        } else {
+          heroCard.style.borderColor = 'rgba(231,76,60,0.7)';
+          heroCard.style.background = 'linear-gradient(135deg, rgba(231,76,60,0.15) 0%, rgba(26,14,8,0.98) 100%)';
+          heroCard.style.boxShadow = '0 10px 30px rgba(231,76,60,0.25)';
+          if (heroIconBox) {
+            heroIconBox.innerHTML = '🔴';
+            heroIconBox.style.background = 'rgba(231,76,60,0.25)';
+            heroIconBox.style.borderColor = '#e74c3c';
+          }
+          if (heroTitle) {
+            heroTitle.textContent = 'WEBSITE ĐÃ TẮT (ĐANG BẢO TRÌ)';
+            heroTitle.style.color = '#ff7675';
+          }
+          if (heroBadge) {
+            heroBadge.textContent = 'ĐÃ KHÓA';
+            heroBadge.style.background = 'rgba(231,76,60,0.25)';
+            heroBadge.style.color = '#ff7675';
+            heroBadge.style.borderColor = 'rgba(231,76,60,0.6)';
+          }
+          if (heroDesc) {
+            heroDesc.textContent = 'Khách hàng truy cập bất kỳ đường link nào của olioncoffee.app đều bị chặn và hiển thị màn hình bảo trì.';
+          }
+          if (heroBtn) {
+            heroBtn.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
+            heroBtn.style.boxShadow = '0 4px 15px rgba(46,204,113,0.4)';
+          }
+          if (heroBtnText) heroBtnText.textContent = 'MỞ LẠI WEBSITE NGAY';
+        }
+      }
+
+      // 2. Desktop Topbar Pill
+      const pill = document.getElementById('siteStatusPill');
+      const dot = document.getElementById('siteStatusDot');
+      const text = document.getElementById('siteStatusText');
+      if (pill) pill.className = isOnline ? 'site-status-pill online' : 'site-status-pill offline';
+      if (dot) dot.className = isOnline ? 'status-dot active' : 'status-dot danger';
+      if (text) text.textContent = isOnline ? 'Web: Đang Mở (Online)' : 'Web: ĐÃ TẮT (Offline)';
+
+      // 3. Mobile Topbar Toggle
+      const mToggle = document.getElementById('mSiteStatusToggle');
+      const mDot = document.getElementById('mSiteStatusDot');
+      const mText = document.getElementById('mSiteStatusText');
+      if (mToggle) mToggle.className = isOnline ? 'mobile-site-toggle online' : 'mobile-site-toggle offline';
+      if (mDot) mDot.className = isOnline ? 'status-dot active' : 'status-dot danger';
+      if (mText) mText.textContent = isOnline ? 'Web: Mở' : 'Web: TẮT';
+
+      // 4. Emergency Banner
+      const banner = document.getElementById('siteOfflineAdminBanner');
+      if (banner) banner.style.display = isOnline ? 'none' : 'flex';
+
+      // 5. Customizer Card
+      const toggleInput = document.getElementById('siteOnlineToggleInput');
+      const toggleLabel = document.getElementById('siteToggleLabel');
+      const switchHead = document.getElementById('switchHeading');
+      const switchSub = document.getElementById('switchSubheading');
+      const detailBadge = document.getElementById('siteStatusDetailBadge');
+      const detailDot = document.getElementById('detailStatusDot');
+      const detailText = document.getElementById('detailStatusText');
+
+      if (toggleInput) toggleInput.checked = isOnline;
+      if (toggleLabel) {
+        toggleLabel.textContent = isOnline ? 'BẬT' : 'TẮT';
+        toggleLabel.style.color = isOnline ? '#2ecc71' : '#e74c3c';
+      }
+      if (switchHead) {
+        switchHead.textContent = isOnline ? 'Trạng thái hiện tại: Website đang BẬT' : 'Trạng thái hiện tại: Website ĐÃ TẮT (BẢO TRÌ)';
+      }
+      if (switchSub) {
+        switchSub.textContent = isOnline 
+          ? 'Khách hàng đang truy cập bình thường trên mọi thiết bị. Gạt công tắc bên cạnh để TẮT website.' 
+          : 'Khách hàng truy cập bất kỳ link nào của olioncoffee.app đều bị chặn và hiển thị màn hình bảo trì.';
+      }
+      if (detailBadge) {
+        detailBadge.style.background = isOnline ? 'rgba(46,204,113,0.15)' : 'rgba(231,76,60,0.2)';
+        detailBadge.style.borderColor = isOnline ? 'rgba(46,204,113,0.4)' : 'rgba(231,76,60,0.5)';
+        detailBadge.style.color = isOnline ? '#2ecc71' : '#ff7675';
+      }
+      if (detailDot) detailDot.className = isOnline ? 'status-dot active' : 'status-dot danger';
+      if (detailText) detailText.textContent = isOnline ? 'Đang Mở Cửa (Online)' : 'Đang Đóng Cửa (Offline)';
+
+      // 6. Update Form Inputs
+      const titleInput = document.getElementById('maintenanceTitleInput');
+      const msgInput = document.getElementById('maintenanceMessageInput');
+      const timeInput = document.getElementById('maintenanceTimeInput');
+      const hotlineInput = document.getElementById('maintenanceHotlineInput');
+
+      if (titleInput && !titleInput.dataset.userEdited) titleInput.value = status.maintenance_title || '';
+      if (msgInput && !msgInput.dataset.userEdited) msgInput.value = status.maintenance_message || '';
+      if (timeInput && !timeInput.dataset.userEdited) timeInput.value = status.maintenance_expected_time || '';
+      if (hotlineInput && !hotlineInput.dataset.userEdited) hotlineInput.value = status.maintenance_hotline || '';
+    }
+
+    function toggleSiteStatusQuick() {
+      const isCurrentlyOnline = Boolean(cachedSiteStatus.is_site_online);
+      if (isCurrentlyOnline) {
+        openSiteConfirmModal(false);
+      } else {
+        confirmTurnOnSite();
+      }
+    }
+
+    function handleSiteToggleChange(checkbox) {
+      const targetState = checkbox.checked;
+      if (!targetState) {
+        checkbox.checked = true;
+        openSiteConfirmModal(false);
+      } else {
+        confirmTurnOnSite();
+      }
+    }
+
+    function openSiteConfirmModal(targetOnline) {
+      pendingToggleState = targetOnline;
+      const modal = document.getElementById('siteStatusConfirmModal');
+      const icon = document.getElementById('confirmModalIcon');
+      const title = document.getElementById('confirmModalTitle');
+      const desc = document.getElementById('confirmModalDesc');
+      const btn = document.getElementById('executeSiteStatusBtn');
+
+      if (!targetOnline) {
+        if (icon) {
+          icon.innerHTML = '⚠️';
+          icon.style.background = 'rgba(231,76,60,0.15)';
+          icon.style.borderColor = '#e74c3c';
+        }
+        if (title) title.textContent = 'Xác Nhận TẮT WEBSITE?';
+        if (desc) desc.innerHTML = 'Khi tắt, <strong>toàn bộ khách hàng truy cập bất kỳ đường link nào</strong> của olioncoffee.app (Trang chủ, Menu, Đặt bàn, Tích điểm, Tin tức) đều sẽ bị chặn và thấy màn hình thông báo tạm ngưng phục vụ.<br><br>Bạn có chắc chắn muốn TẮT WEBSITE ngay bây giờ?';
+        if (btn) {
+          btn.innerHTML = '🔴 Đồng Ý TẮT Website';
+          btn.style.background = '#e74c3c';
+        }
+      } else {
+        if (icon) {
+          icon.innerHTML = '🟢';
+          icon.style.background = 'rgba(46,204,113,0.15)';
+          icon.style.borderColor = '#2ecc71';
+        }
+        if (title) title.textContent = 'Xác Nhận BẬT LẠI WEBSITE?';
+        if (desc) desc.innerHTML = 'Website sẽ mở lại ngay lập tức cho toàn bộ khách hàng trên mọi thiết bị mà không cần chờ đợi.';
+        if (btn) {
+          btn.innerHTML = '🟢 MỞ LẠI WEBSITE NGAY';
+          btn.style.background = '#2ecc71';
+          btn.style.color = '#000';
+        }
+      }
+
+      if (modal) {
+        modal.style.display = 'flex';
+        modal.classList.add('open');
+      }
+    }
+
+    function closeSiteConfirmModal() {
+      const modal = document.getElementById('siteStatusConfirmModal');
+      if (modal) {
+        modal.classList.remove('open');
+        setTimeout(() => {
+          modal.style.display = 'none';
+        }, 250);
+      }
+      pendingToggleState = null;
+    }
+
+    async function executeSiteToggleConfirm() {
+      if (pendingToggleState === null) return;
+      const targetState = pendingToggleState;
+      closeSiteConfirmModal();
+      await applySiteStatusChange(targetState);
+    }
+
+    async function confirmTurnOnSite() {
+      await applySiteStatusChange(true);
+    }
+
+    async function applySiteStatusChange(targetOnline) {
+      cachedSiteStatus.is_site_online = targetOnline;
+      updateSiteStatusUI(cachedSiteStatus);
+
+      // Cập nhật LocalStorage
+      localStorage.setItem('olion_site_online', targetOnline ? 'true' : 'false');
+
+      // Gửi BroadcastChannel tức thì cho mọi tab đang mở cùng máy
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          const bc = new BroadcastChannel('olion_site_status_channel');
+          bc.postMessage({
+            is_online: targetOnline,
+            title: document.getElementById('maintenanceTitleInput')?.value || cachedSiteStatus.maintenance_title,
+            message: document.getElementById('maintenanceMessageInput')?.value || cachedSiteStatus.maintenance_message,
+            expected_time: document.getElementById('maintenanceTimeInput')?.value || cachedSiteStatus.maintenance_expected_time,
+            hotline: document.getElementById('maintenanceHotlineInput')?.value || cachedSiteStatus.maintenance_hotline
+          });
+        }
+      } catch (e) {}
+
+      // Cập nhật lên Cloud Supabase
+      if (typeof updateSiteStatusToCloud === 'function') {
+        const payload = {
+          is_site_online: targetOnline,
+          maintenance_title: document.getElementById('maintenanceTitleInput')?.value || cachedSiteStatus.maintenance_title,
+          maintenance_message: document.getElementById('maintenanceMessageInput')?.value || cachedSiteStatus.maintenance_message,
+          maintenance_expected_time: document.getElementById('maintenanceTimeInput')?.value || cachedSiteStatus.maintenance_expected_time,
+          maintenance_hotline: document.getElementById('maintenanceHotlineInput')?.value || cachedSiteStatus.maintenance_hotline
+        };
+        try {
+          await updateSiteStatusToCloud(payload);
+        } catch (e) {
+          console.warn('Lỗi lưu cloud status:', e);
+        }
+      }
+
+      if (targetOnline) {
+        showToast('🎉 Website đã BẬT! Khách hàng có thể truy cập bình thường.');
+      } else {
+        showToast('🔒 Website đã TẮT! Màn hình bảo trì đang chặn toàn bộ link public.');
+      }
+    }
+
+    async function saveSiteStatusSettings() {
+      const btn = document.getElementById('saveSiteStatusBtn');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '<span>⏳</span> Đang lưu lên Cloud...';
+      }
+
+      const payload = {
+        is_site_online: cachedSiteStatus.is_site_online,
+        maintenance_title: document.getElementById('maintenanceTitleInput')?.value.trim() || cachedSiteStatus.maintenance_title,
+        maintenance_message: document.getElementById('maintenanceMessageInput')?.value.trim() || cachedSiteStatus.maintenance_message,
+        maintenance_expected_time: document.getElementById('maintenanceTimeInput')?.value.trim() || cachedSiteStatus.maintenance_expected_time,
+        maintenance_hotline: document.getElementById('maintenanceHotlineInput')?.value.trim() || cachedSiteStatus.maintenance_hotline
+      };
+
+      cachedSiteStatus = { ...cachedSiteStatus, ...payload };
+
+      if (typeof updateSiteStatusToCloud === 'function') {
+        try {
+          await updateSiteStatusToCloud(payload);
+        } catch (e) {}
+      } else {
+        localStorage.setItem('olion_maintenance_info', JSON.stringify(payload));
+      }
+
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = '<span>💾</span> Lưu Thiết Lập Lên Cloud';
+      }
+      showToast('Đã lưu cấu hình thông báo bảo trì thành công!');
+    }
+
+    function previewMaintenanceScreen() {
+      const title = document.getElementById('maintenanceTitleInput')?.value || cachedSiteStatus.maintenance_title;
+      const msg = document.getElementById('maintenanceMessageInput')?.value || cachedSiteStatus.maintenance_message;
+      const time = document.getElementById('maintenanceTimeInput')?.value || cachedSiteStatus.maintenance_expected_time;
+      const hotline = document.getElementById('maintenanceHotlineInput')?.value || cachedSiteStatus.maintenance_hotline;
+
+      const previewWin = window.open('', '_blank');
+      if (!previewWin) {
+        return alert('Trình duyệt đang chặn mở cửa sổ mới. Vui lòng cho phép popup để xem trước!');
+      }
+
+      previewWin.document.write(`
+        <!DOCTYPE html>
+        <html lang="vi">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Xem Trước Màn Hình Bảo Trì — Olion Coffee</title>
+          <script src="assets/site-gatekeeper.js"><\/script>
+        </head>
+        <body>
+          <script>
+            localStorage.setItem('olion_site_online', 'false');
+            localStorage.setItem('olion_maintenance_info', JSON.stringify({
+              title: ${JSON.stringify(title)},
+              message: ${JSON.stringify(msg)},
+              expected_time: ${JSON.stringify(time)},
+              hotline: ${JSON.stringify(hotline)}
+            }));
+            if (window.OlionGatekeeper) {
+              window.OlionGatekeeper.showMaintenance();
+            }
+          <\/script>
+        </body>
+        </html>
+      `);
+      previewWin.document.close();
+    }
+
     function loadAllData() {
       try { if (typeof setupAdminRealtime === 'function') setupAdminRealtime(); } catch (e) { console.warn(e); }
       try { loadSiteStatus(); } catch (e) { console.warn(e); }
@@ -4844,7 +5231,7 @@
 
     // --- ONESIGNAL PUSH NOTIFICATION (CLOUD-SYNCED & ROBUST) ---
 
-    let ONESIGNAL_APP_ID = "09a8fa7b-6ea9-40b7-b5d5-25dd2ffed24b";
+    var ONESIGNAL_APP_ID = "09a8fa7b-6ea9-40b7-b5d5-25dd2ffed24b";
 
     function cleanOneSignalKey(raw) {
       if (!raw) return '';
@@ -5155,296 +5542,6 @@
     }
 
     
-    // ==============================================================================
-    // OLION COFFEE - WEBSITE STATUS & KILL-SWITCH LOGIC
-    // ==============================================================================
-    let cachedSiteStatus = {
-      is_site_online: true,
-      maintenance_title: 'Olion Coffee Tạm Đóng Cửa Để Nâng Cấp Dịch Vụ',
-      maintenance_message: 'Hệ thống website đang tạm ngưng phục vụ để bảo trì & nâng cấp trải nghiệm tốt nhất cho quý khách. Rất mong quý khách thông cảm và hẹn sớm gặp lại!',
-      maintenance_expected_time: 'Dự kiến mở lại: Sớm nhất',
-      maintenance_hotline: '0783 657 587'
-    };
-    let pendingToggleState = null;
-
-    async function loadSiteStatus() {
-      if (typeof fetchSiteStatusFromCloud === 'function') {
-        try {
-          const status = await fetchSiteStatusFromCloud();
-          if (status) {
-            cachedSiteStatus = status;
-          }
-        } catch (e) {
-          console.warn('Lỗi fetchSiteStatusFromCloud:', e);
-        }
-      } else {
-        const localOnline = localStorage.getItem('olion_site_online');
-        if (localOnline !== null) cachedSiteStatus.is_site_online = localOnline !== 'false';
-      }
-      updateSiteStatusUI(cachedSiteStatus);
-    }
-
-    function updateSiteStatusUI(status) {
-      const isOnline = Boolean(status.is_site_online);
-
-      // 1. Desktop Topbar Pill
-      const pill = document.getElementById('siteStatusPill');
-      const dot = document.getElementById('siteStatusDot');
-      const text = document.getElementById('siteStatusText');
-      if (pill) {
-        pill.className = isOnline ? 'site-status-pill online' : 'site-status-pill offline';
-      }
-      if (dot) {
-        dot.className = isOnline ? 'status-dot active' : 'status-dot danger';
-      }
-      if (text) {
-        text.textContent = isOnline ? 'Web: Đang Mở (Online)' : 'Web: ĐÃ TẮT (Offline)';
-      }
-
-      // 2. Mobile Topbar Toggle
-      const mToggle = document.getElementById('mSiteStatusToggle');
-      const mDot = document.getElementById('mSiteStatusDot');
-      const mText = document.getElementById('mSiteStatusText');
-      if (mToggle) {
-        mToggle.className = isOnline ? 'mobile-site-toggle online' : 'mobile-site-toggle offline';
-      }
-      if (mDot) {
-        mDot.className = isOnline ? 'status-dot active' : 'status-dot danger';
-      }
-      if (mText) {
-        mText.textContent = isOnline ? 'Web: Mở' : 'Web: TẮT';
-      }
-
-      // 3. Emergency Banner
-      const banner = document.getElementById('siteOfflineAdminBanner');
-      if (banner) {
-        banner.style.display = isOnline ? 'none' : 'flex';
-      }
-
-      // 4. Customizer Card
-      const toggleInput = document.getElementById('siteOnlineToggleInput');
-      const toggleLabel = document.getElementById('siteToggleLabel');
-      const switchHead = document.getElementById('switchHeading');
-      const switchSub = document.getElementById('switchSubheading');
-      const detailBadge = document.getElementById('siteStatusDetailBadge');
-      const detailDot = document.getElementById('detailStatusDot');
-      const detailText = document.getElementById('detailStatusText');
-
-      if (toggleInput) toggleInput.checked = isOnline;
-      if (toggleLabel) {
-        toggleLabel.textContent = isOnline ? 'BẬT' : 'TẮT';
-        toggleLabel.style.color = isOnline ? '#2ecc71' : '#e74c3c';
-      }
-      if (switchHead) {
-        switchHead.textContent = isOnline ? 'Trạng thái hiện tại: Website đang BẬT' : 'Trạng thái hiện tại: Website ĐÃ TẮT (BẢO TRÌ)';
-      }
-      if (switchSub) {
-        switchSub.textContent = isOnline 
-          ? 'Khách hàng đang truy cập bình thường trên mọi thiết bị. Gạt công tắc bên cạnh để TẮT website.' 
-          : 'Khách hàng truy cập bất kỳ link nào của olioncoffee.app đều bị chặn và hiển thị màn hình bảo trì.';
-      }
-      if (detailBadge) {
-        detailBadge.style.background = isOnline ? 'rgba(46,204,113,0.15)' : 'rgba(231,76,60,0.2)';
-        detailBadge.style.borderColor = isOnline ? 'rgba(46,204,113,0.4)' : 'rgba(231,76,60,0.5)';
-        detailBadge.style.color = isOnline ? '#2ecc71' : '#ff7675';
-      }
-      if (detailDot) {
-        detailDot.className = isOnline ? 'status-dot active' : 'status-dot danger';
-      }
-      if (detailText) {
-        detailText.textContent = isOnline ? 'Đang Mở Cửa (Online)' : 'Đang Đóng Cửa (Offline)';
-      }
-
-      // 5. Update Form Inputs (nếu chưa được người dùng gõ vào)
-      const titleInput = document.getElementById('maintenanceTitleInput');
-      const msgInput = document.getElementById('maintenanceMessageInput');
-      const timeInput = document.getElementById('maintenanceTimeInput');
-      const hotlineInput = document.getElementById('maintenanceHotlineInput');
-
-      if (titleInput && !titleInput.dataset.userEdited) titleInput.value = status.maintenance_title || '';
-      if (msgInput && !msgInput.dataset.userEdited) msgInput.value = status.maintenance_message || '';
-      if (timeInput && !timeInput.dataset.userEdited) timeInput.value = status.maintenance_expected_time || '';
-      if (hotlineInput && !hotlineInput.dataset.userEdited) hotlineInput.value = status.maintenance_hotline || '';
-    }
-
-    function toggleSiteStatusQuick() {
-      const isCurrentlyOnline = Boolean(cachedSiteStatus.is_site_online);
-      if (isCurrentlyOnline) {
-        // Đang BẬT -> Mở modal xác nhận TẮT
-        openSiteConfirmModal(false);
-      } else {
-        // Đang TẮT -> Bật lại ngay
-        confirmTurnOnSite();
-      }
-    }
-
-    function handleSiteToggleChange(checkbox) {
-      const targetState = checkbox.checked;
-      if (!targetState) {
-        // Muốn TẮT -> Tạm thời giữ checked trên UI và mở modal xác nhận
-        checkbox.checked = true;
-        openSiteConfirmModal(false);
-      } else {
-        // Muốn BẬT -> Bật ngay
-        confirmTurnOnSite();
-      }
-    }
-
-    function openSiteConfirmModal(targetOnline) {
-      pendingToggleState = targetOnline;
-      const modal = document.getElementById('siteStatusConfirmModal');
-      const icon = document.getElementById('confirmModalIcon');
-      const title = document.getElementById('confirmModalTitle');
-      const desc = document.getElementById('confirmModalDesc');
-      const btn = document.getElementById('executeSiteStatusBtn');
-
-      if (!targetOnline) {
-        if (icon) {
-          icon.innerHTML = '⚠️';
-          icon.style.background = 'rgba(231,76,60,0.15)';
-          icon.style.borderColor = '#e74c3c';
-        }
-        if (title) title.textContent = 'Xác Nhận TẮT WEBSITE?';
-        if (desc) desc.innerHTML = 'Khi tắt, <strong>toàn bộ khách hàng truy cập bất kỳ đường link nào</strong> của olioncoffee.app (Trang chủ, Menu, Đặt bàn, Tích điểm, Tin tức) đều sẽ bị chặn và thấy màn hình thông báo tạm ngưng phục vụ.<br><br>Bạn có chắc chắn muốn TẮT WEBSITE ngay bây giờ?';
-        if (btn) {
-          btn.innerHTML = '🔴 Đồng Ý TẮT Website';
-          btn.style.background = '#e74c3c';
-        }
-      } else {
-        if (icon) {
-          icon.innerHTML = '🟢';
-          icon.style.background = 'rgba(46,204,113,0.15)';
-          icon.style.borderColor = '#2ecc71';
-        }
-        if (title) title.textContent = 'Xác Nhận BẬT LẠI WEBSITE?';
-        if (desc) desc.innerHTML = 'Website sẽ mở lại ngay lập tức cho toàn bộ khách hàng trên mọi thiết bị mà không cần chờ đợi.';
-        if (btn) {
-          btn.innerHTML = '🟢 MỞ LẠI WEBSITE NGAY';
-          btn.style.background = '#2ecc71';
-          btn.style.color = '#000';
-        }
-      }
-
-      if (modal) modal.style.display = 'flex';
-    }
-
-    function closeSiteConfirmModal() {
-      const modal = document.getElementById('siteStatusConfirmModal');
-      if (modal) modal.style.display = 'none';
-      pendingToggleState = null;
-    }
-
-    async function executeSiteToggleConfirm() {
-      if (pendingToggleState === null) return;
-      const targetState = pendingToggleState;
-      closeSiteConfirmModal();
-      await applySiteStatusChange(targetState);
-    }
-
-    async function confirmTurnOnSite() {
-      await applySiteStatusChange(true);
-    }
-
-    async function applySiteStatusChange(targetOnline) {
-      cachedSiteStatus.is_site_online = targetOnline;
-      updateSiteStatusUI(cachedSiteStatus);
-
-      // Cập nhật lên Cloud
-      if (typeof updateSiteStatusToCloud === 'function') {
-        const payload = {
-          is_site_online: targetOnline,
-          maintenance_title: document.getElementById('maintenanceTitleInput')?.value || cachedSiteStatus.maintenance_title,
-          maintenance_message: document.getElementById('maintenanceMessageInput')?.value || cachedSiteStatus.maintenance_message,
-          maintenance_expected_time: document.getElementById('maintenanceTimeInput')?.value || cachedSiteStatus.maintenance_expected_time,
-          maintenance_hotline: document.getElementById('maintenanceHotlineInput')?.value || cachedSiteStatus.maintenance_hotline
-        };
-        try {
-          await updateSiteStatusToCloud(payload);
-        } catch (e) {
-          console.warn('Lỗi lưu cloud status:', e);
-        }
-      } else {
-        localStorage.setItem('olion_site_online', targetOnline ? 'true' : 'false');
-      }
-
-      if (targetOnline) {
-        showToast('🎉 Website đã BẬT! Khách hàng có thể truy cập bình thường.');
-      } else {
-        showToast('🔒 Website đã TẮT! Màn hình bảo trì đang chặn toàn bộ link public.');
-      }
-    }
-
-    async function saveSiteStatusSettings() {
-      const btn = document.getElementById('saveSiteStatusBtn');
-      if (btn) {
-        btn.disabled = true;
-        btn.innerHTML = '<span>⏳</span> Đang lưu lên Cloud...';
-      }
-
-      const payload = {
-        is_site_online: cachedSiteStatus.is_site_online,
-        maintenance_title: document.getElementById('maintenanceTitleInput')?.value.trim() || cachedSiteStatus.maintenance_title,
-        maintenance_message: document.getElementById('maintenanceMessageInput')?.value.trim() || cachedSiteStatus.maintenance_message,
-        maintenance_expected_time: document.getElementById('maintenanceTimeInput')?.value.trim() || cachedSiteStatus.maintenance_expected_time,
-        maintenance_hotline: document.getElementById('maintenanceHotlineInput')?.value.trim() || cachedSiteStatus.maintenance_hotline
-      };
-
-      cachedSiteStatus = { ...cachedSiteStatus, ...payload };
-
-      if (typeof updateSiteStatusToCloud === 'function') {
-        try {
-          await updateSiteStatusToCloud(payload);
-        } catch (e) {}
-      } else {
-        localStorage.setItem('olion_maintenance_info', JSON.stringify(payload));
-      }
-
-      if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = '<span>💾</span> Lưu Thiết Lập Lên Cloud';
-      }
-      showToast('Đã lưu cấu hình thông báo bảo trì thành công!');
-    }
-
-    function previewMaintenanceScreen() {
-      const title = document.getElementById('maintenanceTitleInput')?.value || cachedSiteStatus.maintenance_title;
-      const msg = document.getElementById('maintenanceMessageInput')?.value || cachedSiteStatus.maintenance_message;
-      const time = document.getElementById('maintenanceTimeInput')?.value || cachedSiteStatus.maintenance_expected_time;
-      const hotline = document.getElementById('maintenanceHotlineInput')?.value || cachedSiteStatus.maintenance_hotline;
-
-      const previewWin = window.open('', '_blank');
-      if (!previewWin) {
-        return alert('Trình duyệt đang chặn mở cửa sổ mới. Vui lòng cho phép popup để xem trước!');
-      }
-
-      previewWin.document.write(`
-        <!DOCTYPE html>
-        <html lang="vi">
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Xem Trước Màn Hình Bảo Trì — Olion Coffee</title>
-          <script src="assets/site-gatekeeper.js"><\/script>
-        </head>
-        <body>
-          <script>
-            localStorage.setItem('olion_site_online', 'false');
-            localStorage.setItem('olion_maintenance_info', JSON.stringify({
-              title: ${JSON.stringify(title)},
-              message: ${JSON.stringify(msg)},
-              expected_time: ${JSON.stringify(time)},
-              hotline: ${JSON.stringify(hotline)}
-            }));
-            if (window.OlionGatekeeper) {
-              window.OlionGatekeeper.showMaintenance();
-            }
-          <\/script>
-        </body>
-        </html>
-      `);
-      previewWin.document.close();
-    }
-
     // Initialize On Load
     setTimeout(loadOneSignalKey, 500);
 
@@ -5452,7 +5549,7 @@
 
 
   <!-- ======== MODAL: XÁC NHẬN TẮT / BẬT WEBSITE ======== -->
-  <div class="admin-modal-backdrop" id="siteStatusConfirmModal" style="display: none; z-index: 99999;">
+  <div class="admin-modal-backdrop" id="siteStatusConfirmModal" style="display: none; z-index: 99999;" onclick="if(event.target === this) closeSiteConfirmModal()">
     <div class="admin-modal-dialog" style="max-width: 480px; text-align: center; padding: 30px 24px;">
       <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(231,76,60,0.15); border: 2px solid #e74c3c; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 16px auto;" id="confirmModalIcon">
         ⚠️

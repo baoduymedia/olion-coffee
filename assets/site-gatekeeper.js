@@ -9,12 +9,12 @@
   'use strict';
 
   // 1. Tuyệt đối không chặn trang Quản trị Admin
-  const path = window.location.pathname.toLowerCase();
-  if (path.includes('admin') || path.endsWith('/admin.html')) {
+  const currentPath = (window.location.pathname || '').toLowerCase();
+  if (currentPath.includes('admin') || currentPath.endsWith('admin.html')) {
     return;
   }
 
-  // 2. Cấu hình mặc định Supabase & Hotline Olion Coffee
+  // 2. Cấu hình Supabase & Thông tin mặc định
   const SUPABASE_URL = "https://xwbrbesgnwcngzohprxt.supabase.co";
   const SUPABASE_KEY = "sb_publishable_vWuV07_xPU0wNftK0lpnFQ_oA9XHPLS";
   const DEFAULT_TITLE = "Olion Coffee Tạm Đóng Cửa Để Nâng Cấp Dịch Vụ";
@@ -24,20 +24,21 @@
   const DEFAULT_ZALO = "https://zalo.me/0783657587";
   const DEFAULT_ADDRESS = "80/64a Dương Quảng Hàm, P. An Nhơn, Gò Vấp, TP.HCM";
 
-  // 3. Admin Bypass Check (Chế độ xem trước dành riêng cho Quản Trị Viên)
+  // 3. Admin Bypass Check (Chỉ bypass khi có tham số tường minh ?admin_bypass=1 trên URL)
   const urlParams = new URLSearchParams(window.location.search);
-  const isAdminBypass = urlParams.get('admin_bypass') === '1' || sessionStorage.getItem('olion_admin_bypass') === 'true';
+  const isAdminBypass = urlParams.get('admin_bypass') === '1';
   if (isAdminBypass) {
-    sessionStorage.setItem('olion_admin_bypass', 'true');
-    console.log('🛡️ [Gatekeeper] Admin Bypass Active: Bạn đang duyệt web ở chế độ xem trước của Quản Trị Viên.');
-    // Thêm banner cảnh báo nhỏ trên cùng
+    console.log('🛡️ [Gatekeeper] Admin Bypass Active: Đang xem trước bằng link Quản Trị Viên.');
     window.addEventListener('DOMContentLoaded', () => {
       const banner = document.createElement('div');
       banner.id = 'olionAdminPreviewBanner';
       banner.innerHTML = `
-        <div style="position:fixed;top:0;left:0;right:0;z-index:9999999;background:linear-gradient(90deg,#991b1b,#b91c1c);color:#fff;padding:8px 16px;font-size:12.5px;font-family:sans-serif;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.5);">
-          <span>⚠️ <strong>CHẾ ĐỘ XEM TRƯỚC (QUẢN TRỊ VIÊN):</strong> Website hiện đang TẮT đối với khách hàng công cộng.</span>
-          <a href="admin.html" style="background:#fff;color:#991b1b;padding:4px 10px;border-radius:4px;text-decoration:none;font-weight:700;font-size:11.5px;">Vào Admin Bật Web ↗</a>
+        <div style="position:fixed;top:0;left:0;right:0;z-index:2147483647;background:linear-gradient(90deg,#991b1b,#7f1d1d);color:#fff;padding:8px 16px;font-size:12.5px;font-family:sans-serif;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,0.5);">
+          <span>⚠️ <strong>CHẾ ĐỘ XEM TRƯỚC (ADMIN BYPASS):</strong> Khách hàng bình thường hiện đang thấy màn hình bảo trì.</span>
+          <div style="display:flex;gap:8px;">
+            <a href="admin.html" style="background:#fff;color:#991b1b;padding:4px 10px;border-radius:4px;text-decoration:none;font-weight:700;font-size:11.5px;">Vào Admin Bật Web ↗</a>
+            <a href="${window.location.pathname}" style="background:rgba(255,255,255,0.2);color:#fff;padding:4px 10px;border-radius:4px;text-decoration:none;font-size:11.5px;">Xem Như Khách Thường</a>
+          </div>
         </div>
       `;
       document.body.prepend(banner);
@@ -46,22 +47,26 @@
     return;
   }
 
-  // 4. CSS Chặn & Màn Hình Bảo Trì Sang Trọng (Luxury Coffee Theme)
+  // 4. CSS Chặn & Giao Diện Bảo Trì Luxury Coffee
   const INJECTED_CSS = `
     html.olion-site-offline body > *:not(#olionMaintenanceOverlay) {
       display: none !important;
     }
-    html.olion-site-offline {
+    html.olion-site-offline, html.olion-site-offline body {
       overflow: hidden !important;
       height: 100% !important;
+      background: #0d0603 !important;
     }
     #olionMaintenanceOverlay {
       position: fixed !important;
-      inset: 0 !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
       width: 100vw !important;
       height: 100vh !important;
       z-index: 2147483647 !important;
-      background: radial-gradient(circle at 50% 15%, #2c160c 0%, #160a04 55%, #080301 100%) !important;
+      background: radial-gradient(circle at 50% 20%, #2b150b 0%, #140904 55%, #080301 100%) !important;
       color: #f5efe6 !important;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
       display: flex !important;
@@ -80,126 +85,127 @@
       pointer-events: none !important;
     }
     .olion-maint-card {
-      max-width: 560px;
+      max-width: 540px;
       width: 100%;
-      background: rgba(30, 16, 9, 0.85);
-      border: 1px solid rgba(229, 154, 85, 0.35);
-      border-radius: 20px;
-      padding: 36px 28px;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 45px rgba(229, 154, 85, 0.15);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(28, 14, 8, 0.92);
+      border: 1.5px solid rgba(229, 154, 85, 0.4);
+      border-radius: 24px;
+      padding: 38px 28px;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), 0 0 50px rgba(229, 154, 85, 0.18);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       box-sizing: border-box;
       position: relative;
     }
     .olion-maint-logo {
-      width: 110px;
+      width: 120px;
       height: auto;
       margin-bottom: 20px;
-      filter: drop-shadow(0 4px 12px rgba(229, 154, 85, 0.3));
+      filter: drop-shadow(0 4px 15px rgba(229, 154, 85, 0.35));
     }
     .olion-maint-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(231, 76, 60, 0.15);
-      border: 1px solid rgba(231, 76, 60, 0.45);
+      background: rgba(231, 76, 60, 0.16);
+      border: 1px solid rgba(231, 76, 60, 0.5);
       color: #ff7675;
-      padding: 6px 14px;
+      padding: 6px 16px;
       border-radius: 999px;
       font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
     .olion-pulse-dot {
-      width: 8px;
-      height: 8px;
+      width: 9px;
+      height: 9px;
       border-radius: 50%;
       background: #e74c3c;
       box-shadow: 0 0 10px #e74c3c;
-      animation: olionPulse 1.8s infinite;
+      animation: olionPulseAnim 1.6s infinite;
     }
-    @keyframes olionPulse {
+    @keyframes olionPulseAnim {
       0% { transform: scale(0.9); opacity: 0.8; }
-      50% { transform: scale(1.3); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 1; }
       100% { transform: scale(0.9); opacity: 0.8; }
     }
     .olion-maint-title {
-      font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+      font-family: Georgia, "Cormorant Garamond", "Times New Roman", serif;
       font-size: 26px;
-      line-height: 1.3;
+      line-height: 1.35;
       color: #ffffff;
       margin: 0 0 14px 0;
       font-weight: 700;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.7);
     }
     .olion-maint-desc {
       font-size: 14.5px;
-      line-height: 1.6;
-      color: #d1c2b4;
+      line-height: 1.65;
+      color: #d8c8ba;
       margin: 0 0 22px 0;
     }
     .olion-maint-box {
-      background: rgba(0, 0, 0, 0.35);
-      border: 1px dashed rgba(229, 154, 85, 0.3);
-      border-radius: 12px;
-      padding: 14px 18px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px dashed rgba(229, 154, 85, 0.35);
+      border-radius: 14px;
+      padding: 15px 18px;
       margin-bottom: 22px;
       font-size: 13.5px;
       color: #e59a55;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 7px;
     }
     .olion-maint-actions {
       display: flex;
       gap: 12px;
       justify-content: center;
       flex-wrap: wrap;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
     .olion-maint-btn-primary {
       background: linear-gradient(135deg, #e59a55, #c5823f);
       color: #120904;
       text-decoration: none;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 14px;
-      padding: 11px 20px;
-      border-radius: 10px;
+      padding: 12px 22px;
+      border-radius: 12px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 4px 15px rgba(229, 154, 85, 0.3);
+      box-shadow: 0 5px 20px rgba(229, 154, 85, 0.35);
       transition: transform 0.2s, filter 0.2s;
     }
     .olion-maint-btn-primary:hover {
       transform: translateY(-2px);
-      filter: brightness(1.08);
+      filter: brightness(1.1);
     }
     .olion-maint-btn-secondary {
       background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(229, 154, 85, 0.35);
+      border: 1px solid rgba(229, 154, 85, 0.4);
       color: #f5efe6;
       text-decoration: none;
       font-weight: 600;
       font-size: 14px;
-      padding: 11px 18px;
-      border-radius: 10px;
+      padding: 12px 20px;
+      border-radius: 12px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
       transition: background 0.2s;
     }
     .olion-maint-btn-secondary:hover {
-      background: rgba(229, 154, 85, 0.15);
+      background: rgba(229, 154, 85, 0.18);
     }
     .olion-maint-auto-reopen {
       font-size: 12px;
       color: #a38f7d;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
     }
     .olion-spinner {
@@ -208,24 +214,24 @@
       border: 2px solid rgba(229, 154, 85, 0.25);
       border-top-color: #e59a55;
       border-radius: 50%;
-      animation: olionSpin 1s linear infinite;
+      animation: olionSpinAnim 1s linear infinite;
     }
-    @keyframes olionSpin {
+    @keyframes olionSpinAnim {
       to { transform: rotate(360deg); }
     }
     .olion-admin-link {
-      margin-top: 18px;
+      margin-top: 20px;
       font-size: 11.5px;
-      color: rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.25);
       text-decoration: none;
       transition: color 0.2s;
+      display: inline-block;
     }
     .olion-admin-link:hover {
       color: #e59a55;
     }
   `;
 
-  // Thêm style vào head ngay lập tức
   function injectGatekeeperCSS() {
     if (document.getElementById('olionGatekeeperStyles')) return;
     const style = document.createElement('style');
@@ -241,7 +247,6 @@
     document.documentElement.classList.add('olion-site-offline');
   }
 
-  // Khởi tạo thông tin bảo trì từ cache
   let cachedInfo = null;
   try {
     cachedInfo = JSON.parse(localStorage.getItem('olion_maintenance_info') || 'null');
@@ -260,7 +265,11 @@
       if (document.body) {
         document.body.appendChild(overlay);
       } else {
-        window.addEventListener('DOMContentLoaded', () => document.body.appendChild(overlay));
+        window.addEventListener('DOMContentLoaded', () => {
+          if (!document.getElementById('olionMaintenanceOverlay')) {
+            document.body.appendChild(overlay);
+          }
+        });
       }
     }
 
@@ -320,11 +329,11 @@
         if (overlay && overlay.parentNode) {
           overlay.parentNode.removeChild(overlay);
         }
-      }, 400);
+      }, 350);
     }
   }
 
-  // Nếu ngay từ đầu cache báo offline, render luôn
+  // Nếu ngay từ đầu cache báo offline, kích hoạt ngay
   if (initialOffline) {
     if (document.body) {
       showMaintenanceOverlay(cachedInfo);
@@ -333,7 +342,7 @@
     }
   }
 
-  // 8. Trích xuất trạng thái Website từ Supabase Cloud Record
+  // 8. Trích xuất trạng thái Website từ Cloud Record
   function parseCloudStatus(data) {
     if (!data) return { isOnline: true };
 
@@ -343,14 +352,14 @@
     let expected_time = DEFAULT_TIME;
     let hotline = DEFAULT_HOTLINE;
 
-    // A. Kiểm tra cột riêng `is_site_online` (nếu đã chạy migration)
+    // A. Kiểm tra cột riêng is_site_online
     if (typeof data.is_site_online === 'boolean') {
       isOnline = data.is_site_online;
     } else if (typeof data.is_site_online === 'string') {
       isOnline = data.is_site_online === 'true';
     }
 
-    // B. Kiểm tra fallback trong `notification_text` dạng <!--SITE_STATUS:{...}-->
+    // B. Kiểm tra fallback tag <!--SITE_STATUS:{...}--> trong notification_text
     if (data.notification_text && typeof data.notification_text === 'string') {
       const match = data.notification_text.match(/<!--SITE_STATUS:(\{[\s\S]*?\})-->/);
       if (match && match[1]) {
@@ -372,21 +381,16 @@
     if (data.maintenance_expected_time) expected_time = data.maintenance_expected_time;
     if (data.maintenance_hotline) hotline = data.maintenance_hotline;
 
-    return {
-      isOnline,
-      title,
-      message,
-      expected_time,
-      hotline
-    };
+    return { isOnline, title, message, expected_time, hotline };
   }
 
-  // 9. Đồng bộ trạng thái Cloud siêu nhanh qua REST API
+  // 9. Đồng bộ Cloud qua REST API
   let isChecking = false;
   let pollInterval = null;
 
   async function checkSiteStatusFromCloud() {
     if (isChecking) return;
+    if (typeof fetch === 'undefined') return;
     isChecking = true;
 
     try {
@@ -411,24 +415,18 @@
             localStorage.setItem('olion_maintenance_info', JSON.stringify(status));
             showMaintenanceOverlay(status);
 
-            // Bật kiểm tra liên tục mỗi 3.5 giây để tự động mở lại ngay khi Admin BẬT web
+            // Bật kiểm tra liên tục mỗi 3 giây để tự mở lại khi Admin bật
             if (!pollInterval) {
-              pollInterval = setInterval(checkSiteStatusFromCloud, 3500);
+              pollInterval = setInterval(checkSiteStatusFromCloud, 3000);
             }
           } else {
             // WEBSITE ĐANG BẬT BÌNH THƯỜNG
-            const wasOffline = localStorage.getItem('olion_site_online') === 'false';
             localStorage.setItem('olion_site_online', 'true');
             hideMaintenanceOverlay();
 
             if (pollInterval) {
               clearInterval(pollInterval);
               pollInterval = null;
-            }
-
-            // Nếu vừa chuyển từ Offline sang Online, tải lại tài nguyên nếu cần
-            if (wasOffline) {
-              console.log('🎉 [Gatekeeper] Olion Coffee đã mở cửa trở lại!');
             }
           }
         }
@@ -443,14 +441,33 @@
   // Kích hoạt kiểm tra ngay khi load
   checkSiteStatusFromCloud();
 
-  // Kiểm tra định kỳ nhẹ nhàng mỗi 25 giây khi đang online
+  // Kiểm tra định kỳ mỗi 20 giây khi đang Online
   setInterval(() => {
     if (!pollInterval) {
       checkSiteStatusFromCloud();
     }
-  }, 25000);
+  }, 20000);
 
-  // Lắng nghe thay đổi từ tab khác (qua Storage Event)
+  // 10. Tức thời liên tab (BroadcastChannel & Storage Event)
+  try {
+    if (typeof BroadcastChannel !== 'undefined') {
+      const bc = new BroadcastChannel('olion_site_status_channel');
+      bc.onmessage = (e) => {
+        if (e.data && typeof e.data.is_online === 'boolean') {
+          if (!e.data.is_online) {
+            localStorage.setItem('olion_site_online', 'false');
+            showMaintenanceOverlay(e.data);
+            if (!pollInterval) pollInterval = setInterval(checkSiteStatusFromCloud, 3000);
+          } else {
+            localStorage.setItem('olion_site_online', 'true');
+            hideMaintenanceOverlay();
+            if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
+          }
+        }
+      };
+    }
+  } catch (e) {}
+
   window.addEventListener('storage', (e) => {
     if (e.key === 'olion_site_online') {
       if (e.newValue === 'false') {
@@ -461,10 +478,10 @@
     }
   });
 
-  // Export API phục vụ test hoặc admin preview
+  // Export API
   window.OlionGatekeeper = {
     checkStatus: checkSiteStatusFromCloud,
-    showMaintenance: () => showMaintenanceOverlay(),
+    showMaintenance: (info) => showMaintenanceOverlay(info),
     hideMaintenance: hideMaintenanceOverlay,
     isOffline: () => localStorage.getItem('olion_site_online') === 'false'
   };
