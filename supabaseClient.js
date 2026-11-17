@@ -577,6 +577,8 @@ async function fetchSiteStatusFromCloud() {
           status.is_site_online = data.is_site_online === 'true';
         }
 
+        let autoReopenAt = data.auto_reopen_at || null;
+
         if (data.notification_text && typeof data.notification_text === 'string') {
           const m = data.notification_text.match(/<!--SITE_STATUS:(\{[\s\S]*?\})-->/);
           if (m && m[1]) {
@@ -587,6 +589,7 @@ async function fetchSiteStatusFromCloud() {
               if (parsed.message) status.maintenance_message = parsed.message;
               if (parsed.expected_time) status.maintenance_expected_time = parsed.expected_time;
               if (parsed.hotline) status.maintenance_hotline = parsed.hotline;
+              if (parsed.auto_reopen_at) autoReopenAt = parsed.auto_reopen_at;
             } catch (e) {}
           }
         }
@@ -595,13 +598,29 @@ async function fetchSiteStatusFromCloud() {
         if (data.maintenance_message) status.maintenance_message = data.maintenance_message;
         if (data.maintenance_expected_time) status.maintenance_expected_time = data.maintenance_expected_time;
         if (data.maintenance_hotline) status.maintenance_hotline = data.maintenance_hotline;
+        status.auto_reopen_at = autoReopenAt;
+
+        // TỰ ĐỘNG MỞ LẠI KHI HẾT GIỜ HẸN
+        if (!status.is_site_online && status.auto_reopen_at) {
+          const targetMs = new Date(status.auto_reopen_at).getTime();
+          if (!isNaN(targetMs) && targetMs <= Date.now()) {
+            console.log('⏰ [SiteStatus] Thời gian hẹn mở lại đã đến! Tự động bật lại website.');
+            status.is_site_online = true;
+            status.auto_reopen_at = null;
+            setTimeout(() => {
+              updateSiteStatusToCloud({ is_site_online: true, auto_reopen_at: null }).catch(() => {});
+            }, 300);
+          }
+        }
 
         localStorage.setItem('olion_site_online', status.is_site_online ? 'true' : 'false');
+        localStorage.setItem('olion_site_auto_reopen_at', status.auto_reopen_at || '');
         localStorage.setItem('olion_maintenance_info', JSON.stringify({
           title: status.maintenance_title,
           message: status.maintenance_message,
           expected_time: status.maintenance_expected_time,
-          hotline: status.maintenance_hotline
+          hotline: status.maintenance_hotline,
+          auto_reopen_at: status.auto_reopen_at
         }));
       }
     } catch (err) {
@@ -618,15 +637,17 @@ async function updateSiteStatusToCloud(statusObj) {
   const message = statusObj.maintenance_message || 'Hệ thống website đang tạm ngưng phục vụ để bảo trì & nâng cấp trải nghiệm tốt nhất cho quý khách. Rất mong quý khách thông cảm và hẹn sớm gặp lại!';
   const expectedTime = statusObj.maintenance_expected_time || 'Dự kiến mở lại: Sớm nhất';
   const hotline = statusObj.maintenance_hotline || '0783 657 587';
+  const autoReopenAt = statusObj.auto_reopen_at || null;
 
   localStorage.setItem('olion_site_online', isOnline ? 'true' : 'false');
+  localStorage.setItem('olion_site_auto_reopen_at', autoReopenAt || '');
   localStorage.setItem('olion_maintenance_info', JSON.stringify({
-    title, message, expected_time: expectedTime, hotline
+    title, message, expected_time: expectedTime, hotline, auto_reopen_at: autoReopenAt
   }));
 
   const client = supabaseClient || initSupabase();
   if (!client) {
-    return { success: true, source: 'local', is_site_online: isOnline };
+    return { success: true, source: 'local', is_site_online: isOnline, auto_reopen_at: autoReopenAt };
   }
 
   // 1. Thử cập nhật cột trực tiếp
@@ -637,11 +658,12 @@ async function updateSiteStatusToCloud(statusObj) {
       maintenance_message: message,
       maintenance_expected_time: expectedTime,
       maintenance_hotline: hotline,
+      auto_reopen_at: autoReopenAt,
       updated_at: new Date().toISOString()
     };
     const { data, error } = await client.from('site_settings').update(payload).eq('id', 1).select();
     if (!error && data && data.length > 0) {
-      return { success: true, source: 'supabase', is_site_online: isOnline, data };
+      return { success: true, source: 'supabase', is_site_online: isOnline, auto_reopen_at: autoReopenAt, data };
     }
   } catch (err) {}
 
@@ -655,7 +677,8 @@ async function updateSiteStatusToCloud(statusObj) {
       title,
       message,
       expected_time: expectedTime,
-      hotline
+      hotline,
+      auto_reopen_at: autoReopenAt
     })}-->`;
     const newText = `${statusTag} ${currentText}`.trim();
 
@@ -665,13 +688,13 @@ async function updateSiteStatusToCloud(statusObj) {
     }).eq('id', 1).select();
 
     if (!error) {
-      return { success: true, source: 'supabase_fallback', is_site_online: isOnline, data };
+      return { success: true, source: 'supabase_fallback', is_site_online: isOnline, auto_reopen_at: autoReopenAt, data };
     }
   } catch (err) {
     console.warn('⚠️ Lỗi fallback updateSiteStatusToCloud:', err);
   }
 
-  return { success: true, source: 'local', is_site_online: isOnline };
+  return { success: true, source: 'local', is_site_online: isOnline, auto_reopen_at: autoReopenAt };
 }
 
 window.fetchSiteStatusFromCloud = fetchSiteStatusFromCloud;

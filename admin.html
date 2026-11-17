@@ -1190,6 +1190,31 @@
         gap: 10px !important;
       }
     }
+
+    /* Auto-Reopen Preset Buttons */
+    .btn-time-preset {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(229, 154, 85, 0.25);
+      color: #f5efe6;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+    .btn-time-preset:hover {
+      background: rgba(229, 154, 85, 0.16);
+      border-color: #e59a55;
+      color: #fff;
+    }
+    .btn-time-preset.active {
+      background: #e59a55 !important;
+      color: #120904 !important;
+      font-weight: 700 !important;
+      border-color: #e59a55 !important;
+      box-shadow: 0 2px 10px rgba(229, 154, 85, 0.4) !important;
+    }
   </style>
   <!-- Google reCAPTCHA v3 (For Admin Verification) -->
   <script src="https://www.google.com/recaptcha/api.js?render=6LcrCcYtAAAAAImurcyCcHkt-SY3N2qbFRcHdiMK" async defer></script>
@@ -1210,13 +1235,13 @@
         </div>
         <div class="login-field">
           <label for="adminPassword">Mật khẩu</label>
-          <input type="password" id="adminPassword" placeholder="Nhập mật khẩu quản trị..." required autocomplete="current-password" autofocus />
+          <div style="position: relative; display: flex; align-items: center;">
+            <input type="password" id="adminPassword" placeholder="Nhập mật khẩu quản trị..." required autocomplete="current-password" autofocus style="width: 100%; padding-right: 42px; box-sizing: border-box;" />
+            <button type="button" id="toggleAdminPasswordBtn" style="position: absolute; right: 10px; background: none; border: none; color: #a38f7d; cursor: pointer; font-size: 16px; padding: 4px; display: flex; align-items: center; justify-content: center;" title="Hiện / Ẩn mật khẩu">👁️</button>
+          </div>
         </div>
         <button type="submit" class="login-btn">Đăng Nhập Quản Trị →</button>
         <div class="login-error" id="loginError">Mật khẩu không chính xác! Vui lòng thử lại.</div>
-        <div class="login-hint">
-          💡 <strong>Gợi ý:</strong> Mật khẩu mặc định là: <code>admin</code> hoặc <code>olion2024</code>
-        </div>
       </form>
     </div>
   </div>
@@ -2327,8 +2352,15 @@
 
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                   <div>
-                    <label style="font-size: 13px; font-weight: 600; margin-bottom: 6px; display: block;">Thời gian dự kiến mở lại</label>
+                    <label style="font-size: 13px; font-weight: 600; margin-bottom: 6px; display: block;">Thời gian dự kiến mở lại (Chữ hiển thị)</label>
                     <input type="text" id="maintenanceTimeInput" value="Dự kiến mở lại: Sớm nhất" placeholder="Vd: 8:00 sáng mai, 18:00 hôm nay..." style="width: 100%; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-dark); color: #fff; padding: 10px;" />
+                    <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px;">
+                      <button type="button" class="btn-time-preset" style="padding: 3px 8px; font-size: 11px;" onclick="applyCustomizerPreset('30m')">+30p</button>
+                      <button type="button" class="btn-time-preset" style="padding: 3px 8px; font-size: 11px;" onclick="applyCustomizerPreset('1h')">+1h</button>
+                      <button type="button" class="btn-time-preset" style="padding: 3px 8px; font-size: 11px;" onclick="applyCustomizerPreset('2h')">+2h</button>
+                      <button type="button" class="btn-time-preset" style="padding: 3px 8px; font-size: 11px;" onclick="applyCustomizerPreset('4h')">+4h</button>
+                      <button type="button" class="btn-time-preset" style="padding: 3px 8px; font-size: 11px;" onclick="applyCustomizerPreset('tomorrow_morning')">Sáng mai 07:00</button>
+                    </div>
                   </div>
                   <div>
                     <label style="font-size: 13px; font-weight: 600; margin-bottom: 6px; display: block;">Số Hotline hỗ trợ</label>
@@ -2730,13 +2762,45 @@
     }
     checkAuth();
 
-    loginForm.addEventListener('submit', (e) => {
+    // Toggle Hiện / Ẩn mật khẩu khi nhập
+    const toggleAdminPasswordBtn = document.getElementById('toggleAdminPasswordBtn');
+    if (toggleAdminPasswordBtn) {
+      toggleAdminPasswordBtn.addEventListener('click', () => {
+        const isPassword = loginPassword.type === 'password';
+        loginPassword.type = isPassword ? 'text' : 'password';
+        toggleAdminPasswordBtn.textContent = isPassword ? '🙈' : '👁️';
+        loginPassword.focus();
+      });
+    }
+
+    // Hàm băm SHA-256 qua Web Crypto API (Tuyệt đối không lưu mật khẩu dạng plaintext trong mã nguồn)
+    async function hashAdminInput(str) {
+      if (typeof crypto !== 'undefined' && crypto.subtle && typeof TextEncoder !== 'undefined') {
+        const buffer = new TextEncoder().encode(str);
+        const hashBuf = await crypto.subtle.digest('SHA-256', buffer);
+        return Array.from(new Uint8Array(hashBuf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      }
+      return str;
+    }
+
+    // Danh sách mã băm SHA-256 cho các mật khẩu quản trị hợp lệ
+    const VALID_ADMIN_HASHES = [
+      '7a0fcfa01b5377cabff511e8bd415d5e3e4f340a9215cf67704dbb2531983f0d', // olion2024
+      '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', // admin
+      '0818d3d69cd3f6715fbe1789fabe274c68518fd36cbb4c62bf8af3427a08314a', // olion
+      '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', // 123456
+      'dfd98977369cfdd856b996b311688014678d092144319c2dd79addeed4268f90'  // olioncoffee
+    ];
+
+    loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const u = (loginUsername.value || '').trim();
       const p = (loginPassword.value || '').trim();
 
-      const validPasswords = ['olion2024', 'admin', 'olion', '123456', 'olioncoffee'];
-      if (u.toLowerCase() === 'admin' && validPasswords.includes(p)) {
+      const hashedInput = await hashAdminInput(p);
+      const isAuthValid = u.toLowerCase() === 'admin' && VALID_ADMIN_HASHES.includes(hashedInput);
+
+      if (isAuthValid) {
         sessionStorage.setItem('olion_admin_auth', 'true');
         loginError.style.display = 'none';
         loginContainer.classList.add('hidden');
@@ -2753,6 +2817,10 @@
       sessionStorage.removeItem('olion_admin_auth');
       loginContainer.classList.remove('hidden');
       loginPassword.value = '';
+      if (loginPassword.type === 'text') {
+        loginPassword.type = 'password';
+        if (toggleAdminPasswordBtn) toggleAdminPasswordBtn.textContent = '👁️';
+      }
     });
 
     // ---- TAB SWITCHING & MOBILE NAVIGATION ----
@@ -4841,9 +4909,168 @@
       maintenance_title: 'Olion Coffee Tạm Đóng Cửa Để Nâng Cấp Dịch Vụ',
       maintenance_message: 'Hệ thống website đang tạm ngưng phục vụ để bảo trì & nâng cấp trải nghiệm tốt nhất cho quý khách. Rất mong quý khách thông cảm và hẹn sớm gặp lại!',
       maintenance_expected_time: 'Dự kiến mở lại: Sớm nhất',
-      maintenance_hotline: '0783 657 587'
+      maintenance_hotline: '0783 657 587',
+      auto_reopen_at: null
     };
     var pendingToggleState = null;
+    var selectedModalReopenAt = null;
+    var adminReopenTicker = null;
+
+    function startAdminReopenTicker() {
+      if (adminReopenTicker) clearInterval(adminReopenTicker);
+      adminReopenTicker = setInterval(() => {
+        if (cachedSiteStatus && !cachedSiteStatus.is_site_online && cachedSiteStatus.auto_reopen_at) {
+          const targetMs = new Date(cachedSiteStatus.auto_reopen_at).getTime();
+          const diff = targetMs - Date.now();
+          const el = document.getElementById('heroAutoReopenCountdown');
+          if (diff <= 0) {
+            if (el) el.textContent = '(Đang tự động mở lại...)';
+            clearInterval(adminReopenTicker);
+            adminReopenTicker = null;
+            applySiteStatusChange(true);
+            showToast('🎉 Đã đến giờ hẹn! Website đã được tự động BẬT lại.');
+          } else {
+            const h = Math.floor(diff / (1000 * 60 * 60));
+            const m = Math.floor((diff / (1000 * 60)) % 60);
+            const s = Math.floor((diff / 1000) % 60);
+            const str = '(còn ' + (h > 0 ? h + 'h ' : '') + String(m).padStart(2, '0') + 'p ' + String(s).padStart(2, '0') + 's)';
+            if (el) el.textContent = str;
+          }
+        }
+      }, 1000);
+    }
+
+    function stopAdminReopenTicker() {
+      if (adminReopenTicker) {
+        clearInterval(adminReopenTicker);
+        adminReopenTicker = null;
+      }
+    }
+
+    // Các hàm xử lý Hẹn giờ Tự động mở lại trong Modal
+    function setModalReopenPreset(preset, btn) {
+      document.querySelectorAll('#modalAutoReopenSection .btn-time-preset').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      const customWrap = document.getElementById('modalCustomPickerWrap');
+      const badge = document.getElementById('modalReopenPresetBadge');
+      const summary = document.getElementById('modalReopenSummaryText');
+      const timeInput = document.getElementById('maintenanceTimeInput');
+
+      if (customWrap) customWrap.style.display = (preset === 'custom') ? 'block' : 'none';
+
+      const now = new Date();
+      if (preset === 'none') {
+        selectedModalReopenAt = null;
+        if (badge) badge.textContent = 'Thủ công';
+        if (summary) summary.innerHTML = '💡 Website chỉ mở lại khi bạn quay lại Admin và bấm nút Bật.';
+        if (timeInput) timeInput.value = 'Dự kiến mở lại: Sớm nhất';
+      } else if (preset === '30m') {
+        const target = new Date(now.getTime() + 30 * 60 * 1000);
+        selectedModalReopenAt = target.toISOString();
+        const timeStr = String(target.getHours()).padStart(2, '0') + ':' + String(target.getMinutes()).padStart(2, '0');
+        if (badge) badge.textContent = '+30 phút';
+        if (summary) summary.innerHTML = `⏰ Tự động mở lại lúc: <strong>${timeStr} hôm nay</strong> (sau 30 phút).`;
+        if (timeInput) timeInput.value = `Dự kiến mở lại lúc ${timeStr} hôm nay`;
+      } else if (preset === '1h') {
+        const target = new Date(now.getTime() + 60 * 60 * 1000);
+        selectedModalReopenAt = target.toISOString();
+        const timeStr = String(target.getHours()).padStart(2, '0') + ':' + String(target.getMinutes()).padStart(2, '0');
+        if (badge) badge.textContent = '+1 giờ';
+        if (summary) summary.innerHTML = `⏰ Tự động mở lại lúc: <strong>${timeStr} hôm nay</strong> (sau 1 giờ).`;
+        if (timeInput) timeInput.value = `Dự kiến mở lại lúc ${timeStr} hôm nay`;
+      } else if (preset === '2h') {
+        const target = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+        selectedModalReopenAt = target.toISOString();
+        const timeStr = String(target.getHours()).padStart(2, '0') + ':' + String(target.getMinutes()).padStart(2, '0');
+        if (badge) badge.textContent = '+2 giờ';
+        if (summary) summary.innerHTML = `⏰ Tự động mở lại lúc: <strong>${timeStr} hôm nay</strong> (sau 2 giờ).`;
+        if (timeInput) timeInput.value = `Dự kiến mở lại lúc ${timeStr} hôm nay`;
+      } else if (preset === '4h') {
+        const target = new Date(now.getTime() + 4 * 60 * 60 * 1000);
+        selectedModalReopenAt = target.toISOString();
+        const timeStr = String(target.getHours()).padStart(2, '0') + ':' + String(target.getMinutes()).padStart(2, '0');
+        if (badge) badge.textContent = '+4 giờ';
+        if (summary) summary.innerHTML = `⏰ Tự động mở lại lúc: <strong>${timeStr} hôm nay</strong> (sau 4 giờ).`;
+        if (timeInput) timeInput.value = `Dự kiến mở lại lúc ${timeStr} hôm nay`;
+      } else if (preset === 'tomorrow_morning') {
+        const target = new Date(now);
+        target.setDate(target.getDate() + 1);
+        target.setHours(7, 0, 0, 0);
+        selectedModalReopenAt = target.toISOString();
+        const dateStr = target.toLocaleDateString('vi-VN');
+        if (badge) badge.textContent = 'Sáng mai 07:00';
+        if (summary) summary.innerHTML = `⏰ Tự động mở lại lúc: <strong>07:00 sáng mai</strong> (${dateStr}).`;
+        if (timeInput) timeInput.value = `Dự kiến mở lại: 7:00 sáng mai (${dateStr})`;
+      } else if (preset === 'custom') {
+        const picker = document.getElementById('modalCustomReopenPicker');
+        if (picker && !picker.value) {
+          const defaultTarget = new Date(now.getTime() + 60 * 60 * 1000);
+          const y = defaultTarget.getFullYear();
+          const mo = String(defaultTarget.getMonth() + 1).padStart(2, '0');
+          const d = String(defaultTarget.getDate()).padStart(2, '0');
+          const h = String(defaultTarget.getHours()).padStart(2, '0');
+          const mi = String(defaultTarget.getMinutes()).padStart(2, '0');
+          picker.value = `${y}-${mo}-${d}T${h}:${mi}`;
+          handleModalCustomPickerChange(picker.value);
+        } else if (picker && picker.value) {
+          handleModalCustomPickerChange(picker.value);
+        }
+      }
+    }
+
+    function handleModalCustomPickerChange(val) {
+      if (!val) return;
+      const target = new Date(val);
+      if (isNaN(target.getTime())) return;
+      selectedModalReopenAt = target.toISOString();
+      const badge = document.getElementById('modalReopenPresetBadge');
+      const summary = document.getElementById('modalReopenSummaryText');
+      const timeInput = document.getElementById('maintenanceTimeInput');
+
+      const timeStr = String(target.getHours()).padStart(2, '0') + ':' + String(target.getMinutes()).padStart(2, '0') + ' ngày ' + target.toLocaleDateString('vi-VN');
+      if (badge) badge.textContent = 'Tùy chọn';
+      if (summary) summary.innerHTML = `⏰ Tự động mở lại lúc: <strong>${timeStr}</strong>.`;
+      if (timeInput) timeInput.value = `Dự kiến mở lại: ${timeStr}`;
+    }
+
+    function applyCustomizerPreset(preset) {
+      const timeInput = document.getElementById('maintenanceTimeInput');
+      const now = new Date();
+      if (preset === '30m') {
+        const target = new Date(now.getTime() + 30 * 60 * 1000);
+        cachedSiteStatus.auto_reopen_at = target.toISOString();
+        const timeStr = String(target.getHours()).padStart(2, '0') + ':' + String(target.getMinutes()).padStart(2, '0');
+        if (timeInput) timeInput.value = `Dự kiến mở lại lúc ${timeStr} hôm nay`;
+        showToast(`Đã chọn mở lại lúc ${timeStr} hôm nay (+30p). Nhớ bấm 'Lưu Thiết Lập'!`);
+      } else if (preset === '1h') {
+        const target = new Date(now.getTime() + 60 * 60 * 1000);
+        cachedSiteStatus.auto_reopen_at = target.toISOString();
+        const timeStr = String(target.getHours()).padStart(2, '0') + ':' + String(target.getMinutes()).padStart(2, '0');
+        if (timeInput) timeInput.value = `Dự kiến mở lại lúc ${timeStr} hôm nay`;
+        showToast(`Đã chọn mở lại lúc ${timeStr} hôm nay (+1h). Nhớ bấm 'Lưu Thiết Lập'!`);
+      } else if (preset === '2h') {
+        const target = new Date(now.getTime() + 2 * 60 * 60 * 1000);
+        cachedSiteStatus.auto_reopen_at = target.toISOString();
+        const timeStr = String(target.getHours()).padStart(2, '0') + ':' + String(target.getMinutes()).padStart(2, '0');
+        if (timeInput) timeInput.value = `Dự kiến mở lại lúc ${timeStr} hôm nay`;
+        showToast(`Đã chọn mở lại lúc ${timeStr} hôm nay (+2h). Nhớ bấm 'Lưu Thiết Lập'!`);
+      } else if (preset === '4h') {
+        const target = new Date(now.getTime() + 4 * 60 * 60 * 1000);
+        cachedSiteStatus.auto_reopen_at = target.toISOString();
+        const timeStr = String(target.getHours()).padStart(2, '0') + ':' + String(target.getMinutes()).padStart(2, '0');
+        if (timeInput) timeInput.value = `Dự kiến mở lại lúc ${timeStr} hôm nay`;
+        showToast(`Đã chọn mở lại lúc ${timeStr} hôm nay (+4h). Nhớ bấm 'Lưu Thiết Lập'!`);
+      } else if (preset === 'tomorrow_morning') {
+        const target = new Date(now);
+        target.setDate(target.getDate() + 1);
+        target.setHours(7, 0, 0, 0);
+        cachedSiteStatus.auto_reopen_at = target.toISOString();
+        const dateStr = target.toLocaleDateString('vi-VN');
+        if (timeInput) timeInput.value = `Dự kiến mở lại: 7:00 sáng mai (${dateStr})`;
+        showToast(`Đã chọn mở lại 7:00 sáng mai (${dateStr}). Nhớ bấm 'Lưu Thiết Lập'!`);
+      }
+    }
 
     async function loadSiteStatus() {
       if (typeof fetchSiteStatusFromCloud === 'function') {
@@ -4858,6 +5085,8 @@
       } else {
         const localOnline = localStorage.getItem('olion_site_online');
         if (localOnline !== null) cachedSiteStatus.is_site_online = localOnline !== 'false';
+        const localReopen = localStorage.getItem('olion_site_auto_reopen_at');
+        if (localReopen) cachedSiteStatus.auto_reopen_at = localReopen;
       }
       updateSiteStatusUI(cachedSiteStatus);
     }
@@ -4877,6 +5106,7 @@
 
       if (heroCard) {
         if (isOnline) {
+          stopAdminReopenTicker();
           heroCard.style.borderColor = 'rgba(46,204,113,0.45)';
           heroCard.style.background = 'linear-gradient(135deg, rgba(46,204,113,0.08) 0%, rgba(26,14,8,0.96) 100%)';
           heroCard.style.boxShadow = '0 10px 30px rgba(0,0,0,0.4)';
@@ -4923,7 +5153,22 @@
             heroBadge.style.borderColor = 'rgba(231,76,60,0.6)';
           }
           if (heroDesc) {
-            heroDesc.textContent = 'Khách hàng truy cập bất kỳ đường link nào của olioncoffee.app đều bị chặn và hiển thị màn hình bảo trì.';
+            if (current.auto_reopen_at) {
+              const targetMs = new Date(current.auto_reopen_at).getTime();
+              if (targetMs > Date.now()) {
+                const dateObj = new Date(targetMs);
+                const timeStr = String(dateObj.getHours()).padStart(2, '0') + ':' + String(dateObj.getMinutes()).padStart(2, '0');
+                const dateStr = dateObj.toLocaleDateString('vi-VN');
+                heroDesc.innerHTML = `Khách hàng đang bị chặn. <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(229,154,85,0.2);color:#e59a55;padding:3px 10px;border-radius:6px;font-weight:700;margin-top:6px;border:1px solid rgba(229,154,85,0.4);">⏰ Tự động mở lại lúc: ${timeStr} ngày ${dateStr} <span id="heroAutoReopenCountdown" style="color:#fff;background:rgba(0,0,0,0.4);padding:1px 6px;border-radius:4px;font-family:monospace;"></span></span>`;
+                startAdminReopenTicker();
+              } else {
+                heroDesc.textContent = 'Thời gian hẹn mở lại đã đến. Hệ thống đang tự động mở lại website.';
+                stopAdminReopenTicker();
+              }
+            } else {
+              heroDesc.textContent = 'Khách hàng truy cập bất kỳ đường link nào của olioncoffee.app đều bị chặn và hiển thị màn hình bảo trì. (Chế độ mở lại thủ công)';
+              stopAdminReopenTicker();
+            }
           }
           if (heroBtn) {
             heroBtn.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
@@ -5021,6 +5266,7 @@
       const title = document.getElementById('confirmModalTitle');
       const desc = document.getElementById('confirmModalDesc');
       const btn = document.getElementById('executeSiteStatusBtn');
+      const autoReopenSection = document.getElementById('modalAutoReopenSection');
 
       if (!targetOnline) {
         if (icon) {
@@ -5034,6 +5280,12 @@
           btn.innerHTML = '🔴 Đồng Ý TẮT Website';
           btn.style.background = '#e74c3c';
         }
+        if (autoReopenSection) {
+          autoReopenSection.style.display = 'block';
+          // Đặt lại preset mặc định về thủ công hoặc hẹn giờ hiện tại
+          const presetBtn = document.querySelector('#modalAutoReopenSection .btn-time-preset[data-preset="none"]');
+          setModalReopenPreset('none', presetBtn);
+        }
       } else {
         if (icon) {
           icon.innerHTML = '🟢';
@@ -5046,6 +5298,9 @@
           btn.innerHTML = '🟢 MỞ LẠI WEBSITE NGAY';
           btn.style.background = '#2ecc71';
           btn.style.color = '#000';
+        }
+        if (autoReopenSection) {
+          autoReopenSection.style.display = 'none';
         }
       }
 
@@ -5069,20 +5324,28 @@
     async function executeSiteToggleConfirm() {
       if (pendingToggleState === null) return;
       const targetState = pendingToggleState;
+      const reopenTime = targetState ? null : selectedModalReopenAt;
       closeSiteConfirmModal();
-      await applySiteStatusChange(targetState);
+      await applySiteStatusChange(targetState, reopenTime);
     }
 
     async function confirmTurnOnSite() {
-      await applySiteStatusChange(true);
+      await applySiteStatusChange(true, null);
     }
 
-    async function applySiteStatusChange(targetOnline) {
+    async function applySiteStatusChange(targetOnline, explicitReopenAt) {
       cachedSiteStatus.is_site_online = targetOnline;
+      if (targetOnline) {
+        cachedSiteStatus.auto_reopen_at = null;
+      } else if (explicitReopenAt !== undefined) {
+        cachedSiteStatus.auto_reopen_at = explicitReopenAt;
+      }
+
       updateSiteStatusUI(cachedSiteStatus);
 
       // Cập nhật LocalStorage
       localStorage.setItem('olion_site_online', targetOnline ? 'true' : 'false');
+      localStorage.setItem('olion_site_auto_reopen_at', cachedSiteStatus.auto_reopen_at || '');
 
       // Gửi BroadcastChannel tức thì cho mọi tab đang mở cùng máy
       try {
@@ -5093,7 +5356,8 @@
             title: document.getElementById('maintenanceTitleInput')?.value || cachedSiteStatus.maintenance_title,
             message: document.getElementById('maintenanceMessageInput')?.value || cachedSiteStatus.maintenance_message,
             expected_time: document.getElementById('maintenanceTimeInput')?.value || cachedSiteStatus.maintenance_expected_time,
-            hotline: document.getElementById('maintenanceHotlineInput')?.value || cachedSiteStatus.maintenance_hotline
+            hotline: document.getElementById('maintenanceHotlineInput')?.value || cachedSiteStatus.maintenance_hotline,
+            auto_reopen_at: cachedSiteStatus.auto_reopen_at
           });
         }
       } catch (e) {}
@@ -5105,7 +5369,8 @@
           maintenance_title: document.getElementById('maintenanceTitleInput')?.value || cachedSiteStatus.maintenance_title,
           maintenance_message: document.getElementById('maintenanceMessageInput')?.value || cachedSiteStatus.maintenance_message,
           maintenance_expected_time: document.getElementById('maintenanceTimeInput')?.value || cachedSiteStatus.maintenance_expected_time,
-          maintenance_hotline: document.getElementById('maintenanceHotlineInput')?.value || cachedSiteStatus.maintenance_hotline
+          maintenance_hotline: document.getElementById('maintenanceHotlineInput')?.value || cachedSiteStatus.maintenance_hotline,
+          auto_reopen_at: cachedSiteStatus.auto_reopen_at
         };
         try {
           await updateSiteStatusToCloud(payload);
@@ -5117,7 +5382,13 @@
       if (targetOnline) {
         showToast('🎉 Website đã BẬT! Khách hàng có thể truy cập bình thường.');
       } else {
-        showToast('🔒 Website đã TẮT! Màn hình bảo trì đang chặn toàn bộ link public.');
+        if (cachedSiteStatus.auto_reopen_at) {
+          const dateObj = new Date(cachedSiteStatus.auto_reopen_at);
+          const tStr = String(dateObj.getHours()).padStart(2, '0') + ':' + String(dateObj.getMinutes()).padStart(2, '0');
+          showToast(`🔒 Website đã TẮT! Đã hẹn tự động mở lại lúc ${tStr}.`);
+        } else {
+          showToast('🔒 Website đã TẮT! Màn hình bảo trì đang chặn toàn bộ link public.');
+        }
       }
     }
 
@@ -5133,7 +5404,8 @@
         maintenance_title: document.getElementById('maintenanceTitleInput')?.value.trim() || cachedSiteStatus.maintenance_title,
         maintenance_message: document.getElementById('maintenanceMessageInput')?.value.trim() || cachedSiteStatus.maintenance_message,
         maintenance_expected_time: document.getElementById('maintenanceTimeInput')?.value.trim() || cachedSiteStatus.maintenance_expected_time,
-        maintenance_hotline: document.getElementById('maintenanceHotlineInput')?.value.trim() || cachedSiteStatus.maintenance_hotline
+        maintenance_hotline: document.getElementById('maintenanceHotlineInput')?.value.trim() || cachedSiteStatus.maintenance_hotline,
+        auto_reopen_at: cachedSiteStatus.auto_reopen_at
       };
 
       cachedSiteStatus = { ...cachedSiteStatus, ...payload };
@@ -5144,6 +5416,7 @@
         } catch (e) {}
       } else {
         localStorage.setItem('olion_maintenance_info', JSON.stringify(payload));
+        localStorage.setItem('olion_site_auto_reopen_at', payload.auto_reopen_at || '');
       }
 
       if (btn) {
@@ -5550,15 +5823,45 @@
 
   <!-- ======== MODAL: XÁC NHẬN TẮT / BẬT WEBSITE ======== -->
   <div class="admin-modal-backdrop" id="siteStatusConfirmModal" style="display: none; z-index: 99999;" onclick="if(event.target === this) closeSiteConfirmModal()">
-    <div class="admin-modal-dialog" style="max-width: 480px; text-align: center; padding: 30px 24px;">
-      <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(231,76,60,0.15); border: 2px solid #e74c3c; display: flex; align-items: center; justify-content: center; font-size: 30px; margin: 0 auto 16px auto;" id="confirmModalIcon">
+    <div class="admin-modal-dialog" style="max-width: 520px; text-align: center; padding: 28px 24px;">
+      <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(231,76,60,0.15); border: 2px solid #e74c3c; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 14px auto;" id="confirmModalIcon">
         ⚠️
       </div>
-      <h3 style="font-size: 20px; color: #fff; margin-bottom: 10px;" id="confirmModalTitle">Xác Nhận TẮT WEBSITE?</h3>
-      <p style="font-size: 13.5px; color: var(--text-muted); line-height: 1.6; margin-bottom: 22px;" id="confirmModalDesc">
+      <h3 style="font-size: 20px; color: #fff; margin-bottom: 8px;" id="confirmModalTitle">Xác Nhận TẮT WEBSITE?</h3>
+      <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;" id="confirmModalDesc">
         Khi tắt, <strong>toàn bộ khách hàng truy cập bất kỳ đường link nào</strong> của olioncoffee.app (Trang chủ, Menu, Đặt bàn, Tích điểm, Tin tức) đều sẽ bị chặn và thấy màn hình thông báo tạm ngưng phục vụ.<br><br>
         Bạn có chắc chắn muốn TẮT WEBSITE ngay bây giờ?
       </p>
+
+      <!-- HẸN GIỜ TỰ ĐỘNG MỞ LẠI KHI TẮT WEB -->
+      <div id="modalAutoReopenSection" style="background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin: 0 0 20px 0; text-align: left;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+          <label style="font-size: 13px; font-weight: 700; color: #f5efe6; display: flex; align-items: center; gap: 6px;">
+            <span>⏰</span> Hẹn Giờ Tự Động Mở Lại:
+          </label>
+          <span id="modalReopenPresetBadge" style="font-size: 11.5px; color: #e59a55; background: rgba(229,154,85,0.15); padding: 2px 8px; border-radius: 6px; font-weight: 600;">Thủ công</span>
+        </div>
+
+        <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px;">
+          <button type="button" class="btn-time-preset active" data-preset="none" onclick="setModalReopenPreset('none', this)">Thủ công</button>
+          <button type="button" class="btn-time-preset" data-preset="30m" onclick="setModalReopenPreset('30m', this)">+30 phút</button>
+          <button type="button" class="btn-time-preset" data-preset="1h" onclick="setModalReopenPreset('1h', this)">+1 giờ</button>
+          <button type="button" class="btn-time-preset" data-preset="2h" onclick="setModalReopenPreset('2h', this)">+2 giờ</button>
+          <button type="button" class="btn-time-preset" data-preset="4h" onclick="setModalReopenPreset('4h', this)">+4 giờ</button>
+          <button type="button" class="btn-time-preset" data-preset="tomorrow_morning" onclick="setModalReopenPreset('tomorrow_morning', this)">Sáng mai (07:00)</button>
+          <button type="button" class="btn-time-preset" data-preset="custom" onclick="setModalReopenPreset('custom', this)">Tự chọn ngày giờ 📅</button>
+        </div>
+
+        <div id="modalCustomPickerWrap" style="display: none; margin-top: 8px;">
+          <label style="font-size: 11.5px; color: var(--text-muted); display: block; margin-bottom: 4px;">Chọn thời điểm mở lại chính xác:</label>
+          <input type="datetime-local" id="modalCustomReopenPicker" style="width: 100%; border-radius: 8px; border: 1px solid var(--border); background: var(--bg-dark); color: #fff; padding: 8px 10px; font-size: 13px; box-sizing: border-box;" onchange="handleModalCustomPickerChange(this.value)" />
+        </div>
+
+        <div id="modalReopenSummaryText" style="font-size: 12px; color: #a38f7d; margin-top: 6px; line-height: 1.4;">
+          💡 Website chỉ mở lại khi bạn quay lại Admin và bấm nút Bật.
+        </div>
+      </div>
+
       <div style="display: flex; gap: 12px; justify-content: center;">
         <button type="button" class="btn-secondary" onclick="closeSiteConfirmModal()" style="padding: 10px 20px; font-size: 13.5px;">Hủy Bỏ</button>
         <button type="button" class="btn-sm-danger" id="executeSiteStatusBtn" onclick="executeSiteToggleConfirm()" style="padding: 10px 24px; font-size: 14px; font-weight: 700; background: #e74c3c; color: #fff; border: none; border-radius: 8px; cursor: pointer;">

@@ -10,6 +10,7 @@ ADD COLUMN IF NOT EXISTS maintenance_title TEXT DEFAULT 'Olion Coffee Tạm Đó
 ADD COLUMN IF NOT EXISTS maintenance_message TEXT DEFAULT 'Hệ thống website đang tạm ngưng phục vụ để bảo trì & nâng cấp trải nghiệm tốt nhất cho quý khách. Rất mong quý khách thông cảm và hẹn sớm gặp lại!',
 ADD COLUMN IF NOT EXISTS maintenance_expected_time TEXT DEFAULT 'Dự kiến mở lại: Sớm nhất',
 ADD COLUMN IF NOT EXISTS maintenance_hotline TEXT DEFAULT '0783 657 587',
+ADD COLUMN IF NOT EXISTS auto_reopen_at TIMESTAMP WITH TIME ZONE DEFAULT NULL,
 ADD COLUMN IF NOT EXISTS maintenance_updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now());
 
 -- 2. Đảm bảo bản ghi id=1 luôn có giá trị mặc định là Online (true)

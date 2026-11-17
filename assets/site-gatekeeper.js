@@ -200,6 +200,77 @@
     .olion-maint-btn-secondary:hover {
       background: rgba(229, 154, 85, 0.18);
     }
+    .olion-maint-countdown {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(229, 154, 85, 0.45);
+      border-radius: 16px;
+      padding: 16px 14px;
+      margin-bottom: 22px;
+      box-shadow: inset 0 2px 10px rgba(0,0,0,0.4), 0 0 25px rgba(229, 154, 85, 0.12);
+    }
+    .olion-countdown-badge {
+      font-size: 11.5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #e59a55;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .olion-countdown-grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .olion-cd-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 52px;
+    }
+    .olion-cd-num {
+      background: rgba(229, 154, 85, 0.15);
+      border: 1px solid rgba(229, 154, 85, 0.35);
+      border-radius: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 22px;
+      font-weight: 800;
+      color: #ffffff;
+      padding: 6px 4px;
+      line-height: 1;
+      width: 100%;
+      box-sizing: border-box;
+      text-shadow: 0 0 10px rgba(229, 154, 85, 0.6);
+    }
+    .olion-cd-txt {
+      font-size: 10px;
+      color: #a38f7d;
+      margin-top: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+    .olion-cd-sep {
+      font-size: 20px;
+      font-weight: 700;
+      color: #e59a55;
+      margin-top: -14px;
+      animation: olionBlinkAnim 1s infinite;
+    }
+    @keyframes olionBlinkAnim {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.25; }
+    }
+    .olion-countdown-footer {
+      font-size: 12px;
+      color: #cbbba9;
+      margin-top: 10px;
+      line-height: 1.4;
+    }
     .olion-maint-auto-reopen {
       font-size: 12px;
       color: #a38f7d;
@@ -278,6 +349,47 @@
     const time = (info && info.expected_time) || (cachedInfo && cachedInfo.expected_time) || DEFAULT_TIME;
     const hotline = (info && info.hotline) || (cachedInfo && cachedInfo.hotline) || DEFAULT_HOTLINE;
     const cleanPhone = hotline.replace(/[^0-9]/g, '') || "0783657587";
+    const autoReopenAt = (info && info.auto_reopen_at) || (cachedInfo && cachedInfo.auto_reopen_at) || localStorage.getItem('olion_site_auto_reopen_at') || null;
+
+    let countdownHtml = '';
+    let targetMs = 0;
+    if (autoReopenAt) {
+      targetMs = new Date(autoReopenAt).getTime();
+      if (!isNaN(targetMs) && targetMs > Date.now()) {
+        countdownHtml = `
+          <div class="olion-maint-countdown" id="olionCountdownBox">
+            <div class="olion-countdown-badge">
+              <span>⏱️</span>
+              <span>Bộ Đếm Tự Động Mở Lại</span>
+            </div>
+            <div class="olion-countdown-grid">
+              <div class="olion-cd-item">
+                <span class="olion-cd-num" id="olionCdDays">00</span>
+                <span class="olion-cd-txt">Ngày</span>
+              </div>
+              <span class="olion-cd-sep">:</span>
+              <div class="olion-cd-item">
+                <span class="olion-cd-num" id="olionCdHours">00</span>
+                <span class="olion-cd-txt">Giờ</span>
+              </div>
+              <span class="olion-cd-sep">:</span>
+              <div class="olion-cd-item">
+                <span class="olion-cd-num" id="olionCdMinutes">00</span>
+                <span class="olion-cd-txt">Phút</span>
+              </div>
+              <span class="olion-cd-sep">:</span>
+              <div class="olion-cd-item">
+                <span class="olion-cd-num" id="olionCdSeconds">00</span>
+                <span class="olion-cd-txt">Giây</span>
+              </div>
+            </div>
+            <div class="olion-countdown-footer">
+              Website sẽ tự động gỡ bỏ màn hình bảo trì và mở lại ngay khi đồng hồ về 00:00:00.
+            </div>
+          </div>
+        `;
+      }
+    }
 
     overlay.innerHTML = `
       <div class="olion-maint-card">
@@ -290,6 +402,8 @@
         </div>
         <h1 class="olion-maint-title">${title}</h1>
         <p class="olion-maint-desc">${msg}</p>
+
+        ${countdownHtml}
 
         <div class="olion-maint-box">
           <div style="font-weight: 700; color: #fff;">⏰ ${time}</div>
@@ -309,7 +423,7 @@
 
         <div class="olion-maint-auto-reopen">
           <span class="olion-spinner"></span>
-          <span>Hệ thống sẽ tự động mở lại ngay khi quán hoàn tất nâng cấp...</span>
+          <span>Hệ thống sẽ tự động mở lại ngay khi hoàn tất lịch bảo trì...</span>
         </div>
 
         <div>
@@ -317,10 +431,60 @@
         </div>
       </div>
     `;
+
+    // Khởi chạy đồng hồ đếm ngược nếu có hẹn giờ
+    if (window._olionMaintCountdownTimer) {
+      clearInterval(window._olionMaintCountdownTimer);
+      window._olionMaintCountdownTimer = null;
+    }
+
+    if (targetMs > Date.now()) {
+      function tickCountdown() {
+        const now = Date.now();
+        const diff = targetMs - now;
+        if (diff <= 0) {
+          if (window._olionMaintCountdownTimer) {
+            clearInterval(window._olionMaintCountdownTimer);
+            window._olionMaintCountdownTimer = null;
+          }
+          const box = document.getElementById('olionCountdownBox');
+          if (box) {
+            box.innerHTML = '<div style="color: #2ecc71; font-weight: 700; padding: 10px; font-size: 14px;">🎉 Đã đến giờ mở cửa! Đang tự động mở lại website...</div>';
+          }
+          setTimeout(() => {
+            localStorage.setItem('olion_site_online', 'true');
+            hideMaintenanceOverlay();
+          }, 1200);
+          return;
+        }
+
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diff / (1000 * 60)) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+
+        const elDays = document.getElementById('olionCdDays');
+        const elHours = document.getElementById('olionCdHours');
+        const elMinutes = document.getElementById('olionCdMinutes');
+        const elSeconds = document.getElementById('olionCdSeconds');
+
+        if (elDays) elDays.textContent = String(d).padStart(2, '0');
+        if (elHours) elHours.textContent = String(h).padStart(2, '0');
+        if (elMinutes) elMinutes.textContent = String(m).padStart(2, '0');
+        if (elSeconds) elSeconds.textContent = String(s).padStart(2, '0');
+      }
+
+      tickCountdown();
+      window._olionMaintCountdownTimer = setInterval(tickCountdown, 1000);
+    }
   }
 
   // 7. Hàm gỡ bỏ màn hình bảo trì (khi Web được Bật lại)
   function hideMaintenanceOverlay() {
+    if (window._olionMaintCountdownTimer) {
+      clearInterval(window._olionMaintCountdownTimer);
+      window._olionMaintCountdownTimer = null;
+    }
     document.documentElement.classList.remove('olion-site-offline');
     const overlay = document.getElementById('olionMaintenanceOverlay');
     if (overlay) {
@@ -351,6 +515,7 @@
     let message = DEFAULT_MSG;
     let expected_time = DEFAULT_TIME;
     let hotline = DEFAULT_HOTLINE;
+    let auto_reopen_at = data.auto_reopen_at || null;
 
     // A. Kiểm tra cột riêng is_site_online
     if (typeof data.is_site_online === 'boolean') {
@@ -372,6 +537,7 @@
           if (parsed.message) message = parsed.message;
           if (parsed.expected_time) expected_time = parsed.expected_time;
           if (parsed.hotline) hotline = parsed.hotline;
+          if (parsed.auto_reopen_at) auto_reopen_at = parsed.auto_reopen_at;
         } catch (e) {}
       }
     }
@@ -380,8 +546,19 @@
     if (data.maintenance_message) message = data.maintenance_message;
     if (data.maintenance_expected_time) expected_time = data.maintenance_expected_time;
     if (data.maintenance_hotline) hotline = data.maintenance_hotline;
+    if (data.auto_reopen_at) auto_reopen_at = data.auto_reopen_at;
 
-    return { isOnline, title, message, expected_time, hotline };
+    // KIỂM TRA TỰ ĐỘNG MỞ LẠI KHI HẾT GIỜ HẸN
+    if (!isOnline && auto_reopen_at) {
+      const reopenTime = new Date(auto_reopen_at).getTime();
+      if (!isNaN(reopenTime) && reopenTime <= Date.now()) {
+        console.log('⏰ [Gatekeeper] Đã tới thời điểm hẹn mở lại! Tự động unblock trang web.');
+        isOnline = true;
+        auto_reopen_at = null;
+      }
+    }
+
+    return { isOnline, title, message, expected_time, hotline, auto_reopen_at };
   }
 
   // 9. Đồng bộ Cloud qua REST API
